@@ -1,5 +1,5 @@
 flask
 gunicorn
 werkzeug
-git+https://github.com/hayroy/mega.py
+mega.py==1.0.8
 requests
