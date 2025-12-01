@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Free Server</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://hcaptcha.com/1/api.js" async defer></script>
+  <script src='//libtl.com/sdk.js' data-zone='8987728' data-sdk='show_8987728'></script>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <!-- Tom Select -->
+  <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+  </style>
+  <style>
+/* Tambahan style biar jelas kalau ini dropdown */
+.ts-wrapper.single .ts-control::after {
+  content: "\f078"; /* fa-chevron-down */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 12px;
+  color: #555;
+  pointer-events: none;
+}
+.ts-wrapper.single .ts-control {
+  padding-right: 2rem; /* ruang buat icon dropdown */
+}
+</style>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="Logo" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+<!-- MAIN -->
+<main class="flex-1 flex items-start justify-center px-4 pt-8 animate-fadeInUp">
+  <div class="max-w-screen-sm w-full bg-white p-6 rounded-2xl shadow-xl">
+    <h1 class="text-2xl font-bold text-center mb-6">Create a Free Pterodactyl Server</h1>
+    <form id="serverForm" class="space-y-6">
+<input type="hidden" name="fingerprint" id="fingerprintField">
+    
+    <!-- Progress Step Indicator -->
+<div id="progressSteps" class="flex justify-between mb-8">
+  <div class="flex-1 flex flex-col items-center">
+    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white font-bold">1</div>
+    <span class="text-xs mt-2">Panel</span>
+  </div>
+  <div class="flex-1 flex items-center">
+    <div class="h-1 w-full bg-gray-300"></div>
+  </div>
+  <div class="flex-1 flex flex-col items-center">
+    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-300 text-gray-600 font-bold">2</div>
+    <span class="text-xs mt-2">Name</span>
+  </div>
+  <div class="flex-1 flex items-center">
+    <div class="h-1 w-full bg-gray-300"></div>
+  </div>
+  <div class="flex-1 flex flex-col items-center">
+    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-300 text-gray-600 font-bold">3</div>
+    <span class="text-xs mt-2">Egg</span>
+  </div>
+  <div class="flex-1 flex items-center">
+    <div class="h-1 w-full bg-gray-300"></div>
+  </div>
+  <div class="flex-1 flex flex-col items-center">
+    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-300 text-gray-600 font-bold">4</div>
+    <span class="text-xs mt-2">Node</span>
+  </div>
+  <div class="flex-1 flex items-center">
+    <div class="h-1 w-full bg-gray-300"></div>
+  </div>
+  <div class="flex-1 flex flex-col items-center">
+    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-300 text-gray-600 font-bold">5</div>
+    <span class="text-xs mt-2">Review</span>
+  </div>
+  <div class="flex-1 flex items-center">
+    <div class="h-1 w-full bg-gray-300"></div>
+  </div>
+  <div class="flex-1 flex flex-col items-center">
+    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-300 text-gray-600 font-bold">6</div>
+    <span class="text-xs mt-2">Create</span>
+  </div>
+</div>
+
+<!-- STEP 1 -->
+<div class="step">
+  <label for="panelSelect" class="block text-sm font-medium text-gray-700">1. Select Panel</label>
+  <select name="panel_id" id="panelSelect" onchange="updateServerId(this.value)" required
+    class="mt-1 w-full px-4 py-3 border rounded-lg">
+  </select>
+  
+  <p id="error-step-0" 
+     class="flex items-center gap-2 text-red-500 text-sm mt-1 hidden opacity-0 transition duration-300">
+     <i class="fa fa-exclamation-circle"></i> Please select a panel first.
+  </p>
+  
+  <button type="button" onclick="validateStep(0)" 
+    class="mt-4 flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+    Next <i class="fa fa-arrow-right"></i>
+  </button>
+</div>
+
+<!-- STEP 2 -->
+<div class="step hidden">
+<div>
+          <label for="server_name" class="block text-sm font-medium text-gray-700">2. Server Name & Email</label>
+        <input type="email" id="email" value="{{ user.email }}" readonly
+  class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 focus:ring-2 focus:ring-blue-400 outline-none" />
+      </div>
+  <input type="text" name="server_name" id="server_name" required 
+    class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
+  <p id="error-step-1" 
+     class="flex items-center gap-2 text-red-500 text-sm mt-1 hidden opacity-0 transition duration-300">
+     <i class="fa fa-exclamation-circle"></i> Server name is required.
+  </p>
+  <div class="mt-4 flex justify-between">
+    <button type="button" onclick="prevStep()" 
+      class="flex items-center gap-2 bg-gray-400 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      <i class="fa fa-arrow-left"></i> Back
+    </button>
+    <button type="button" onclick="validateStep(1)" 
+      class="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      Next <i class="fa fa-arrow-right"></i>
+    </button>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step hidden">
+  <label for="egg" class="block text-sm font-medium text-gray-700">3. Select Egg</label>
+  <select name="egg" id="egg" required class="mt-1 w-full px-4 py-3 border rounded-lg"></select>
+  <p id="error-step-2" 
+     class="flex items-center gap-2 text-red-500 text-sm mt-1 hidden opacity-0 transition duration-300">
+     <i class="fa fa-exclamation-circle"></i> Please choose eggs first.
+  </p>
+  <div class="mt-4 flex justify-between">
+    <button type="button" onclick="prevStep()" 
+      class="flex items-center gap-2 bg-gray-400 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      <i class="fa fa-arrow-left"></i> Back
+    </button>
+    <button type="button" onclick="validateStep(2)" 
+      class="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      Next <i class="fa fa-arrow-right"></i>
+    </button>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step hidden">
+  <label for="node" class="block text-sm font-medium text-gray-700">4. Select Node</label>
+  <select name="node" id="node" required class="mt-1 w-full px-4 py-3 border rounded-lg"></select>
+  <p id="error-step-3" 
+     class="flex items-center gap-2 text-red-500 text-sm mt-1 hidden opacity-0 transition duration-300">
+     <i class="fa fa-exclamation-circle"></i> Please select a node first.
+  </p>
+  <div class="mt-4 flex justify-between">
+    <button type="button" onclick="prevStep()" 
+      class="flex items-center gap-2 bg-gray-400 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      <i class="fa fa-arrow-left"></i> Back
+    </button>
+    <button type="button" onclick="validateStep(3)" 
+      class="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      Next <i class="fa fa-arrow-right"></i>
+    </button>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step hidden">
+  <label for="review" class="block text-sm font-medium text-gray-700">5. Data Review</label>
+
+  <div class="bg-white rounded-xl shadow-md p-5 space-y-3 border border-gray-200">
+  <div class="flex justify-between text-gray-700">
+    <span class="font-medium">Panel:</span>
+    <span id="reviewPanel"></span>
+  </div>
+  <div class="flex justify-between text-gray-700">
+    <span class="font-medium">Name:</span>
+    <span id="reviewName"></span>
+  </div>
+  <div class="flex justify-between text-gray-700">
+    <span class="font-medium">Egg:</span>
+    <span id="reviewEgg"></span>
+  </div>
+  <div class="flex justify-between text-gray-700">
+    <span class="font-medium">Node:</span>
+    <span id="reviewNode"></span>
+  </div>
+</div>
+
+  <div class="mt-6 flex justify-between">
+    <button type="button" onclick="prevStep()" 
+      class="flex items-center gap-2 bg-gray-400 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      <i class="fa fa-arrow-left"></i> Back
+    </button>
+    <button type="button" onclick="nextStep()" 
+      class="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      Next <i class="fa fa-arrow-right"></i>
+    </button>
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="step hidden">
+  <!-- Bungkus hCaptcha dengan flex -->
+  <div class="flex justify-center mb-4">
+    <div class="h-captcha transform scale-90" data-sitekey="ebe8e3f6-3040-4338-8e4e-6e38bd5c2464"></div>
+  </div>
+
+  <button type="button" id="createBtn"
+    class="w-full flex items-center justify-center gap-2 bg-yellow-500 text-white py-3 rounded-full shadow hover:shadow-lg hover:scale-105 transition duration-200">
+    <i class="fa fa-play"></i> Watch Ad & Create Server
+  </button>
+
+  <div class="mt-4 flex justify-between">
+    <button type="button" onclick="prevStep()" 
+      class="flex items-center gap-2 bg-gray-400 text-white px-5 py-2 rounded-xl shadow hover:shadow-lg hover:scale-105 transition duration-200">
+      <i class="fa fa-arrow-left"></i> Back
+    </button>
+  </div>
+</div>
+
+<!-- INFO SECTION -->
+<section class="max-w-screen-sm mx-auto mt-6 px-4">
+  <div class="bg-gray-100/80 rounded-lg p-3 space-y-2 shadow-sm border-l-4 border-blue-500 text-sm">
+    <div class="flex items-start gap-2">
+      <i class="fa-solid fa-shield-halved text-greey-600 text-base mt-0.5"></i>
+      <p><span class="font-semibold">Your data is safe.</span> Your personal information is protected and not shared without permission.</p>
+    </div>
+    <div class="flex items-start gap-2">
+      <i class="fa-solid fa-lock text-greey-600 text-base mt-0.5"></i>
+      <p><span class="font-semibold">Files are always kept safe.</span> Our system ensures your files will not be stolen.</p>
+    </div>
+    <div class="flex items-start gap-2">
+      <i class="fa-solid fa-database text-greey-600 text-base mt-0.5"></i>
+      <p><span class="font-semibold">Perform regular backups.</span> Always make a copy of important files for your data security.</p>
+    </div>
+    <div class="flex items-start gap-2">
+      <i class="fa-solid fa-user-shield text-greey-600 text-base mt-0.5"></i>
+      <p><span class="font-semibold">Keep information confidential.</span> Do not share your sensitive data except with authorized admins.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50 hidden">
+  <div class="flex flex-col items-center gap-2">
+    <svg class="animate-spin h-10 w-10 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+    </svg>
+    <p class="text-sm text-gray-600 mt-2">Creating server, please wait...</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+      <p>
+        <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+    </div>
+  </footer>
+
+<!-- SCRIPT -->
+<script>
+let currentStep = 0;
+const steps = document.querySelectorAll(".step");
+
+function showStep(n) {
+  steps.forEach((step, i) => {
+    if (i === n) {
+      step.classList.remove("hidden");
+    } else {
+      step.classList.add("hidden");
+    }
+  });
+
+  // Update progress step indicator dengan animasi
+  const indicators = document.querySelectorAll("#progressSteps div.w-8");
+  indicators.forEach((el, i) => {
+    el.classList.remove("transition-all", "duration-500");
+    void el.offsetWidth; // force reflow untuk restart animasi
+    el.classList.add("transition-all", "duration-500");
+
+    if (i === n) {
+      el.classList.remove("bg-gray-300", "text-gray-600");
+      el.classList.add("bg-blue-500", "text-white");
+    } else if (i < n) {
+      el.classList.remove("bg-gray-300", "text-gray-600");
+      el.classList.add("bg-green-500", "text-white");
+    } else {
+      el.classList.remove("bg-blue-500", "bg-green-500", "text-white");
+      el.classList.add("bg-gray-300", "text-gray-600");
+    }
+  });
+
+  // Update review
+  if (n === 4) {
+    document.getElementById("reviewPanel").innerText = getSelectedPanelId();
+    document.getElementById("reviewName").innerText = document.getElementById("server_name").value;
+    document.getElementById("reviewEgg").innerText = document.getElementById("egg").tomselect.getValue() 
+      ? document.getElementById("egg").tomselect.getItem(document.getElementById("egg").tomselect.getValue()).innerText 
+      : "";
+    document.getElementById("reviewNode").innerText = document.getElementById("node").tomselect.getValue() 
+      ? document.getElementById("node").tomselect.getItem(document.getElementById("node").tomselect.getValue()).innerText 
+      : "";
+  }
+  if (n === 5) {
+  onStep6Open();
+}
+}
+
+function nextStep(){ if(currentStep<steps.length-1){ currentStep++; showStep(currentStep);} }
+function prevStep(){ if(currentStep>0){ currentStep--; showStep(currentStep);} }
+document.addEventListener("DOMContentLoaded",()=>{
+  showStep(currentStep);
+
+  new TomSelect("#panelSelect",{
+    create:false,
+    sortField:{field:"text",direction:"asc"}
+  });
+
+  new TomSelect("#egg",{
+    create:false,
+    sortField:{field:"text",direction:"asc"},
+    render:{
+      option:(data,escape)=>`<div class="flex items-center">${data.icon || ''}<span class="ml-1">${escape(data.text)}</span></div>`,
+      item:(data,escape)=>`<div class="flex items-center">${data.icon || ''}<span class="ml-1">${escape(data.text)}</span></div>`
+    }
+  });
+
+  new TomSelect("#node",{
+    create:false,
+    sortField:{field:"text",direction:"asc"}
+  });
+});
+
+function updateReviewRealTime() {
+  const panelTS = document.getElementById("panelSelect").tomselect;
+  const eggTS = document.getElementById("egg").tomselect;
+  const nodeTS = document.getElementById("node").tomselect;
+  
+  document.getElementById("reviewPanel").innerText = panelTS.getValue() ? panelTS.getItem(panelTS.getValue())[0].innerText : "";
+  document.getElementById("reviewEgg").innerText = eggTS.getValue() 
+  ? eggTS.getItem(eggTS.getValue()).innerText 
+  : "";
+
+document.getElementById("reviewNode").innerText = nodeTS.getValue() 
+  ? nodeTS.getItem(nodeTS.getValue()).innerText 
+  : "";
+  document.getElementById("reviewName").innerText = document.getElementById("server_name").value;
+}
+
+// Event listener untuk update otomatis
+document.addEventListener("DOMContentLoaded", () => {
+  const panelTS = document.getElementById("panelSelect").tomselect;
+  const eggTS = document.getElementById("egg").tomselect;
+  const nodeTS = document.getElementById("node").tomselect;
+  
+  panelTS.on("change", updateReviewRealTime);
+  eggTS.on("change", updateReviewRealTime);
+  nodeTS.on("change", updateReviewRealTime);
+  document.getElementById("server_name").addEventListener("input", updateReviewRealTime);
+});
+
+function getSelectedPanelId() {
+  return document.getElementById("panelSelect").value;
+}
+
+function updateServerId(panelId) {
+  if (!panelId) return;
+
+  // ambil elemen tomselect
+  const eggEl = document.getElementById("egg");
+  const nodeEl = document.getElementById("node");
+
+  // kosongkan value + options agar pilihan lama hilang dan user harus pilih lagi
+  if (eggEl && eggEl.tomselect) {
+    try {
+      const eggTS = eggEl.tomselect;
+      eggTS.clear();         // hapus nilai terpilih
+      eggTS.clearOptions();  // hapus opsi lama
+      eggTS.refreshOptions(false);
+    } catch (err) {
+      console.warn("Gagal mengosongkan egg tomselect:", err);
+    }
+  }
+
+  if (nodeEl && nodeEl.tomselect) {
+    try {
+      const nodeTS = nodeEl.tomselect;
+      nodeTS.clear();
+      nodeTS.clearOptions();
+      nodeTS.refreshOptions(false);
+    } catch (err) {
+      console.warn("Gagal mengosongkan node tomselect:", err);
+    }
+  }
+
+  // kosongkan teks di review supaya langsung terlihat kosong
+  const revEgg = document.getElementById("reviewEgg");
+  const revNode = document.getElementById("reviewNode");
+  if (revEgg) revEgg.innerText = "";
+  if (revNode) revNode.innerText = "";
+
+  // lalu kirim request ke server seperti biasa
+  fetch("/panel/set-serverid?email={{ user.email }}", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: "panel_id=" + encodeURIComponent(panelId),
+    credentials: "include"
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      fetchEggs();
+      fetchServerCounts();
+    } else {
+      console.error("Gagal set serverid:", data.message);
+    }
+  })
+  .catch(err => console.error("Error update serverid:", err));
+}
+
+async function fetchServerCounts(){
+  const panelId=getSelectedPanelId();
+  if(!panelId)return;
+  const res=await fetch(`/get-node-server-counts?panel_id=${panelId}`);
+  const serverCounts=await res.json();
+
+  const tom = document.getElementById("node").tomselect;
+  tom.clearOptions();
+  tom.addOption({value:"",text:"Select Node",disabled:true});
+
+  Object.entries(serverCounts.nodes).forEach(([nodeId,info])=>{
+    tom.addOption({
+      value: nodeId,
+      text: `${info.name} (${info.count}/${info.limit}) ${info.count>=info.limit?"Full":"Available"}`,
+      disabled: info.count>=info.limit
+    });
+  });
+  tom.refreshOptions(false);
+
+  // Tambahkan update review otomatis
+  if(typeof updateReviewRealTime === "function") updateReviewRealTime();
+}
+
+async function fetchEggs(){
+  const panelId = getSelectedPanelId();
+  if(!panelId) return;
+
+  const res = await fetch(`/get-eggs?panel_id=${panelId}`);
+  const data = await res.json();
+
+  const tom = document.getElementById("egg").tomselect;
+  tom.clearOptions();
+  tom.addOption({value:"",text:"Select Egg",disabled:true});
+
+  if(data.eggs && Array.isArray(data.eggs)){
+    data.eggs.forEach(egg=>{
+      let icon = "";
+
+      switch (egg.nest.toLowerCase()) {
+        case "nodejs":
+          icon = '<i class="fa-brands fa-node-js text-green-600 mr-2"></i>';
+          break;
+        case "python":
+          icon = '<i class="fa-brands fa-python text-blue-500 mr-2"></i>';
+          break;
+        case "minecraft":
+          icon = '<i class="fa-solid fa-cube text-yellow-600 mr-2"></i>';
+          break;
+        default:
+          icon = '<i class="fa-solid fa-server text-gray-500 mr-2"></i>';
+      }
+
+      tom.addOption({
+        value: egg.id,
+        text: `${egg.nest} - ${egg.name}`,
+        icon: icon
+      });
+    });
+  } else {
+    tom.addOption({value:"",text:"No eggs available",disabled:true});
+  }
+  tom.refreshOptions(false);
+
+  // Tambahkan update review otomatis
+  if(typeof updateReviewRealTime === "function") updateReviewRealTime();
+}
+
+document.getElementById("serverForm").addEventListener("submit",function(e){
+  const captcha=document.querySelector('[name="h-captcha-response"]');
+  if(!captcha || !captcha.value){ e.preventDefault(); alert("Please complete captcha"); return; }
+  if(!sudahNonton){ e.preventDefault(); alert("Please watch the ad"); return; }
+  document.getElementById("loadingOverlay").classList.remove("hidden");
+});
+</script>
+<script>
+function showError(stepIndex) {
+  const el = document.getElementById(`error-step-${stepIndex}`);
+  el.classList.remove("hidden");
+  requestAnimationFrame(() => {
+    el.classList.remove("opacity-0");
+    el.classList.add("opacity-100");
+  });
+}
+
+function hideError(stepIndex) {
+  const el = document.getElementById(`error-step-${stepIndex}`);
+  el.classList.remove("opacity-100");
+  el.classList.add("opacity-0");
+  setTimeout(() => el.classList.add("hidden"), 300); // sesuai duration-300
+}
+
+function validateStep(stepIndex) {
+  let valid = true;
+
+  if (stepIndex === 0) {
+    valid = !!document.getElementById("panelSelect").value;
+  } else if (stepIndex === 1) {
+    valid = !!document.getElementById("server_name").value.trim();
+  } else if (stepIndex === 2) {
+    valid = !!document.getElementById("egg").value;
+  } else if (stepIndex === 3) {
+    valid = !!document.getElementById("node").value;
+  }
+
+  if (valid) {
+    hideError(stepIndex);
+    nextStep();
+  } else {
+    showError(stepIndex);
+  }
+}
+</script>
+<script>
+const API_BASE = "https://control.kocheng.biz.id";
+const qs = new URLSearchParams(location.search);
+const EMAIL = qs.get("email") || "";
+const USERNAME = EMAIL.split("@")[0];
+document.getElementById("email").value = EMAIL;
+
+// Bungkus show_8987728 jadi Promise
+function playRewardedAd() {
+  return new Promise((resolve, reject) => {
+    try {
+      if (typeof show_8987728 === "function") {
+        show_8987728(); // panggil Monetag SDK
+        console.log("🎬 Iklan dimulai...");
+
+        // fallback auto-resolve setelah 8 detik
+        setTimeout(() => {
+          console.log("⏱️ Timeout selesai → lanjut create server");
+          resolve();
+        }, 5000);
+      } else {
+        reject(new Error("show_8987728 tidak tersedia"));
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+// Flow utama
+async function watchAdAndCreate() {
+  const btn = document.getElementById("createBtn");
+  btn.disabled = true;
+  btn.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Showing Ad…";
+
+  try {
+    await playRewardedAd();
+    await createServer();
+  } catch (err) {
+    alert("❌ Gagal menayangkan iklan: " + err.message);
+    btn.disabled = false;
+    btn.innerHTML = "<i class='fa fa-play'></i> Watch Ad & Create Server";
+  }
+}
+
+// Request ke API backend
+async function createServer() {
+  const payload = {
+  email: EMAIL,
+  server_name: document.getElementById("server_name").value.trim(),
+  egg_id: document.getElementById("egg").value,
+  node_id: document.getElementById("node").value
+};
+
+  if (!payload.server_name || !payload.egg_id || !payload.node_id) {
+    alert("⚠️ Lengkapi form dulu.");
+    resetBtn();
+    return;
+  }
+
+  const btn = document.getElementById("createBtn");
+  btn.innerHTML = "<i class='fa fa-spinner fa-spin'></i> Creating server…";
+
+  try {
+    const res = await fetch(`${API_BASE}/api/create_server`, {
+      method: "POST",
+      headers: { "Content-Type":"application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      const text = await res.text();
+      alert("❌ Response bukan JSON:\n" + text.slice(0,200));
+      resetBtn();
+      return;
+    }
+
+    if (res.ok && data.status === "success") {
+      btn.innerHTML = "<i class='fa fa-check'></i> Server Created!";
+      alert("✅ Server created successfully!");
+      location.href = `${API_BASE}/miniapp/paneldetail?email=${encodeURIComponent(EMAIL)}`;
+    } else {
+      alert("⚠️ Hampir selesai: " + (data.error || JSON.stringify(data)));
+      resetBtn();
+    }
+  } catch (e) {
+    alert("❌ Error: " + e.message);
+    resetBtn();
+  }
+}
+
+function resetBtn() {
+  const btn = document.getElementById("createBtn");
+  btn.disabled = false;
+  btn.innerHTML = "<i class='fa fa-play'></i> Watch Ad & Create Server";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetchEggs();
+  fetchServerCounts();
+  document.getElementById("createBtn").onclick = watchAdAndCreate;
+});
+</script>
+<script>
+function onStep6Open() {
+  const email = "{{ user.email }}";
+
+  fetch("/panel/create-user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email }) // kirim email ke server
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        console.log("✅ Pterodactyl user created", data.id);
+      } else {
+        console.log("❌ Gagal membuat user Pterodactyl!", data.msg);
+      }
+    })
+    .catch(err => console.error("Error create user:", err));
+}
+</script>
+<script>
+async function fetchPanelsStatus(){
+  try {
+    const res = await fetch("/get-all-panels-status");
+    const panelsStatus = await res.json();
+
+    const select = document.getElementById("panelSelect");
+
+    // kalau pakai TomSelect, harus akses instance
+    const ts = select.tomselect;
+
+    ts.clearOptions(); // hapus semua opsi lama
+
+    // Tambahkan default option
+    ts.addOption({ value: "", text: "Select Panel", disabled: true });
+    ts.setValue(""); // reset ke default
+
+    // Tambah option dari API
+    Object.entries(panelsStatus).forEach(([panelId, info]) => {
+      ts.addOption({
+        value: panelId,
+        text: info.all_full ? `${panelId} (Full)` : panelId,
+        disabled: info.all_full
+      });
+    });
+
+    ts.refreshOptions(false); // refresh tampilan
+
+  } catch (err) {
+    console.error("Gagal ambil status panels:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", fetchPanelsStatus);
+</script>
+</body>
+</html>

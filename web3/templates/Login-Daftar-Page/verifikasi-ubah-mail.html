@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Skyforgia">
+<meta property="og:description" content="Free bot discord & whatsapp hosting.">
+<meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://control.skyforgia.biz.id">
+<meta property="og:type" content="website">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skyforgia">
+<meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+<meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "url": "https://control.skyforgia.biz.id",
+  "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+  "name": "Skyforgia"
+}
+</script>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Skyforgia |> Email Verification</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+  body {
+    background-color: #f8f9fb;
+    font-family: 'Inter', sans-serif;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .digit-input:focus {
+    animation: scaleInput 0.2s ease-in-out;
+  }
+
+  @keyframes scaleInput {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+  }
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+  <!-- MAIN -->
+  <main class="flex-grow flex items-center justify-center px-4 py-10 fade-in">
+  <div class="bg-white rounded-2xl shadow-xl border w-full max-w-4xl grid md:grid-cols-2 overflow-hidden">
+
+    <!-- LEFT: Branding / Illustration -->
+    <div class="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-8 flex flex-col justify-center space-y-4">
+      <div class="text-center space-y-2">
+        <h2 class="text-3xl font-bold">Verify New Email</h2>
+        <p class="text-blue-100 text-sm leading-relaxed">
+          Enter the verification code we sent to your new email.
+        </p>
+      </div>
+
+      <div class="flex justify-center">
+        <i class="fa-solid fa-shield-halved text-7xl opacity-90 drop-shadow-md"></i>
+      </div>
+
+      <p class="text-xs text-blue-100 text-center">For your security</p>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="p-8 space-y-4">
+
+      <h3 class="text-xl font-bold text-center text-gray-800 mb-2">Email Verification</h3>
+      <p class="text-gray-600 text-sm text-center">Enter the 6 digit code sent to your email.</p>
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="p-3 bg-red-100 text-red-700 rounded text-center text-sm">
+        {% for message in messages %}{{ message }}{% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <form id="formKode" method="POST" action="/profile/verification/new-email" class="space-y-6">
+
+        <!-- OTP Inputs -->
+        <div class="flex justify-center gap-2">
+          {% for i in range(6) %}
+          <input type="text"
+            maxlength="1"
+            pattern="\d*"
+            required
+            name="digit{{ i }}"
+            class="digit-input w-12 h-14 text-center border rounded-xl bg-gray-50 text-lg font-semibold text-gray-800 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition">
+          {% endfor %}
+        </div>
+
+        <input type="hidden" name="kode" id="kodeLengkap">
+
+        <!-- Submit Button -->
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm shadow transition">
+          Verify Email
+        </button>
+      </form>
+
+      <!-- Resend Code -->
+      <form id="resendForm" method="POST" action="/profile/verification/new-code" class="text-center">
+        <button id="resendButton" type="submit" class="text-sm text-blue-600 font-semibold hover:underline">
+          Resend Code
+        </button>
+      </form>
+
+    </div>
+
+  </div>
+</main>
+
+  <!-- JS FUNCTIONAL -->
+  <script>
+    function setupInputs() {
+      const inputs = document.querySelectorAll('.digit-input');
+      inputs.forEach((input, i) => {
+        input.addEventListener('input', () => {
+          input.classList.add('scale-110');
+          setTimeout(() => input.classList.remove('scale-110'), 150);
+          if (input.value.length === 1 && i < inputs.length - 1) {
+            inputs[i + 1].focus();
+          }
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !input.value && i > 0) {
+            inputs[i - 1].focus();
+          }
+        });
+      });
+
+      document.getElementById('formKode').addEventListener('submit', () => {
+        const kode = Array.from(inputs).map(input => input.value).join('');
+        document.getElementById('kodeLengkap').value = kode;
+      });
+    }
+
+    function setupCooldown() {
+      const resendButton = document.getElementById('resendButton');
+      let cooldown = 60;
+
+      const savedTime = localStorage.getItem("resendCooldownEnd");
+      if (savedTime) {
+        const remaining = Math.floor((new Date(savedTime) - new Date()) / 1000);
+        if (remaining > 0) startCooldown(remaining);
+      }
+
+      function startCooldown(duration) {
+        resendButton.disabled = true;
+        let timeLeft = duration;
+        resendButton.innerText = `Resend in ${timeLeft}s`;
+        const interval = setInterval(() => {
+          timeLeft--;
+          resendButton.innerText = `Resend in ${timeLeft}s`;
+          if (timeLeft <= 0) {
+            clearInterval(interval);
+            resendButton.disabled = false;
+            resendButton.innerText = 'Resend Code';
+            localStorage.removeItem("resendCooldownEnd");
+          }
+        }, 1000);
+      }
+
+      document.getElementById('resendForm').addEventListener('submit', (e) => {
+        const cooldownEnd = new Date(new Date().getTime() + cooldown * 1000);
+        localStorage.setItem("resendCooldownEnd", cooldownEnd);
+        startCooldown(cooldown);
+      });
+    }
+
+    window.onload = function () {
+      setupInputs();
+      setupCooldown();
+    };
+  </script>
+
+</body>
+</html>

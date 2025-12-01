@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Sahabat Ai Nusantara |> Sign up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="Logo" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+<!-- MAIN CONTENT -->
+<main class="flex-grow flex items-center justify-center px-4">
+  <div class="bg-white shadow-xl rounded-2xl p-6 sm:p-8 w-full max-w-md fade-in">
+    <h2 class="text-2xl font-bold text-center mb-6">Sign Up</h2>
+
+    {% if message %}
+      <div class="mb-4 p-3 bg-red-100 text-red-700 rounded text-center">{{ message }}</div>
+    {% endif %}
+
+    <form action="/signup/email" method="POST" class="space-y-4 text-left" id="form-daftar">
+      <div>
+        <label for="nama" class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" id="nama" name="nama" required placeholder="Enter your username"
+          class="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300" />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email"
+          class="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300" />
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" name="password" required placeholder="Enter your password"
+          class="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-300" />
+      </div>
+
+      <div>
+        <label for="referral_code" class="block text-sm font-medium">Referral Code (opsional)</label>
+        <input type="text" id="referral_code" name="referral_code" value="{{ referral_code or '' }}"
+          class="w-full px-4 py-2 border rounded-lg" />
+        <p id="referral_error" class="text-sm text-red-500 mt-1"></p>
+        <input type="hidden" name="device_id" id="device_id" />
+      </div>
+
+      <button id="submit-btn" type="submit"
+        class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 rounded-full font-semibold transition">
+        Sign up
+      </button>
+    </form>
+
+    <p class="mt-6 text-sm text-center text-gray-600">
+      Already have an account?
+      <a href="/signin/email" class="text-blue-600 hover:underline font-medium">Sign in</a>
+    </p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+      <p>
+        <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+    </div>
+  </footer>
+
+<!-- SCRIPT -->
+<script>
+  // Ambil elemen penting
+  const referralInput = document.getElementById("referral_code");
+  const errorDiv = document.getElementById("referral_error");
+  const submitBtn = document.getElementById("submit-btn");
+  const deviceInput = document.getElementById("device_id");
+  const form = document.getElementById("form-daftar");
+  let referralValid = true;
+
+  // ✅ Generate device ID
+  function getDeviceId() {
+    let id = localStorage.getItem("device_id");
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem("device_id", id);
+    }
+    return id;
+  }
+
+  // Set device_id input
+  deviceInput.value = getDeviceId();
+
+  // ✅ Fungsi AJAX ke /validate/referral
+  async function validateReferral() {
+    const code = referralInput.value.trim();
+    const device_id = deviceInput.value;
+
+    if (code === "") {
+      // Kosong = dianggap valid (karena opsional)
+      errorDiv.textContent = "";
+      referralInput.classList.remove("border-red-500");
+      submitBtn.disabled = false;
+      submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+      referralValid = true;
+      return;
+    }
+
+    try {
+      const res = await fetch(`/validate/referral?code=${encodeURIComponent(code)}&device_id=${device_id}`);
+      const data = await res.json();
+
+      if (!data.valid) {
+        errorDiv.textContent = data.message;
+        referralInput.classList.add("border-red-500");
+        submitBtn.disabled = true;
+        submitBtn.classList.add("opacity-50", "cursor-not-allowed");
+        referralValid = false;
+      } else {
+        errorDiv.textContent = "";
+        referralInput.classList.remove("border-red-500");
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        referralValid = true;
+      }
+    } catch (err) {
+      console.error("Gagal memvalidasi referral:", err);
+      referralValid = false;
+    }
+  }
+
+  // ✅ Validasi saat mengetik
+  referralInput.addEventListener("input", validateReferral);
+
+  // ✅ Auto isi dari URL ?referral=
+  window.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const referralFromUrl = urlParams.get("referral");
+
+    if (referralFromUrl && referralInput && !referralInput.value) {
+      referralInput.value = referralFromUrl.toUpperCase();
+      setTimeout(() => validateReferral(), 200); // beri waktu render
+    }
+  });
+
+  // ✅ Validasi saat submit
+  form.addEventListener("submit", async (e) => {
+    await validateReferral();
+
+    if (!referralValid) {
+      e.preventDefault();
+    }
+  });
+</script>
+
+</body>
+</html>

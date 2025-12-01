@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sahabat Ai Nusantara |> Daily Mission</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="Logo" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-grow flex items-start justify-center px-4 py-8 animate-fadeInUp">
+    <div class="bg-white shadow-xl rounded-2xl w-full max-w-xl p-6 sm:p-8 space-y-6 relative">
+
+      <!-- Judul -->
+      <div class="text-center">
+        <h2 class="text-2xl font-bold text-blue-600"><i class="fa-solid fa-list-check mr-1"></i> Daily Mission</h2>
+        <p class="text-gray-600 text-sm mt-1">Complete missions and collect coins every day</p>
+      </div>
+
+      <!-- Daily Claim -->
+      <div>
+        <h3 class="text-blue-700 font-semibold mb-2"><i class="fa-solid fa-calendar-check mr-1"></i> Daily Claim (30 Days)</h3>
+        <div class="flex flex-wrap justify-center gap-2">
+          {% for i in range(1, 31) %}
+          <div class="w-8 h-8 rounded-full text-xs flex items-center justify-center
+            {% if i <= user.daily_claim_day %}
+              bg-blue-500 text-white
+            {% else %}
+              bg-gray-200 text-gray-500
+            {% endif %}">
+            {{ i }}
+          </div>
+          {% endfor %}
+        </div>
+        <div class="mt-4 text-center">
+          {% if user.daily_claim_last == now.date() %}
+          <button class="px-5 py-2.5 bg-gray-300 text-white text-sm font-semibold rounded-full cursor-not-allowed" disabled>
+            <i class="fa-solid fa-circle-check mr-1"></i> Claimed Today
+          </button>
+          {% else %}
+          <button id="klaimButton" onclick="klaimHarian()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-full">
+            <i class="fa-solid fa-circle-check mr-1"></i> Claim Day to-{{ user.daily_claim_day + 1 }}
+          </button>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Misi -->
+      <div class="space-y-4 mt-6">
+
+        <!-- Undang Teman -->
+        <div class="flex justify-between items-center border p-4 rounded-xl bg-gray-50">
+          <div>
+            <h4 class="font-semibold text-gray-700">
+              <i class="fa-solid fa-user-group mr-2 text-gray-500"></i>Invite Friends
+            </h4>
+            <p class="text-xs text-gray-500">Navigate to the referral page</p>
+          </div>
+          <a href="/getcoin/referral" class="text-sm font-semibold bg-gradient-to-r from-red-500 to-orange-400 hover:brightness-110 text-white px-4 py-2 rounded-full min-w-[110px] text-center">
+            +100
+          </a>
+        </div>
+
+        <!-- AFK Tingkatan -->
+        <div class="space-y-2" id="afk-section">
+          {% set afk_rewards = [
+            {'jumlah': 50, 'bonus': 20, 'claimed': user.afk_bonus_50},
+            {'jumlah': 100, 'bonus': 50, 'claimed': user.afk_bonus_100},
+            {'jumlah': 200, 'bonus': 70, 'claimed': user.afk_bonus_200}
+          ] %}
+          {% for afk in afk_rewards %}
+          <div class="flex justify-between items-center border p-4 rounded-xl bg-gray-50">
+            <div>
+              <h4 class="font-semibold text-gray-700">
+                <i class="fa-solid fa-clock mr-2 text-gray-500"></i>AFK {{ afk.jumlah }} Coin
+              </h4>
+              <p class="text-xs text-gray-500">Bonus +{{ afk.bonus }} coin (1x/month)</p>
+            </div>
+            {% if afk.claimed %}
+            <button class="text-sm font-semibold bg-gray-300 text-white px-4 py-2 rounded-full min-w-[110px] cursor-not-allowed" disabled>
+              Finished
+            </button>
+            {% else %}
+            <a href="/getcoin/afk" class="text-sm font-semibold bg-gradient-to-r from-red-500 to-orange-400 hover:brightness-110 text-white px-4 py-2 rounded-full min-w-[110px] text-center">
+              +{{ afk.bonus }}
+            </a>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Buat Server -->
+        <div class="flex justify-between items-center border p-4 rounded-xl bg-gray-50">
+          <div>
+            <h4 class="font-semibold text-gray-700">
+              <i class="fa-solid fa-server mr-2 text-gray-500"></i>Create Server
+            </h4>
+            <p class="text-xs text-gray-500">Can only be done once in a lifetime</p>
+          </div>
+          {% if user.server|int == 1 or user.created_server_before %}
+  <button class="text-sm font-semibold bg-gray-300 text-white px-4 py-2 rounded-full min-w-[110px] text-center cursor-not-allowed" disabled>
+    Finished
+  </button>
+{% else %}
+  <a href="#"
+     onclick="bukaIklan()"
+     class="text-sm font-semibold bg-gradient-to-r from-red-500 to-orange-400 hover:brightness-110 text-white px-4 py-2 rounded-full min-w-[110px] text-center">
+    +20
+  </a>
+{% endif %}
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+      <p>
+        <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+    </div>
+  </footer>
+
+  <!-- Popup Daily -->
+  <div id="popupClaimdaily" class="fixed top-5 right-5 bg-white border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-700 flex items-center space-x-3 opacity-0 -translate-y-2 transition-all duration-500 z-50">
+    <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+    <span id="popupText">Claim Successfully!</span>
+  </div>
+
+  <!-- Script Daily -->
+  <script>
+    function klaimHarian() {
+      fetch("/getcoin/daily", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const popup = document.getElementById("popupClaimdaily");
+          const text = document.getElementById("popupText");
+          text.innerText = `Successful claim +${data.reward} Coin`;
+
+          popup.classList.remove("opacity-0", "-translate-y-2");
+          popup.classList.add("opacity-100", "translate-y-0");
+
+          setTimeout(() => {
+            popup.classList.remove("opacity-100", "translate-y-0");
+            popup.classList.add("opacity-0", "-translate-y-2");
+          }, 3000);
+
+          const btn = document.getElementById("klaimButton");
+          btn.disabled = true;
+          btn.innerText = "Claimed Today";
+          btn.classList.remove("bg-blue-600", "hover:bg-blue-700");
+          btn.classList.add("bg-gray-300", "cursor-not-allowed");
+        } else {
+          alert(data.message);
+        }
+      });
+    }
+  </script>
+
+<script>
+function bukaIklan() {
+  window.open('https://ouo.io/jqy8uj', '_blank');
+}
+</script>
+</body>
+</html>

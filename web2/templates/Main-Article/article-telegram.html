@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <title>Deploying a Pterodactyl Server with Telegram Bot Integration | Kocheng Hosting</title>
+  <meta name="description" content="A complete guide to automating Pterodactyl server deployment through Telegram Bot integration. Boost efficiency with practical examples.">
+  <meta name="category" content="bots,hosting">
+  <meta name="date" content="2025-09-14">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .lead { color: #475569; }
+    .note { background: rgba(59, 130, 246, 0.06); border-left: 4px solid rgba(59,130,246,0.2); padding: .75rem 1rem; border-radius: .375rem; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/blog" class="transition-transform duration-200 hover:scale-105 flex items-center space-x-2">
+        <i class="fa-solid fa-arrow-left text-blue-600"></i>
+        <span class="text-sm text-gray-700">Back to Blog</span>
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+    <h1 class="text-3xl font-bold text-blue-900 mb-4">Create a Free Pterodactyl Server via Telegram Bot</h1>
+    <p class="text-gray-500 mb-6">Published on September 14, 2025 · 6 min read</p>
+
+    <p class="lead mb-4">This guide explains how to create a free Pterodactyl server on Kocheng Hosting using our Telegram bot. The Telegram flow is convenient for mobile users and automates much of the server creation. Follow the steps below carefully and ensure the email you supply matches your website account.</p>
+
+    <div class="note mb-6">
+      <strong>Note:</strong> This service is ad-supported. During the setup you will be asked to view short advertisements—this is required to complete free server creation. See our <a href="/ads.html" class="text-blue-600 hover:underline">Ads Disclosure</a> for more details.
+    </div>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 1 — Start the Telegram Bot</h2>
+<p class="mb-4">Open the Telegram bot linked from your dashboard and tap <strong>Start</strong> (or type <code>/start</code>) to begin.</p>
+<div class="border rounded-xl overflow-hidden shadow mb-6">
+  <img src="/static/images/createviatele/step1.png" alt="Starting the Telegram bot" class="w-full">
+</div>
+
+<h2 class="text-xl font-semibold mt-6 mb-2">Step 2 — Enter Your Registered Email</h2>
+<p class="mb-4">When prompted, enter the same email address you used to register at <code>control.kocheng.biz.id</code>. This connects the bot to your account.</p>
+<div class="border rounded-xl overflow-hidden shadow mb-6">
+  <img src="/static/images/createviatele/step2.png" alt="Entering email in Telegram bot" class="w-full">
+</div>
+
+<h2 class="text-xl font-semibold mt-6 mb-2">Step 3 — Confirm and Explore Menus</h2>
+<p class="mb-4">If the email is valid, you’ll see a confirmation message. Type <code>/help</code> to display all available menus and commands.</p>
+<div class="border rounded-xl overflow-hidden shadow mb-6">
+  <img src="/static/images/createviatele/step3.png" alt="Telegram bot confirmation and help menu" class="w-full">
+</div>
+
+<h2 class="text-xl font-semibold mt-6 mb-2">Step 4 — Select Create Server</h2>
+<p class="mb-4">From the menu, choose <strong>Create Server</strong> to begin the provisioning process.</p>
+<div class="border rounded-xl overflow-hidden shadow mb-6">
+  <img src="/static/images/createviatele/step4.png" alt="Create server option in Telegram bot" class="w-full">
+</div>
+
+<h2 class="text-xl font-semibold mt-6 mb-2">Step 5 — Open the Mini App</h2>
+<p class="mb-4">The bot will send a message with an <strong>Open Mini App</strong> button. Tap it to continue the setup in a new interface.</p>
+<div class="border rounded-xl overflow-hidden shadow mb-6">
+  <img src="/static/images/createviatele/step5.png" alt="Open mini app button in Telegram" class="w-full">
+</div>
+
+<h2 class="text-xl font-semibold mt-6 mb-2">Step 6 — Tap the Yellow Action Button</h2>
+<p class="mb-4">Inside the mini app, tap the yellow action button to proceed. This will redirect you through a short verification flow.</p>
+<div class="border rounded-xl overflow-hidden shadow mb-6">
+  <img src="/static/images/createviatele/step6.png" alt="Yellow action button in Telegram mini app" class="w-full">
+</div>
+
+<h2 class="text-xl font-semibold mt-6 mb-2">Step 7 — Return if Redirected</h2>
+<p class="mb-4">If you are redirected to another page, simply use your phone’s <strong>Back</strong> button to return to the mini app.</p>
+<div class="border rounded-xl overflow-hidden shadow mb-6">
+  <img src="/static/images/createviatele/step7.png" alt="Back navigation example" class="w-full">
+</div>
+
+<h2 class="text-xl font-semibold mt-6 mb-2">Step 8 — Complete the Server Form</h2>
+<p class="mb-4">You’ll be taken to a server creation form. Fill in the required details (server name, node, egg) and follow the on-screen instructions to finalize setup.</p>
+<div class="border rounded-xl overflow-hidden shadow mb-6">
+  <img src="/static/images/createviatele/step8.png" alt="Server creation form in mini app" class="w-full">
+</div>
+
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Troubleshooting & Tips</h2>
+    <ul class="list-disc ml-6 mb-4">
+      <li><strong>Ad not loading:</strong> Try switching networks (mobile data ↔ Wi-Fi) or wait a few seconds before using the back button.</li>
+      <li><strong>Wrong email used:</strong> If you entered a different email, open a support ticket via the dashboard or contact support.</li>
+      <li><strong>Mini-app issues:</strong> Update your Telegram app to the latest version, or reopen the mini-app from the bot.</li>
+      <li><strong>Server creation failed:</strong> Retry the create flow; if it still fails, contact support with the error details.</li>
+    </ul>
+
+    <p class="mt-6">If you have questions or need help, contact our support team via the dashboard or email: <a href="mailto:supporthosting@kocheng.tech" class="text-blue-600 hover:underline">supporthosting@kocheng.tech</a>.</p>
+
+    <p class="mt-8 font-semibold">Server creation via Telegram completed? Great — now deploy your bot files using the Pterodactyl panel or follow our step-by-step deployment guide linked above.</p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+      <p>
+        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("main").classList.add("visible");
+    });
+  </script>
+</body>
+</html>

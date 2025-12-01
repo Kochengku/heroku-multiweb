@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Skyforgia">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.skyforgia.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skyforgia">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.skyforgia.biz.id",
+    "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+    "name": "Skyforgia"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+
+<!-- Meta -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skyforgia |> Referral Rewards</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body { background:#f8f9fb; font-family:'Inter',sans-serif }
+  @keyframes fadeIn {0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:translateY(0)}}
+  .fade-in{animation:fadeIn .5s ease-out}
+  .gradient-btn{background:linear-gradient(to bottom,#1e40af,#0f2a72)}
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="flex-grow px-4 py-10 fade-in">
+  <div class="max-w-screen-xl mx-auto space-y-8">
+
+    <!-- HEADER HERO -->
+    <div class="bg-gradient-to-br from-blue-600 to-blue-800 text-white rounded-2xl shadow-xl p-8 text-center space-y-2">
+      <h2 class="text-3xl sm:text-4xl font-bold drop-shadow-md">Referral Rewards</h2>
+      <p class="text-blue-100 text-sm sm:text-base">Invite friends and earn Skyforgia Coins!</p>
+    </div>
+
+    <!-- REFERRAL INPUT -->
+    <div class="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 space-y-6">
+      <div class="text-center">
+        <h3 class="text-xl font-bold text-blue-700">Have a Referral Code?</h3>
+        <p class="text-gray-600 mt-1 text-sm">
+          Claim bonus
+          <span class="bg-yellow-400 text-white text-xs px-2 py-1 rounded-full font-semibold">+20 Coins</span>
+        </p>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+          <div class="w-full p-3 rounded-lg border text-sm text-center font-medium
+            {% if category=='success' %}bg-green-50 border-green-200 text-green-700
+            {% elif category=='error' %}bg-red-50 border-red-200 text-red-700
+            {% else %}bg-gray-50 border-gray-200 text-gray-600{% endif %}">
+            {{ message }}
+          </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% if not user.referred_by %}
+      <form method="POST" class="space-y-4">
+        <div>
+          <label class="text-sm font-semibold text-gray-700">Referral Code</label>
+          <input type="text" id="referral_code" name="referral_code"
+            class="mt-1 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+            placeholder="e.g. 8H2JS7KQ" required>
+        </div>
+
+        <input type="hidden" name="device_id" id="device_id">
+
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm shadow transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-gift"></i> Claim Coins
+        </button>
+      </form>
+      <p class="text-xs text-gray-500 text-center">* Code can only be used once</p>
+      {% endif %}
+    </div>
+
+    <!-- REFERRAL CODE -->
+    <div class="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 space-y-4">
+      <h3 class="text-lg font-bold text-gray-800">Your Referral Code</h3>
+      <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl border">
+        <span class="font-mono text-blue-700 text-lg">{{ user.referral_code }}</span>
+        <button onclick="copyCode()" class="text-blue-600 hover:text-blue-800 transition">
+          <i class="fa-regular fa-copy"></i>
+        </button>
+      </div>
+      <div class="text-center">
+        <a href="https://wa.me/?text=Join%20Skyforgia...&ref={{ user.referral_code }}"
+           class="text-green-600 hover:text-green-700 font-medium text-sm flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp"></i> Share on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- REFERRAL STATS -->
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="stats-card">
+        <div class="flex justify-between items-center">
+          <span class="text-gray-700 text-sm"><i class="fa-solid fa-user-plus text-blue-600"></i> Invited By</span>
+          <strong class="text-gray-900">{{ inviter.nama or "Unknown" }}</strong>
+        </div>
+      </div>
+
+      <div class="stats-card">
+        <div class="flex justify-between items-center">
+          <span class="text-gray-700 text-sm"><i class="fa-solid fa-users text-blue-600"></i> Friends Invited</span>
+          <strong class="text-gray-900">{{ total_referred }}</strong>
+        </div>
+      </div>
+
+      <div class="stats-card">
+        <div class="flex justify-between items-center">
+          <span class="text-gray-700 text-sm"><i class="fa-solid fa-coins text-yellow-500"></i> Coins Earned</span>
+          <strong class="text-gray-900">{{ total_referral_coin }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .stats-card {
+        @apply bg-white rounded-2xl shadow-md border border-blue-100 p-4;
+      }
+    </style>
+
+    <!-- ACTIVITY LOG -->
+    <div class="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 space-y-4">
+      <h3 class="font-bold text-gray-800 flex items-center gap-2">
+        <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> Activity Log
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm rounded-xl overflow-hidden">
+          <thead class="bg-blue-50 text-blue-700">
+            <tr><th class="p-2">User</th><th class="p-2">Activity</th><th class="p-2 text-center">Coin</th></tr>
+          </thead>
+          <tbody class="divide-y bg-white">
+            {% for log in activity_log %}
+            <tr>
+              <td class="p-2">{{ log.username }}</td>
+              <td class="p-2">{{ log.action }}</td>
+              <td class="p-2 text-center">{{ log.reward }}</td>
+            </tr>
+            {% endfor %}
+            {% if activity_log|length == 0 %}
+            <tr><td colspan="3" class="text-center p-3 text-gray-400">No activity yet</td></tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div class="bg-white rounded-2xl shadow-xl border p-6 sm:p-8 space-y-4">
+      <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+        <i class="fa-solid fa-ranking-star text-yellow-500"></i> Leaderboard
+      </h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm rounded-xl overflow-hidden">
+          <thead class="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+            <tr><th class="p-2">User</th><th class="p-2">Email</th><th class="p-2 text-center">Invites</th><th class="p-2 text-center">Coins</th></tr>
+          </thead>
+          <tbody class="divide-y bg-white">
+            {% for u in leaderboard %}
+            <tr class="{% if loop.index == 1 %}bg-yellow-50 font-semibold{% endif %}">
+              <td class="p-2">{{ u.nama }}</td>
+              <td class="p-2">{{ u.email[:3] }}***@***</td>
+              <td class="p-2 text-center">{{ u.total_undangan }}</td>
+              <td class="p-2 text-center">{{ u.total_koin }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+async function generateDeviceId() {
+  const raw=navigator.userAgent+Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const hash=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(raw));
+  document.getElementById("device_id").value = [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,"0")).join("");
+}
+function copyCode(){navigator.clipboard.writeText(document.getElementById("myReferralCode")?.innerText||"").then(()=>alert("Copied!"));}
+window.onload=generateDeviceId;
+</script>
+
+</body>
+</html>
