@@ -30,10 +30,10 @@ from web4.app import app as web4
 # ============================
 
 DOMAIN_MAP = {
-    "WEB1_DOMAIN": web1,
-    "WEB2_DOMAIN": web2,
-    "WEB3_DOMAIN": web3,
-    "WEB4_DOMAIN": web4,
+    "control.kocheng.biz.id": web1,
+    "kocheng.biz.id": web2,
+    "control.skyforgia.web.id": web3,
+    "skyforgia.web.id": web4,
 }
 
 class HostDispatcher:
