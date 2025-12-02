@@ -1300,21 +1300,57 @@ def moderator_required(f):
 BACKUP_FOLDER = "backups"
 os.makedirs(BACKUP_FOLDER, exist_ok=True)
 
-mega = Mega()
-m = mega.login("kentukimeme@gmail.com", "Bintang123**")
+def get_mega_client():
+    try:
+        mega = Mega()
+        return mega.login("kentukimeme@gmail.com", "Bintang123**")
+    except Exception as e:
+        print(f"[MEGA ERROR] Gagal login: {e}")
+        return None
 
 def upload_to_mega(local_file, remote_folder="/Skyforgia_backup/"):
-    folder = m.find(remote_folder)
-    if folder is None:
-        folder = m.create_folder(remote_folder)
-    file = m.upload(local_file, folder[0])
-    return file
-    
-def download_from_mega(remote_file, local_path):
-    file = m.find(remote_file)
-    if file is None:
+    m = get_mega_client()
+    if not m:
+        print("[MEGA ERROR] Tidak dapat login.")
         return None
-    return m.download(file[0], local_path)
+
+    try:
+        # cek folder
+        folder = m.find(remote_folder)
+
+        # jika folder belum ada → buat
+        if not folder:
+            folder = m.create_folder(remote_folder)
+            folder = folder[0] if isinstance(folder, list) else folder
+
+        # upload file
+        uploaded = m.upload(local_file, folder)
+        print(f"[MEGA] Upload sukses: {uploaded}")
+        return uploaded
+
+    except Exception as e:
+        print(f"[MEGA ERROR] Upload gagal: {e}")
+        return None
+
+def download_from_mega(remote_file, local_path):
+    m = get_mega_client()
+    if not m:
+        print("[MEGA ERROR] Tidak dapat login.")
+        return None
+
+    try:
+        file = m.find(remote_file)
+        if not file:
+            print(f"[MEGA] File '{remote_file}' tidak ditemukan.")
+            return None
+
+        result = m.download(file, local_path)
+        print(f"[MEGA] Download sukses: {local_path}")
+        return result
+
+    except Exception as e:
+        print(f"[MEGA ERROR] Download gagal: {e}")
+        return None
     
 def get_ptero_user(email, panel_id):
     panel = PANELS.get(panel_id)
