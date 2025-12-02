@@ -3841,16 +3841,27 @@ def check_mega():
     filename = f"backup_{email}.zip"
     remote_path = f"/Skyforgia_backup/{filename}"
 
-    result = subprocess.run(["mega-ls", remote_path], capture_output=True, text=True)
-    if result.returncode == 0 and filename in result.stdout:
-        user.is_backup_mega = True
-        user.last_filename = filename
-        db.session.commit()
-        return jsonify({"has_backup": True, "filename": filename})
-    else:
-        user.is_backup_mega = False
-        db.session.commit()
-        return jsonify({"has_backup": False})
+    # login dulu
+    m = get_mega_client()
+    if not m:
+        return jsonify({"has_backup": False, "error": "Gagal login ke MEGA"}), 500
+
+    # cek file EXISTS
+    try:
+        file_node = m.find(remote_path)
+        if file_node:  # jika file ditemukan
+            user.is_backup_mega = True
+            user.last_filename = filename
+            db.session.commit()
+            return jsonify({"has_backup": True, "filename": filename})
+
+        else:  # jika tidak ada
+            user.is_backup_mega = False
+            db.session.commit()
+            return jsonify({"has_backup": False})
+
+    except Exception as e:
+        return jsonify({"has_backup": False, "error": f"Gagal cek MEGA: {str(e)}"}), 500
 
 @app.route("/toggle-auto-backup", methods=["POST"])
 def toggle_auto_backup():
