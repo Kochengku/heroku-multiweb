@@ -7,7 +7,8 @@ from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from config import admin_mail
+import os
+admin_mail = os.getenv("ADMIN_MAIL")
 
 # Header API
 PANELS = {
