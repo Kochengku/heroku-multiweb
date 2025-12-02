@@ -50,6 +50,7 @@ import io
 from authlib.integrations.flask_client import OAuth
 import sys
 import os
+os.environ["WERKZEUG_RUN_MAIN"] = "true"
 sys.path.append(os.path.join(os.path.dirname(__file__), 'static/konfigurasi'))
 
 from config import EMAIL_API_TOKEN, G_CLIENT_ID, G_CLIENT_SECRET, admin_mail, telegrambotlink, ouolink, whatsapp_number, whatsapp_channel, telegram_user, telegram_channel, FROM_NAME, FROM_EMAIL, ZEPTO_API_KEY, ZEPTO_API_URL
@@ -77,7 +78,8 @@ class Config:
 app.config.from_object(Config())
 scheduler = APScheduler()
 scheduler.init_app(app)
-scheduler.start()
+if not os.environ.get("HEROKU", False):
+    scheduler.start()
 
 DEFAULT_NODES = [
     {"id": 1, "name": "Node 1", "limit_server": 35},
