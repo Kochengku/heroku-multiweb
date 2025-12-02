@@ -34,6 +34,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
+from mega import Mega
 
 import difflib
 from sqlalchemy import or_
@@ -1299,20 +1300,21 @@ def moderator_required(f):
 BACKUP_FOLDER = "backups"
 os.makedirs(BACKUP_FOLDER, exist_ok=True)
 
-def upload_to_mega(local_file, remote_folder="/Skyforgia_backup/"):
-    if remote_folder:
-        folder = mega_client.find(remote_folder)
-        if folder:
-            return mega_client.upload(local_file, folder)
-    
-    # jika folder tidak ditemukan, upload ke root
-    return mega_client.upload(local_file)
+mega = Mega()
+m = mega.login("kentukimeme@gmail.com", "Bintang123**")
 
-def download_from_mega(remote_file_name, local_path):
-    file = mega_client.find(remote_file_name)
-    if file:
-        return mega_client.download(file, local_path)
-    return None
+def upload_to_mega(local_file, remote_folder="/Skyforgia_backup/"):
+    folder = m.find(remote_folder)
+    if folder is None:
+        folder = m.create_folder(remote_folder)
+    file = m.upload(local_file, folder[0])
+    return file
+    
+def download_from_mega(remote_file, local_path):
+    file = m.find(remote_file)
+    if file is None:
+        return None
+    return m.download(file[0], local_path)
     
 def get_ptero_user(email, panel_id):
     panel = PANELS.get(panel_id)
