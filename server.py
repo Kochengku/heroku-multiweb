@@ -1,20 +1,5 @@
 from flask import request
 from werkzeug.wrappers import Response
-from mega.asyncio import AsyncMega
-
-# ============== MEGA LOGIN LAZY ==============
-MEGA_EMAIL = "kentukimeme@gmail.com"
-MEGA_PASSWORD = "Bintang123**"
-
-mega_client = None
-
-async def get_mega():
-    global mega_client
-    if mega_client is None:
-        mega = AsyncMega()
-        mega_client = await mega.login(MEGA_EMAIL, MEGA_PASSWORD)
-        print("[INFO] Login Mega Sukses!")
-    return mega_client
 
 # ============== IMPORT APPS ==============
 from web1.app import app as web1
