@@ -78,7 +78,7 @@ class Config:
 app.config.from_object(Config())
 scheduler = APScheduler()
 scheduler.init_app(app)
-if not os.environ.get("HEROKU", False):
+if os.getenv("DISABLE_SCHEDULER") != "1":
     scheduler.start()
 
 DEFAULT_NODES = [
