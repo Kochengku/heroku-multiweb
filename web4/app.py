@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'static/konfigurasi'))
 
-from config import web_control, status_page, whatsapp_channel, whattsapp_admin, url_order
+from config_web4 import web_control, status_page, whatsapp_channel, whattsapp_admin, url_order
 app = Flask(__name__)
 
 #------ SISITEM ARTICLE ------#
