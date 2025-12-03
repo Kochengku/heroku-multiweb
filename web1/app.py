@@ -60,15 +60,15 @@ app = Flask(__name__)
 app.secret_key = 'Kocheng'
 
 # Konfigurasi SQLite
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data_user.db"  # Database utama untuk User
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+
 app.config["SQLALCHEMY_BINDS"] = {
-    'data_panel': 'sqlite:///data_panel.db',
-    'data_refferal_user': 'sqlite:///data_refferal_user.db',
-    'data_global_server': 'sqlite:///data_global_server.db',
-    'data_global_limit_node': 'sqlite:///data_global_limit_node.db',
-    'data_dashboard': 'sqlite:///data_dashboard.db',
-    'data_ticket': 'sqlite:///data_ticket.db'
+    'data_panel': os.getenv("DATABASE_URL"),
+    'data_refferal_user': os.getenv("DATABASE_URL"),
+    'data_global_server': os.getenv("DATABASE_URL"),
+    'data_global_limit_node': os.getenv("DATABASE_URL"),
+    'data_dashboard': os.getenv("DATABASE_URL"),
+    'data_ticket': os.getenv("DATABASE_URL"),
 }
 
 class Config:
