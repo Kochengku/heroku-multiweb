@@ -4302,51 +4302,30 @@ def upload_mega_route():
 
     return jsonify({"message": "Upload berhasil", "filename": filename})
 
-@app.route("/restore-mega", methods=["POST"])
+@app.route("/restore-mega", methods=["GET"])
 def restore_mega():
-    data = request.get_json() or {}
+    filename = request.args.get("filename")
 
-    email = data.get("email")
-    filename_from_client = data.get("filename")
+    if not filename:
+        return jsonify({"error": "filename wajib"}), 400
 
-    # Validasi input
-    if not email and not filename_from_client:
-        return jsonify({"error": "Email atau filename wajib"}), 400
-
-    # Tentukan nama file backup
-    if filename_from_client:
-        safe_filename = filename_from_client
-    else:
-        safe_filename = f"backup_{email.replace('@','_').replace('.','_')}.zip"
-
-    local_file = os.path.join(BACKUP_FOLDER, safe_filename)
-    os.makedirs(BACKUP_FOLDER, exist_ok=True)
-
-    # Panggil API internal untuk download dari Mega
-    mega_url = f"{MEGA_API}/mega/kocheng/download?filename={safe_filename}"
+    mega_url = f"{MEGA_API}/mega/kocheng/download?filename={filename}"
 
     try:
         response = requests.get(mega_url, stream=True)
-
         if response.status_code != 200:
-            return jsonify({"error": "Gagal restore dari Mega", "detail": response.text}), 500
+            return jsonify({"error": "Gagal download dari Mega", "detail": response.text}), 500
 
-        # Simpan file ke lokal
-        with open(local_file, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
+        return Response(
+            response.iter_content(chunk_size=8192),
+            mimetype="application/octet-stream",
+            headers={
+                "Content-Disposition": f"attachment; filename={filename}"
+            }
+        )
 
     except Exception as e:
-        return jsonify({"error": "Gagal memanggil API Mega", "detail": str(e)}), 500
-
-    # Pastikan file tersimpan
-    if not os.path.exists(local_file):
-        return jsonify({"error": "File tidak ditemukan setelah download"}), 500
-
-    return jsonify({
-        "message": "Restore dari Mega berhasil",
-        "download_url": f"/download-backup/{safe_filename}"
-    }), 200
+        return jsonify({"error": "Error streaming Mega", "detail": str(e)}), 500
 
 @app.route("/check-mega")
 def check_mega():
