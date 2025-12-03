@@ -14,3 +14,4 @@ SQLAlchemy
 Flask-Caching
 qrcode
 authlib
+psycopg2-binary
