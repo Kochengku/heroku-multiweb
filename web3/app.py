@@ -34,7 +34,6 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
-from mega import Mega
 
 import difflib
 from sqlalchemy import or_
@@ -1301,58 +1300,7 @@ def moderator_required(f):
 #------ SISTEM BACKUP ------#
 BACKUP_FOLDER = "backups"
 os.makedirs(BACKUP_FOLDER, exist_ok=True)
-
-def get_mega_client():
-    try:
-        mega = Mega()
-        return mega.login("kentukimeme@gmail.com", "Bintang123**")
-    except Exception as e:
-        print(f"[MEGA ERROR] Gagal login: {e}")
-        return None
-
-def upload_to_mega(local_file, remote_folder="/Skyforgia_backup/"):
-    m = get_mega_client()
-    if not m:
-        print("[MEGA ERROR] Tidak dapat login.")
-        return None
-
-    try:
-        # cek folder
-        folder = m.find(remote_folder)
-
-        # jika folder belum ada → buat
-        if not folder:
-            folder = m.create_folder(remote_folder)
-            folder = folder[0] if isinstance(folder, list) else folder
-
-        # upload file
-        uploaded = m.upload(local_file, folder)
-        print(f"[MEGA] Upload sukses: {uploaded}")
-        return uploaded
-
-    except Exception as e:
-        print(f"[MEGA ERROR] Upload gagal: {e}")
-        return None
-
-def download_from_mega(remote_file, local_path):
-    m = get_mega_client()
-    if not m:
-        print("[MEGA ERROR] Tidak dapat login.")
-        return None
-
-    try:
-        file = m.find(remote_file)
-        if not file:
-            print(f"[MEGA] File '{remote_file}' tidak ditemukan.")
-            return None
-
-        result = m.download(file, local_path)
-        print(f"[MEGA] Download sukses: {local_path}")
-        return result
-
-    except Exception as e:
-        print(f"[MEGA ERROR] Download gagal: {e}")
-        return None
+MEGA_API = "unpleasant-christi-1kocheng-ea5544f0.koyeb.app"
     
 def get_ptero_user(email, panel_id):
     panel = PANELS.get(panel_id)
@@ -1441,20 +1389,44 @@ def backup_and_upload(user):
     backup_name = f"backup_{user.email}.zip"
     backup_path = os.path.join(BACKUP_FOLDER, backup_name)
 
+    # Buat ZIP
     with zipfile.ZipFile(backup_path, "w", zipfile.ZIP_DEFLATED) as zipf:
         for srv in servers:
             uuid = srv["attributes"]["uuid"]
             add_to_zip(zipf, panel_id, uuid, "/")
 
-    result = upload_to_mega(backup_path)
-    if result.returncode == 0:
-        print(f"[OK] Backup {backup_name} berhasil diupload ke Mega")
-        user.last_backup = datetime.utcnow()
-        user.next_backup = user.last_backup + timedelta(weeks=1)
-        user.auto_backup_enabled = True
+    # === UPLOAD KE API MEGA ===
+    try:
+        files = {"file": open(backup_path, "rb")}
+        payload = {
+            "filename": backup_name,
+            "email": user.email
+        }
+        r = requests.post(
+            f"{MEGA_API}/mega/skyforgia/upload",
+            files=files,
+            data=payload
+        )
+    except Exception as e:
+        print(f"[FAILED] Gagal memanggil API upload Mega: {str(e)}")
+        return False
+
+    # === Hasil upload ===
+    if r.status_code != 200:
+        print(f"[FAILED] Upload ke Mega gagal: {r.text}")
+        user.is_backup_mega = False
         db.session.commit()
-    else:
-        print(f"[FAILED] Upload gagal: {result.stderr}")
+        return False
+
+    # === Jika sukses ===
+    print(f"[OK] Backup {backup_name} berhasil diupload ke Mega")
+
+    user.last_backup = datetime.utcnow()
+    user.next_backup = user.last_backup + timedelta(weeks=1)
+    user.auto_backup_enabled = True
+    user.is_backup_mega = True
+    user.last_filename = backup_name
+    db.session.commit()
 
     cleanup_old_backups()
     return True
@@ -3783,45 +3755,66 @@ def upload_mega_route():
 
     filepath = os.path.join(BACKUP_FOLDER, filename)
     if not os.path.exists(filepath):
-        return jsonify({"error": "File tidak ditemukan di server", "detail": filepath}), 404
+        return jsonify({"error": "File tidak ditemukan", "path": filepath}), 404
 
-    result = upload_to_mega(filepath)
+    files = {"file": open(filepath, "rb")}
+    r = requests.post(f"{MEGA_API}/mega/skyforgia/upload", files=files)
+
     user = User.query.filter_by(email=email).first()
-    if result.returncode != 0:
+
+    if r.status_code != 200:
         if user:
             user.is_backup_mega = False
             db.session.commit()
-        return jsonify({"error": "Gagal upload ke Mega"}), 500
+        return jsonify({"error": "Gagal upload ke Railway", "detail": r.text}), 500
 
     if user:
         user.is_backup_mega = True
         user.last_filename = filename
         db.session.commit()
 
-    return jsonify({"message": "Upload to cloud storage successful", "filename": filename}), 200
+    return jsonify({"message": "Upload berhasil", "filename": filename})
 
 @app.route("/restore-mega", methods=["POST"])
 def restore_mega():
     data = request.get_json() or {}
+
     email = data.get("email")
     filename_from_client = data.get("filename")
 
+    # Validasi input
     if not email and not filename_from_client:
         return jsonify({"error": "Email atau filename wajib"}), 400
 
+    # Tentukan nama file backup
     if filename_from_client:
         safe_filename = filename_from_client
     else:
         safe_filename = f"backup_{email.replace('@','_').replace('.','_')}.zip"
 
     local_file = os.path.join(BACKUP_FOLDER, safe_filename)
-    remote_file = f"/Skyforgia_backup/{safe_filename}"
-
     os.makedirs(BACKUP_FOLDER, exist_ok=True)
-    result = download_from_mega(remote_file, local_file)
 
-    if result.returncode != 0 or not os.path.exists(local_file):
-        return jsonify({"error": "Gagal restore dari Mega"}), 500
+    # Panggil API internal untuk download dari Mega
+    mega_url = f"{MEGA_API}/mega/skyforgia/download?filename={safe_filename}"
+
+    try:
+        response = requests.get(mega_url, stream=True)
+
+        if response.status_code != 200:
+            return jsonify({"error": "Gagal restore dari Mega", "detail": response.text}), 500
+
+        # Simpan file ke lokal
+        with open(local_file, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+    except Exception as e:
+        return jsonify({"error": "Gagal memanggil API Mega", "detail": str(e)}), 500
+
+    # Pastikan file tersimpan
+    if not os.path.exists(local_file):
+        return jsonify({"error": "File tidak ditemukan setelah download"}), 500
 
     return jsonify({
         "message": "Restore dari Mega berhasil",
@@ -3839,29 +3832,37 @@ def check_mega():
         return jsonify({"has_backup": False, "error": "User tidak ditemukan"}), 404
 
     filename = f"backup_{email}.zip"
-    remote_path = f"/Skyforgia_backup/{filename}"
 
-    # login dulu
-    m = get_mega_client()
-    if not m:
-        return jsonify({"has_backup": False, "error": "Gagal login ke MEGA"}), 500
-
-    # cek file EXISTS
+    # Panggil API Mega internal
     try:
-        file_node = m.find(remote_path)
-        if file_node:  # jika file ditemukan
-            user.is_backup_mega = True
-            user.last_filename = filename
-            db.session.commit()
-            return jsonify({"has_backup": True, "filename": filename})
-
-        else:  # jika tidak ada
-            user.is_backup_mega = False
-            db.session.commit()
-            return jsonify({"has_backup": False})
-
+        api_url = f"{MEGA_API}/mega/skyforgia/check?filename={filename}"
+        response = requests.get(api_url)
     except Exception as e:
-        return jsonify({"has_backup": False, "error": f"Gagal cek MEGA: {str(e)}"}), 500
+        return jsonify({
+            "has_backup": False,
+            "error": f"Gagal menghubungi API Mega: {str(e)}"
+        }), 500
+
+    # Parse response API
+    if response.status_code != 200:
+        return jsonify({
+            "has_backup": False,
+            "error": f"API Mega error: {response.text}"
+        }), 500
+
+    data = response.json()
+
+    # Jika Mega bilang ada
+    if data.get("has_backup"):
+        user.is_backup_mega = True
+        user.last_filename = filename
+        db.session.commit()
+        return jsonify({"has_backup": True, "filename": filename})
+
+    # Jika tidak ada
+    user.is_backup_mega = False
+    db.session.commit()
+    return jsonify({"has_backup": False})
 
 @app.route("/toggle-auto-backup", methods=["POST"])
 def toggle_auto_backup():
