@@ -59,16 +59,22 @@ os.environ["WERKZEUG_RUN_MAIN"] = "true"
 app = Flask(__name__)
 app.secret_key = 'Kocheng'
 
-# Konfigurasi SQLite
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+# Ambil URL dari Heroku
+raw_uri = os.getenv("DATABASE_URL")
+
+# Convert postgres:// → postgresql://
+if raw_uri and raw_uri.startswith("postgres://"):
+    raw_uri = raw_uri.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = raw_uri
 
 app.config["SQLALCHEMY_BINDS"] = {
-    'data_panel': os.getenv("DATABASE_URL"),
-    'data_refferal_user': os.getenv("DATABASE_URL"),
-    'data_global_server': os.getenv("DATABASE_URL"),
-    'data_global_limit_node': os.getenv("DATABASE_URL"),
-    'data_dashboard': os.getenv("DATABASE_URL"),
-    'data_ticket': os.getenv("DATABASE_URL"),
+    'data_panel': raw_uri,
+    'data_refferal_user': raw_uri,
+    'data_global_server': raw_uri,
+    'data_global_limit_node': raw_uri,
+    'data_dashboard': raw_uri,
+    'data_ticket': raw_uri,
 }
 
 class Config:
