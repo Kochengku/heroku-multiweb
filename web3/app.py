@@ -3736,7 +3736,6 @@ def backup():
     panel_id = str(user.serverid) if user.serverid else None
 
     p_user = get_ptero_user(email, panel_id)
-    cleanup_old_backups()
     if not p_user:
         return jsonify({"error": "User tidak ditemukan di panel"}), 404
 
