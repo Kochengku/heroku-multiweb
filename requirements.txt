@@ -1,5 +1,4 @@
 gunicorn
-mega.py==1.0.8
 Flask
 Flask-Session
 Flask-SQLAlchemy
