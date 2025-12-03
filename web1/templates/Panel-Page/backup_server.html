@@ -392,34 +392,19 @@ document.getElementById("restoreMega").addEventListener("click", async () => {
     return;
   }
 
-  try {
-    const res = await fetch("/restore-mega", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: userEmail, filename })
-    });
+  // 🔥 langsung download file dari backend
+  const downloadUrl = `/restore-mega?filename=${encodeURIComponent(filename)}`;
 
-    const result = await res.json();
+  // Membuat link download secara otomatis
+  const a = document.createElement("a");
+  a.href = downloadUrl;
+  a.download = filename; // memastikan browser mendownload
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 
-    if (res.ok && result.download_url) {
-      const encoded = encodeURI(result.download_url);
-      const dl = document.getElementById("downloadLink");
-      dl.href = encoded;
-      dl.setAttribute("download", filename);
-      dl.style.display = "inline-flex";
-
-      alert("Restore successful, please download the file.");
-      showPopup("popupSuccess");
-      document.getElementById("downloadSection").classList.remove("hidden");
-    } else {
-      alert(result.error || "Restore failed without message.");
-      showPopup("popupError");
-    }
-  } catch (err) {
-    console.error("Error restore:", err);
-    alert("An error occurred while restoring");
-    showPopup("popupError");
-  }
+  // Tampilkan popup / notifikasi
+  showPopup("popupSuccess");
 });
 
 // ====== CEK STATUS BACKUP MEGA SAAT PAGE LOAD ======
