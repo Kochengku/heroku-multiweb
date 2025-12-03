@@ -1330,12 +1330,6 @@ def list_files(panel_id, uuid, directory="/"):
     res = requests.get(url, headers=get_client_headers(panel_id)).json()
     return res
 
-def list_files(panel_id, uuid, directory="/"):
-    panel = PANELS.get(panel_id)
-    url = f"{panel['url']}/api/client/servers/{uuid}/files/list?directory={directory}"
-    res = requests.get(url, headers=get_client_headers(panel_id)).json()
-    return res
-
 def ptero_download_file(panel_id, uuid, path):
     panel = PANELS.get(panel_id)
     url = f"{panel['url']}/api/client/servers/{uuid}/files/contents?file={path}"
@@ -1345,6 +1339,10 @@ def ptero_download_file(panel_id, uuid, path):
     return None
 
 def add_to_zip(zipf, panel_id, uuid, base_dir="/"):
+    if base_dir in visited_paths:
+        return
+    visited_paths.add(base_dir)
+
     files = list_files(panel_id, uuid, base_dir)
     for f in files.get("data", []):
         name = f["attributes"]["name"]
@@ -1352,8 +1350,9 @@ def add_to_zip(zipf, panel_id, uuid, base_dir="/"):
         size = f["attributes"]["size"]
         rel_path = os.path.join(base_dir, name).replace("//", "/")
 
-        if name == "node_modules":
+        if name in ("node_modules", ".", ".."):
             continue
+
         if is_file and size > 50 * 1024 * 1024:  # skip >50MB
             continue
 
