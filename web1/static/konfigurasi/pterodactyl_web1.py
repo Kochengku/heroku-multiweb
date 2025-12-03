@@ -14,13 +14,13 @@ admin_mail = os.getenv("ADMIN_MAIL")
 PANELS = {
     "server1": {
         "url": "https://console.kocheng.tech",
-        "api_key": "ptla_EXNL6B5x4xkjmZvvPXWUECxLUYq2FUma4jRh4yGTzz2",
-        "client_api_key": "ptlc_2KtKO79tb3ESNNU8EkuyOYTeafqucv0M1X9vJLdoWOj"
+        "api_key": "ptla_iSj8zMtCvlSV05XphQKr4QLKUa7t5jm2CG9rXsJlYSZ",
+        "client_api_key": "ptlc_OurES0aIGdkGJIHxQF4Iym1FwqLllcJczG1fBtBC2kZ"
     },
     "server2": {
         "url": "https://console.kocheng.biz.id",
-        "api_key": "ptla_UwnBQiTC4o8D1brbnLasjHjLxtKcx33XO4es1fjUs9f",
-        "client_api_key": "ptlc_hbNicW8bfYsNa71J0yNzrLNbgQrwvEPZadLxPbotqGb"
+        "api_key": "ptla_VyaEyCBXizyfI5Cew5RmfSXOhUdSzJT68KRTHWOXG7G",
+        "client_api_key": "ptlc_VXyniYgN9KnHm0xp3oGpLt3iSotH8tVIkQGCbTcOoSo"
     }
     # Bisa ditambah server3, dst...
 }
