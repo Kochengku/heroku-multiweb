@@ -1,5 +1,6 @@
 import os
-import subprocess
+import base64
+import requests
 from datetime import datetime
 
 from flask import request
@@ -19,48 +20,72 @@ from apscheduler.triggers.cron import CronTrigger
 # CONFIG
 # ==========================
 
-REPO_PATH = os.getcwd()
-
-# folder yang mau di-backup
 TARGETS = [
     "web1/instance",
     "web3/instance",
 ]
 
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # set via Heroku
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 GITHUB_USER = "Kochengku"
-REPO_NAME = "heroku-multiweb"
+GITHUB_REPO = "heroku-multiweb"
 
 
 # ==========================
-# BACKUP FUNCTION
+# GITHUB UPLOAD FUNCTION
+# ==========================
+
+def github_upload(local_path, github_path):
+
+    with open(local_path, "rb") as f:
+        encoded = base64.b64encode(f.read()).decode("utf-8")
+
+    url = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/{github_path}"
+
+    # cek apakah file sudah ada
+    r = requests.get(url, headers={"Authorization": f"token {GITHUB_TOKEN}"})
+    sha = r.json().get("sha") if r.status_code == 200 else None
+
+    data = {
+        "message": f"Backup {github_path}",
+        "content": encoded,
+        "branch": "main"
+    }
+
+    if sha:
+        data["sha"] = sha
+
+    r = requests.put(
+        url,
+        headers={"Authorization": f"token {GITHUB_TOKEN}"},
+        json=data
+    )
+
+    print("UPLOAD", github_path, "=>", r.status_code)
+    return r.status_code in (200, 201)
+
+
+# ==========================
+# BACKUP JOB
 # ==========================
 
 def backup_job():
     print("=== BACKUP START ===")
 
-    os.chdir(REPO_PATH)
+    for folder in TARGETS:
+        print("Backup folder:", folder)
 
-    # Set remote pakai token biar push tidak minta password
-    remote_url = (
-        f"https://{GITHUB_TOKEN}:x-oauth-basic@github.com/"
-        f"{GITHUB_USER}/{REPO_NAME}.git"
-    )
-    subprocess.run(["git", "remote", "set-url", "origin", remote_url])
+        if not os.path.isdir(folder):
+            print("Folder tidak ditemukan:", folder)
+            continue
 
-    # Loop untuk setiap folder target
-    for target_path in TARGETS:
-        print(f"Backup folder: {target_path}")
+        for root, dirs, files in os.walk(folder):
+            for file in files:
+                local_file = os.path.join(root, file)
 
-        # git add hanya folder tersebut
-        subprocess.run(["git", "add", target_path])
+                # path di GitHub 100% sama seperti lokal
+                github_file = local_file  # <- TERPENTING!
 
-    # Commit
-    msg = f"Auto-backup web1+web3 instance {datetime.now().isoformat()}"
-    subprocess.run(["git", "commit", "-m", msg])
-
-    # Push
-    subprocess.run(["git", "push"])
+                github_upload(local_file, github_file)
 
     print("=== BACKUP DONE ===")
 
@@ -91,14 +116,14 @@ app = HostDispatcher()
 
 
 # ==========================
-# SCHEDULER (SETIAP 1 MENIT)
+# SCHEDULER SETIAP 1 MENIT
 # ==========================
 
 scheduler = BackgroundScheduler()
 
 scheduler.add_job(
     backup_job,
-    CronTrigger(minute="*/1"),  # <--- BACKUP SETIAP 1 MENIT
+    CronTrigger(minute="*/1"),
     id="backup_job",
     replace_existing=True
 )
