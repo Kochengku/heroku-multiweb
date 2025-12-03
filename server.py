@@ -5,7 +5,7 @@ from datetime import datetime
 
 from flask import request
 from werkzeug.wrappers import Response
-
+os.environ["WERKZEUG_RUN_MAIN"] = "true"
 # ============== IMPORT APPS ==============
 from web1.app import app as web1
 from web2.app import app as web2
@@ -127,7 +127,7 @@ scheduler.add_job(
     id="backup_job",
     replace_existing=True
 )
-
-scheduler.start()
+if os.getenv("DISABLE_SCHEDULER") != "1":
+    scheduler.start()
 
 print("Scheduler aktif: backup setiap 1 menit untuk web1/instance & web3/instance")
