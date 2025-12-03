@@ -1460,7 +1460,7 @@ def moderator_required(f):
 #------ SISTEM BACKUP ------#
 BACKUP_FOLDER = "backups"
 os.makedirs(BACKUP_FOLDER, exist_ok=True)
-MEGA_API = "unpleasant-christi-1kocheng-ea5544f0.koyeb.app"
+MEGA_API = "https://unpleasant-christi-1kocheng-ea5544f0.koyeb.app"
 
 def get_ptero_user(email, panel_id):
     panel = PANELS.get(panel_id)
