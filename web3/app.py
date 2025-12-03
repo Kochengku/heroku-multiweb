@@ -1338,6 +1338,7 @@ def ptero_download_file(panel_id, uuid, path):
         return res.content
     return None
 
+visited_paths = set()
 def add_to_zip(zipf, panel_id, uuid, base_dir="/"):
     if base_dir in visited_paths:
         return
