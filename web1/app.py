@@ -161,7 +161,7 @@ class ServerSpec(db.Model):
     
     id = db.Column(db.String, primary_key=True)
     ram = db.Column(db.Integer, default=1024)
-    cpu = db.Column(db.Integer, default=150)
+    cpu = db.Column(db.Integer, default=100)
     disk = db.Column(db.Integer, default=5024)
 
 class Node(db.Model):
@@ -300,7 +300,7 @@ def init_server_spec():
             default_server = ServerSpec(
                 id=panel_id,   # <-- ID diambil dari key dict
                 ram=1024,
-                cpu=150,
+                cpu=100,
                 disk=5024
             )
             db.session.add(default_server)
@@ -3138,7 +3138,7 @@ def admin_panel():
     # === SERVER SPEC ===
     server_spec = ServerSpec.query.filter_by(id=panel_id).first()
     if not server_spec:
-        server_spec = ServerSpec(id=panel_id, ram=1024, cpu=150, disk=5072)
+        server_spec = ServerSpec(id=panel_id, ram=1024, cpu=100, disk=5072)
         db.session.add(server_spec)
         db.session.commit()
 
