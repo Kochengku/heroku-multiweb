@@ -3,9 +3,12 @@ import base64
 import requests
 from datetime import datetime
 
-from flask import request
+from flask import Flask, request
 from werkzeug.wrappers import Response
+
+# Biar APScheduler tidak duplikat run di Heroku
 os.environ["WERKZEUG_RUN_MAIN"] = "true"
+
 # ============== IMPORT APPS ==============
 from web1.app import app as web1
 from web2.app import app as web2
@@ -41,7 +44,7 @@ def github_upload(local_path, github_path):
 
     url = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/{github_path}"
 
-    # cek apakah file sudah ada
+    # cek apakah file sudah ada di GitHub
     r = requests.get(url, headers={"Authorization": f"token {GITHUB_TOKEN}"})
     sha = r.json().get("sha") if r.status_code == 200 else None
 
@@ -52,7 +55,7 @@ def github_upload(local_path, github_path):
     }
 
     if sha:
-        data["sha"] = sha
+        data["sha"] = sha  # overwrite file jika sudah ada
 
     r = requests.put(
         url,
@@ -82,8 +85,8 @@ def backup_job():
             for file in files:
                 local_file = os.path.join(root, file)
 
-                # path di GitHub 100% sama seperti lokal
-                github_file = local_file  # <- TERPENTING!
+                # path GitHub sama persis dengan folder lokal
+                github_file = local_file
 
                 github_upload(local_file, github_file)
 
@@ -91,7 +94,7 @@ def backup_job():
 
 
 # ==========================
-# DOMAIN DISPATCHER
+# DOMAIN DISPATCHER (WSGI)
 # ==========================
 
 DOMAIN_MAP = {
@@ -112,11 +115,14 @@ class HostDispatcher:
         return Response("Domain tidak ditemukan", status=404)(environ, start_response)
 
 
-app = HostDispatcher()
+# ⭐ FIX PALING PENTING: jadikan HostDispatcher WSGI callable
+def app(environ, start_response):
+    dispatcher = HostDispatcher()
+    return dispatcher(environ, start_response)
 
 
 # ==========================
-# SCHEDULER SETIAP 1 MENIT
+# SCHEDULER (1 MENIT)
 # ==========================
 
 scheduler = BackgroundScheduler()
@@ -127,7 +133,9 @@ scheduler.add_job(
     id="backup_job",
     replace_existing=True
 )
+
+# Heroku: scheduler hanya jalan 1x per dyno
 if os.getenv("DISABLE_SCHEDULER") != "1":
     scheduler.start()
 
-print("Scheduler aktif: backup setiap 1 menit untuk web1/instance & web3/instance")
+print("Scheduler aktif: backup tiap 1 menit untuk web1/instance & web3/instance")
