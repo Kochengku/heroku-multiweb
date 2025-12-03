@@ -1464,8 +1464,6 @@ def moderator_required(f):
     return decorated_function
     
 #------ SISTEM BACKUP ------#
-BACKUP_FOLDER = "backups"
-os.makedirs(BACKUP_FOLDER, exist_ok=True)
 MEGA_API = "https://unpleasant-christi-1kocheng-ea5544f0.koyeb.app"
 
 def get_ptero_user(email, panel_id):
@@ -1504,42 +1502,45 @@ def ptero_download_file(panel_id, uuid, path):
         return res.content
     return None
 
-visited_paths = set()
-def add_to_zip(zipf, panel_id, uuid, base_dir="/"):
-    if base_dir in visited_paths:
-        return
-    visited_paths.add(base_dir)
+def build_zip_memory(panel_id, uuid):
+    global visited_paths
+    visited_paths = set()
 
-    files = list_files(panel_id, uuid, base_dir)
-    for f in files.get("data", []):
-        name = f["attributes"]["name"]
-        is_file = f["attributes"]["is_file"]
-        size = f["attributes"]["size"]
-        rel_path = os.path.join(base_dir, name).replace("//", "/")
+    zip_buffer = io.BytesIO()
+    zipf = zipfile.ZipFile(zip_buffer, mode="w", compression=zipfile.ZIP_DEFLATED)
 
-        if name in ("node_modules", ".", ".."):
-            continue
+    def add_path(base_dir="/"):
+        if base_dir in visited_paths:
+            return
+        visited_paths.add(base_dir)
 
-        if is_file and size > 50 * 1024 * 1024:  # skip >50MB
-            continue
+        files = list_files(panel_id, uuid, base_dir)
+        for f in files.get("data", []):
+            name = f["attributes"]["name"]
+            is_file = f["attributes"]["is_file"]
+            size = f["attributes"]["size"]
+            rel_path = os.path.join(base_dir, name).replace("//", "/")
 
-        if is_file:
-            content = ptero_download_file(panel_id, uuid, rel_path)
-            if content:
-                zipf.writestr(rel_path.lstrip("/"), content)
-        else:
-            add_to_zip(zipf, panel_id, uuid, rel_path)
+            if name in ("node_modules", ".", ".."):
+                continue
+
+            if is_file and size > 50 * 1024 * 1024:  # skip >50MB
+                continue
+
+            if is_file:
+                content = ptero_download_file(panel_id, uuid, rel_path)
+                if content:
+                    zipf.writestr(rel_path.lstrip("/"), content)
+            else:
+                add_path(rel_path)
+
+    # mulai dari root
+    add_path("/")
+    zipf.close()
+
+    zip_buffer.seek(0)
+    return zip_buffer
            
-def cleanup_old_backups():
-    """Hapus backup lebih tua dari 1 hari"""
-    now = time.time()
-    for f in os.listdir(BACKUP_FOLDER):
-        path = os.path.join(BACKUP_FOLDER, f)
-        if os.path.isfile(path):
-            file_age = now - os.path.getmtime(path)
-            if file_age > 24 * 3600:
-                os.remove(path)
-                        
 def backup_and_upload(user):
     panel_id = str(user.serverid) if user.serverid else None
     p_user = get_ptero_user(user.email, panel_id)
@@ -1553,17 +1554,30 @@ def backup_and_upload(user):
         return False
 
     backup_name = f"backup_{user.email}.zip"
-    backup_path = os.path.join(BACKUP_FOLDER, backup_name)
 
-    # Buat ZIP
-    with zipfile.ZipFile(backup_path, "w", zipfile.ZIP_DEFLATED) as zipf:
-        for srv in servers:
-            uuid = srv["attributes"]["uuid"]
-            add_to_zip(zipf, panel_id, uuid, "/")
+    # === BANGUN ZIP DI MEMORY ===
+    # jika ada beberapa server, gabungkan ke ZIP
+    mem_zip = io.BytesIO()
+    zipf = zipfile.ZipFile(mem_zip, "w", zipfile.ZIP_DEFLATED)
+
+    for srv in servers:
+        uuid = srv["attributes"]["uuid"]
+
+        # bangun ZIP khusus server ini
+        server_zip = build_zip_memory(panel_id, uuid)
+
+        # masukkan isi server ke dalam ZIP global
+        with zipfile.ZipFile(server_zip, "r") as sz:
+            for file in sz.namelist():
+                content = sz.read(file)
+                zipf.writestr(file, content)
+
+    zipf.close()
+    mem_zip.seek(0)
 
     # === UPLOAD KE API MEGA ===
     try:
-        files = {"file": open(backup_path, "rb")}
+        files = {"file": (backup_name, mem_zip.getvalue())}
         payload = {
             "filename": backup_name,
             "email": user.email
@@ -1594,7 +1608,6 @@ def backup_and_upload(user):
     user.last_filename = backup_name
     db.session.commit()
 
-    cleanup_old_backups()
     return True
     
 def weekly_backup():
@@ -4250,61 +4263,78 @@ def backup():
         return jsonify({"error": "Email tidak ditemukan"}), 400
 
     user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User tidak ditemukan di database"}), 404
+
     panel_id = str(user.serverid) if user.serverid else None
 
     p_user = get_ptero_user(email, panel_id)
     cleanup_old_backups()
     if not p_user:
-        return jsonify({"error": "User tidak ditemukan"}), 404
+        return jsonify({"error": "User tidak ditemukan di panel"}), 404
+
     servers = get_servers_by_userid(p_user["id"], panel_id)
     if not servers:
         return jsonify({"error": "Server tidak ditemukan"}), 404
 
     uuid = servers[0]["attributes"]["uuid"]
     filename = f"backup_{email}.zip"
-    filepath = os.path.join(BACKUP_FOLDER, filename)
 
-    with zipfile.ZipFile(filepath, "w", zipfile.ZIP_DEFLATED) as zipf:
-        add_to_zip(zipf, panel_id, uuid, "/")
+    # === ZIP in-memory ===
+    zip_buffer = build_zip_memory(panel_id, uuid)  # pakai fungsi baru
 
-    return jsonify({
-        "message": "Backup selesai (lokal)",
-        "local_url": f"/download-backup/{filename}",
-        "filename": filename
-    })
-
-@app.route("/download-backup/<path:filename>")
-def download_backup(filename):
-    return send_from_directory(BACKUP_FOLDER, filename, as_attachment=True)
+    # === RETURN FILE KE USER TANPA MENYIMPAN ===
+    return send_file(
+        zip_buffer,
+        mimetype="application/zip",
+        as_attachment=True,
+        download_name=filename
+    )
 
 @app.route("/upload-mega", methods=["POST"])
 def upload_mega_route():
     data = request.get_json() or {}
-    filename = data.get("filename")
     email = data.get("email")
 
-    if not filename or not email:
-        return jsonify({"error": "Filename dan Email wajib"}), 400
-
-    filepath = os.path.join(BACKUP_FOLDER, filename)
-    if not os.path.exists(filepath):
-        return jsonify({"error": "File tidak ditemukan", "path": filepath}), 404
-
-    files = {"file": open(filepath, "rb")}
-    r = requests.post(f"{MEGA_API}/mega/kocheng/upload", files=files)
+    if not email:
+        return jsonify({"error": "Email wajib"}), 400
 
     user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User tidak ditemukan"}), 404
+
+    panel_id = str(user.serverid) if user.serverid else None
+    p_user = get_ptero_user(email, panel_id)
+    if not p_user:
+        return jsonify({"error": "User panel tidak ditemukan"}), 404
+
+    servers = get_servers_by_userid(p_user["id"], panel_id)
+    if not servers:
+        return jsonify({"error": "Server tidak ditemukan"}), 404
+
+    uuid = servers[0]["attributes"]["uuid"]
+    filename = f"backup_{email}.zip"
+
+    # === BIKIN ZIP DI MEMORY ===
+    zip_buffer = build_zip_memory(panel_id, uuid)
+    zip_buffer.seek(0)
+
+    # === UPLOAD KE MEGA API (RAILWAY) ===
+    files = {
+        "file": (filename, zip_buffer, "application/zip")
+    }
+
+    r = requests.post(f"{MEGA_API}/mega/kocheng/upload", files=files)
 
     if r.status_code != 200:
-        if user:
-            user.is_backup_mega = False
-            db.session.commit()
+        user.is_backup_mega = False
+        db.session.commit()
         return jsonify({"error": "Gagal upload ke Railway", "detail": r.text}), 500
 
-    if user:
-        user.is_backup_mega = True
-        user.last_filename = filename
-        db.session.commit()
+    # === UPDATE DB ===
+    user.is_backup_mega = True
+    user.last_filename = filename
+    db.session.commit()
 
     return jsonify({"message": "Upload berhasil", "filename": filename})
 
