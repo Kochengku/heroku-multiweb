@@ -14,8 +14,8 @@ admin_mail = os.getenv("ADMIN_MAIL")
 PANELS = {
     "server1": {
         "url": "https://console.skyforgia.web.id",
-        "api_key": "ptla_UnlGOK3UDUJMSG8m1Flq7afvwEYMgVMdZPzjcb6iydM",
-        "client_api_key": "ptlc_SntJlP1Cs7jniLrcqfsvNXfD9fyvFpCHUeL51IAKqoW"
+        "api_key": "ptla_KCpE3wrwnAsOBUp54Glx8onHfVEvtC0PDtDtuZIUz0v",
+        "client_api_key": "ptlc_rAAYmyY18RGbDR3aaLW4VbamzuZfSEdAekKGo8ankwm"
     }
     # Bisa ditambah server3, dst...
 }
