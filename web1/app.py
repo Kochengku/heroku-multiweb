@@ -155,6 +155,7 @@ class User(db.Model):
     next_backup = db.Column(db.DateTime)
     photo_google = db.Column(db.String(255), nullable=True)
     serverid = db.Column(db.String(50))
+    mega_link = db.Column(db.Text)
     
 class ServerSpec(db.Model):
     __bind_key__ = 'data_global_server'
@@ -4277,6 +4278,17 @@ def list_files_route():
 
     return jsonify(file_list)
 
+def trigger_backup_process(email, panel_id):
+    zip_api_url = f"{MEGA_API}/build/kocheng/backup"
+    payload = {
+        "email": email,
+        "panel_id": panel_id
+    }
+    try:
+        requests.post(zip_api_url, json=payload, timeout=5)
+    except Exception as e:
+        print("Backup trigger error:", e)
+
 @app.route("/backup", methods=["POST"])
 def backup():
     data = request.get_json()
@@ -4290,28 +4302,15 @@ def backup():
         return jsonify({"error": "User tidak ditemukan"}), 404
 
     panel_id = str(user.serverid)
-    
-    # === CALL API ZIP SERVICE ===
-    zip_api_url = f"{MEGA_API}/build/kocheng/backup"
 
-    payload = {
-        "email": email,
-        "panel_id": panel_id
-    }
+    # ✅ JALANKAN ASYNC (BACKGROUND)
+    Thread(target=trigger_backup_process, args=(email, panel_id)).start()
 
-    r = requests.post(zip_api_url, json=payload, stream=True)
-
-    if r.status_code != 200:
-        return jsonify({"error": "Gagal membuat backup"}), 500
-
-    filename = f"backup_{email}.zip"
-
-    return send_file(
-        io.BytesIO(r.content),
-        mimetype="application/zip",
-        as_attachment=True,
-        download_name=filename
-    )
+    # ✅ LANGSUNG BALIK, TANPA NUNGGU ZIP
+    return jsonify({
+        "status": "Backup sedang diproses",
+        "email": email
+    }), 200
 
 @app.route("/upload-mega", methods=["POST"])
 def upload_mega_route():
@@ -4407,6 +4406,39 @@ def upload_mega_route():
         "filename": filename
     })
 
+@app.route("/api/backup-finished", methods=["POST"])
+def backup_finished():
+    data = request.get_json()
+
+    email = data.get("email")
+    filename = data.get("filename")
+    mega_link = data.get("mega_link")
+
+    user = User.query.filter_by(email=email).first()
+    if user:
+        user.is_backup_mega = True
+        user.last_filename = filename
+        user.mega_link = mega_link
+        db.session.commit()
+
+    return jsonify({"status": "ok"})
+    
+@app.route("/backup-status", methods=["GET"])
+def backup_status():
+    email = request.args.get("email")
+
+    if not email:
+        return jsonify({"error": "Email wajib"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User tidak ditemukan"}), 404
+
+    return jsonify({
+        "ready": user.is_backup_mega,
+        "filename": user.last_filename
+    })
+    
 @app.route("/restore-mega", methods=["GET"])
 def restore_mega():
     filename = request.args.get("filename")
