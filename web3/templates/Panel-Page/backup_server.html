@@ -257,65 +257,90 @@ function forceDownload(url, filename) {
 
 // ====== START BACKUP ======
 document.getElementById("startBackup").addEventListener("click", async () => {
-  const email = userEmail;
-  document.getElementById("progressSection").classList.remove("hidden");
-  document.getElementById("progressBar").style.width = "0%";
+  try {
+    const email = userEmail;
 
-  const filesRes = await fetch(`/list-files?email=${email}`);
-  const files = await filesRes.json();
+    // === TAMPILKAN PROGRESS ===
+    document.getElementById("progressSection").classList.remove("hidden");
+    document.getElementById("progressBar").style.width = "0%";
 
-  if (files.warning) {
-    showPopup("popupNoserver");
-    document.getElementById("progressSection").classList.add("hidden");
-    return;
-  }
+    // === AMBIL LIST FILE ===
+    const filesRes = await fetch(`/list-files?email=${email}`);
+    const files = await filesRes.json();
 
-  const fileTable = document.getElementById("fileTable");
-  const fileList = document.getElementById("fileList");
-  fileList.innerHTML = "";
-  files.forEach((f) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td class="px-4 py-2 border">${f.name}</td>
-      <td class="px-4 py-2 border">${f.type}</td>
-      <td class="px-4 py-2 border">${f.size}</td>
-    `;
-    fileList.appendChild(tr);
-  });
-  fileTable.classList.remove("hidden");
-
-  if (!lastFilename && files.length > 0) {
-    lastFilename = files[0].name;
-  }
-
-  let progress = 0;
-  const interval = setInterval(() => {
-    if (progress < 90) {
-      progress += 10;
-      document.getElementById("progressBar").style.width = progress + "%";
+    if (files.warning) {
+      showPopup("popupNoserver");
+      document.getElementById("progressSection").classList.add("hidden");
+      return;
     }
-  }, 500);
 
-  const backupRes = await fetch("/backup", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
-  });
+    // === TAMPILKAN FILE KE TABLE ===
+    const fileTable = document.getElementById("fileTable");
+    const fileList = document.getElementById("fileList");
+    fileList.innerHTML = "";
 
-  clearInterval(interval);
-  document.getElementById("progressBar").style.width = "100%";
+    files.forEach((f) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="px-4 py-2 border">${f.name}</td>
+        <td class="px-4 py-2 border">${f.type}</td>
+        <td class="px-4 py-2 border">${f.size}</td>
+      `;
+      fileList.appendChild(tr);
+    });
 
-  const result = await backupRes.json();
-  if (result.local_url) {
-    lastFilename = result.filename;
+    fileTable.classList.remove("hidden");
+
+    if (!lastFilename && files.length > 0) {
+      lastFilename = files[0].name;
+    }
+
+    // === SIMULASI PROGRESS ===
+    let progress = 0;
+    const interval = setInterval(() => {
+      if (progress < 90) {
+        progress += 10;
+        document.getElementById("progressBar").style.width = progress + "%";
+      }
+    }, 500);
+
+    // === PANGGIL API BACKUP ===
+    const backupRes = await fetch("/backup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    // === HENTIKAN PROGRESS ===
+    clearInterval(interval);
+    document.getElementById("progressBar").style.width = "100%";
+
+    // ✅ CEK JIKA RESPONSE ERROR
+    if (!backupRes.ok) {
+      showPopup("popupError");
+      return;
+    }
+
+    // ✅ AMBIL FILE SEBAGAI BLOB (BUKAN JSON)
+    const blob = await backupRes.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    // ✅ SET NAMA FILE DOWNLOAD
+    lastFilename = `backup_${email}.zip`;
+
     const downloadLink = document.getElementById("downloadLink");
-    downloadLink.href = encodeURI(result.local_url);
+    downloadLink.href = url;
     downloadLink.setAttribute("download", lastFilename);
+
+    // ✅ TAMPILKAN UI DOWNLOAD
     document.getElementById("downloadSection").classList.remove("hidden");
     document.getElementById("uploadMega").classList.remove("hidden");
     document.getElementById("restoreMega").classList.remove("hidden");
+
     showPopup("popupSuccess");
-  } else {
+
+  } catch (error) {
+    console.error("Backup Error:", error);
     showPopup("popupError");
   }
 });
