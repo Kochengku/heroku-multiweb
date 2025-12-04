@@ -1401,7 +1401,7 @@ def backup_and_upload(user):
 
         try:
             r = requests.post(
-                "{MEGA_API}/build/skyforgia/backup",
+                f"{MEGA_API}/build/skyforgia/backup",
                 json={
                     "email": user.email,
                     "panel_id": panel_id,
@@ -3759,7 +3759,7 @@ def backup():
     panel_id = str(user.serverid)
     
     # === CALL API ZIP SERVICE ===
-    zip_api_url = "{MEGA_API}/build/skyforgia/backup"
+    zip_api_url = f"{MEGA_API}/build/skyforgia/backup"
 
     payload = {
         "email": email,
@@ -3810,7 +3810,7 @@ def upload_mega_route():
     # ================================
     try:
         r_zip = requests.post(
-            "{MEGA_API}/build/skyforgia/backup",
+            f"{MEGA_API}/build/skyforgia/backup",
             json={
                 "email": email,
                 "panel_id": panel_id,
