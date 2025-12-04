@@ -1377,6 +1377,7 @@ def build_zip_memory(panel_id, uuid):
            
 def backup_and_upload(user):
     panel_id = str(user.serverid) if user.serverid else None
+
     p_user = get_ptero_user(user.email, panel_id)
     if not p_user:
         print(f"[ERROR] User {user.email} tidak ditemukan di {panel_id}")
@@ -1389,18 +1390,36 @@ def backup_and_upload(user):
 
     backup_name = f"backup_{user.email}.zip"
 
-    # === BANGUN ZIP DI MEMORY ===
-    # jika ada beberapa server, gabungkan ke ZIP
+    # === ZIP GLOBAL (GABUNGAN SEMUA SERVER) ===
     mem_zip = io.BytesIO()
     zipf = zipfile.ZipFile(mem_zip, "w", zipfile.ZIP_DEFLATED)
 
     for srv in servers:
         uuid = srv["attributes"]["uuid"]
 
-        # bangun ZIP khusus server ini
-        server_zip = build_zip_memory(panel_id, uuid)
+        print(f"[INFO] Request backup server {uuid} ke ZIP API")
 
-        # masukkan isi server ke dalam ZIP global
+        try:
+            r = requests.post(
+                "{MEGA_API}/build/skyforgia/backup",
+                json={
+                    "email": user.email,
+                    "panel_id": panel_id,
+                    "uuid": uuid
+                },
+                timeout=300
+            )
+        except Exception as e:
+            print(f"[FAILED] Gagal request ZIP API: {str(e)}")
+            continue
+
+        if r.status_code != 200:
+            print(f"[FAILED] ZIP API error: {r.text}")
+            continue
+
+        # === MASUKKAN ZIP SERVER KE ZIP GLOBAL ===
+        server_zip = io.BytesIO(r.content)
+
         with zipfile.ZipFile(server_zip, "r") as sz:
             for file in sz.namelist():
                 content = sz.read(file)
@@ -1416,23 +1435,26 @@ def backup_and_upload(user):
             "filename": backup_name,
             "email": user.email
         }
+
         r = requests.post(
             f"{MEGA_API}/mega/skyforgia/upload",
             files=files,
-            data=payload
+            data=payload,
+            timeout=300
         )
+
     except Exception as e:
         print(f"[FAILED] Gagal memanggil API upload Mega: {str(e)}")
         return False
 
-    # === Hasil upload ===
+    # === HASIL UPLOAD ===
     if r.status_code != 200:
         print(f"[FAILED] Upload ke Mega gagal: {r.text}")
         user.is_backup_mega = False
         db.session.commit()
         return False
 
-    # === Jika sukses ===
+    # === JIKA SUKSES ===
     print(f"[OK] Backup {backup_name} berhasil diupload ke Mega")
 
     user.last_backup = datetime.utcnow()
@@ -1440,8 +1462,8 @@ def backup_and_upload(user):
     user.auto_backup_enabled = True
     user.is_backup_mega = True
     user.last_filename = backup_name
-    db.session.commit()
 
+    db.session.commit()
     return True
     
 def weekly_backup():
@@ -3726,32 +3748,33 @@ def list_files_route():
 def backup():
     data = request.get_json()
     email = data.get("email")
+
     if not email:
         return jsonify({"error": "Email tidak ditemukan"}), 400
 
     user = User.query.filter_by(email=email).first()
     if not user:
-        return jsonify({"error": "User tidak ditemukan di database"}), 404
+        return jsonify({"error": "User tidak ditemukan"}), 404
 
-    panel_id = str(user.serverid) if user.serverid else None
+    panel_id = str(user.serverid)
+    
+    # === CALL API ZIP SERVICE ===
+    zip_api_url = "{MEGA_API}/build/skyforgia/backup"
 
-    p_user = get_ptero_user(email, panel_id)
-    if not p_user:
-        return jsonify({"error": "User tidak ditemukan di panel"}), 404
+    payload = {
+        "email": email,
+        "panel_id": panel_id
+    }
 
-    servers = get_servers_by_userid(p_user["id"], panel_id)
-    if not servers:
-        return jsonify({"error": "Server tidak ditemukan"}), 404
+    r = requests.post(zip_api_url, json=payload, stream=True)
 
-    uuid = servers[0]["attributes"]["uuid"]
+    if r.status_code != 200:
+        return jsonify({"error": "Gagal membuat backup"}), 500
+
     filename = f"backup_{email}.zip"
 
-    # === ZIP in-memory ===
-    zip_buffer = build_zip_memory(panel_id, uuid)  # pakai fungsi baru
-
-    # === RETURN FILE KE USER TANPA MENYIMPAN ===
     return send_file(
-        zip_buffer,
+        io.BytesIO(r.content),
         mimetype="application/zip",
         as_attachment=True,
         download_name=filename
@@ -3770,6 +3793,7 @@ def upload_mega_route():
         return jsonify({"error": "User tidak ditemukan"}), 404
 
     panel_id = str(user.serverid) if user.serverid else None
+
     p_user = get_ptero_user(email, panel_id)
     if not p_user:
         return jsonify({"error": "User panel tidak ditemukan"}), 404
@@ -3781,28 +3805,74 @@ def upload_mega_route():
     uuid = servers[0]["attributes"]["uuid"]
     filename = f"backup_{email}.zip"
 
-    # === BIKIN ZIP DI MEMORY ===
-    zip_buffer = build_zip_memory(panel_id, uuid)
+    # ================================
+    # 1️⃣ REQUEST ZIP KE ZIP API
+    # ================================
+    try:
+        r_zip = requests.post(
+            "{MEGA_API}/build/skyforgia/backup",
+            json={
+                "email": email,
+                "panel_id": panel_id,
+                "uuid": uuid
+            },
+            timeout=300
+        )
+    except Exception as e:
+        return jsonify({
+            "error": "Gagal menghubungi ZIP API",
+            "detail": str(e)
+        }), 500
+
+    if r_zip.status_code != 200:
+        return jsonify({
+            "error": "ZIP API gagal membuat backup",
+            "detail": r_zip.text
+        }), 500
+
+    zip_buffer = io.BytesIO(r_zip.content)
     zip_buffer.seek(0)
 
-    # === UPLOAD KE MEGA API (RAILWAY) ===
+    # ================================
+    # 2️⃣ UPLOAD KE MEGA API (RAILWAY)
+    # ================================
     files = {
         "file": (filename, zip_buffer, "application/zip")
     }
 
-    r = requests.post(f"{MEGA_API}/mega/skyforgia/upload", files=files)
+    try:
+        r = requests.post(
+            f"{MEGA_API}/mega/skyforgia/upload",
+            files=files,
+            timeout=300
+        )
+    except Exception as e:
+        user.is_backup_mega = False
+        db.session.commit()
+        return jsonify({
+            "error": "Gagal menghubungi MEGA API",
+            "detail": str(e)
+        }), 500
 
     if r.status_code != 200:
         user.is_backup_mega = False
         db.session.commit()
-        return jsonify({"error": "Gagal upload ke Railway", "detail": r.text}), 500
+        return jsonify({
+            "error": "Gagal upload ke Railway",
+            "detail": r.text
+        }), 500
 
-    # === UPDATE DB ===
+    # ================================
+    # 3️⃣ UPDATE DATABASE
+    # ================================
     user.is_backup_mega = True
     user.last_filename = filename
     db.session.commit()
 
-    return jsonify({"message": "Upload berhasil", "filename": filename})
+    return jsonify({
+        "message": "Upload berhasil",
+        "filename": filename
+    })
 
 @app.route("/restore-mega", methods=["GET"])
 def restore_mega():
