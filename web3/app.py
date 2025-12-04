@@ -3757,28 +3757,33 @@ def trigger_backup_process(email, panel_id):
     except Exception as e:
         print("Backup trigger error:", e)
 
-@app.route("/backup", methods=["POST"])
-def backup():
-    data = request.get_json()
-    email = data.get("email")
+def trigger_backup_process(email, panel_id):
+    zip_api_url = f"{MEGA_API}/build/kocheng/backup"
+    payload = {
+        "email": email,
+        "panel_id": panel_id
+    }
 
-    if not email:
-        return jsonify({"error": "Email tidak ditemukan"}), 400
+    try:
+        print("[BACKUP] Trigger start:", email)
 
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return jsonify({"error": "User tidak ditemukan"}), 404
+        r = requests.post(
+            zip_api_url,
+            json=payload,
+            timeout=300  # ✅ 5 menit, bukan 5 detik
+        )
 
-    panel_id = str(user.serverid)
+        print("[BACKUP] Status:", r.status_code)
+        print("[BACKUP] Response:", r.text)
 
-    # ✅ JALANKAN ASYNC (BACKGROUND)
-    Thread(target=trigger_backup_process, args=(email, panel_id)).start()
+        if r.status_code != 200:
+            print("❌ Backup API gagal")
 
-    # ✅ LANGSUNG BALIK, TANPA NUNGGU ZIP
-    return jsonify({
-        "status": "Backup sedang diproses",
-        "email": email
-    }), 200
+    except requests.exceptions.Timeout:
+        print("❌ Backup timeout (MEGA lambat)")
+
+    except Exception as e:
+        print("❌ Backup trigger error:", e)
 
 @app.route("/upload-mega", methods=["POST"])
 def upload_mega_route():
