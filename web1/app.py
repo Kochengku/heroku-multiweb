@@ -4292,17 +4292,17 @@ def trigger_backup_process(email, panel_id):
         r = requests.post(
             zip_api_url,
             json=payload,
-            timeout=300  # ✅ 5 menit, bukan 5 detik
+            timeout=300
         )
 
         print("[BACKUP] Status:", r.status_code)
         print("[BACKUP] Response:", r.text)
 
-        if r.status_code != 200:
+        if r.status_code not in [200, 202]:
             print("❌ Backup API gagal")
 
     except requests.exceptions.Timeout:
-        print("❌ Backup timeout (MEGA lambat)")
+        print("❌ Backup timeout")
 
     except Exception as e:
         print("❌ Backup trigger error:", e)
@@ -4315,24 +4315,28 @@ def backup():
     if not email:
         return jsonify({"error": "Email tidak ditemukan"}), 400
 
-    try:
-        user = User.query.filter_by(email=email).first()
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+    user = User.query.filter_by(email=email).first()
     if not user:
         return jsonify({"error": "User tidak ditemukan"}), 404
 
+    # ✅ RESET STATUS
+    user.is_backup_mega = False
+    user.mega_link = None
+    db.session.commit()
+
     panel_id = str(user.serverid)
 
-    # ✅ ASYNC BACKGROUND (AMAN)
-    t = Thread(target=trigger_backup_process, args=(email, panel_id), daemon=True)
+    t = Thread(
+        target=trigger_backup_process,
+        args=(email, panel_id),
+        daemon=True
+    )
     t.start()
 
     return jsonify({
-        "status": "Backup sedang diproses",
+        "status": "processing",
         "email": email
-    }), 200
+    }), 202
 
 @app.route("/upload-mega", methods=["POST"])
 def upload_mega_route():
@@ -4430,36 +4434,26 @@ def upload_mega_route():
 
 @app.route("/api/backup-finished", methods=["POST"])
 def backup_finished():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
 
     email = data.get("email")
     filename = data.get("filename")
     mega_link = data.get("mega_link")
 
-    user = User.query.filter_by(email=email).first()
-    if user:
-        user.is_backup_mega = True
-        user.last_filename = filename
-        user.mega_link = mega_link
-        db.session.commit()
-
-    return jsonify({"status": "ok"})
-    
-@app.route("/backup-status", methods=["GET"])
-def backup_status():
-    email = request.args.get("email")
-
-    if not email:
-        return jsonify({"error": "Email wajib"}), 400
+    if not email or not mega_link:
+        return jsonify({"error": "data tidak lengkap"}), 400
 
     user = User.query.filter_by(email=email).first()
     if not user:
         return jsonify({"error": "User tidak ditemukan"}), 404
 
-    return jsonify({
-        "ready": user.is_backup_mega,
-        "filename": user.last_filename
-    })
+    user.is_backup_mega = True
+    user.last_filename = filename
+    user.mega_link = mega_link
+    db.session.commit()
+
+    print("✅ Backup selesai diterima di Control Server")
+    return jsonify({"status": "ok"}), 200
     
 @app.route("/restore-mega", methods=["GET"])
 def restore_mega():
@@ -4543,3 +4537,12 @@ def toggle_auto_backup():
         backup_and_upload(user)
 
     return jsonify({"status": "ok", "enabled": enabled})
+    
+@app.route("/api/panels", methods=["GET"])
+def get_panels():
+    secret = request.headers.get("X-CONTROL-KEY")
+
+    if secret != "KUNCI_WEB_A":
+        return jsonify({"error": "Unauthorized"}), 401
+
+    return jsonify(PANELS)
