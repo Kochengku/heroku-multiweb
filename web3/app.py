@@ -3896,22 +3896,6 @@ def backup_finished():
 
     return jsonify({"status": "ok"})
     
-@app.route("/backup-status", methods=["GET"])
-def backup_status():
-    email = request.args.get("email")
-
-    if not email:
-        return jsonify({"error": "Email wajib"}), 400
-
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return jsonify({"error": "User tidak ditemukan"}), 404
-
-    return jsonify({
-        "ready": user.is_backup_mega,
-        "filename": user.last_filename
-    })
-
 @app.route("/restore-mega", methods=["GET"])
 def restore_mega():
     filename = request.args.get("filename")
