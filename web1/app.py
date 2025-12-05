@@ -4480,3 +4480,6 @@ def get_panels():
         return jsonify({"error": "Unauthorized"}), 401
 
     return jsonify(PANELS)
+    
+if __name__ == "__main__":
+    app.run()
