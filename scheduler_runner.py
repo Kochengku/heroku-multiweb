@@ -129,27 +129,21 @@ try:
         print("✅ EKSEKUSI update_queue")
         run_process_update_queue()
 
-    # ✅ RESET BOOST → JAM 01:00 WIB
+    # ✅ RESET BOOST
     elif job == "reset_boost":
         if not run_reset_ram_boost:
             raise Exception("Fungsi reset_boost tidak tersedia")
 
-        if now.hour == 1:
             print("✅ EKSEKUSI reset_boost")
             run_reset_ram_boost()
-        else:
-            print("⏭️ Skip reset_boost (belum jam 1 pagi WIB)")
 
-    # ✅ RESET UPGRADE → JAM 01:30 WIB
+    # ✅ RESET UPGRADE
     elif job == "reset_upgrade":
         if not run_reset_ram_upgrade:
             raise Exception("Fungsi reset_upgrade tidak tersedia")
 
-        if now.hour == 1 and now.minute >= 30:
             print("✅ EKSEKUSI reset_upgrade")
             run_reset_ram_upgrade()
-        else:
-            print("⏭️ Skip reset_upgrade (belum jam 01:30 WIB)")
 
     else:
         print("❌ JOB TIDAK DIKENAL:", job)
