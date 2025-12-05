@@ -18,9 +18,6 @@ import sqlite3
 import string
 import math
 from functools import wraps
-from flask_apscheduler import APScheduler
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.cron import CronTrigger
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import zipfile
 import subprocess
@@ -71,15 +68,6 @@ app.config["SQLALCHEMY_BINDS"] = {
     'data_dashboard': 'sqlite:///data_dashboard.db',
     'data_ticket': 'sqlite:///data_ticket.db'
 }
-
-class Config:
-    SCHEDULER_API_ENABLED = True
-
-app.config.from_object(Config())
-scheduler = APScheduler()
-scheduler.init_app(app)
-if os.getenv("DISABLE_SCHEDULER") != "1":
-    scheduler.start()
 
 DEFAULT_NODES = [
     {"id": 1, "name": "Node 1", "limit_server": 35},
@@ -594,35 +582,6 @@ def enqueue_spec_update(panel_id: str, ram: int, disk: int, cpu: int):
         page += 1
 
     add_log(f"📌 Total {len(update_queue)} server masuk ke queue {panel_id} untuk diproses batch")
- 
-@scheduler.task("interval", minutes=1)
-def process_update_queue():
-    global update_queue, update_status
-    if not update_queue:
-        if update_status == "running":
-            update_status = "done"
-            add_log("🎉 Semua server selesai diproses")
-        return
-
-    batch = update_queue[:10]
-    update_queue = update_queue[10:]
-    add_log(f"🔄 Proses {len(batch)} server (sisa {len(update_queue)} di queue)")
-
-    for srv in batch:
-        try:
-            ok = update_server_build(
-                srv["id"],            # numeric id untuk API
-                srv["allocation"],
-                srv["ram"],
-                srv["disk"],
-                srv["cpu"]
-            )
-            if ok:
-                add_log(f"✅ Berhasil update server {srv['uuid']} (panel {srv['panel_id']})")
-            else:
-                add_log(f"❌ Gagal update server {srv['uuid']} (panel {srv['panel_id']})")
-        except Exception as e:
-            add_log(f"❌ Error server {srv['uuid']} (panel {srv['panel_id']}): {e}")
             
 def get_server_status(panel_id, identifier):
     """Ambil status server dari API client (running/starting/offline)."""
@@ -1041,63 +1000,6 @@ def send_verification_email(email_penerima, kode):
 
     print("Status:", response.status_code)
     print("Respon:", response.text)
-    
-
-@scheduler.task('interval', id='reset_ram_task', minutes=5)
-def reset_ram_task():
-    print("[INFO] Running reset_ram_task")
-
-    with app.app_context():
-        users = User.query.filter(User.last_boost != None).all()
-        now = datetime.utcnow()
-        print(f"[INFO] Ditemukan {len(users)} user dengan boost aktif")
-
-        for user in users:
-            if not user.last_boost:
-                print(f"[SKIP] User {user.email} tidak punya last_boost")
-                continue
-
-            selisih = now - user.last_boost
-            print(f"[DEBUG] Cek user: {user.email} | last_boost: {user.last_boost} | selisih: {selisih}")
-
-            if selisih > timedelta(hours=1):
-                try:
-                    # Gunakan panel_id dari user.serverid (misal: "server1", "server2")
-                    panel_id = str(user.serverid) if user.serverid else None
-
-                    server_data = Server.query.filter_by(user_id=user.id).first()
-                    if not server_data:
-                        print(f"[ERROR] Server milik {user.email} tidak ditemukan di {panel_id}.")
-                        continue
-
-                    # Ambil allocation jika belum ada
-                    if not server_data.allocation_id:
-                        print(f"[INFO] Allocation belum ada untuk server {server_data.id}, ambil dari API {panel_id}...")
-                        allocation_id = get_allocation_from_api(panel_id, server_data.id)
-                        if allocation_id:
-                            server_data.allocation_id = allocation_id
-                            db.session.commit()
-                        else:
-                            print(f"[ERROR] Gagal ambil allocation_id dari API {panel_id} untuk server {server_data.id}")
-                            continue
-
-                    print(f"[INFO] Mengembalikan RAM ke normal untuk {user.email} ({panel_id})")
-                    user.boostserver = 0
-                    db.session.commit()
-                    serverspec = ServerSpec.query.filter_by(id=panel_id).first()
-                    if serverspec:
-                         revert_ram(panel_id, user, server_data, serverspec.ram)
-                    else:
-                          revert_ram(panel_id, user, server_data, 1024)
-
-                    user.last_boost = None
-                    db.session.commit()
-                    print(f"[SUCCESS] RAM berhasil di-reset dan last_boost dihapus untuk {user.email} ({panel_id})")
-
-                except Exception as e:
-                    print(f"[ERROR] Gagal reset RAM untuk {user.email} ({panel_id}): {e}")
-            else:
-                print(f"[WAIT] User {user.email} belum lewat 1 jam (baru {selisih.total_seconds() // 60} menit)")
 
 def revert_ram(panel_id, user, server_data, ramasli):
     """Kembalikan RAM ke spesifikasi normal untuk server tertentu di panel tertentu"""
@@ -1162,101 +1064,6 @@ def get_allocation_from_api(panel_id, server_id):
     except Exception as e:
         print(f"[ERROR] Gagal ambil allocation dari API ({panel_id}) server {server_id}: {e}")
         return None
-        
- # Scheduler untuk reset ram upgrade ram via coin
-@scheduler.task('interval', id='reset_ram_task_upgrade_ram', minutes=5)
-def reset_ram_task_upgrade_ram():
-    print("[INFO] Menjalankan reset_ram_task_upgrade_ram...")
-
-    with app.app_context():
-        now = datetime.utcnow()
-        users = User.query.filter(User.ram_upgrade_end != None).all()
-        print(f"[INFO] Ditemukan {len(users)} user yang pernah upgrade RAM")
-
-        for user in users:
-            if not user.ram_upgrade_end:
-                print(f"[SKIP] User {user.email} tidak punya ram_upgrade_end")
-                continue
-
-            if now >= user.ram_upgrade_end:
-                print(f"[INFO] Upgrade RAM user {user.email} sudah kadaluarsa")
-
-                # Ambil panel_id dari user
-                panel_id = str(user.serverid) if user.serverid else None
-                if not panel_id or panel_id not in PANELS:
-                    print(f"[ERROR] Panel ID tidak valid untuk user {user.email}: {panel_id}")
-                    continue
-
-                server = Server.query.filter_by(user_id=user.id).first()
-                if not server:
-                    print(f"[ERROR] Server milik {user.email} tidak ditemukan.")
-                    continue
-
-                # Pastikan allocation ada
-                if not server.allocation_id:
-                    print(f"[INFO] Allocation belum ada, ambil dari API untuk server {server.id} ({panel_id})")
-                    allocation_id = get_allocation_from_api(panel_id, server.id)
-                    if allocation_id:
-                        server.allocation_id = allocation_id
-                        db.session.commit()
-                    else:
-                        print(f"[ERROR] Gagal ambil allocation_id untuk server {server.id} ({panel_id})")
-                        continue
-
-                # Revert ke spesifikasi normal
-                serverspec = ServerSpec.query.filter_by(id=panel_id).first()
-                if revert_ram(panel_id, user, server, serverspec.ram):
-                    user.ram = serverspec.ram
-                    user.ram_upgrade_start = None
-                    user.ram_upgrade_end = None
-                    db.session.commit()
-                    print(f"[DONE] RAM direset dan info upgrade dibersihkan untuk {user.email} ({panel_id})")
-                else:
-                    print(f"[FAIL] Gagal reset RAM untuk {user.email} ({panel_id})")
-
-            else:
-                sisa = user.ram_upgrade_end - now
-                print(f"[WAIT] Upgrade RAM {user.email} masih aktif ({sisa})")
-                
-# Scheduler untuk mematikan server user yang tidak login website selama 5 hari
-@scheduler.task('interval', id='shutdown_inactive_servers', hours=24)
-def shutdown_inactive_servers():
-    print("[INFO] Menjalankan shutdown_inactive_servers...")
-
-    with app.app_context():
-        batas = datetime.utcnow() - timedelta(days=5)
-        users = User.query.filter(User.last_login != None, User.last_login < batas).all()
-        print(f"[INFO] Ditemukan {len(users)} user tidak aktif > 5 hari")
-
-        for user in users:
-            panel_id = str(user.serverid) if user.serverid else None
-            if not panel_id or panel_id not in PANELS:
-                print(f"[SKIP] {user.email} tidak punya panel_id valid ({panel_id})")
-                continue
-
-            servers = Server.query.filter_by(user_id=user.id).all()
-            if not servers:
-                print(f"[SKIP] {user.email} tidak punya server")
-                continue
-
-            for server in servers:
-                try:
-                    url = f"{PANELS[panel_id]['url']}/api/application/servers/{server.id}/power"
-                    headers = {
-                        "Authorization": f"Bearer {PANELS[panel_id]['api_key']}",
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    }
-
-                    response = requests.post(url, headers=headers, json={"signal": "stop"})
-
-                    if response.status_code == 204:
-                        print(f"[✓] Server {server.id} milik {user.email} dimatikan (panel: {panel_id})")
-                    else:
-                        print(f"[✗] Gagal matikan {server.id} (panel: {panel_id}) "
-                              f"{response.status_code} - {response.text}")
-                except Exception as e:
-                    print(f"[ERROR] Gagal shutdown server {server.id} ({panel_id}) - {str(e)}")
 
 def admin_required(f):
     @wraps(f)
@@ -1468,6 +1275,166 @@ def backup_and_upload(user):
     db.session.commit()
     return True
     
+# == SEMUA FUNGSI SCHEDULER 
+# =========================
+# ✅ DAILY BROADCAST (07:00)
+# =========================
+def run_daily_broadcast():
+    with app.app_context():
+        print(f"[SCHEDULER] Cek broadcast {datetime.now()}")
+        broadcast_lock_notification()
+
+
+# ===============================
+# ✅ PROCESS UPDATE QUEUE (1 MENIT)
+# ===============================
+def run_process_update_queue():
+    global update_queue, update_status
+
+    if not update_queue:
+        if update_status == "running":
+            update_status = "done"
+            add_log("🎉 Semua server selesai diproses")
+        return
+
+    batch = update_queue[:10]
+    update_queue = update_queue[10:]
+    add_log(f"🔄 Proses {len(batch)} server (sisa {len(update_queue)} di queue)")
+
+    for srv in batch:
+        try:
+            ok = update_server_build(
+                srv["id"],
+                srv["allocation"],
+                srv["ram"],
+                srv["disk"],
+                srv["cpu"]
+            )
+
+            if ok:
+                add_log(f"✅ Berhasil update server {srv['uuid']} (panel {srv['panel_id']})")
+            else:
+                add_log(f"❌ Gagal update server {srv['uuid']} (panel {srv['panel_id']})")
+
+        except Exception as e:
+            add_log(f"❌ Error server {srv['uuid']} (panel {srv['panel_id']}): {e}")
+
+
+# ================================
+# ✅ RESET BOOST RAM (5 MENIT)
+# ================================
+def run_reset_ram_boost():
+    print("[INFO] Running reset_ram_task")
+
+    with app.app_context():
+        users = User.query.filter(User.last_boost != None).all()
+        now = datetime.utcnow()
+
+        for user in users:
+            if not user.last_boost:
+                continue
+
+            selisih = now - user.last_boost
+
+            if selisih > timedelta(hours=1):
+                try:
+                    panel_id = str(user.serverid) if user.serverid else None
+                    server_data = Server.query.filter_by(user_id=user.id).first()
+                    if not server_data:
+                        continue
+
+                    if not server_data.allocation_id:
+                        allocation_id = get_allocation_from_api(panel_id, server_data.id)
+                        if allocation_id:
+                            server_data.allocation_id = allocation_id
+                            db.session.commit()
+                        else:
+                            continue
+
+                    user.boostserver = 0
+                    db.session.commit()
+
+                    serverspec = ServerSpec.query.filter_by(id=panel_id).first()
+                    revert_ram(panel_id, user, server_data, serverspec.ram if serverspec else 1024)
+
+                    user.last_boost = None
+                    db.session.commit()
+
+                except Exception as e:
+                    print("[ERROR]", e)
+
+
+# ====================================
+# ✅ RESET UPGRADE RAM VIA COIN (5 MENIT)
+# ====================================
+def run_reset_ram_upgrade():
+    print("[INFO] Menjalankan reset_ram_task_upgrade_ram...")
+
+    with app.app_context():
+        now = datetime.utcnow()
+        users = User.query.filter(User.ram_upgrade_end != None).all()
+
+        for user in users:
+            if now >= user.ram_upgrade_end:
+                panel_id = str(user.serverid) if user.serverid else None
+                if not panel_id or panel_id not in PANELS:
+                    continue
+
+                server = Server.query.filter_by(user_id=user.id).first()
+                if not server:
+                    continue
+
+                if not server.allocation_id:
+                    allocation_id = get_allocation_from_api(panel_id, server.id)
+                    if allocation_id:
+                        server.allocation_id = allocation_id
+                        db.session.commit()
+                    else:
+                        continue
+
+                serverspec = ServerSpec.query.filter_by(id=panel_id).first()
+
+                if revert_ram(panel_id, user, server, serverspec.ram):
+                    user.ram = serverspec.ram
+                    user.ram_upgrade_start = None
+                    user.ram_upgrade_end = None
+                    db.session.commit()
+
+
+# =================================
+# ✅ SHUTDOWN USER TIDAK AKTIF (24 JAM)
+# =================================
+def run_shutdown_inactive_servers():
+    print("[INFO] Menjalankan shutdown_inactive_servers...")
+
+    with app.app_context():
+        batas = datetime.utcnow() - timedelta(days=5)
+        users = User.query.filter(User.last_login != None, User.last_login < batas).all()
+
+        for user in users:
+            panel_id = str(user.serverid) if user.serverid else None
+            if not panel_id or panel_id not in PANELS:
+                continue
+
+            servers = Server.query.filter_by(user_id=user.id).all()
+            for server in servers:
+                try:
+                    url = f"{PANELS[panel_id]['url']}/api/application/servers/{server.id}/power"
+                    headers = {
+                        "Authorization": f"Bearer {PANELS[panel_id]['api_key']}",
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+
+                    response = requests.post(url, headers=headers, json={"signal": "stop"})
+                    if response.status_code == 204:
+                        print(f"[✓] Server {server.id} dimatikan")
+                except Exception as e:
+                    print("[ERROR]", e)
+                    
+# ====================================
+# ✅ BACKUP MINGGUAN 
+# ====================================
 def weekly_backup():
     with app.app_context():
         users = User.query.filter_by(auto_backup_enabled=True).all()
@@ -1526,21 +1493,6 @@ def weekly_backup():
                 db.session.commit()
 
             time.sleep(60)  # throttle supaya panel tidak overload
-
-scheduler_auto_backup = BackgroundScheduler()
-
-# Jalan tiap Minggu jam 03:00 pagi
-scheduler_auto_backup.add_job(
-    weekly_backup,
-    "cron",
-    day_of_week="sun",
-    hour=3,
-    minute=0,
-    id="weekly_backup_job",
-    replace_existing=True
-)
-
-scheduler_auto_backup.start()
     
 #------ SISTEM UPDATE LAST LOGIN ------#
 @app.before_request
