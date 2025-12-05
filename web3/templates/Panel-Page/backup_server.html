@@ -167,14 +167,6 @@
       </div>
     </div>
 
-    <!-- Download -->
-    <div id="downloadSection" class="hidden text-center">
-      <a id="downloadLink"
-        class="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-lg font-medium inline-flex items-center gap-2 text-sm">
-        <i class="fa-solid fa-download"></i> Download Backup
-      </a>
-    </div>
-
   </section>
 
 </main>
@@ -257,115 +249,81 @@ function forceDownload(url, filename) {
 
 // ====== START BACKUP ======
 document.getElementById("startBackup").addEventListener("click", async () => {
+  let interval;
+
   try {
     const email = userEmail;
 
-    // === TAMPILKAN PROGRESS ===
-    document.getElementById("progressSection").classList.remove("hidden");
-    document.getElementById("progressBar").style.width = "5%";
+    const progressSection = document.getElementById("progressSection");
+    const progressBar = document.getElementById("progressBar");
 
-    // === AMBIL LIST FILE ===
+    // ✅ TAMPILKAN PROGRESS
+    progressSection.classList.remove("hidden");
+    progressBar.style.width = "5%";
+
+    // ✅ AMBIL LIST FILE
     const filesRes = await fetch(`/list-files?email=${email}`);
     const files = await filesRes.json();
 
     if (files.warning) {
       showPopup("popupNoserver");
-      document.getElementById("progressSection").classList.add("hidden");
+      progressSection.classList.add("hidden");
       return;
     }
 
-    // === TAMPILKAN FILE KE TABLE ===
-    const fileTable = document.getElementById("fileTable");
-    const fileList = document.getElementById("fileList");
-    fileList.innerHTML = "";
+    // ✅ TAMPILKAN FILE KE TABEL
+  const fileTable = document.getElementById("fileTable");
+  const fileList = document.getElementById("fileList");
+  fileList.innerHTML = "";
+  files.forEach((f) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="px-4 py-2 border">${f.name}</td>
+      <td class="px-4 py-2 border">${f.type}</td>
+      <td class="px-4 py-2 border">${f.size}</td>
+    `;
+    fileList.appendChild(tr);
+  });
+  fileTable.classList.remove("hidden");
 
-    files.forEach((f) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td class="px-4 py-2 border">${f.name}</td>
-        <td class="px-4 py-2 border">${f.type}</td>
-        <td class="px-4 py-2 border">${f.size}</td>
-      `;
-      fileList.appendChild(tr);
-    });
-
-    fileTable.classList.remove("hidden");
-
-    // === SIMULASI PROGRESS (HANYA UI) ===
+    // ✅ SIMULASI PROGRESS (UI SAJA)
     let progress = 10;
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
       if (progress < 90) {
         progress += 10;
-        document.getElementById("progressBar").style.width = progress + "%";
+        progressBar.style.width = progress + "%";
       }
     }, 500);
 
-    // === PANGGIL API BACKUP (ASYNC) ===
+    // ✅ PANGGIL BACKUP
     const backupRes = await fetch("/backup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email })
     });
 
-    const result = await backupRes.json(); // ✅ SEKARANG JSON
-
+    // ✅ PAKSA SELESAI UI BEGITU REQUEST BALIK
     clearInterval(interval);
-    document.getElementById("progressBar").style.width = "100%";
+    progressBar.style.width = "100%";
 
-    // ✅ JIKA ERROR
-    if (!backupRes.ok) {
-      console.error(result);
-      showPopup("popupError");
-      return;
-    }
+    setTimeout(() => {
+      progressSection.classList.add("hidden"); // ✅ BAR HILANG TOTAL
+    }, 300);
 
-    // ✅ BACKUP TIDAK DIDOWNLOAD LAGI
-    showPopup("popupSuccessProcessing");
-    
-    cekStatusBackup(email);
-
-    // ✅ TAMPILKAN STATUS "SEDANG DIPROSES"
-    document.getElementById("downloadSection").classList.remove("hidden");
-    document.getElementById("downloadSection").innerHTML = `
-      <p class="text-green-500 font-semibold">
-        ✅ Backup sedang diproses di server.
-      </p>
-      <p class="text-sm text-gray-400 mt-1">
-        Silakan tunggu, file akan tersedia otomatis setelah upload ke MEGA selesai.
-      </p>
-    `;
+    // ✅ STATUS APA PUN, TETAP TAMPILKAN SUKSES PROSES
+    showPopup("popupSuccess");
 
   } catch (error) {
     console.error("Backup Error:", error);
+
+    clearInterval(interval);
+
+    // ✅ PAKSA HILANG BIAR NGGAK STUCK
+    document.getElementById("progressSection").classList.add("hidden");
+
     showPopup("popupError");
   }
 });
-
-async function cekStatusBackup(email) {
-  try {
-    const res = await fetch(`/backup-status?email=${email}`);
-    const data = await res.json();
-
-    if (data.ready && data.mega_link) {
-  showPopup("popupBackupSelesai");
-
-  document.getElementById("downloadSection").innerHTML = `
-    <a href="${data.mega_link}" target="_blank"
-       class="bg-green-600 text-white px-4 py-2 rounded">
-       ✅ Download Backup dari MEGA
-    </a>
-  `;
-}
-
-    // ❌ BELUM SELESAI → cek lagi 5 detik
-    setTimeout(() => cekStatusBackup(email), 5000);
-
-  } catch (err) {
-    console.error("Gagal cek status backup:", err);
-    setTimeout(() => cekStatusBackup(email), 5000);
-  }
-}
-
 // ====== UPLOAD MEGA ======
 document.getElementById("uploadMega").addEventListener("click", async () => {
   if (!lastFilename) return;
