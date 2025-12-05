@@ -32,7 +32,7 @@ except Exception as e:
 
 
 # =========================
-# ✅ PROCESS UPDATE QUEUE (WEB1 & WEB3)
+# ✅ PROCESS UPDATE QUEUE
 # =========================
 update_queue = []
 update_status = "idle"
@@ -116,8 +116,8 @@ def run_reset_ram_boost():
                 user.last_boost = None
                 db.session.commit()
 
-        except Exception as e:
-            print("[ERROR reset_boost]", e)
+            except Exception as e:
+                print("[ERROR reset_boost]", e)
 
 
 # =========================
