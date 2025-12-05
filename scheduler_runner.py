@@ -1,6 +1,7 @@
 import sys
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import importlib
 
 print("========== SCHEDULER RUNNER START ==========")
 
@@ -21,17 +22,12 @@ now = datetime.now(ZoneInfo("Asia/Jakarta"))
 print(f"[SCHEDULER] Job: {job} | Waktu WIB: {now}")
 
 # =========================
-# ✅ SAFE IMPORT DENGAN FALLBACK WEB1 -> WEB3
+# ✅ SAFE IMPORT (VERSI AMAN)
 # =========================
-
 def safe_import_multi(paths, func_name):
-    """
-    Coba import fungsi dari beberapa module secara berurutan.
-    Kalau gagal semua, return None (TAPI ERROR DITAMPILKAN).
-    """
     for path in paths:
         try:
-            module = __import__(path, fromlist=[func_name])
+            module = importlib.import_module(path)
             func = getattr(module, func_name)
             print(f"✅ IMPORT BERHASIL: {func_name} dari {path}")
             return func
@@ -45,44 +41,38 @@ def safe_import_multi(paths, func_name):
 # ✅ IMPORT SEMUA JOB
 # =========================
 
-# ✅ WEEKLY BACKUP (WEB1 & WEB3)
 weekly_backup = safe_import_multi(
     ["web1.scheduler_tasks", "web3.scheduler_tasks"],
     "weekly_backup"
 )
 
-# ✅ DAILY BROADCAST (KHUSUS WEB1)
 run_daily_broadcast = safe_import_multi(
     ["web1.scheduler_tasks"],
     "run_daily_broadcast"
 )
 
-# ✅ SHUTDOWN INACTIVE (WEB1 & WEB3)
 run_shutdown_inactive_servers = safe_import_multi(
     ["web1.scheduler_tasks", "web3.scheduler_tasks"],
     "run_shutdown_inactive_servers"
 )
 
-# ✅ RESET BOOST (WEB1 & WEB3)
 run_reset_ram_boost = safe_import_multi(
     ["web1.scheduler_tasks", "web3.scheduler_tasks"],
     "run_reset_ram_boost"
 )
 
-# ✅ RESET UPGRADE (WEB1 & WEB3)
 run_reset_ram_upgrade = safe_import_multi(
     ["web1.scheduler_tasks", "web3.scheduler_tasks"],
     "run_reset_ram_upgrade"
 )
 
-# ✅ UPDATE QUEUE (WEB1 & WEB3)
 run_process_update_queue = safe_import_multi(
     ["web1.scheduler_tasks", "web3.scheduler_tasks"],
     "run_process_update_queue"
 )
 
 # =========================
-# ✅ DEBUG STATUS FUNGSI
+# ✅ DEBUG STATUS
 # =========================
 print("========== DEBUG STATUS FUNGSI ==========")
 print("weekly_backup:", weekly_backup)
@@ -98,7 +88,7 @@ print("========================================")
 # =========================
 
 try:
-    # ✅ 1 MINGGU 1X → MINGGU JAM 03:00 WIB
+    # ✅ MINGGU JAM 03:00 WIB
     if job == "weekly_backup":
         if not weekly_backup:
             raise Exception("Fungsi weekly_backup tidak tersedia")
@@ -109,18 +99,18 @@ try:
         else:
             print("⏭️ Skip weekly_backup (belum waktunya)")
 
-    # ✅ TIAP HARI JAM 07:00 WIB
+    # ✅ HARIAN JAM 07:00 WIB
     elif job == "daily_broadcast":
         if not run_daily_broadcast:
-            raise Exception("Fungsi daily_broadcast tidak tersedia di web ini")
+            raise Exception("Fungsi daily_broadcast tidak tersedia")
 
         if now.hour == 7:
             print("✅ EKSEKUSI daily_broadcast")
             run_daily_broadcast()
         else:
-            print("⏭️ Skip daily_broadcast (belum jam 7 pagi WIB)")
+            print("⏭️ Skip daily_broadcast")
 
-    # ✅ TIAP HARI JAM 02:00 WIB
+    # ✅ HARIAN JAM 02:00 WIB
     elif job == "shutdown_inactive":
         if not run_shutdown_inactive_servers:
             raise Exception("Fungsi shutdown_inactive tidak tersedia")
@@ -129,9 +119,9 @@ try:
             print("✅ EKSEKUSI shutdown_inactive")
             run_shutdown_inactive_servers()
         else:
-            print("⏭️ Skip shutdown_inactive (belum jam 2 pagi WIB)")
+            print("⏭️ Skip shutdown_inactive")
 
-    # ✅ BEBAS (SETIAP 1–10 MENIT)
+    # ✅ TIAP 1–10 MENIT
     elif job == "update_queue":
         if not run_process_update_queue:
             raise Exception("Fungsi update_queue tidak tersedia")
@@ -139,21 +129,27 @@ try:
         print("✅ EKSEKUSI update_queue")
         run_process_update_queue()
 
-    # ✅ RESET BOOST
+    # ✅ RESET BOOST → JAM 01:00 WIB
     elif job == "reset_boost":
         if not run_reset_ram_boost:
             raise Exception("Fungsi reset_boost tidak tersedia")
 
-        print("✅ EKSEKUSI reset_boost")
-        run_reset_ram_boost()
+        if now.hour == 1:
+            print("✅ EKSEKUSI reset_boost")
+            run_reset_ram_boost()
+        else:
+            print("⏭️ Skip reset_boost (belum jam 1 pagi WIB)")
 
-    # ✅ RESET UPGRADE
+    # ✅ RESET UPGRADE → JAM 01:30 WIB
     elif job == "reset_upgrade":
         if not run_reset_ram_upgrade:
             raise Exception("Fungsi reset_upgrade tidak tersedia")
 
-        print("✅ EKSEKUSI reset_upgrade")
-        run_reset_ram_upgrade()
+        if now.hour == 1 and now.minute >= 30:
+            print("✅ EKSEKUSI reset_upgrade")
+            run_reset_ram_upgrade()
+        else:
+            print("⏭️ Skip reset_upgrade (belum jam 01:30 WIB)")
 
     else:
         print("❌ JOB TIDAK DIKENAL:", job)
@@ -161,4 +157,6 @@ try:
 except Exception as e:
     print("🔥 FATAL ERROR SAAT EKSEKUSI JOB:", e)
 
-print("========== SCHEDULER RUNNER SELESAI ==========")
+finally:
+    print("✅ Scheduler selesai, exit...")
+    sys.exit(0)
