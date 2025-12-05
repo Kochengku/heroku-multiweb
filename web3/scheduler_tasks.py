@@ -82,42 +82,51 @@ def run_reset_ram_boost():
 
     print("[INFO] Running reset_ram_task")
 
-    with app.app_context():
-        users = User.query.filter(User.last_boost != None).all()
-        now = datetime.utcnow()
+    try:
+        with app.app_context():
+            users = User.query.filter(User.last_boost != None).all()
+            now = datetime.utcnow()
 
-        for user in users:
-            try:
-                if not user.last_boost:
-                    continue
-
-                if (now - user.last_boost) < timedelta(hours=1):
-                    continue
-
-                panel_id = str(user.serverid) if user.serverid else None
-                server_data = Server.query.filter_by(user_id=user.id).first()
-                if not server_data:
-                    continue
-
-                if not server_data.allocation_id:
-                    allocation_id = get_allocation_from_api(panel_id, server_data.id)
-                    if allocation_id:
-                        server_data.allocation_id = allocation_id
-                        db.session.commit()
-                    else:
+            for user in users:
+                try:
+                    if not user.last_boost:
                         continue
 
-                user.boostserver = 0
-                db.session.commit()
+                    if (now - user.last_boost) < timedelta(hours=1):
+                        continue
 
-                serverspec = ServerSpec.query.filter_by(id=panel_id).first()
-                revert_ram(panel_id, user, server_data, serverspec.ram if serverspec else 1024)
+                    panel_id = str(user.serverid) if user.serverid else None
+                    server_data = Server.query.filter_by(user_id=user.id).first()
+                    if not server_data:
+                        continue
 
-                user.last_boost = None
-                db.session.commit()
+                    if not server_data.allocation_id:
+                        allocation_id = get_allocation_from_api(panel_id, server_data.id)
+                        if allocation_id:
+                            server_data.allocation_id = allocation_id
+                            db.session.commit()
+                        else:
+                            continue
 
-            except Exception as e:
-                print("[ERROR reset_boost]", e)
+                    user.boostserver = 0
+                    db.session.commit()
+
+                    serverspec = ServerSpec.query.filter_by(id=panel_id).first()
+                    revert_ram(panel_id, user, server_data, serverspec.ram if serverspec else 1024)
+
+                    user.last_boost = None
+                    db.session.commit()
+
+                except Exception as e:
+                    print("[ERROR reset_boost]", e)
+
+    finally:
+        try:
+            db.session.close()
+            db.engine.dispose()
+            print("✅ DB ditutup (reset_boost)")
+        except:
+            pass
 
 
 # =========================
@@ -130,41 +139,50 @@ def run_reset_ram_upgrade():
 
     print("[INFO] Menjalankan reset_ram_task_upgrade_ram...")
 
-    with app.app_context():
-        now = datetime.utcnow()
-        users = User.query.filter(User.ram_upgrade_end != None).all()
+    try:
+        with app.app_context():
+            now = datetime.utcnow()
+            users = User.query.filter(User.ram_upgrade_end != None).all()
 
-        for user in users:
-            try:
-                if now < user.ram_upgrade_end:
-                    continue
-
-                panel_id = str(user.serverid) if user.serverid else None
-                if not panel_id or panel_id not in PANELS:
-                    continue
-
-                server = Server.query.filter_by(user_id=user.id).first()
-                if not server:
-                    continue
-
-                if not server.allocation_id:
-                    allocation_id = get_allocation_from_api(panel_id, server.id)
-                    if allocation_id:
-                        server.allocation_id = allocation_id
-                        db.session.commit()
-                    else:
+            for user in users:
+                try:
+                    if now < user.ram_upgrade_end:
                         continue
 
-                serverspec = ServerSpec.query.filter_by(id=panel_id).first()
+                    panel_id = str(user.serverid) if user.serverid else None
+                    if not panel_id or panel_id not in PANELS:
+                        continue
 
-                if revert_ram(panel_id, user, server, serverspec.ram):
-                    user.ram = serverspec.ram
-                    user.ram_upgrade_start = None
-                    user.ram_upgrade_end = None
-                    db.session.commit()
+                    server = Server.query.filter_by(user_id=user.id).first()
+                    if not server:
+                        continue
 
-            except Exception as e:
-                print("[ERROR reset_upgrade]", e)
+                    if not server.allocation_id:
+                        allocation_id = get_allocation_from_api(panel_id, server.id)
+                        if allocation_id:
+                            server.allocation_id = allocation_id
+                            db.session.commit()
+                        else:
+                            continue
+
+                    serverspec = ServerSpec.query.filter_by(id=panel_id).first()
+
+                    if revert_ram(panel_id, user, server, serverspec.ram):
+                        user.ram = serverspec.ram
+                        user.ram_upgrade_start = None
+                        user.ram_upgrade_end = None
+                        db.session.commit()
+
+                except Exception as e:
+                    print("[ERROR reset_upgrade]", e)
+
+    finally:
+        try:
+            db.session.close()
+            db.engine.dispose()
+            print("✅ DB ditutup (reset_upgrade)")
+        except:
+            pass
 
 
 # =========================
@@ -177,31 +195,40 @@ def run_shutdown_inactive_servers():
 
     print("[INFO] Menjalankan shutdown_inactive_servers...")
 
-    with app.app_context():
-        batas = datetime.utcnow() - timedelta(days=5)
-        users = User.query.filter(User.last_login != None, User.last_login < batas).all()
+    try:
+        with app.app_context():
+            batas = datetime.utcnow() - timedelta(days=5)
+            users = User.query.filter(User.last_login != None, User.last_login < batas).all()
 
-        for user in users:
-            try:
-                panel_id = str(user.serverid) if user.serverid else None
-                if not panel_id or panel_id not in PANELS:
-                    continue
+            for user in users:
+                try:
+                    panel_id = str(user.serverid) if user.serverid else None
+                    if not panel_id or panel_id not in PANELS:
+                        continue
 
-                servers = Server.query.filter_by(user_id=user.id).all()
-                for server in servers:
-                    url = f"{PANELS[panel_id]['url']}/api/application/servers/{server.id}/power"
-                    headers = {
-                        "Authorization": f"Bearer {PANELS[panel_id]['api_key']}",
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    }
+                    servers = Server.query.filter_by(user_id=user.id).all()
+                    for server in servers:
+                        url = f"{PANELS[panel_id]['url']}/api/application/servers/{server.id}/power"
+                        headers = {
+                            "Authorization": f"Bearer {PANELS[panel_id]['api_key']}",
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        }
 
-                    r = requests.post(url, headers=headers, json={"signal": "stop"})
-                    if r.status_code == 204:
-                        print(f"[✓] Server {server.id} dimatikan")
+                        r = requests.post(url, headers=headers, json={"signal": "stop"})
+                        if r.status_code == 204:
+                            print(f"[✓] Server {server.id} dimatikan")
 
-            except Exception as e:
-                print("[ERROR shutdown]", e)
+                except Exception as e:
+                    print("[ERROR shutdown]", e)
+
+    finally:
+        try:
+            db.session.close()
+            db.engine.dispose()
+            print("✅ DB ditutup (shutdown)")
+        except:
+            pass
 
 
 # =========================
@@ -212,52 +239,61 @@ def weekly_backup():
         print("❌ App tidak siap - weekly_backup dilewati")
         return
 
-    with app.app_context():
-        users = User.query.filter_by(auto_backup_enabled=True).all()
-        print(f"[INFO] Weekly backup: {len(users)} user")
+    try:
+        with app.app_context():
+            users = User.query.filter_by(auto_backup_enabled=True).all()
+            print(f"[INFO] Weekly backup: {len(users)} user")
 
-        for user in users:
-            try:
-                panel_id = str(user.serverid) if user.serverid else None
-                if not panel_id:
+            for user in users:
+                try:
+                    panel_id = str(user.serverid) if user.serverid else None
+                    if not panel_id:
+                        user.auto_backup_enabled = False
+                        db.session.commit()
+                        continue
+
+                    p_user = get_ptero_user(user.email, panel_id)
+                    if not p_user:
+                        user.auto_backup_enabled = False
+                        db.session.commit()
+                        continue
+
+                    servers = get_servers_by_userid(p_user["id"], panel_id)
+                    if not servers:
+                        user.auto_backup_enabled = False
+                        db.session.commit()
+                        continue
+
+                    has_files = False
+                    for srv in servers:
+                        uuid = srv["attributes"]["uuid"]
+                        files = list_files(panel_id, uuid, "/")
+                        if files and files.get("data"):
+                            has_files = True
+                            break
+
+                    if not has_files:
+                        user.auto_backup_enabled = False
+                        db.session.commit()
+                        continue
+
+                    backup_and_upload(user)
+
+                    user.last_backup = datetime.utcnow()
+                    user.next_backup = user.last_backup + timedelta(weeks=1)
+                    db.session.commit()
+
+                except Exception as e:
+                    print(f"[ERROR weekly_backup] {user.email}:", e)
                     user.auto_backup_enabled = False
                     db.session.commit()
-                    continue
 
-                p_user = get_ptero_user(user.email, panel_id)
-                if not p_user:
-                    user.auto_backup_enabled = False
-                    db.session.commit()
-                    continue
+                time.sleep(60)
 
-                servers = get_servers_by_userid(p_user["id"], panel_id)
-                if not servers:
-                    user.auto_backup_enabled = False
-                    db.session.commit()
-                    continue
-
-                has_files = False
-                for srv in servers:
-                    uuid = srv["attributes"]["uuid"]
-                    files = list_files(panel_id, uuid, "/")
-                    if files and files.get("data"):
-                        has_files = True
-                        break
-
-                if not has_files:
-                    user.auto_backup_enabled = False
-                    db.session.commit()
-                    continue
-
-                backup_and_upload(user)
-
-                user.last_backup = datetime.utcnow()
-                user.next_backup = user.last_backup + timedelta(weeks=1)
-                db.session.commit()
-
-            except Exception as e:
-                print(f"[ERROR weekly_backup] {user.email}:", e)
-                user.auto_backup_enabled = False
-                db.session.commit()
-
-            time.sleep(60)
+    finally:
+        try:
+            db.session.close()
+            db.engine.dispose()
+            print("✅ DB ditutup (weekly_backup)")
+        except:
+            pass
