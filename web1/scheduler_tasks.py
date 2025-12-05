@@ -34,7 +34,7 @@ except Exception as e:
 
 
 # =========================
-# ✅ DAILY BROADCAST (KHUSUS WEB1)
+# ✅ DAILY BROADCAST
 # =========================
 def run_daily_broadcast():
     if not app:
@@ -48,7 +48,7 @@ def run_daily_broadcast():
 
 
 # =========================
-# ✅ PROCESS UPDATE QUEUE (WEB1 & WEB3)
+# ✅ PROCESS UPDATE QUEUE
 # =========================
 update_queue = []
 update_status = "idle"
@@ -132,8 +132,8 @@ def run_reset_ram_boost():
                 user.last_boost = None
                 db.session.commit()
 
-        except Exception as e:
-            print("[ERROR reset_boost]", e)
+            except Exception as e:
+                print("[ERROR reset_boost]", e)
 
 
 # =========================
