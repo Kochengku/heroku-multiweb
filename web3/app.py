@@ -3978,3 +3978,12 @@ def toggle_auto_backup():
         backup_and_upload(user)
 
     return jsonify({"status": "ok", "enabled": enabled})
+    
+@app.route("/api/panels", methods=["GET"])
+def get_panels():
+    secret = request.headers.get("X-CONTROL-KEY")
+
+    if secret != "KUNCI_WEB_A":
+        return jsonify({"error": "Unauthorized"}), 401
+
+    return jsonify(PANELS)
