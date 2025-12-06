@@ -1,7 +1,7 @@
 import sys
+import requests
 from datetime import datetime
 from zoneinfo import ZoneInfo
-import importlib
 
 print("========== SCHEDULER RUNNER START ==========")
 
@@ -21,9 +21,6 @@ job = sys.argv[1]
 now = datetime.now(ZoneInfo("Asia/Jakarta"))
 print(f"[SCHEDULER] Job: {job} | Waktu WIB: {now}")
 
-# =========================
-# ✅ SAFE IMPORT (VERSI AMAN)
-# =========================
 def safe_import_multi(paths, func_name):
     for path in paths:
         try:
@@ -35,115 +32,104 @@ def safe_import_multi(paths, func_name):
             print(f"⚠️ GAGAL import {func_name} dari {path}: {e}")
     print(f"❌ TOTAL GAGAL IMPORT: {func_name}")
     return None
-
-
-# =========================
-# ✅ IMPORT SEMUA JOB
-# =========================
-
-weekly_backup = safe_import_multi(
-    ["web1.scheduler_tasks", "web3.scheduler_tasks"],
-    "weekly_backup"
-)
-
-run_daily_broadcast = safe_import_multi(
-    ["web1.scheduler_tasks"],
-    "run_daily_broadcast"
-)
-
-run_shutdown_inactive_servers = safe_import_multi(
-    ["web1.scheduler_tasks", "web3.scheduler_tasks"],
-    "run_shutdown_inactive_servers"
-)
-
-run_reset_ram_boost = safe_import_multi(
-    ["web1.scheduler_tasks", "web3.scheduler_tasks"],
-    "run_reset_ram_boost"
-)
-
-run_reset_ram_upgrade = safe_import_multi(
-    ["web1.scheduler_tasks", "web3.scheduler_tasks"],
-    "run_reset_ram_upgrade"
-)
-
+    
 run_process_update_queue = safe_import_multi(
     ["web1.scheduler_tasks", "web3.scheduler_tasks"],
     "run_process_update_queue"
 )
 
 # =========================
-# ✅ DEBUG STATUS
+# ✅ DOMAIN
 # =========================
-print("========== DEBUG STATUS FUNGSI ==========")
-print("weekly_backup:", weekly_backup)
-print("daily_broadcast:", run_daily_broadcast)
-print("shutdown_inactive:", run_shutdown_inactive_servers)
-print("update_queue:", run_process_update_queue)
-print("reset_boost:", run_reset_ram_boost)
-print("reset_upgrade:", run_reset_ram_upgrade)
-print("========================================")
+WEB1_URL = "https://control.kocheng.biz.id"
+WEB3_URL = "https://control.skyforgia.web.id"
 
 # =========================
-# ✅ ROUTING + EKSEKUSI JOB
+# ✅ ROUTING + JAM (FULL HTTP)
 # =========================
 
 try:
-    # ✅ MINGGU JAM 03:00 WIB
-    if job == "weekly_backup":
-        if not weekly_backup:
-            raise Exception("Fungsi weekly_backup tidak tersedia")
-
+    # =========================
+    # ✅ WEEKLY BACKUP (MINGGU 03:00 WIB)
+    # =========================
+    if job == "weekly_backup_web1":
         if now.weekday() == 6 and now.hour == 3:
-            print("✅ EKSEKUSI weekly_backup")
-            weekly_backup()
+            print("✅ EKSEKUSI weekly_backup WEB1")
+            r = requests.post(f"{WEB1_URL}/internal/weekly-backup", timeout=600)
+            print("✅ RESPONSE:", r.text)
         else:
-            print("⏭️ Skip weekly_backup (belum waktunya)")
+            print("⏭️ Skip weekly_backup_web1 (belum waktunya)")
 
-    # ✅ HARIAN JAM 07:00 WIB
-    elif job == "daily_broadcast":
-        if not run_daily_broadcast:
-            raise Exception("Fungsi daily_broadcast tidak tersedia")
+    elif job == "weekly_backup_web3":
+        if now.weekday() == 6 and now.hour == 3:
+            print("✅ EKSEKUSI weekly_backup WEB3")
+            r = requests.post(f"{WEB3_URL}/internal/weekly-backup", timeout=600)
+            print("✅ RESPONSE:", r.text)
+        else:
+            print("⏭️ Skip weekly_backup_web3 (belum waktunya)")
 
+    # =========================
+    # ✅ DAILY BROADCAST (WEB1 ONLY - 07:00)
+    # =========================
+    elif job == "daily_broadcast_web1":
         if now.hour == 7:
-            print("✅ EKSEKUSI daily_broadcast")
-            run_daily_broadcast()
+            print("✅ EKSEKUSI daily_broadcast WEB1")
+            r = requests.post(f"{WEB1_URL}/internal/daily-broadcast", timeout=120)
+            print("✅ RESPONSE:", r.text)
         else:
-            print("⏭️ Skip daily_broadcast")
+            print("⏭️ Skip daily_broadcast_web1")
 
-    # ✅ HARIAN JAM 02:00 WIB
-    elif job == "shutdown_inactive":
-        if not run_shutdown_inactive_servers:
-            raise Exception("Fungsi shutdown_inactive tidak tersedia")
-
+    # =========================
+    # ✅ SHUTDOWN INACTIVE (02:00 WIB)
+    # =========================
+    elif job == "shutdown_inactive_web1":
         if now.hour == 2:
-            print("✅ EKSEKUSI shutdown_inactive")
-            run_shutdown_inactive_servers()
+            print("✅ EKSEKUSI shutdown_inactive WEB1")
+            r = requests.post(f"{WEB1_URL}/internal/shutdown-inactive", timeout=300)
+            print("✅ RESPONSE:", r.text)
         else:
-            print("⏭️ Skip shutdown_inactive")
+            print("⏭️ Skip shutdown_inactive_web1")
 
-    # ✅ TIAP 1–10 MENIT
+    elif job == "shutdown_inactive_web3":
+        if now.hour == 2:
+            print("✅ EKSEKUSI shutdown_inactive WEB3")
+            r = requests.post(f"{WEB3_URL}/internal/shutdown-inactive", timeout=300)
+            print("✅ RESPONSE:", r.text)
+        else:
+            print("⏭️ Skip shutdown_inactive_web3")
+
+    # =========================
+    # ✅ RESET BOOST (BEBAS)
+    # =========================
+    elif job == "reset_boost_web1":
+        print("✅ EKSEKUSI reset_boost WEB1")
+        r = requests.post(f"{WEB1_URL}/internal/reset-boost", timeout=120)
+        print("✅ RESPONSE:", r.text)
+
+    elif job == "reset_boost_web3":
+        print("✅ EKSEKUSI reset_boost WEB3")
+        r = requests.post(f"{WEB3_URL}/internal/reset-boost", timeout=120)
+        print("✅ RESPONSE:", r.text)
+
+    # =========================
+    # ✅ RESET UPGRADE (BEBAS)
+    # =========================
+    elif job == "reset_upgrade_web1":
+        print("✅ EKSEKUSI reset_upgrade WEB1")
+        r = requests.post(f"{WEB1_URL}/internal/reset-upgrade", timeout=120)
+        print("✅ RESPONSE:", r.text)
+
+    elif job == "reset_upgrade_web3":
+        print("✅ EKSEKUSI reset_upgrade WEB3")
+        r = requests.post(f"{WEB3_URL}/internal/reset-upgrade", timeout=120)
+        print("✅ RESPONSE:", r.text)
+        
     elif job == "update_queue":
         if not run_process_update_queue:
             raise Exception("Fungsi update_queue tidak tersedia")
 
         print("✅ EKSEKUSI update_queue")
         run_process_update_queue()
-
-    # ✅ RESET BOOST
-    elif job == "reset_boost":
-        if not run_reset_ram_boost:
-            raise Exception("Fungsi reset_boost tidak tersedia")
-
-            print("✅ EKSEKUSI reset_boost")
-            run_reset_ram_boost()
-
-    # ✅ RESET UPGRADE
-    elif job == "reset_upgrade":
-        if not run_reset_ram_upgrade:
-            raise Exception("Fungsi reset_upgrade tidak tersedia")
-
-            print("✅ EKSEKUSI reset_upgrade")
-            run_reset_ram_upgrade()
 
     else:
         print("❌ JOB TIDAK DIKENAL:", job)
