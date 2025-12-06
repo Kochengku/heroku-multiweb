@@ -1368,14 +1368,7 @@ def backup_and_upload(user):
         args=(user.email, panel_id)
     )
     t.start()
-
-    # === HASIL UPLOAD ===
-    if r.status_code != 200:
-        print(f"[FAILED] Upload ke Mega gagal: {r.text}")
-        user.is_backup_mega = False
-        db.session.commit()
-        return False
-
+    
     # === JIKA SUKSES ===
     print(f"[OK] Backup {backup_name} berhasil diupload ke Mega")
 
