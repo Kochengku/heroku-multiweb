@@ -1370,6 +1370,7 @@ def backup_and_upload(user):
     t.start()
     
     # === JIKA SUKSES ===
+    backup_name = f"backup_{user.email}.zip"
     print(f"[OK] Backup {backup_name} berhasil diupload ke Mega")
 
     user.last_backup = datetime.utcnow()
