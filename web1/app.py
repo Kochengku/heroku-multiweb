@@ -1332,77 +1332,42 @@ def build_zip_memory(panel_id, uuid):
     zip_buffer.seek(0)
     return zip_buffer
            
-def backup_and_upload(user):
-    panel_id = str(user.serverid) if user.serverid else None
+def trigger_backup_process(email, panel_id):
+    zip_api_url = f"{MEGA_API}/build/kocheng/backup"
+    payload = {
+        "email": email,
+        "panel_id": panel_id
+    }
 
-    p_user = get_ptero_user(user.email, panel_id)
-    if not p_user:
-        print(f"[ERROR] User {user.email} tidak ditemukan di {panel_id}")
-        return False
-
-    servers = get_servers_by_userid(p_user["id"], panel_id)
-    if not servers:
-        print(f"[INFO] {user.email} tidak punya server di {panel_id}")
-        return False
-
-    backup_name = f"backup_{user.email}.zip"
-
-    # === ZIP GLOBAL (GABUNGAN SEMUA SERVER) ===
-    mem_zip = io.BytesIO()
-    zipf = zipfile.ZipFile(mem_zip, "w", zipfile.ZIP_DEFLATED)
-
-    for srv in servers:
-        uuid = srv["attributes"]["uuid"]
-
-        print(f"[INFO] Request backup server {uuid} ke ZIP API")
-
-        try:
-            r = requests.post(
-                f"{MEGA_API}/build/kocheng/backup",
-                json={
-                    "email": user.email,
-                    "panel_id": panel_id,
-                    "uuid": uuid
-                },
-                timeout=300
-            )
-        except Exception as e:
-            print(f"[FAILED] Gagal request ZIP API: {str(e)}")
-            continue
-
-        if r.status_code != 200:
-            print(f"[FAILED] ZIP API error: {r.text}")
-            continue
-
-        # === MASUKKAN ZIP SERVER KE ZIP GLOBAL ===
-        server_zip = io.BytesIO(r.content)
-
-        with zipfile.ZipFile(server_zip, "r") as sz:
-            for file in sz.namelist():
-                content = sz.read(file)
-                zipf.writestr(file, content)
-
-    zipf.close()
-    mem_zip.seek(0)
-
-    # === UPLOAD KE API MEGA ===
     try:
-        files = {"file": (backup_name, mem_zip.getvalue())}
-        payload = {
-            "filename": backup_name,
-            "email": user.email
-        }
+        print("[BACKUP] Trigger start:", email)
 
         r = requests.post(
-            f"{MEGA_API}/mega/kocheng/upload",
-            files=files,
-            data=payload,
+            zip_api_url,
+            json=payload,
             timeout=300
         )
 
+        print("[BACKUP] Status:", r.status_code)
+        print("[BACKUP] Response:", r.text)
+
+        if r.status_code not in [200, 202]:
+            print("❌ Backup API gagal")
+
+    except requests.exceptions.Timeout:
+        print("❌ Backup timeout")
+
     except Exception as e:
-        print(f"[FAILED] Gagal memanggil API upload Mega: {str(e)}")
-        return False
+        print("❌ Backup trigger error:", e)
+        
+def backup_and_upload(user):
+    panel_id = str(user.serverid) if user.serverid else None
+
+    t = Thread(
+        target=trigger_backup_process,
+        args=(user.email, panel_id)
+    )
+    t.start()
 
     # === HASIL UPLOAD ===
     if r.status_code != 200:
@@ -3993,34 +3958,6 @@ def list_files_route():
         })
 
     return jsonify(file_list)
-
-def trigger_backup_process(email, panel_id):
-    zip_api_url = f"{MEGA_API}/build/kocheng/backup"
-    payload = {
-        "email": email,
-        "panel_id": panel_id
-    }
-
-    try:
-        print("[BACKUP] Trigger start:", email)
-
-        r = requests.post(
-            zip_api_url,
-            json=payload,
-            timeout=300
-        )
-
-        print("[BACKUP] Status:", r.status_code)
-        print("[BACKUP] Response:", r.text)
-
-        if r.status_code not in [200, 202]:
-            print("❌ Backup API gagal")
-
-    except requests.exceptions.Timeout:
-        print("❌ Backup timeout")
-
-    except Exception as e:
-        print("❌ Backup trigger error:", e)
 
 @app.route("/backup", methods=["POST"])
 def backup():
