@@ -4043,8 +4043,7 @@ def backup():
 
     t = Thread(
         target=trigger_backup_process,
-        args=(email, panel_id),
-        daemon=True
+        args=(email, panel_id)
     )
     t.start()
 
