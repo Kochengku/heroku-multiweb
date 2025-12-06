@@ -8,7 +8,7 @@ from collections import defaultdict
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import os
-admin_mail = os.getenv("ADMIN_MAIL")
+from static.konfigurasi.config_web1 import admin_mail
 
 # Header API
 PANELS = {
