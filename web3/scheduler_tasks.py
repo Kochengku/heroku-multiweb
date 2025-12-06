@@ -122,8 +122,7 @@ def run_reset_ram_boost():
 
     finally:
         try:
-            db.session.close()
-            db.engine.dispose()
+            db.session.remove()
             print("✅ DB ditutup (reset_boost)")
         except:
             pass
@@ -178,8 +177,7 @@ def run_reset_ram_upgrade():
 
     finally:
         try:
-            db.session.close()
-            db.engine.dispose()
+            db.session.remove()
             print("✅ DB ditutup (reset_upgrade)")
         except:
             pass
@@ -224,8 +222,7 @@ def run_shutdown_inactive_servers():
 
     finally:
         try:
-            db.session.close()
-            db.engine.dispose()
+            db.session.remove()
             print("✅ DB ditutup (shutdown)")
         except:
             pass
@@ -292,8 +289,7 @@ def weekly_backup():
 
     finally:
         try:
-            db.session.close()
-            db.engine.dispose()
+            db.session.remove()
             print("✅ DB ditutup (weekly_backup)")
         except:
             pass
