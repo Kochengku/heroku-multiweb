@@ -4262,5 +4262,35 @@ def get_panels():
 
     return jsonify(PANELS)
     
+@app.route("/internal/reset-boost", methods=["POST"])
+def internal_reset_boost():
+    from web1.scheduler_tasks import run_reset_ram_boost
+    run_reset_ram_boost()
+    return {"status": "ok", "job": "reset_boost"}, 200
+
+@app.route("/internal/reset-upgrade", methods=["POST"])
+def internal_reset_upgrade():
+    from web1.scheduler_tasks import run_reset_ram_upgrade
+    run_reset_ram_upgrade()
+    return {"status": "ok", "job": "reset_upgrade"}, 200
+
+@app.route("/internal/weekly-backup", methods=["POST"])
+def internal_weekly_backup():
+    from web1.scheduler_tasks import weekly_backup
+    weekly_backup()
+    return {"status": "ok", "job": "weekly_backup"}, 200
+
+@app.route("/internal/shutdown-inactive", methods=["POST"])
+def internal_shutdown_inactive():
+    from web1.scheduler_tasks import run_shutdown_inactive_servers
+    run_shutdown_inactive_servers()
+    return {"status": "ok", "job": "shutdown_inactive"}, 200
+
+@app.route("/internal/daily-broadcast", methods=["POST"])
+def internal_daily_broadcast():
+    from web1.scheduler_tasks import run_daily_broadcast
+    run_daily_broadcast()
+    return {"status": "ok", "job": "daily_broadcast"}, 200
+    
 if __name__ == "__main__":
     app.run()
