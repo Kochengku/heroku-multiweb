@@ -11,40 +11,48 @@ app = Flask(__name__)
 
 #------ SISITEM ARTICLE ------#
 # Path to article templates
-ARTICLE_DIR = os.path.join(app.template_folder, "Main-Article")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
+
+app = Flask(__name__, template_folder=TEMPLATE_DIR)
+
+ARTICLE_DIR = os.path.join(TEMPLATE_DIR, "Main-Article")
 
 def get_articles():
-    """Scan articles and extract metadata (title + description + category + date)."""
     articles = {}
+
+    if not os.path.exists(ARTICLE_DIR):
+        print("[ERROR] Folder tidak ditemukan:", ARTICLE_DIR)
+        return articles
+
     for file in os.listdir(ARTICLE_DIR):
         if file.endswith(".html"):
             slug = file.replace(".html", "")
             file_path = os.path.join(ARTICLE_DIR, file)
 
-            # Baca dengan ignore error biar aman
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                soup = BeautifulSoup(f, "html.parser")
+            try:
+                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                    soup = BeautifulSoup(f, "html.parser")
+            except Exception as e:
+                print("[ERROR] Gagal baca:", file_path, e)
+                continue
 
-                # Title
-                title = soup.title.string if soup.title else slug.replace("-", " ").title()
+            title = soup.title.string if soup.title else slug.replace("-", " ").title()
 
-                # Description
-                description_tag = soup.find("meta", attrs={"name": "description"})
-                description = description_tag["content"] if description_tag else "No description available."
+            description_tag = soup.find("meta", attrs={"name": "description"})
+            description = description_tag["content"] if description_tag else "No description available."
 
-                # Category
-                category_tag = soup.find("meta", attrs={"name": "category"})
-                categories = category_tag["content"].lower() if category_tag else "general"
+            category_tag = soup.find("meta", attrs={"name": "category"})
+            categories = category_tag["content"].lower() if category_tag else "general"
 
-                # Date
-                date_tag = soup.find("meta", attrs={"name": "date"})
-                if date_tag:
-                    try:
-                        date = datetime.strptime(date_tag["content"], "%Y-%m-%d")
-                    except ValueError:
-                        date = datetime.min
-                else:
+            date_tag = soup.find("meta", attrs={"name": "date"})
+            if date_tag:
+                try:
+                    date = datetime.strptime(date_tag["content"], "%Y-%m-%d")
+                except ValueError:
                     date = datetime.min
+            else:
+                date = datetime.min
 
             articles[slug] = {
                 "file": file,
@@ -54,9 +62,7 @@ def get_articles():
                 "date": date
             }
 
-    # Sort by date (newest first)
-    articles = dict(sorted(articles.items(), key=lambda x: x[1]["date"], reverse=True))
-    return articles
+    return dict(sorted(articles.items(), key=lambda x: x[1]["date"], reverse=True))
 
 # Route untuk landing page (index)
 @app.route('/robots.txt')
