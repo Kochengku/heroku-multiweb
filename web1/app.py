@@ -1306,6 +1306,7 @@ def is_panel_alive(panel_id, timeout=5):
         
 def sync_user_multi_panel(user):
     email = user.email
+    do_sync = True
 
     for panel_id in PANELS.keys():
 
@@ -1625,7 +1626,6 @@ def dashboard():
         if not session.get("sync_done"):
             print("[SYNC] Sinkronisasi pertama kali dilakukan")
             
-            do_sync = True
 
             sync_ok = sync_user_multi_panel(user)
 
