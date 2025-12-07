@@ -1207,7 +1207,7 @@ def sync_user_multi_panel(user):
             cpu=serverspec.cpu,
             ram=serverspec.ram,
             disk=serverspec.disk,
-            allocation_id=get_allocation_from_api
+            allocation_id=allocation_id
         )
         db.session.merge(server_entry)
 
