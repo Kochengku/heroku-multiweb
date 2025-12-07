@@ -6,17 +6,23 @@ import requests
 # ✅ SAFE IMPORT DARI FLASK APP
 # =========================
 try:
-    from web3.app import app, db, User, Server, ServerSpec, PANELS
-    from web3.utils import (
-        update_server_build,
-        get_allocation_from_api,
-        revert_ram,
-        get_ptero_user,
-        get_servers_by_userid,
-        list_files,
-        backup_and_upload,
-        add_log
-    )
+    from web3.app import (
+    app,
+    db,
+    User,
+    Server,
+    ServerSpec,
+    PANELS,
+
+    update_server_build,
+    get_allocation_from_api,
+    revert_ram,
+    get_ptero_user,
+    get_servers_by_userid,
+    list_files,
+    backup_and_upload,
+    add_log
+)
     print("✅ Import web3.app berhasil")
 except Exception as e:
     print("❌ Gagal import web3.app:", e)
@@ -40,10 +46,11 @@ update_status = "idle"
 def run_process_update_queue():
     global update_queue, update_status
 
+    # proses ini tidak butuh app context DB kalau semua helper siap
     if not update_queue:
         if update_status == "running":
             update_status = "done"
-            if add_log:
+            if 'add_log' in globals() and add_log:
                 add_log("🎉 Semua server selesai diproses")
         return
 
@@ -51,40 +58,45 @@ def run_process_update_queue():
     batch = update_queue[:10]
     update_queue = update_queue[10:]
 
-    if add_log:
+    if 'add_log' in globals() and add_log:
         add_log(f"🔄 Proses {len(batch)} server (sisa {len(update_queue)} di queue)")
 
     for srv in batch:
         try:
-            ok = update_server_build(
-                srv["id"],
-                srv["allocation"],
-                srv["ram"],
-                srv["disk"],
-                srv["cpu"]
-            )
+            ok = None
+            if 'update_server_build' in globals() and update_server_build:
+                ok = update_server_build(
+                    srv.get("id"),
+                    srv.get("allocation"),
+                    srv.get("ram"),
+                    srv.get("disk"),
+                    srv.get("cpu")
+                )
+            else:
+                print("⚠️ update_server_build helper tidak tersedia")
+                ok = False
 
-            if ok and add_log:
-                add_log(f"✅ Berhasil update server {srv['uuid']} (panel {srv['panel_id']})")
+            if ok and 'add_log' in globals() and add_log:
+                add_log(f"✅ Berhasil update server {srv.get('uuid')} (panel {srv.get('panel_id')})")
+            elif not ok and 'add_log' in globals() and add_log:
+                add_log(f"❌ Gagal update server {srv.get('uuid')} (panel {srv.get('panel_id')})")
 
         except Exception as e:
-            if add_log:
+            if 'add_log' in globals() and add_log:
                 add_log(f"❌ Error server {srv.get('uuid')}: {e}")
+            else:
+                print("❌ Error server:", srv.get('uuid'), e)
 
 
 # =========================
 # ✅ RESET BOOST RAM
 # =========================
 def run_reset_ram_boost():
-    if not app:
-        print("❌ App tidak siap - reset_boost dilewati")
-        return
-
-    print("[INFO] Running reset_ram_task")
-
+    print("🔥 MASUK run_reset_ram_boost()")
     try:
         with app.app_context():
             users = User.query.filter(User.last_boost != None).all()
+            print("✅ User dengan last_boost:", len(users))
             now = datetime.utcnow()
 
             for user in users:
@@ -93,38 +105,57 @@ def run_reset_ram_boost():
                         continue
 
                     if (now - user.last_boost) < timedelta(hours=1):
+                        # belum waktunya revert karena boost belum 1 jam
                         continue
 
                     panel_id = str(user.serverid) if user.serverid else None
                     server_data = Server.query.filter_by(user_id=user.id).first()
                     if not server_data:
+                        print(f"⚠️ Tidak ada server_data untuk user {user.id}, skip")
                         continue
 
+                    # pastikan allocation_id
                     if not server_data.allocation_id:
                         allocation_id = get_allocation_from_api(panel_id, server_data.id)
                         if allocation_id:
                             server_data.allocation_id = allocation_id
                             db.session.commit()
                         else:
+                            print(f"⚠️ Allocation tidak ditemukan untuk server {server_data.id}, skip")
                             continue
 
+                    # reset flags di DB
                     user.boostserver = 0
                     db.session.commit()
+                    print(f"✅ DB: boostserver=0 untuk {user.email}")
 
+                    # ambil serverspec aman
                     serverspec = ServerSpec.query.filter_by(id=panel_id).first()
-                    revert_ram(panel_id, user, server_data, serverspec.ram if serverspec else 1024)
+                    target_ram = serverspec.ram if serverspec else 1024
 
+                    # panggil revert_ram (eksekusi ke panel)
+                    try:
+                        revert_ok = revert_ram(panel_id, user, server_data, target_ram)
+                        print(f"🔁 revert_ram untuk {user.email} -> result: {revert_ok}")
+                    except Exception as e:
+                        print(f"❌ Error revert_ram untuk {user.email}:", e)
+
+                    # clear last_boost
                     user.last_boost = None
                     db.session.commit()
+                    print(f"✅ BOOST DIRESET: {user.email}")
 
                 except Exception as e:
-                    print("[ERROR reset_boost]", e)
+                    print("[ERROR reset_boost] loop user:", e)
+
+    except Exception as e:
+        print("❌ ERROR run_reset_ram_boost:", e)
 
     finally:
         try:
             db.session.remove()
-            print("✅ DB ditutup (reset_boost)")
-        except:
+            print("✅ DB session dilepas (reset_boost)")
+        except Exception:
             pass
 
 
@@ -132,16 +163,12 @@ def run_reset_ram_boost():
 # ✅ RESET UPGRADE RAM
 # =========================
 def run_reset_ram_upgrade():
-    if not app:
-        print("❌ App tidak siap - reset_upgrade dilewati")
-        return
-
-    print("[INFO] Menjalankan reset_ram_task_upgrade_ram...")
-
+    print("🔥 MASUK run_reset_ram_upgrade()")
     try:
         with app.app_context():
             now = datetime.utcnow()
             users = User.query.filter(User.ram_upgrade_end != None).all()
+            print("✅ User dengan ram_upgrade_end:", len(users))
 
             for user in users:
                 try:
@@ -150,10 +177,12 @@ def run_reset_ram_upgrade():
 
                     panel_id = str(user.serverid) if user.serverid else None
                     if not panel_id or panel_id not in PANELS:
+                        print(f"⚠️ panel_id invalid untuk user {user.email}, skip")
                         continue
 
                     server = Server.query.filter_by(user_id=user.id).first()
                     if not server:
+                        print(f"⚠️ Tidak ada server untuk user {user.email}, skip")
                         continue
 
                     if not server.allocation_id:
@@ -162,24 +191,36 @@ def run_reset_ram_upgrade():
                             server.allocation_id = allocation_id
                             db.session.commit()
                         else:
+                            print(f"⚠️ Allocation tidak ditemukan untuk server {server.id}, skip")
                             continue
 
                     serverspec = ServerSpec.query.filter_by(id=panel_id).first()
+                    target_ram = serverspec.ram if serverspec else 1024
 
-                    if revert_ram(panel_id, user, server, serverspec.ram):
-                        user.ram = serverspec.ram
+                    try:
+                        revert_ok = revert_ram(panel_id, user, server, target_ram)
+                        print(f"🔁 revert_ram (upgrade) untuk {user.email} -> result: {revert_ok}")
+                    except Exception as e:
+                        print(f"❌ Error revert_ram (upgrade) untuk {user.email}:", e)
+
+                    if revert_ok:
+                        user.ram = target_ram
                         user.ram_upgrade_start = None
                         user.ram_upgrade_end = None
                         db.session.commit()
+                        print(f"✅ UPGRADE DIRESET: {user.email}")
 
                 except Exception as e:
-                    print("[ERROR reset_upgrade]", e)
+                    print("[ERROR reset_upgrade] loop user:", e)
+
+    except Exception as e:
+        print("❌ ERROR run_reset_ram_upgrade:", e)
 
     finally:
         try:
             db.session.remove()
-            print("✅ DB ditutup (reset_upgrade)")
-        except:
+            print("✅ DB session dilepas (reset_upgrade)")
+        except Exception:
             pass
 
 
@@ -187,16 +228,12 @@ def run_reset_ram_upgrade():
 # ✅ SHUTDOWN USER TIDAK AKTIF
 # =========================
 def run_shutdown_inactive_servers():
-    if not app:
-        print("❌ App tidak siap - shutdown dilewati")
-        return
-
-    print("[INFO] Menjalankan shutdown_inactive_servers...")
-
+    print("🔥 MASUK run_shutdown_inactive_servers()")
     try:
         with app.app_context():
             batas = datetime.utcnow() - timedelta(days=5)
             users = User.query.filter(User.last_login != None, User.last_login < batas).all()
+            print("✅ User inactive:", len(users))
 
             for user in users:
                 try:
@@ -206,25 +243,33 @@ def run_shutdown_inactive_servers():
 
                     servers = Server.query.filter_by(user_id=user.id).all()
                     for server in servers:
-                        url = f"{PANELS[panel_id]['url']}/api/application/servers/{server.id}/power"
-                        headers = {
-                            "Authorization": f"Bearer {PANELS[panel_id]['api_key']}",
-                            "Content-Type": "application/json",
-                            "Accept": "application/json"
-                        }
+                        try:
+                            url = f"{PANELS[panel_id]['url']}/api/application/servers/{server.id}/power"
+                            headers = {
+                                "Authorization": f"Bearer {PANELS[panel_id]['api_key']}",
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                            }
 
-                        r = requests.post(url, headers=headers, json={"signal": "stop"})
-                        if r.status_code == 204:
-                            print(f"[✓] Server {server.id} dimatikan")
+                            r = requests.post(url, headers=headers, json={"signal": "stop"})
+                            if r.status_code == 204:
+                                print(f"[✓] Server {server.id} dimatikan")
+                            else:
+                                print(f"⚠️ Gagal matikan server {server.id}, status: {r.status_code}")
+                        except Exception as e:
+                            print("❌ Error saat memanggil panel power:", e)
 
                 except Exception as e:
-                    print("[ERROR shutdown]", e)
+                    print("[ERROR shutdown] loop user:", e)
+
+    except Exception as e:
+        print("❌ ERROR run_shutdown_inactive_servers:", e)
 
     finally:
         try:
             db.session.remove()
-            print("✅ DB ditutup (shutdown)")
-        except:
+            print("✅ DB session dilepas (shutdown)")
+        except Exception:
             pass
 
 
@@ -232,10 +277,7 @@ def run_shutdown_inactive_servers():
 # ✅ WEEKLY BACKUP
 # =========================
 def weekly_backup():
-    if not app:
-        print("❌ App tidak siap - weekly_backup dilewati")
-        return
-
+    print("🔥 MASUK weekly_backup()")
     try:
         with app.app_context():
             users = User.query.filter_by(auto_backup_enabled=True).all()
@@ -279,6 +321,7 @@ def weekly_backup():
                     user.last_backup = datetime.utcnow()
                     user.next_backup = user.last_backup + timedelta(weeks=1)
                     db.session.commit()
+                    print(f"✅ Backup dijalankan: {user.email}")
 
                 except Exception as e:
                     print(f"[ERROR weekly_backup] {user.email}:", e)
@@ -287,9 +330,12 @@ def weekly_backup():
 
                 time.sleep(60)
 
+    except Exception as e:
+        print("❌ ERROR weekly_backup:", e)
+
     finally:
         try:
             db.session.remove()
-            print("✅ DB ditutup (weekly_backup)")
-        except:
+            print("✅ DB session dilepas (weekly_backup)")
+        except Exception:
             pass
