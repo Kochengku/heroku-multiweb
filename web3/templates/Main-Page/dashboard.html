@@ -763,7 +763,7 @@ function closeSidebar() {
 </div>
 
 <script>
-const DO_SYNC = {{ 'true' if not session.get('sync_done') else 'false' }};
+const DO_SYNC = {{ do_sync|tojson }};
 
 if (DO_SYNC) {
     const overlay = document.getElementById("sync-loading");
