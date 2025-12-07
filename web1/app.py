@@ -1334,15 +1334,6 @@ def sync_user_multi_panel(user):
             print(f"[ERROR] ServerSpec tidak ditemukan untuk {panel_id}")
             continue
         
-        if not serverspec.allocation_id:
-           allocation_id = get_allocation_from_api(panel_id, server_data["id"])
-           if allocation_id:
-              serverspec.allocation_id = allocation_id
-              db.session.commit()
-           else:
-              print(f"⚠️ Allocation tidak ditemukan untuk server {server_data.id}, skip")
-              continue
-          
         # ✅ UPDATE USER
         user.serverid = panel_id
         user.uuid = server_data["uuid"]
@@ -1350,6 +1341,8 @@ def sync_user_multi_panel(user):
         user.ram = serverspec.ram
         user.disk = serverspec.disk
         user.server = 1
+        
+        allocation_id = get_allocation_from_api(panel_id, server_data["id"])
 
         # ✅ SIMPAN / UPDATE SERVER
         server_entry = Server(
@@ -1361,7 +1354,8 @@ def sync_user_multi_panel(user):
             server=1,
             cpu=serverspec.cpu,
             ram=serverspec.ram,
-            disk=serverspec.disk
+            disk=serverspec.disk,
+            allocation_id=get_allocation_from_api
         )
         db.session.merge(server_entry)
 
