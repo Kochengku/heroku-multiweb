@@ -1185,6 +1185,15 @@ def sync_user_multi_panel(user):
         if not serverspec:
             print(f"[ERROR] ServerSpec tidak ditemukan untuk {panel_id}")
             continue
+            
+        if not serverspec.allocation_id:
+           allocation_id = get_allocation_from_api(panel_id, server_data["id"])
+           if allocation_id:
+              serverspec.allocation_id = allocation_id
+              db.session.commit()
+           else:
+              print(f"⚠️ Allocation tidak ditemukan untuk server {server_data.id}, skip")
+              continue
 
         # ✅ UPDATE USER
         user.serverid = panel_id
@@ -1444,7 +1453,8 @@ def dashboard():
             telegrambotlink=telegrambotlink,
             whatsapp_number=whatsapp_number,
             whatsapp_channel=whatsapp_channel,
-            telegram_user=telegram_user
+            telegram_user=telegram_user,
+            do_sync=not session.get("sync_done")
         )
 
         resp = make_response(html)
