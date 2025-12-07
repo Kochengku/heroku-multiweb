@@ -1292,6 +1292,99 @@ def ptero_download_file(panel_id, uuid, path):
     if res.status_code == 200:
         return res.content
     return None
+    
+def is_panel_alive(panel_id, timeout=5):
+    panel = PANELS.get(panel_id)
+    if not panel:
+        return False
+
+    try:
+        r = requests.get(panel["url"], timeout=timeout)
+        return r.status_code < 500
+    except requests.RequestException:
+        return False
+        
+def sync_user_multi_panel(user):
+    email = user.email
+
+    for panel_id in PANELS.keys():
+
+        # ✅ 0. CEK PANEL BISA DIAKSES ATAU TIDAK
+        if not is_panel_alive(panel_id):
+            print(f"[SKIP] Panel {panel_id} tidak bisa diakses")
+            continue
+
+        # 1. Cari user berdasarkan email di panel ini
+        ptero_user = get_ptero_user(email, panel_id)
+        if not ptero_user:
+            continue
+
+        ptero_user_id = ptero_user["id"]
+
+        # 2. Ambil semua server milik user di panel ini
+        servers = get_servers_by_userid(ptero_user_id, panel_id)
+        if not servers:
+            continue
+
+        # 3. Ambil 1 server pertama
+        server_data = servers[0]["attributes"]
+
+        serverspec = ServerSpec.query.filter_by(id=panel_id).first()
+        if not serverspec:
+            print(f"[ERROR] ServerSpec tidak ditemukan untuk {panel_id}")
+            continue
+
+        # ✅ UPDATE USER
+        user.serverid = panel_id
+        user.uuid = server_data["uuid"]
+        user.cpu = serverspec.cpu
+        user.ram = serverspec.ram
+        user.disk = serverspec.disk
+        user.server = 1
+
+        # ✅ SIMPAN / UPDATE SERVER
+        server_entry = Server(
+            id=server_data["id"],
+            serverid=panel_id,
+            name=server_data.get("name"),
+            uuid=server_data["uuid"],
+            user_id=user.id,
+            server=1,
+            cpu=serverspec.cpu,
+            ram=serverspec.ram,
+            disk=serverspec.disk
+        )
+        db.session.merge(server_entry)
+
+        # ✅ COIN: TAMBAH 20 HANYA JIKA 0
+        if user.coin == 0:
+            user.coin += 20
+
+        # ✅ CEK & REVERT RAM DENGAN PENGECUALIAN
+        try:
+            current_ram = server_data["limits"]["memory"]  # MB dari Pterodactyl
+
+            allow_revert = (
+                current_ram > 1024 and
+                user.boostserver <= 0 and
+                user.ram_upgrade_start is None and
+                user.ram_upgrade_end is None
+            )
+
+            if allow_revert:
+                print(f"[RAM REVERT] {current_ram}MB → 1024MB | {panel_id}")
+                revert_ram(panel_id, user, serverspec, 1024)
+            else:
+                print(f"[RAM SKIP] {current_ram}MB | boost={user.boostserver} | upgrade_active")
+
+        except Exception as e:
+            print(f"[WARN] Gagal cek/revert RAM server: {e}")
+
+        db.session.commit()
+        return True  # ✅ SUKSES SINKRON
+
+    # ❌ Tidak ketemu di semua panel
+    return False
 
 def build_zip_memory(panel_id, uuid):
     global visited_paths
@@ -1524,6 +1617,18 @@ def dashboard():
            blokir_create = True
 
         cek_iklan_kedaluwarsa(user)
+        
+        if not session.get("sync_done"):
+            print("[SYNC] Sinkronisasi pertama kali dilakukan")
+
+            sync_ok = sync_user_multi_panel(user)
+
+            if not sync_ok:
+                return "Akun tidak ditemukan di server manapun", 403
+
+            session["sync_done"] = True
+        else:
+            print("[SYNC] Dilewati (sudah pernah sync di session ini)")
 
         html = render_template(
             'Main-Page/dashboard.html',
@@ -2008,6 +2113,7 @@ def kirim_ulang():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+    session.pop("sync_done", None)
     return redirect('/signin/email?logout=success')
     
 @app.route('/login/google')
