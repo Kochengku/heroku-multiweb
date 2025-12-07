@@ -191,6 +191,67 @@ function closeSidebar() {
 }
 
 </style>
+
+<style>
+.sync-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.sync-box {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    padding: 35px 40px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0,0,0,0.4);
+    animation: zoomIn 0.4s ease;
+    color: white;
+}
+
+.sync-spinner {
+    width: 70px;
+    height: 70px;
+    border: 6px solid rgba(255,255,255,0.3);
+    border-top: 6px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+.sync-text {
+    margin-top: 18px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.sync-subtext {
+    opacity: 0.7;
+    font-size: 13px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9) }
+    to { transform: scale(1) }
+}
+</style>
 <style>
   /* Default bubble & panel terlihat */
   #helpBubble, 
@@ -693,6 +754,30 @@ function closeSidebar() {
   </div>
 </div>
 
+<div id="sync-loading" class="sync-overlay">
+    <div class="sync-box">
+        <div class="sync-spinner"></div>
+        <p class="sync-text">Synchronizing your data...</p>
+        <small class="sync-subtext">Please wait a moment</small>
+    </div>
+</div>
+
+<script>
+const DO_SYNC = {{ 'true' if not session.get('sync_done') else 'false' }};
+
+if (DO_SYNC) {
+    const overlay = document.getElementById("sync-loading");
+    overlay.style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+    document.body.style.pointerEvents = "none";
+    overlay.style.pointerEvents = "all";
+
+    setTimeout(() => {
+        location.reload();
+    }, 5000);
+}
+</script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
