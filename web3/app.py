@@ -1220,7 +1220,7 @@ def sync_user_multi_panel(user):
             current_ram = server_data["limits"]["memory"]  # RAM dari Pterodactyl (MB)
             if current_ram > 1024:
                 print(f"[RAM REVERT] {current_ram}MB → 1024MB | {panel_id}")
-                revert_ram(panel_id, user, serverspec, 1024)
+                revert_ram(panel_id, user, server_entry, 1024)
             else:
                 print(f"[RAM OK] {current_ram}MB | {panel_id}")
         except Exception as e:
@@ -1418,8 +1418,11 @@ def dashboard():
             if dupe:
                 blokir_create = True
                 
+        do_sync = False
         if not session.get("sync_done"):
             print("[SYNC] Sinkronisasi pertama kali dilakukan")
+            
+            do_sync = True
 
             sync_ok = sync_user_multi_panel(user)
 
@@ -1448,7 +1451,7 @@ def dashboard():
             whatsapp_number=whatsapp_number,
             whatsapp_channel=whatsapp_channel,
             telegram_user=telegram_user,
-            do_sync=not session.get("sync_done")
+            do_sync=do_sync
         )
 
         resp = make_response(html)
