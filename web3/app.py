@@ -1426,9 +1426,6 @@ def dashboard():
 
             sync_ok = sync_user_multi_panel(user)
 
-            if not sync_ok:
-                return "Akun tidak ditemukan di server manapun", 403
-
             session["sync_done"] = True
         else:
             print("[SYNC] Dilewati (sudah pernah sync di session ini)")
