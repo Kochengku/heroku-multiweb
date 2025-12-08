@@ -519,54 +519,56 @@ function closeSidebar() {
   <main class="flex-grow p-4 sm:p-6 relative z-0">
 
     <!-- Welcome -->
-    <h1 class="text-2xl font-bold mb-4 flex items-center gap-2">
-      Welcome, {{ user.nama }}!
-      <span class="animate-wave">👋</span>
-    </h1>
+<h1 class="text-2xl font-bold mb-4 flex items-center gap-2">
+  Welcome, {{ user.nama }}!
+  <span class="animate-wave">👋</span>
+</h1>
 
-    <!-- Account Status Card -->
-<div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-  <h2 class="font-semibold text-base mb-2">
-    <i class="fa-sharp-duotone fa-solid fa-magnifying-glass"></i>
-    Account Status
-  </h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
 
-  <!-- LOADING SYNC -->
-  <div id="sync-status" class="hidden flex items-center gap-2 text-blue-600 font-medium">
-    <span class="sync-spinner"></span>
-    <span>Synchronizing your account...</span>
+  <!-- Account Status -->
+  <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+    <h2 class="font-semibold text-base mb-2">
+      <i class="fa-sharp-duotone fa-solid fa-magnifying-glass"></i>
+      Account Status
+    </h2>
+
+    <div id="sync-status" class="hidden flex items-center gap-2 text-blue-600 font-medium">
+      <span class="sync-spinner"></span>
+      <span>Synchronizing your account...</span>
+    </div>
+
+    <div id="normal-status">
+      {% if blokir_create is defined and blokir_create %}
+        <p class="text-gray-600">
+          Restricted <i class="fas fa-ban text-red-500"></i>
+        </p>
+      {% else %}
+        <p class="text-gray-600">
+          Registered and verified <i class="fas fa-check-circle text-green-500"></i>
+        </p>
+      {% endif %}
+    </div>
   </div>
 
-  <!-- NORMAL STATUS -->
-  <div id="normal-status">
-    {% if blokir_create is defined and blokir_create %}
-      <p class="text-gray-600">
-        Restricted <i class="fas fa-ban text-red-500"></i>
-      </p>
-    {% else %}
-      <p class="text-gray-600">
-        Registered and verified <i class="fas fa-check-circle text-green-500"></i>
-      </p>
-    {% endif %}
+  <!-- Username -->
+  <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+    <h2 class="font-semibold text-base mb-2">
+      <i class="fa-sharp-duotone fa-solid fa-user"></i>
+      Username
+    </h2>
+    <p class="text-gray-600">{{ user.nama }}</p>
+  </div>
+
+  <!-- Active Email -->
+  <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+    <h2 class="font-semibold text-base mb-2">
+      <i class="fa-solid fa-envelope"></i>
+      Active Email
+    </h2>
+    <p class="text-gray-600">{{ user.email }}</p>
   </div>
 </div>
-
-      <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-        <h2 class="font-semibold text-base mb-2">
-          <i class="fa-sharp-duotone fa-solid fa-user"></i>
-          Username
-        </h2>
-        <p class="text-gray-600">{{ user.nama }}</p>
-      </div>
-
-      <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-        <h2 class="font-semibold text-base mb-2">
-          <i class="fa-solid fa-envelope"></i>
-          Active Email
-        </h2>
-        <p class="text-gray-600">{{ user.email }}</p>
-      </div>
-    </div>
 
     <hr class="my-8 border-gray-200">
 
