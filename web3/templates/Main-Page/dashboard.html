@@ -451,13 +451,13 @@ function closeSidebar() {
     <h3 class="font-semibold text-sm text-gray-600 mb-2">Account Status</h3>
 
     <!-- LOADING SYNC -->
-    <div id="sync-status-2" class="hidden flex items-center gap-2 text-blue-600 font-medium">
+    <div id="sync-status" class="hidden flex items-center gap-2 text-blue-600 font-medium">
       <span class="sync-spinner"></span>
       <span>Synchronizing your account...</span>
     </div>
 
     <!-- NORMAL STATUS -->
-    <div id="normal-status-2">
+    <div id="normal-status">
       {% if blokir_create is defined and blokir_create %}
         <p class="text-gray-600 flex items-center gap-2">
           <i class="fas fa-ban text-red-500"></i> Restricted
