@@ -224,61 +224,19 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
 
 <style>
-.sync-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    z-index: 99999;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.4s ease-in-out;
-}
-
-.sync-box {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 18px;
-    padding: 35px 40px;
-    text-align: center;
-    box-shadow: 0 0 40px rgba(0,0,0,0.4);
-    animation: zoomIn 0.4s ease;
-    color: white;
-}
-
 .sync-spinner {
-    width: 70px;
-    height: 70px;
-    border: 6px solid rgba(255,255,255,0.3);
-    border-top: 6px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: auto;
-}
-
-.sync-text {
-    margin-top: 18px;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: 0.4px;
-}
-
-.sync-subtext {
-    opacity: 0.7;
-    font-size: 13px;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(59, 130, 246, 0.3);
+  border-top: 3px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0 }
-    to { opacity: 1 }
-}
-
-@keyframes zoomIn {
-    from { transform: scale(0.9) }
-    to { transform: scale(1) }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
 
@@ -566,23 +524,31 @@ function closeSidebar() {
       <span class="animate-wave">👋</span>
     </h1>
 
-    <!-- Account Info -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-      <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+    <!-- Account Status Card -->
+<div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
   <h2 class="font-semibold text-base mb-2">
     <i class="fa-sharp-duotone fa-solid fa-magnifying-glass"></i>
     Account Status
   </h2>
 
-  {% if blokir_create is defined and blokir_create %}
-  <p class="text-gray-600">
-    Restricted <i class="fas fa-ban text-red-500"></i>
-  </p>
-{% else %}
-  <p class="text-gray-600">
-    Registered and verified <i class="fas fa-check-circle text-green-500"></i>
-  </p>
-{% endif %}
+  <!-- LOADING SYNC -->
+  <div id="sync-status" class="hidden flex items-center gap-2 text-blue-600 font-medium">
+    <span class="sync-spinner"></span>
+    <span>Synchronizing your account...</span>
+  </div>
+
+  <!-- NORMAL STATUS -->
+  <div id="normal-status">
+    {% if blokir_create is defined and blokir_create %}
+      <p class="text-gray-600">
+        Restricted <i class="fas fa-ban text-red-500"></i>
+      </p>
+    {% else %}
+      <p class="text-gray-600">
+        Registered and verified <i class="fas fa-check-circle text-green-500"></i>
+      </p>
+    {% endif %}
+  </div>
 </div>
 
       <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
@@ -855,29 +821,27 @@ function closeSidebar() {
 </div>
 {% endif %}
 
-<div id="sync-loading" class="sync-overlay">
-    <div class="sync-box">
-        <div class="sync-spinner"></div>
-        <p class="sync-text">Synchronizing your data...</p>
-        <small class="sync-subtext">Please wait a moment</small>
-    </div>
-</div>
-
 <script>
 const DO_SYNC = {{ do_sync|tojson }};
 
-if (DO_SYNC) {
-    const overlay = document.getElementById("sync-loading");
-    overlay.style.display = "flex";
+document.addEventListener("DOMContentLoaded", function () {
+  const syncStatus = document.getElementById("sync-status");
+  const normalStatus = document.getElementById("normal-status");
 
-    document.body.style.overflow = "hidden";
-    document.body.style.pointerEvents = "none";
-    overlay.style.pointerEvents = "all";
+  if (DO_SYNC) {
+    // Sembunyikan status normal
+    normalStatus.classList.add("hidden");
 
+    // Tampilkan animasi sync
+    syncStatus.classList.remove("hidden");
+
+    // Setelah 5 detik, balik ke normal
     setTimeout(() => {
-        location.reload();
-    }, 5000);
-}
+      syncStatus.classList.add("hidden");
+      normalStatus.classList.remove("hidden");
+    }, 5000); // 5 detik
+  }
+});
 </script>
 <script>
 function showBlokirPopupIfAllowed() {
