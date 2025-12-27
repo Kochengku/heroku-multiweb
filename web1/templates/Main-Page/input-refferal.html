@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sahabat Ai Nusantara |> Referral Input </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="Logo" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+  <!-- Konten Utama -->
+  <main class="flex-grow flex items-center justify-center px-4 py-8 animate-fadeInUp">
+    <div class="bg-white shadow-xl rounded-2xl w-full max-w-md p-6 sm:p-8 space-y-6 relative">
+
+      <div class="text-center">
+        <h2 class="text-2xl font-bold text-blue-600">Enter Referral Code</h2>
+        <p class="text-gray-600 mt-1">Claim and get <span class="bg-yellow-400 text-white px-2 py-1 rounded-full text-xs font-semibold">+20 Coin</span></p>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="px-4 py-3 rounded text-sm text-center font-semibold
+              {% if category == 'message' %}bg-gray-100 text-gray-700
+              {% elif category == 'error' %}bg-red-100 text-red-700
+              {% elif category == 'success' %}bg-green-100 text-green-700
+              {% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% if not user.referred_by %}
+<form method="POST" class="space-y-5">
+  <div>
+    <label for="referral_code" class="block text-sm font-medium text-gray-700">Referral Code</label>
+    <input type="text" id="referral_code" name="referral_code"
+           placeholder="Contoh: 8H2JS7KQ" required
+           class="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-400" />
+  </div>
+
+  <input type="hidden" name="device_id" id="device_id" />
+
+  <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-semibold transition flex items-center justify-center gap-2">
+    <i class="fa-solid fa-gift"></i> Claim Code & Get Coin
+  </button>
+</form>
+<p class="text-xs text-center text-gray-400 pt-2">The code can only be claimed once & cannot be changed.</p>
+{% endif %}
+
+<!-- Bagian Info Selalu Tampil -->
+<div class="space-y-4 text-sm text-gray-800 mt-6">
+
+  <!-- Kode Referral -->
+  <div class="flex items-center justify-between border p-3 rounded-lg bg-gray-50">
+    <span><i class="fa-solid fa-qrcode mr-2 text-blue-500"></i> Your Referral Code</span>
+    <div class="flex items-center gap-2">
+      <span id="myReferralCode" class="font-mono text-blue-700">{{ user.referral_code }}</span>
+      <button onclick="copyCode()" class="text-sm text-blue-600 hover:text-blue-800">
+        <i class="fa-regular fa-copy"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bagikan ke WhatsApp -->
+  <div class="flex justify-center gap-3">
+    <a href="https://wa.me/?text=FREE%20PANEL%20PTERODACTYL%20(HINGGA%205GB%20-%20%E2%88%9E!!)%0A%0ASaya%20mengundang%20kamu%20untuk%20membantu%20saya%20dalam%20misi%20%60%60%60Pencari%20Koin!%60%60%60%2C%20dengan%20koin%20tersebut%20saya%20dapat%20meningkatkan%20RAM%20server%20saya%20hingga%205GB%20dan%20berkesempatan%20mendapatkan%20%E2%88%9EGB!!%0A%0AMasukkan%20kode%20saya%20ini%20%F0%9F%91%87%0Ahttps%3A%2F%2Fcontrol.kocheng.biz.id%2Fdaftar%2Femail%3Freferral%3D{{ user.referral_code }}%0A%0AAtau%20masukkan%20secara%20manual%20di%20halaman%20%F0%9F%91%87%0Ahttps%3A%2F%2Fcontrol.kocheng.biz.id%2Fgetcoin%2Freferral%0A%0A%60%60%60{{ user.referral_code }}%60%60%60%0A%0AGabung%20bersama%20saya%20untuk%20mendapatkan%20panel%20Pterodactyl%20secara%20GRATIS%20tanpa%20dipungut%20biaya%20sepeserpun%20selamanya%21%20%F0%9F%98%8E"
+       target="_blank" class="text-green-600 hover:text-green-800 flex items-center gap-1 text-sm">
+      <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp
+    </a>
+  </div>
+
+  <!-- Tabel Informasi -->
+  <div class="bg-blue-50 border border-blue-100 rounded-lg divide-y">
+    <div class="flex justify-between p-3">
+      <span><i class="fa-solid fa-user-plus text-blue-500 mr-2"></i> Invited by</span>
+      <strong>{{ inviter.nama or "Tidak diketahui" }}</strong>
+    </div>
+    <div class="flex justify-between p-3">
+      <span><i class="fa-solid fa-users text-blue-500 mr-2"></i> Friends you invite</span>
+      <strong>{{ total_referred }}</strong>
+    </div>
+    <div class="flex justify-between p-3">
+      <span><i class="fa-solid fa-coins text-yellow-500 mr-2"></i> Referral coins you get</span>
+      <strong>{{ total_referral_coin }}</strong>
+    </div>
+  </div>
+  
+  <!-- Log Aktivitas Referral -->
+<div class="mt-8">
+  <h3 class="font-bold text-blue-700 mb-2"><i class="fa-solid fa-clock-rotate-left text-gray-600 mr-1"></i> Log Aktivitas Referral</h3>
+  <table class="w-full text-sm text-left border rounded-lg overflow-hidden">
+    <thead class="bg-gray-100 text-gray-700">
+      <tr>
+        <th class="p-2">Username</th>
+        <th class="p-2">Activity</th>
+        <th class="p-2 text-center">Coin</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y bg-white">
+      {% for log in activity_log %}
+      <tr>
+        <td class="p-2">{{ log.username }}</td>
+        <td class="p-2">{{ log.action }}</td>
+        <td class="p-2 text-center">{{ log.reward }}</td>
+      </tr>
+      {% endfor %}
+      {% if activity_log|length == 0 %}
+      <tr>
+        <td colspan="3" class="p-3 text-center text-gray-400">There is no referral activity yet</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+<!-- Pagination -->
+{% if total_pages > 1 %}
+  <div class="mt-4 flex justify-center items-center space-x-2 text-sm text-gray-600">
+    {% if page > 1 %}
+      <a href="?page={{ page - 1 }}" class="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-100">
+        &laquo; previously
+      </a>
+    {% endif %}
+
+    <span class="px-3 py-1 bg-gray-100 border border-gray-300 rounded">
+      Halaman {{ page }} dari {{ total_pages }}
+    </span>
+
+    {% if page < total_pages %}
+      <a href="?page={{ page + 1 }}" class="px-3 py-1 bg-white border border-gray-300 rounded hover:bg-gray-100">
+        Next &raquo;
+      </a>
+    {% endif %}
+  </div>
+{% endif %}
+
+<!-- Info Reward Referral -->
+<div class="mt-8 border-t pt-6">
+  <h3 class="text-blue-700 font-semibold mb-4 text-center">
+    <i class="fa-solid fa-gift mr-2"></i>Bonus from Friends' Activities
+  </h3>
+  <div class="overflow-hidden border rounded-xl bg-blue-50">
+    <table class="w-full text-sm text-left text-gray-700">
+      <thead class="bg-blue-100 text-gray-800 font-semibold">
+        <tr>
+          <th class="px-4 py-3"><i class="fa-solid fa-user-friends mr-1"></i> Friends Activities</th>
+          <th class="px-4 py-3 text-right"><i class="fa-solid fa-coins mr-1 text-yellow-500"></i> Coins for You</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-blue-100">
+        <tr class="hover:bg-blue-100/50 transition">
+          <td class="px-4 py-3">Enter your referral code</td>
+          <td class="px-4 py-3 text-right font-semibold text-green-600">+5</td>
+        </tr>
+        <tr class="hover:bg-blue-100/50 transition">
+          <td class="px-4 py-3">Creating a server</td>
+          <td class="px-4 py-3 text-right font-semibold text-green-600">+15</td>
+        </tr>
+        <tr class="hover:bg-blue-100/50 transition">
+          <td class="px-4 py-3">AFK & collect 50 coins</td>
+          <td class="px-4 py-3 text-right font-semibold text-green-600">+20</td>
+        </tr>
+        <tr class="hover:bg-blue-100/50 transition">
+          <td class="px-4 py-3">AFK & collect 100 coins</td>
+          <td class="px-4 py-3 text-right font-semibold text-green-600">+50</td>
+        </tr>
+        <tr class="hover:bg-blue-100/50 transition">
+          <td class="px-4 py-3">AFK & collect 200 coins</td>
+          <td class="px-4 py-3 text-right font-semibold text-green-600">+100</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-xs text-center text-gray-500 mt-3">
+    <i class="fa-solid fa-info-circle mr-1 text-blue-400"></i>Rewards are only given 1x per friend per activity
+  </p>
+</div>
+
+
+  <!-- Leaderboard -->
+  <div class="mt-6">
+    <h3 class="font-bold text-blue-700 mb-2"><i class="fa-solid fa-ranking-star text-yellow-500 mr-1"></i> Top 5 Referral Leaderboard</h3>
+    <table class="w-full text-sm text-left border rounded-lg overflow-hidden">
+      <thead class="bg-blue-100 text-blue-700">
+        <tr>
+          <th class="p-2">Username</th>
+          <th class="p-2">Email</th>
+          <th class="p-2">Invitation</th>
+          <th class="p-2">Coin</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y bg-white">
+  {% for u in leaderboard %}
+  <tr class="{% if loop.index == 1 %}bg-yellow-100 font-semibold{% endif %}">
+    <td class="p-2 flex items-center gap-2">
+      {% if loop.index == 1 %}
+        <i class="fa-solid fa-medal text-yellow-500"></i>
+      {% elif loop.index == 2 %}
+        <i class="fa-solid fa-medal text-orange-500"></i>
+      {% elif loop.index == 3 %}
+        <i class="fa-solid fa-medal text-gray-400"></i>
+      {% endif %}
+      {{ u.nama }}
+    </td>
+    <td class="p-2">{{ u.email[:3] }}***@***</td>
+    <td class="p-2 text-center">{{ u.total_undangan }}</td>
+    <td class="p-2 text-center">{{ u.total_koin }}</td>
+  </tr>
+  {% endfor %}
+</tbody>
+    </table>
+  </div>
+
+</div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+      <p>
+        <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    async function generateDeviceId() {
+      const raw = navigator.userAgent + Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const encoder = new TextEncoder();
+      const data = encoder.encode(raw);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      document.getElementById("device_id").value = hashHex;
+    }
+
+    function copyCode() {
+      const text = document.getElementById("myReferralCode").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Code copied successfully!");
+      });
+    }
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        {% if category == 'success' %}
+          window.onload = () => {
+            generateDeviceId();
+            setTimeout(() => {
+              confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+              });
+            }, 600);
+          };
+        {% else %}
+          window.onload = generateDeviceId;
+        {% endif %}
+      {% endfor %}
+    {% endwith %}
+  </script>
+
+</body>
+</html>

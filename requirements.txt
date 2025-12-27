@@ -1,0 +1,17 @@
+gunicorn
+Flask
+Flask-Session
+Flask-SQLAlchemy
+python-dateutil
+Werkzeug
+requests
+Flask-APScheduler
+APScheduler
+beautifulsoup4
+Flask-WTF
+pytz
+SQLAlchemy
+Flask-Caching
+qrcode
+authlib
+psycopg2-binary

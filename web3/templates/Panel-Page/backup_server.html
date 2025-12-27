@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Skyforgia">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.skyforgia.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skyforgia">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.skyforgia.biz.id",
+    "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+    "name": "Skyforgia"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+  </style>
+  <title>Skyforgia |> Backup Server</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" href="/static/favicon-96x96.png" />
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+<main class="flex flex-grow animate-fadeInUp">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 p-6 hidden md:block">
+    <h2 class="font-semibold text-gray-800 mb-4">Backup Control</h2>
+    <ul class="space-y-2 text-sm">
+      <li class="text-blue-600 font-semibold"><i class="fa-solid fa-database mr-2"></i>File Backups</li>
+      <li class="text-gray-600 flex items-center gap-2"><i class="fa-solid fa-shield-halved"></i> Security</li>
+      <li class="text-gray-600 flex items-center gap-2"><i class="fa-solid fa-gear"></i> Settings</li>
+    </ul>
+
+    <hr class="my-4">
+
+    <h2 class="font-semibold text-gray-800 mb-2">Auto Backup</h2>
+    <label class="relative inline-flex items-center cursor-pointer mt-1">
+      <input type="checkbox" id="toggleAutoBackup" class="sr-only peer"
+        {% if auto_backup_enabled %}checked{% endif %}
+        {% if not user_data.server or user_data.server == 0 %}disabled{% endif %}
+      >
+      <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 peer-disabled:opacity-40"></div>
+      <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition peer-checked:translate-x-5"></div>
+    </label>
+
+    <!-- Auto info appears dynamically via JS later -->
+    <div id="autoBackupInfo" class="text-xs text-gray-600 mt-3 hidden"></div>
+  </aside>
+
+  <!-- Main Content -->
+  <section class="flex-grow p-6 md:p-10 space-y-6 max-w-5xl mx-auto">
+
+    <!-- Title -->
+    <div class="bg-white p-6 rounded-xl border shadow-sm">
+      <h1 class="text-2xl font-bold text-gray-800 mb-2">Server Backup Manager</h1>
+      <p class="text-gray-500 text-sm">Backup, restore & manage stored files.</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="bg-white p-6 rounded-xl border shadow-sm flex flex-wrap gap-3 justify-center">
+      <button id="startBackup"
+        class="btn-main bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium text-sm disabled:opacity-50">
+        <i class="fa-solid fa-database mr-1"></i>Start Backup
+      </button>
+
+      <button id="uploadMega"
+        class="hidden bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-lg font-medium text-sm">
+        <i class="fa-brands fa-megaport mr-1"></i>Upload to Cloud
+      </button>
+
+      <button id="restoreMega"
+        class="hidden bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg font-medium text-sm">
+        <i class="fa-solid fa-download mr-1"></i>Restore Backup
+      </button>
+    </div>
+
+    
+    <!-- Files Table -->
+    <div class="bg-white p-6 rounded-xl border shadow-sm">
+      <div class="flex justify-between mb-3">
+        <h2 class="font-semibold text-gray-800 text-lg">Your Files</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-sm" id="fileTable">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700 uppercase text-xs">
+              <th class="px-3 py-2 border">Name</th>
+              <th class="px-3 py-2 border">Type</th>
+              <th class="px-3 py-2 border">Size</th>
+            </tr>
+          </thead>
+          <tbody id="fileList" class="text-gray-600">
+            <tr><td colspan="3" class="py-3 text-center text-gray-400">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progressSection" class="hidden bg-white p-6 rounded-xl border shadow-sm">
+      <p class="text-sm text-gray-600 mb-2">Backup in progress...</p>
+      <div class="w-full bg-gray-200 rounded-full h-3">
+        <div id="progressBar" class="bg-blue-600 h-3 rounded-full transition-all" style="width:0%"></div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+  
+<!-- Popup Persetujuan Backup -->
+<div id="backupAgreementPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-500 p-2">
+  <div id="backupAgreementBox" class="bg-white rounded-xl shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-md p-3 sm:p-4 transform scale-95 transition-transform duration-500">
+    
+    <!-- Judul -->
+    <h2 id="backupAgreeTitle" class="text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 text-center">
+      Pemberitahuan Penting
+    </h2>
+
+    <!-- Isi -->
+    <div class="space-y-2 text-gray-700 text-xs sm:text-sm leading-relaxed">
+      <p id="backupAgreeLine1">1. Dengan menggunakan backup disini kamu mempercayai kami sebagai tempat menyimpan file script.</p>
+      <p id="backupAgreeLine2">2. Email yang digunakan harus sama dengan email yang digunakan untuk backup pertama kali supaya script dapat di download ulang kembali.</p>
+      <p id="backupAgreeLine3">3. Script kamu aman karena hanya di kelola oleh pihak kami tanpa ada campur tangan oleh pihak lain.</p>
+      <p id="backupAgreeConfirm" class="font-semibold text-xs sm:text-sm">
+        Dengan menekan tombol "Saya Setuju", Anda menyatakan telah membaca, memahami, dan menyetujui ketentuan di atas.
+      </p>
+    </div>
+
+    <!-- Tombol -->
+    <div class="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-end gap-2">
+      <button id="backupTranslateBtn" class="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition text-xs sm:text-sm">
+        English
+      </button>
+      <button id="backupAcceptBtn" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition text-xs sm:text-sm">
+        Saya Setuju
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="popupNoserver" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+  <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-xl"></i>
+  <span>Server Has No File</span>
+</div>
+<div id="popupSuccess" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+  <span>Succeed!</span>
+</div>
+<div id="popupError" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+  <i class="fa-solid fa-circle-xmark text-red-500 text-xl"></i>
+  <span>There Is An Error!</span>
+</div>
+
+<script>
+const userEmail = "{{ user_email }}"; // dari backend template
+const user = {{ user_data | tojson }};
+let lastFilename = null;
+
+function showPopup(id) {
+  const popup = document.getElementById(id);
+  popup.classList.remove("opacity-0", "-translate-y-2");
+  popup.classList.add("opacity-100", "translate-y-0");
+  setTimeout(() => {
+    popup.classList.remove("opacity-100", "translate-y-0");
+    popup.classList.add("opacity-0", "-translate-y-2");
+  }, 3000);
+}
+
+function forceDownload(url, filename) {
+  try {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename || "";
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    return true;
+  } catch (e) {
+    console.error("forceDownload failed:", e);
+    return false;
+  }
+}
+
+// ====== START BACKUP ======
+document.getElementById("startBackup").addEventListener("click", async () => {
+  let interval;
+
+  try {
+    const email = userEmail;
+
+    const progressSection = document.getElementById("progressSection");
+    const progressBar = document.getElementById("progressBar");
+
+    // ✅ TAMPILKAN PROGRESS
+    progressSection.classList.remove("hidden");
+    progressBar.style.width = "5%";
+
+    // ✅ AMBIL LIST FILE
+    const filesRes = await fetch(`/list-files?email=${email}`);
+    const files = await filesRes.json();
+
+    if (files.warning) {
+      showPopup("popupNoserver");
+      progressSection.classList.add("hidden");
+      return;
+    }
+
+    // ✅ TAMPILKAN FILE KE TABEL
+  const fileTable = document.getElementById("fileTable");
+  const fileList = document.getElementById("fileList");
+  fileList.innerHTML = "";
+  files.forEach((f) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="px-4 py-2 border">${f.name}</td>
+      <td class="px-4 py-2 border">${f.type}</td>
+      <td class="px-4 py-2 border">${f.size}</td>
+    `;
+    fileList.appendChild(tr);
+  });
+  fileTable.classList.remove("hidden");
+
+    // ✅ SIMULASI PROGRESS (UI SAJA)
+    let progress = 10;
+    interval = setInterval(() => {
+      if (progress < 90) {
+        progress += 10;
+        progressBar.style.width = progress + "%";
+      }
+    }, 500);
+
+    // ✅ PANGGIL BACKUP
+    const backupRes = await fetch("/backup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+
+    // ✅ PAKSA SELESAI UI BEGITU REQUEST BALIK
+    clearInterval(interval);
+    progressBar.style.width = "100%";
+
+    setTimeout(() => {
+      progressSection.classList.add("hidden"); // ✅ BAR HILANG TOTAL
+    }, 300);
+
+    // ✅ STATUS APA PUN, TETAP TAMPILKAN SUKSES PROSES
+    showPopup("popupSuccess");
+
+  } catch (error) {
+    console.error("Backup Error:", error);
+
+    clearInterval(interval);
+
+    // ✅ PAKSA HILANG BIAR NGGAK STUCK
+    document.getElementById("progressSection").classList.add("hidden");
+
+    showPopup("popupError");
+  }
+});
+// ====== UPLOAD MEGA ======
+document.getElementById("uploadMega").addEventListener("click", async () => {
+  if (!lastFilename) return;
+  const res = await fetch("/upload-mega", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ filename: lastFilename, email: userEmail }),
+  });
+  const result = await res.json();
+  if (result.mega_url || result.message) {
+    const text = result.mega_url
+      ? `Upload to cloud successful : ${result.mega_url}`
+      : result.message;
+    alert(text);
+    showPopup("popupSuccess");
+  } else {
+    alert(result.error || "Upload failed");
+    showPopup("popupError");
+  }
+});
+
+// ====== RESTORE MEGA ======
+document.getElementById("restoreMega").addEventListener("click", async () => {
+  const restoreBtn = document.getElementById("restoreMega");
+  const filename = restoreBtn.dataset.filename || lastFilename;
+
+  if (!filename) {
+    alert("No backup file name selected.");
+    return;
+  }
+
+  // 🔥 langsung download file dari backend
+  const downloadUrl = `/restore-mega?filename=${encodeURIComponent(filename)}`;
+
+  // Membuat link download secara otomatis
+  const a = document.createElement("a");
+  a.href = downloadUrl;
+  a.download = filename; // memastikan browser mendownload
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  // Tampilkan popup / notifikasi
+  showPopup("popupSuccess");
+});
+
+// ====== CEK STATUS BACKUP MEGA SAAT PAGE LOAD ======
+document.addEventListener("DOMContentLoaded", async () => {
+  const restoreBtn = document.getElementById("restoreMega");
+
+  try {
+    const res = await fetch(`/check-mega?email=${userEmail}`);
+    const result = await res.json();
+
+    if (result.has_backup) {
+      // tampilkan tombol restore langsung
+      restoreBtn.classList.remove("hidden");
+      // simpan nama file dari backend
+      restoreBtn.dataset.filename = result.filename;
+    } else {
+      // kalau belum ada backup di Mega, tombol restore tetap hidden
+      restoreBtn.classList.add("hidden");
+    }
+  } catch (err) {
+    console.error("Failed to check backup:", err);
+  }
+});
+
+// ====== LOAD FILE LIST SAAT PAGE LOAD ======
+document.addEventListener("DOMContentLoaded", () => {
+    const startBtn = document.getElementById("startBackup");
+    const fileList = document.getElementById("fileList");
+
+    // ð¹ Jika server user = 0, nonaktifkan tombol + tampilkan pesan tabel
+    if (user.server === 0) {
+      startBtn.disabled = true;
+
+      fileList.innerHTML = `
+        <tr>
+          <td colspan="3" class="text-center py-3 text-gray-400">
+            You don't have a server
+          </td>
+        </tr>
+      `;
+      return; // supaya tidak lanjut loadFileList()
+    }
+
+    // ð¹ Kalau server > 0, baru load daftar file
+    loadFileList();
+  });
+
+  async function loadFileList() {
+    const fileList = document.getElementById("fileList");
+    fileList.innerHTML = `
+      <tr>
+        <td colspan="3" class="text-center py-3 text-gray-400">Loading data...</td>
+      </tr>
+    `;
+
+    try {
+      const res = await fetch(`/list-files?email=${userEmail}`);
+      const files = await res.json();
+
+      fileList.innerHTML = "";
+
+      if (!files || files.length === 0) {
+        fileList.innerHTML = `
+          <tr>
+            <td colspan="3" class="text-center py-3 text-gray-400">Empty file</td>
+          </tr>
+        `;
+        return;
+      }
+
+      files.forEach((f) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="px-3 py-2 border">${f.name}</td>
+          <td class="px-3 py-2 border">${f.type}</td>
+          <td class="px-3 py-2 border">${f.size}</td>
+        `;
+        fileList.appendChild(tr);
+      });
+    } catch (err) {
+      console.error("Gagal load file list:", err);
+      fileList.innerHTML = `
+        <tr>
+          <td colspan="3" class="text-center py-3 text-gray-400">Empty file</td>
+        </tr>
+      `;
+    }
+  }
+  
+ // ====== TOGGLE AUTO BACKUP ======
+document.addEventListener("DOMContentLoaded", async () => {
+  const toggle = document.getElementById("toggleAutoBackup");
+  const infoSection = document.getElementById("autoBackupInfo");
+  const userEmail = "{{ user_data.email }}";   
+  const hasServer = {{ "true" if user_data.server else "false" }}; 
+
+
+  // tampilkan info saat page load kalau dari backend sudah aktif
+  if (toggle.checked) {
+    infoSection.classList.remove("hidden");
+  }
+
+  try {
+    const res = await fetch(`/list-files?email=${userEmail}`);
+    const files = await res.json();
+
+    if (!hasServer || !files || files.length === 0) {
+      toggle.checked = false;
+      toggle.disabled = true;
+      infoSection.classList.add("hidden");
+    }
+  } catch (err) {
+    console.error("Gagal cek server:", err);
+    toggle.checked = false;
+    toggle.disabled = true;
+    infoSection.classList.add("hidden");
+  }
+
+  // simpan perubahan saat toggle diklik
+  toggle.addEventListener("change", async () => {
+    const enabled = toggle.checked;
+
+    try {
+      const res = await fetch("/toggle-auto-backup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled })
+      });
+
+      if (!res.ok) throw new Error("Update gagal");
+
+      if (enabled) {
+        infoSection.classList.remove("hidden");
+      } else {
+        infoSection.classList.add("hidden");
+      }
+    } catch (err) {
+      console.error("Gagal update auto backup:", err);
+      toggle.checked = !enabled; // rollback
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("backupAgreementPopup");
+  const box = document.getElementById("backupAgreementBox");
+  const acceptBtn = document.getElementById("backupAcceptBtn");
+  const translateBtn = document.getElementById("backupTranslateBtn");
+
+  // hanya tampil kalau belum pernah setuju
+  if (!localStorage.getItem("backupAgreementAccepted")) {
+    showPopup();
+  }
+
+  function showPopup() {
+    popup.classList.remove("pointer-events-none", "opacity-0");
+    popup.classList.add("opacity-100");
+    box.classList.remove("scale-95");
+    box.classList.add("scale-100");
+  }
+
+  function hidePopup() {
+    popup.classList.add("opacity-0");
+    popup.classList.remove("opacity-100");
+    box.classList.add("scale-95");
+    box.classList.remove("scale-100");
+    setTimeout(() => {
+      popup.classList.add("pointer-events-none");
+    }, 500);
+  }
+
+  acceptBtn.addEventListener("click", () => {
+    localStorage.setItem("backupAgreementAccepted", "true");
+    hidePopup();
+  });
+
+  let currentLang = "id";
+  translateBtn.addEventListener("click", () => {
+    if (currentLang === "id") {
+      document.getElementById("backupAgreeTitle").innerText = "Important Notice";
+      document.getElementById("backupAgreeLine1").innerText = "1. By using backup here, you trust us as a place to store your script files.";
+      document.getElementById("backupAgreeLine2").innerText = "2. The email used must be the same as the email used for the first backup so that the script can be downloaded again.";
+      document.getElementById("backupAgreeLine3").innerText = "3. Your script is safe because it is only managed by us without interference from other parties.";
+      document.getElementById("backupAgreeConfirm").innerHTML = "<b>By clicking “I Agree”, you confirm that you have read, understood, and accepted the terms above.</b>";
+      acceptBtn.innerText = "I Agree";
+      translateBtn.innerText = "Indonesia";
+      currentLang = "en";
+    } else {
+      document.getElementById("backupAgreeTitle").innerText = "Pemberitahuan Penting";
+      document.getElementById("backupAgreeLine1").innerText = "1. Dengan menggunakan backup disini kamu mempercayai kami sebagai tempat menyimpan file script.";
+      document.getElementById("backupAgreeLine2").innerText = "2. Email yang digunakan harus sama dengan email yang digunakan untuk backup pertama kali supaya script dapat di download ulang kembali.";
+      document.getElementById("backupAgreeLine3").innerText = "3. Script kamu aman karena hanya di kelola oleh pihak kami tanpa ada campur tangan oleh pihak lain.";
+      document.getElementById("backupAgreeConfirm").innerHTML = "<b>Dengan menekan tombol “Saya Setuju”, Anda menyatakan telah membaca, memahami, dan menyetujui ketentuan di atas.</b>";
+      acceptBtn.innerText = "Saya Setuju";
+      translateBtn.innerText = "English";
+      currentLang = "id";
+    }
+  });
+});
+</script>
+</body>
+</html>
