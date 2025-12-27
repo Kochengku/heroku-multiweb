@@ -12,7 +12,7 @@ admin_mail = 'kentukimeme@gmail.com' #ganti dengan email admin
 # Konfigurasi link
 ouolink = 'https://ouo.io/7fQjGb'
 telegrambotlink = 'http://t.me/kochengs_bot'
-whatsapp_number = '212724606118'
+whatsapp_number = '6281775155057'
 whatsapp_channel = 'https://whatsapp.com/channel/0029Vb2IjRwFi8xZpEVes12h'
 telegram_user = 'Dodolzzzz'
 telegram_channel = 'https://t.me/freepanelptro'
