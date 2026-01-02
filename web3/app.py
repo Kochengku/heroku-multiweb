@@ -54,30 +54,28 @@ from pterodactyl_web3 import create_user, create_server, get_all_nodes, hapus_us
 from werkzeug.security import generate_password_hash, check_password_hash
 os.environ["WERKZEUG_RUN_MAIN"] = "true"
 
-db = SQLAlchemy()
-
 app = Flask(__name__)
 app.secret_key = "Kocheng"
 
-os.environ.pop("DATABASE_URL", None)
+db_sqlite_sqlite = SQLAlchemy()
 
 app.config.update(
-    SQLALCHEMY_DATABASE_URI="sqlite:///data_user.db",
+    SQLALCHEMY_DATABASE_URI="sqlite:///data_user.db_sqlite",
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SQLALCHEMY_BINDS={
-        "data_panel": "sqlite:///data_panel.db",
-        "data_refferal_user": "sqlite:///data_refferal_user.db",
-        "data_global_server": "sqlite:///data_global_server.db",
-        "data_global_limit_node": "sqlite:///data_global_limit_node.db",
-        "data_dashboard": "sqlite:///data_dashboard.db",
-        "data_ticket": "sqlite:///data_ticket.db",
+        "data_panel": "sqlite:///data_panel.db_sqlite",
+        "data_refferal_user": "sqlite:///data_refferal_user.db_sqlite",
+        "data_global_server": "sqlite:///data_global_server.db_sqlite",
+        "data_global_limit_node": "sqlite:///data_global_limit_node.db_sqlite",
+        "data_dashboard": "sqlite:///data_dashboard.db_sqlite",
+        "data_ticket": "sqlite:///data_ticket.db_sqlite",
     },
     SQLALCHEMY_ENGINE_OPTIONS={
         "connect_args": {"check_same_thread": False}
     }
 )
 
-db.init_app(app)
+db_sqlite_sqlite.init_app(app)
 
 DEFAULT_NODES = [
     {"id": 1, "name": "Node 1", "limit_server": 35},
@@ -90,153 +88,153 @@ DEFAULT_NODES = [
     {"id": 8, "name": "Node 8", "limit_server": 35},
 ]
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(100))
-    bio = db.Column(db.String(100))
-    email = db.Column(db.String(100), unique=True)
-    password_hash = db.Column(db.String(128))
-    is_verified = db.Column(db.Boolean, default=False)
-    login_google = db.Column(db.Boolean, default=False)
-    photo_url = db.Column(db.String(255))
-    server = db.Column(db.Integer, default=0)
-    cpu = db.Column(db.Integer, default=0)
-    ram = db.Column(db.Integer, default=0)
-    disk = db.Column(db.Integer, default=0)
-    last_boost = db.Column(db.DateTime, nullable=True)
-    last_boost_used = db.Column(db.DateTime, nullable=True)
-    coin = db.Column(db.Integer, default=0)
-    ram_upgrade_start = db.Column(db.DateTime, nullable=True)
-    ram_upgrade_end = db.Column(db.DateTime, nullable=True)
-    harian_coin = db.Column(db.Integer, default=0)
-    harian_coin_tanggal = db.Column(db.Date, default=datetime.utcnow().date)
-    last_login = db.Column(db.DateTime, default=datetime.utcnow)
-    token = db.Column(db.String(64), unique=True, nullable=True) 
-    timestamp = db.Column(db.Integer, nullable=True)
-    boostserver = db.Column(db.Integer, default=0)
-    referral_code = db.Column(db.String(20), unique=True)
-    referred_by = db.Column(db.String(20), nullable=True)
-    milestone_3 = db.Column(db.Boolean, default=False)
-    milestone_5 = db.Column(db.Boolean, default=False)
-    milestone_10 = db.Column(db.Boolean, default=False)
-    milestone_15 = db.Column(db.Boolean, default=False)
-    milestone_20 = db.Column(db.Boolean, default=False)
-    milestone_25 = db.Column(db.Boolean, default=False)
-    milestone_30 = db.Column(db.Boolean, default=False)
-    device_id = db.Column(db.String(255), nullable=True)
-    ip_address = db.Column(db.String(50), nullable=True)
-    daily_claim_day = db.Column(db.Integer, default=0)           
-    daily_claim_last = db.Column(db.Date, nullable=True)         
-    afk_total_coin_bulanan = db.Column(db.Integer, default=0)    
-    afk_bonus_bulan = db.Column(db.String(7), nullable=True)     
-    afk_bonus_50 = db.Column(db.Boolean, default=False)          
-    afk_bonus_100 = db.Column(db.Boolean, default=False)         
-    afk_bonus_200 = db.Column(db.Boolean, default=False)
-    created_server_before = db.Column(db.Boolean, default=False)
-    create_mission_rewarded = db.Column(db.Boolean, default=False)
-    ip_address = db.Column(db.String(45))
-    user_agent = db.Column(db.Text)
-    is_moderator = db.Column(db.Boolean, default=False)
-    is_banned = db.Column(db.Boolean, default=False)
-    is_backup_mega = db.Column(db.Boolean, default=False)
-    last_filename = db.Column(db.String(255))
-    auto_backup_enabled = db.Column(db.Boolean, default=False)
-    last_backup = db.Column(db.DateTime)
-    next_backup = db.Column(db.DateTime)
-    photo_google = db.Column(db.String(255), nullable=True)
-    serverid = db.Column(db.String(50))
-    mega_link = db.Column(db.Text)
-    trialramused = db.Column(db.Integer, default=0)
+class User(db_sqlite.Model):
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    nama = db_sqlite.Column(db_sqlite.String(100))
+    bio = db_sqlite.Column(db_sqlite.String(100))
+    email = db_sqlite.Column(db_sqlite.String(100), unique=True)
+    password_hash = db_sqlite.Column(db_sqlite.String(128))
+    is_verified = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    login_google = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    photo_url = db_sqlite.Column(db_sqlite.String(255))
+    server = db_sqlite.Column(db_sqlite.Integer, default=0)
+    cpu = db_sqlite.Column(db_sqlite.Integer, default=0)
+    ram = db_sqlite.Column(db_sqlite.Integer, default=0)
+    disk = db_sqlite.Column(db_sqlite.Integer, default=0)
+    last_boost = db_sqlite.Column(db_sqlite.DateTime, nullable=True)
+    last_boost_used = db_sqlite.Column(db_sqlite.DateTime, nullable=True)
+    coin = db_sqlite.Column(db_sqlite.Integer, default=0)
+    ram_upgrade_start = db_sqlite.Column(db_sqlite.DateTime, nullable=True)
+    ram_upgrade_end = db_sqlite.Column(db_sqlite.DateTime, nullable=True)
+    harian_coin = db_sqlite.Column(db_sqlite.Integer, default=0)
+    harian_coin_tanggal = db_sqlite.Column(db_sqlite.Date, default=datetime.utcnow().date)
+    last_login = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
+    token = db_sqlite.Column(db_sqlite.String(64), unique=True, nullable=True) 
+    timestamp = db_sqlite.Column(db_sqlite.Integer, nullable=True)
+    boostserver = db_sqlite.Column(db_sqlite.Integer, default=0)
+    referral_code = db_sqlite.Column(db_sqlite.String(20), unique=True)
+    referred_by = db_sqlite.Column(db_sqlite.String(20), nullable=True)
+    milestone_3 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_5 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_10 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_15 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_20 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_25 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_30 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    device_id = db_sqlite.Column(db_sqlite.String(255), nullable=True)
+    ip_address = db_sqlite.Column(db_sqlite.String(50), nullable=True)
+    daily_claim_day = db_sqlite.Column(db_sqlite.Integer, default=0)           
+    daily_claim_last = db_sqlite.Column(db_sqlite.Date, nullable=True)         
+    afk_total_coin_bulanan = db_sqlite.Column(db_sqlite.Integer, default=0)    
+    afk_bonus_bulan = db_sqlite.Column(db_sqlite.String(7), nullable=True)     
+    afk_bonus_50 = db_sqlite.Column(db_sqlite.Boolean, default=False)          
+    afk_bonus_100 = db_sqlite.Column(db_sqlite.Boolean, default=False)         
+    afk_bonus_200 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    created_server_before = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    create_mission_rewarded = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    ip_address = db_sqlite.Column(db_sqlite.String(45))
+    user_agent = db_sqlite.Column(db_sqlite.Text)
+    is_moderator = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    is_banned = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    is_backup_mega = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    last_filename = db_sqlite.Column(db_sqlite.String(255))
+    auto_backup_enabled = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    last_backup = db_sqlite.Column(db_sqlite.DateTime)
+    next_backup = db_sqlite.Column(db_sqlite.DateTime)
+    photo_google = db_sqlite.Column(db_sqlite.String(255), nullable=True)
+    serverid = db_sqlite.Column(db_sqlite.String(50))
+    mega_link = db_sqlite.Column(db_sqlite.Text)
+    trialramused = db_sqlite.Column(db_sqlite.Integer, default=0)
     
-class ServerSpec(db.Model):
+class ServerSpec(db_sqlite.Model):
     __bind_key__ = 'data_global_server'
     
-    id = db.Column(db.String, primary_key=True)
-    ram = db.Column(db.Integer, default=1024)
-    cpu = db.Column(db.Integer, default=80)
-    disk = db.Column(db.Integer, default=3024)
+    id = db_sqlite.Column(db_sqlite.String, primary_key=True)
+    ram = db_sqlite.Column(db_sqlite.Integer, default=1024)
+    cpu = db_sqlite.Column(db_sqlite.Integer, default=80)
+    disk = db_sqlite.Column(db_sqlite.Integer, default=3024)
 
-class Node(db.Model):
+class Node(db_sqlite.Model):
     __bind_key__ = 'data_global_limit_node'
     
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    limit_server = db.Column(db.Integer, default=35)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    name = db_sqlite.Column(db_sqlite.String(50))
+    limit_server = db_sqlite.Column(db_sqlite.Integer, default=35)
 
-class Server(db.Model):
+class Server(db_sqlite.Model):
     __bind_key__ = 'data_panel'
 
-    id = db.Column(db.Integer, primary_key=True)
-    serverid = db.Column(db.String(50))
-    name = db.Column(db.String(100), nullable=False)
-    uuid = db.Column(db.String(36), unique=True, nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
-    server = db.Column(db.Integer, default=0)
-    cpu = db.Column(db.Integer, default=0)
-    ram = db.Column(db.Integer, default=0)
-    disk = db.Column(db.Integer, default=0)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    allocation_id = db.Column(db.Integer, nullable=True)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    serverid = db_sqlite.Column(db_sqlite.String(50))
+    name = db_sqlite.Column(db_sqlite.String(100), nullable=False)
+    uuid = db_sqlite.Column(db_sqlite.String(36), unique=True, nullable=False)
+    user_id = db_sqlite.Column(db_sqlite.Integer, nullable=False)
+    server = db_sqlite.Column(db_sqlite.Integer, default=0)
+    cpu = db_sqlite.Column(db_sqlite.Integer, default=0)
+    ram = db_sqlite.Column(db_sqlite.Integer, default=0)
+    disk = db_sqlite.Column(db_sqlite.Integer, default=0)
+    created_at = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
+    allocation_id = db_sqlite.Column(db_sqlite.Integer, nullable=True)
     
-class Ticket(db.Model):
+class Ticket(db_sqlite.Model):
     __bind_key__ = 'data_ticket'
     __tablename__ = 'ticket'
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_email = db.Column(db.String(120), nullable=False)
-    subject = db.Column(db.String(255), nullable=False)
-    category = db.Column(db.String(100), nullable=False)
-    status = db.Column(db.String(50), default="open")
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    user_email = db_sqlite.Column(db_sqlite.String(120), nullable=False)
+    subject = db_sqlite.Column(db_sqlite.String(255), nullable=False)
+    category = db_sqlite.Column(db_sqlite.String(100), nullable=False)
+    status = db_sqlite.Column(db_sqlite.String(50), default="open")
+    created_at = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
 
-    is_notified_admin = db.Column(db.Boolean, default=False)
+    is_notified_admin = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
-    replies = db.relationship(
+    replies = db_sqlite.relationship(
         "Reply",
         backref="ticket",
         cascade="all, delete-orphan",
         passive_deletes=True
     )
     
-class ReplyImage(db.Model):
+class ReplyImage(db_sqlite.Model):
     __bind_key__ = 'data_ticket'
     __tablename__ = 'reply_image'
 
-    id = db.Column(db.Integer, primary_key=True)
-    reply_id = db.Column(db.Integer, db.ForeignKey("reply.id"), nullable=False)
-    image_url = db.Column(db.String(255), nullable=False)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    reply_id = db_sqlite.Column(db_sqlite.Integer, db_sqlite.ForeignKey("reply.id"), nullable=False)
+    image_url = db_sqlite.Column(db_sqlite.String(255), nullable=False)
 
-class Reply(db.Model):
+class Reply(db_sqlite.Model):
     __bind_key__ = 'data_ticket'
     __tablename__ = 'reply'
 
-    id = db.Column(db.Integer, primary_key=True)
-    ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id", ondelete="CASCADE"), nullable=False)
-    sender = db.Column(db.String(50))  # 'user' atau 'admin'
-    message = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    ticket_id = db_sqlite.Column(db_sqlite.Integer, db_sqlite.ForeignKey("ticket.id", ondelete="CASCADE"), nullable=False)
+    sender = db_sqlite.Column(db_sqlite.String(50))  # 'user' atau 'admin'
+    message = db_sqlite.Column(db_sqlite.Text, nullable=False)
+    created_at = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
 
-    is_notified_user = db.Column(db.Boolean, default=False)
-    is_notified_admin = db.Column(db.Boolean, default=False)
+    is_notified_user = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    is_notified_admin = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
-    images = db.relationship("ReplyImage", backref="reply", cascade="all, delete-orphan")
+    images = db_sqlite.relationship("ReplyImage", backref="reply", cascade="all, delete-orphan")
     
-class ReferralActivity(db.Model):
+class ReferralActivity(db_sqlite.Model):
     __bind_key__ = 'data_refferal_user'
 
-    id = db.Column(db.Integer, primary_key=True)
-    inviter_id = db.Column(db.Integer)
-    invited_id = db.Column(db.Integer)
-    action = db.Column(db.String(50))
-    reward = db.Column(db.Integer, default=0)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    inviter_id = db_sqlite.Column(db_sqlite.Integer)
+    invited_id = db_sqlite.Column(db_sqlite.Integer)
+    action = db_sqlite.Column(db_sqlite.String(50))
+    reward = db_sqlite.Column(db_sqlite.Integer, default=0)
+    timestamp = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
     
-class SiteSetting(db.Model):
+class SiteSetting(db_sqlite.Model):
     __bind_key__ = 'data_dashboard'
 
-    id = db.Column(db.Integer, primary_key=True)
-    key = db.Column(db.String(100), unique=True, nullable=False)
-    value = db.Column(db.String(255), nullable=False)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    key = db_sqlite.Column(db_sqlite.String(100), unique=True, nullable=False)
+    value = db_sqlite.Column(db_sqlite.String(255), nullable=False)
 
     @staticmethod
     def get(key, default=None):
@@ -250,8 +248,8 @@ class SiteSetting(db.Model):
             s.value = str(value)
         else:
             s = SiteSetting(key=key, value=str(value))
-            db.session.add(s)
-        db.session.commit()
+            db_sqlite.session.add(s)
+        db_sqlite.session.commit()
     
 update_queue = []
 update_logs = []
@@ -281,8 +279,8 @@ def init_nodes():
     if Node.query.count() == 0:
         for n in DEFAULT_NODES:
             node = Node(id=n["id"], name=n["name"], limit_server=n["limit_server"])
-            db.session.add(node)
-        db.session.commit()
+            db_sqlite.session.add(node)
+        db_sqlite.session.commit()
         print("Node default berhasil ditambahkan!")
         
 def init_server_spec():
@@ -295,15 +293,15 @@ def init_server_spec():
                 cpu=80,
                 disk=3024
             )
-            db.session.add(default_server)
+            db_sqlite.session.add(default_server)
             print(f"[INIT] ServerSpec untuk {panel_id} berhasil ditambahkan")
         else:
             print(f"[INIT] ServerSpec untuk {panel_id} sudah ada, dilewati")
 
-    db.session.commit()
+    db_sqlite.session.commit()
         
 with app.app_context():
-    db.create_all()
+    db_sqlite.create_all()
     init_nodes()
     init_server_spec()
 
@@ -548,14 +546,14 @@ def enqueue_spec_update(panel_id: str, ram: int, disk: int, cpu: int):
             allocation = attrs["allocation"]
 
             # Gunakan UUID, bukan numeric id
-            server_db = Server.query.filter_by(uuid=server_uuid).first()
-            if not server_db:
-                add_log(f"⚠️ Server {server_uuid} tidak ditemukan di DB")
+            server_db_sqlite = Server.query.filter_by(uuid=server_uuid).first()
+            if not server_db_sqlite:
+                add_log(f"⚠️ Server {server_uuid} tidak ditemukan di db_sqlite")
                 continue
 
-            user = User.query.filter_by(id=server_db.user_id).first()
+            user = User.query.filter_by(id=server_db_sqlite.user_id).first()
             if not user:
-                add_log(f"⚠️ User {server_db.user_id} tidak ditemukan")
+                add_log(f"⚠️ User {server_db_sqlite.user_id} tidak ditemukan")
                 continue
 
             if user.ram_upgrade_start is not None or user.last_boost is not None:
@@ -572,11 +570,11 @@ def enqueue_spec_update(panel_id: str, ram: int, disk: int, cpu: int):
                 "cpu": cpu
             })
 
-            # Update spec di DB
+            # Update spec di db_sqlite
             user.cpu = cpu
             user.ram = ram
             user.disk = disk
-            db.session.commit()
+            db_sqlite.session.commit()
 
         if data["meta"]["pagination"]["current_page"] >= data["meta"]["pagination"]["total_pages"]:
             break
@@ -839,7 +837,7 @@ def hapus_server_tidak_valid(panel_id, simulasi=True):
                     user.ram_upgrade_start = None
                     user.ram_upgrade_end = None
 
-                db.session.delete(srv)
+                db_sqlite.session.delete(srv)
                 total_dihapus += 1
                 output.append("Server berhasil dihapus dan state user di-reset.")
 
@@ -847,7 +845,7 @@ def hapus_server_tidak_valid(panel_id, simulasi=True):
             total_dilewatkan += 1
 
     if not simulasi:
-        db.session.commit()
+        db_sqlite.session.commit()
 
     output.append("")
     output.append("Ringkasan:")
@@ -868,7 +866,7 @@ def mark_trial(user):
     user.cpu = 80
     user.trialramused = 1
 
-    db.session.commit()
+    db_sqlite.session.commit()
     
 def mark_trial_two(user):
     now = datetime.utcnow()
@@ -904,7 +902,7 @@ def mark_trial_two(user):
         print(f"⚠️ Revert gagal {user.email}:", e)
         return False
 
-    db.session.commit()
+    db_sqlite.session.commit()
     
 def ensure_trial_on_dashboard(user):
 
@@ -1000,9 +998,9 @@ def check_invite_milestone(user, inviter):
                 action=attr,
                 reward=reward
             )
-            db.session.add(inviter)
-            db.session.add(activity)
-            db.session.commit()
+            db_sqlite.session.add(inviter)
+            db_sqlite.session.add(activity)
+            db_sqlite.session.commit()
     
 def log_referral_activity(user, action):
     if not user.referred_by:
@@ -1029,7 +1027,7 @@ def log_referral_activity(user, action):
         reward = 100
 
     inviter.coin += reward
-    db.session.add(inviter)
+    db_sqlite.session.add(inviter)
 
     activity = ReferralActivity(
         inviter_id=inviter.id,
@@ -1037,8 +1035,8 @@ def log_referral_activity(user, action):
         action=action,
         reward=reward
     )
-    db.session.add(activity)
-    db.session.commit()
+    db_sqlite.session.add(activity)
+    db_sqlite.session.commit()
 
     check_invite_milestone(user, inviter)    
     
@@ -1307,7 +1305,7 @@ def reset_user_server_data(user):
     user.ram_upgrade_start = None
     user.ram_upgrade_end = None
 
-    db.session.commit()
+    db_sqlite.session.commit()
 
 def sync_user_multi_panel(user):
     email = user.email
@@ -1373,7 +1371,7 @@ def sync_user_multi_panel(user):
             disk=server_disk,
             allocation_id=allocation_id
         )
-        db.session.merge(server_entry)
+        db_sqlite.session.merge(server_entry)
 
         # COIN DEFAULT
         from web1.scheduler_tasks import sync_coin_to_github
@@ -1401,7 +1399,7 @@ def sync_user_multi_panel(user):
         except Exception as e:
             print(f"[WARN] Gagal cek/revert RAM: {e}")
 
-        db.session.commit()
+        db_sqlite.session.commit()
         return True  # ⬅️ STOP, SERVER SUDAH DITEMUKAN
 
     # =========================
@@ -1498,7 +1496,7 @@ def backup_and_upload(user):
     user.is_backup_mega = True
     user.last_filename = backup_name
 
-    db.session.commit()
+    db_sqlite.session.commit()
     return True
     
 #------ SISTEM UPDATE LAST LOGIN ------#
@@ -1511,7 +1509,7 @@ def update_last_login():
     user = User.query.filter_by(email=user_email).first()
     if user:
         user.last_login = datetime.utcnow()
-        db.session.commit()
+        db_sqlite.session.commit()
 
 #------ HALAMAN DASHBOARD UTAMA------#
 @app.route("/")
@@ -1561,7 +1559,7 @@ def dashboard():
         return resp
         
     if not user:
-        logging.warning(f"[DASHBOARD] User ID {session.get('user_id')} tidak ditemukan di DB. Session direset.")
+        logging.warning(f"[DASHBOARD] User ID {session.get('user_id')} tidak ditemukan di db_sqlite. Session direset.")
         session.clear()
         return redirect('/')
 
@@ -1609,7 +1607,7 @@ def dashboard():
 
            if coin_sync > user.coin:
                user.coin = coin_sync
-               db.session.commit()
+               db_sqlite.session.commit()
                session["coin_synced"] = True
         else:
             print("[SYNC] Dilewati (sudah pernah sync di session ini)")
@@ -1681,8 +1679,8 @@ def hapus_akun():
         print("[SKIP DELETE SERVER] User tidak punya server (>0). Tidak menghapus server Pterodactyl.")
 
     try:
-        db.session.delete(user)
-        db.session.commit()
+        db_sqlite.session.delete(user)
+        db_sqlite.session.commit()
         print("[DELETE USER] User berhasil dihapus.")
     except Exception as e:
         print("[DELETE USER ERROR]", str(e))
@@ -1821,7 +1819,7 @@ def edit_profil():
                 file.save(file_path)
                 user.photo_url = f'uploads/{filename}'
 
-        db.session.commit()
+        db_sqlite.session.commit()
         return redirect('/profile?change=success')
 
     return render_template('Main-Page/edit_profile.html', user=user, message=message)
@@ -1858,7 +1856,7 @@ def verifikasi_edit_email():
             if 'photo_url' in pending:
                 user.photo_url = pending['photo_url']
 
-            db.session.commit()
+            db_sqlite.session.commit()
             session.pop('pending_update', None)
             return redirect('/profile?changemail=success')
         else:
@@ -2018,8 +2016,8 @@ def verifikasi():
                     ip_address=ip_address,
                     coin=20 if referred_by else 0  # bonus koin 20 kalau referral
                 )
-                db.session.add(new_user)
-                db.session.commit()
+                db_sqlite.session.add(new_user)
+                db_sqlite.session.commit()
 
                 # ✅ set session lengkap biar konsisten dengan login google
                 session['user_id'] = new_user.id
@@ -2102,12 +2100,12 @@ def authorize_google():
     photo_google = user_info["picture"]
     referral_code = uuid.uuid4().hex[:8].upper()
 
-    existing_user = db.session.query(User).filter_by(email=email).first()
+    existing_user = db_sqlite.session.query(User).filter_by(email=email).first()
 
     if not existing_user:
         new_user = User(email=email, nama=nama, photo_google=photo_google, login_google=True, referral_code=referral_code)
-        db.session.add(new_user)
-        db.session.commit()
+        db_sqlite.session.add(new_user)
+        db_sqlite.session.commit()
         user = new_user
     else:
         user = existing_user
@@ -2143,8 +2141,8 @@ def support_page():
                 status="Open",
                 is_notified_admin=False
             )
-            db.session.add(new_ticket)
-            db.session.commit()
+            db_sqlite.session.add(new_ticket)
+            db_sqlite.session.commit()
 
             # 2. Tambahkan reply pertama
             first_reply = Reply(
@@ -2153,8 +2151,8 @@ def support_page():
                 message=message,
                 is_notified_admin=False
             )
-            db.session.add(first_reply)
-            db.session.commit()
+            db_sqlite.session.add(first_reply)
+            db_sqlite.session.commit()
 
             return redirect('/tickets?newticket=success')
 
@@ -2195,7 +2193,7 @@ def tickets_page():
         if hasattr(Ticket, "is_notified_admin"):
             Ticket.query.filter_by(is_notified_admin=False).update({"is_notified_admin": True})
 
-        db.session.commit()
+        db_sqlite.session.commit()
 
         tickets = Ticket.query.order_by(Ticket.created_at.desc()).all()
 
@@ -2232,8 +2230,8 @@ def ticket_detail(ticket_id):
             else:
                 reply.is_notified_admin = False  # Admin perlu dapat notif
 
-            db.session.add(reply)
-            db.session.commit()
+            db_sqlite.session.add(reply)
+            db_sqlite.session.commit()
 
             # Simpan gambar jika ada
             image_urls = []
@@ -2246,9 +2244,9 @@ def ticket_detail(ticket_id):
                     image_urls.append(image_url)
 
                     reply_image = ReplyImage(reply_id=reply.id, image_url=image_url)
-                    db.session.add(reply_image)
+                    db_sqlite.session.add(reply_image)
 
-            db.session.commit()
+            db_sqlite.session.commit()
 
             return jsonify({
                 "sender": sender,
@@ -2283,7 +2281,7 @@ def ticket_detail(ticket_id):
             Reply.is_notified_user == False
         ).update({"is_notified_user": True})
 
-    db.session.commit()
+    db_sqlite.session.commit()
 
     return render_template(
         "Ticket-Page/ticket_detail.html",
@@ -2297,14 +2295,14 @@ def ticket_detail(ticket_id):
 def update_status(ticket_id, new_status):
     ticket = Ticket.query.get_or_404(ticket_id)
     ticket.status = new_status
-    db.session.commit()
+    db_sqlite.session.commit()
     return redirect('/tickets?changestatus=success')
 
 @app.route("/ticket/<int:ticket_id>/delete")
 def delete_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
-    db.session.delete(ticket)
-    db.session.commit()
+    db_sqlite.session.delete(ticket)
+    db_sqlite.session.commit()
     return redirect('/tickets?delete=success')
     
 @app.route("/check_notifications")
@@ -2440,7 +2438,7 @@ def afk_earn():
         user.afk_bonus_50 = True
         bonus_text = "+20 bonus (AFK 50)"
 
-    db.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({
         "success": True,
@@ -2521,8 +2519,8 @@ def referral():
         user.device_id = device_id
         user.coin += 20
 
-        db.session.add(user)
-        db.session.commit()
+        db_sqlite.session.add(user)
+        db_sqlite.session.commit()
 
         # ✅ Catat aktivitas
         log_referral_activity(user, "input_code")
@@ -2541,7 +2539,7 @@ def referral():
         action="input_code"
     ).count()
 
-    total_coin = db.session.query(func.sum(ReferralActivity.reward)).filter(
+    total_coin = db_sqlite.session.query(func.sum(ReferralActivity.reward)).filter(
         ReferralActivity.inviter_id == user.id
     ).scalar() or 0
 
@@ -2674,7 +2672,7 @@ def klaim_harian():
     user.daily_claim_day = hari_ke
     user.daily_claim_last = today
 
-    db.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({
         "success": True,
@@ -2697,8 +2695,8 @@ def misi():
 @moderator_required
 def delete_user(user_id):
     user = User.query.get_or_404(user_id)
-    db.session.delete(user)
-    db.session.commit()
+    db_sqlite.session.delete(user)
+    db_sqlite.session.commit()
     flash("User Successfully Deleted.", "success")
     return redirect('/admin/list/user?delete=success')
 
@@ -2772,15 +2770,15 @@ def delete_server_web(server_id):
     user = User.query.get(server.user_id)
 
     try:
-        db.session.delete(server)
+        db_sqlite.session.delete(server)
         user.server = 0
         user.cpu = 0
         user.ram = 0
         user.disk = 0
-        db.session.commit()
+        db_sqlite.session.commit()
         flash('Server Successfully Deleted.', 'success')
     except SQLAlchemyError:
-        db.session.rollback()
+        db_sqlite.session.rollback()
         flash('Gagal menghapus server.', 'error')
 
     return redirect('/admin/list/server?delete=success')
@@ -2879,7 +2877,7 @@ def kelola_koin():
                 flash("Invalid action.", "error")
                 return redirect(url_for('kelola_koin'))
 
-            db.session.commit()
+            db_sqlite.session.commit()
             flash(f"Coins successfully in{'plus' if aksi == 'tambah' else 'reduce'} for {email}.", "success")
 
     # Query user dengan filter pencarian dan min coin
@@ -2926,13 +2924,13 @@ def admin_panel():
             user = User.query.get(user_id)
             if user:
                 user.is_moderator = not user.is_moderator
-                db.session.commit()
+                db_sqlite.session.commit()
 
         elif action == "toggle_banned" and user_id:
             user = User.query.get(user_id)
             if user:
                 user.is_banned = not user.is_banned
-                db.session.commit()
+                db_sqlite.session.commit()
 
         elif action == "update_spec":
             ram = int(request.form.get("ram"))
@@ -2946,7 +2944,7 @@ def admin_panel():
                 server_spec.ram = ram
                 server_spec.cpu = cpu
                 server_spec.disk = disk
-                db.session.commit()
+                db_sqlite.session.commit()
                 enqueue_spec_update(panel_id=panel_id, ram=ram, disk=disk, cpu=cpu)
 
         elif action == "update_node" and node_id:
@@ -2954,7 +2952,7 @@ def admin_panel():
             node = Node.query.get(node_id)
             if node:
                 node.limit_server = limit
-                db.session.commit()
+                db_sqlite.session.commit()
 
         elif action == "toggle_maintenance":
             maintenance_mode = SiteSetting.get("maintenance_mode", "false") == "true"
@@ -2999,8 +2997,8 @@ def admin_panel():
     server_spec = ServerSpec.query.filter_by(id=panel_id).first()
     if not server_spec:
         server_spec = ServerSpec(id=panel_id, ram=1024, cpu=80, disk=5072)
-        db.session.add(server_spec)
-        db.session.commit()
+        db_sqlite.session.add(server_spec)
+        db_sqlite.session.commit()
 
     nodes = Node.query.all()
 
@@ -3057,11 +3055,11 @@ def get_node_server_counts():
     if result is None:
         return jsonify({"error": f"Gagal mengambil data dari panel {panel_id}"}), 500
 
-    # Ambil limit terbaru dari DB
+    # Ambil limit terbaru dari db_sqlite
     nodes = Node.query.all()
     node_limits = {str(node.id): node.limit_server for node in nodes}
 
-    # Gabungkan result dengan limit dari DB
+    # Gabungkan result dengan limit dari db_sqlite
     for node_id, info in result.items():
         info["limit"] = node_limits.get(str(node_id), 35)  # default 35
 
@@ -3071,7 +3069,7 @@ def get_node_server_counts():
 def get_all_panels_status():
     result = {}
 
-    # Ambil limit terbaru dari DB
+    # Ambil limit terbaru dari db_sqlite
     nodes = Node.query.all()
     node_limits = {str(node.id): node.limit_server for node in nodes}
 
@@ -3220,7 +3218,7 @@ def boost_ram():
             res.raise_for_status()
             allocation_id = res.json()['attributes']['allocation']
             server_data.allocation_id = allocation_id
-            db.session.commit()
+            db_sqlite.session.commit()
         except Exception as e:
             return jsonify({"success": False, "message": f"Failed to retrieve allocation_id: {e}"})
 
@@ -3256,7 +3254,7 @@ def boost_ram():
     user.last_boost = now
     user.last_boost_used = now
     user.boostserver = 1
-    db.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({"success": True, "message": f"✅ RAM successfully upgraded to 1.5 GB on {panel_id} within 1 hour!"})
 
@@ -3406,7 +3404,7 @@ def upgrade_ram():
         user.ram_upgrade_start = now
         user.ram_upgrade_end = now + timedelta(days=durasi)
 
-        db.session.commit()
+        db_sqlite.session.commit()
 
         return jsonify({
             "success": True,
@@ -3446,7 +3444,7 @@ def panel_set_serverid():
 
         # update serverid user
         user.serverid = panel_id
-        db.session.commit()
+        db_sqlite.session.commit()
 
         app.logger.info(f"✅ User {user.id} set serverid = {panel_id}")
         return {"success": True, "message": f"Serverid set to {panel_id}"}
@@ -3468,8 +3466,8 @@ def create_ptero_user():
         user = User.query.filter_by(email=email).first()
         if not user:
             user = User(email=email)
-            db.session.add(user)
-            db.session.commit()
+            db_sqlite.session.add(user)
+            db_sqlite.session.commit()
             print(f"[DEBUG] Auto-create user {email} dengan id={user.id}")
 
         session["user_id"] = user.id
@@ -3485,7 +3483,7 @@ def create_ptero_user():
     ptero_user = create_user(panel_id, user.email, username)
     if ptero_user and "id" in ptero_user:
         user.ptero_id = ptero_user["id"]
-        db.session.commit()
+        db_sqlite.session.commit()
         return jsonify({"success": True, "id": user.ptero_id})
     else:
         return jsonify({"success": False, "msg": "Failed to create Ptero user"}), 500
@@ -3529,7 +3527,7 @@ def panel_create_get():
     # update user info
     user.device_id = device_id
     user.ip_address = ip_addr
-    db.session.commit()
+    db_sqlite.session.commit()
 
     dupe = User.query.filter(
         (User.device_id == device_id) | (User.ip_address == ip_addr),
@@ -3648,7 +3646,7 @@ def panel_create_post():
         flash("Incomplete data", "error")
         return redirect("/panel/create")
 
-    # 2️⃣ Ambil spesifikasi server dari DB
+    # 2️⃣ Ambil spesifikasi server dari db_sqlite
     server = ServerSpec.query.filter_by(id=panel_id).first()
     if not server:
         flash("Server spec tidak ditemukan!", "error")
@@ -3692,7 +3690,7 @@ def panel_create_post():
         flash("Server created but not ready yet. Please wait a moment.", "warning")
         return redirect("/dashboard")
 
-    # 4️⃣ Simpan server ke DB
+    # 4️⃣ Simpan server ke db_sqlite
     data = server_ready
     server_entry = Server(
         id=data["id"],
@@ -3705,7 +3703,7 @@ def panel_create_post():
         ram=server.ram,
         disk=server.disk
     )
-    db.session.merge(server_entry)
+    db_sqlite.session.merge(server_entry)
 
     # Update data user
     user.server = 1
@@ -3725,7 +3723,7 @@ def panel_create_post():
     if user.referred_by:
         log_referral_activity(user, "create_server")
 
-    db.session.commit()
+    db_sqlite.session.commit()
 
     flash("Server Created Successfully!", "server_created")
     return redirect(f"/panel/detail?email={user.email}&username={username}&panel_id={panel_id}")
@@ -3744,7 +3742,7 @@ def backup_page():
         return resp
 
     panel_id = str(user.serverid) if user.serverid else None
-    db.session.refresh(user)
+    db_sqlite.session.refresh(user)
 
     has_files = False
     no_server = False
@@ -3831,7 +3829,7 @@ def backup():
     # ✅ RESET STATUS
     user.is_backup_mega = False
     user.mega_link = None
-    db.session.commit()
+    db_sqlite.session.commit()
 
     panel_id = str(user.serverid)
 
@@ -3914,7 +3912,7 @@ def upload_mega_route():
         )
     except Exception as e:
         user.is_backup_mega = False
-        db.session.commit()
+        db_sqlite.session.commit()
         return jsonify({
             "error": "Gagal menghubungi MEGA API",
             "detail": str(e)
@@ -3922,7 +3920,7 @@ def upload_mega_route():
 
     if r.status_code != 200:
         user.is_backup_mega = False
-        db.session.commit()
+        db_sqlite.session.commit()
         return jsonify({
             "error": "Gagal upload ke Railway",
             "detail": r.text
@@ -3933,7 +3931,7 @@ def upload_mega_route():
     # ================================
     user.is_backup_mega = True
     user.last_filename = filename
-    db.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({
         "message": "Upload berhasil",
@@ -3953,7 +3951,7 @@ def backup_finished():
         user.is_backup_mega = True
         user.last_filename = filename
         user.mega_link = mega_link
-        db.session.commit()
+        db_sqlite.session.commit()
 
     return jsonify({"status": "ok"})
     
@@ -4017,12 +4015,12 @@ def check_mega():
     if data.get("has_backup"):
         user.is_backup_mega = True
         user.last_filename = filename
-        db.session.commit()
+        db_sqlite.session.commit()
         return jsonify({"has_backup": True, "filename": filename})
 
     # Jika tidak ada
     user.is_backup_mega = False
-    db.session.commit()
+    db_sqlite.session.commit()
     return jsonify({"has_backup": False})
 
 @app.route("/toggle-auto-backup", methods=["POST"])
@@ -4033,7 +4031,7 @@ def toggle_auto_backup():
     user = User.query.get(session["user_id"])
     enabled = request.json.get("enabled", False)
     user.auto_backup_enabled = enabled
-    db.session.commit()
+    db_sqlite.session.commit()
 
     if enabled:
         backup_and_upload(user)
