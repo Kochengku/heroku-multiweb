@@ -53,7 +53,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'static/konfigurasi'))
 from config_web3 import EMAIL_API_TOKEN, G_CLIENT_ID, G_CLIENT_SECRET, admin_mail, telegrambotlink, ouolink, whatsapp_number, whatsapp_channel, telegram_user, telegram_channel
 from pterodactyl_web3 import create_user, create_server, get_all_nodes, hapus_user_tanpa_server, fetch_node_server_counts, get_all_servers, get_all_users, fetch_egg_list, delete_server, PANELS, get_client_headers, get_headers
 from werkzeug.security import generate_password_hash, check_password_hash
-os.environ["WERKZEUG_RUN_MAIN"] = "true"
 
 app = Flask(__name__)
 app.secret_key = "Kocheng"
