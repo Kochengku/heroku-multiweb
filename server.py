@@ -25,9 +25,10 @@ class HostDispatcher:
     def __call__(self, environ, start_response):
         host = environ.get("HTTP_HOST", "").split(":")[0].lower()
 
-        for domain, app in DOMAIN_MAP.items():
-            if domain in host:
-                return app(environ, start_response)
+        for domain, flask_app in DOMAIN_MAP.items():
+            if domain == host:
+                with flask_app.app_context():
+                    return flask_app(environ, start_response)
 
         return Response("Domain tidak ditemukan", status=404)(environ, start_response)
 
