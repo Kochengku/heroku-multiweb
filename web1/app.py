@@ -58,8 +58,6 @@ os.environ["WERKZEUG_RUN_MAIN"] = "true"
 app = Flask(__name__)
 app.secret_key = "Kocheng"
 
-db_pg = SQLAlchemy()
-
 raw_uri = os.getenv("DATABASE_URL")
 if not raw_uri:
     raise RuntimeError("DATABASE_URL tidak ditemukan")
@@ -78,7 +76,7 @@ app.config.update(
     }
 )
 
-db_pg.init_app(app)
+db_pg = SQLAlchemy(app)
 
 DEFAULT_NODES = [
     {"id": 1, "name": "Node 1", "limit_server": 35},
