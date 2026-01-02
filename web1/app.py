@@ -32,6 +32,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
 from threading import Thread
+from flask import current_app
 
 import difflib
 from sqlalchemy import or_
@@ -1895,6 +1896,7 @@ def dashboard():
     except Exception as e:
         logging.error(f"[DASHBOARD] Error render dashboard: {str(e)}")
         flash("Terjadi error saat membuka dashboard, silakan login ulang.", "error")
+        print("CURRENT APP:", current_app.name)
         session.clear()
         return redirect('/signin/email')
       
