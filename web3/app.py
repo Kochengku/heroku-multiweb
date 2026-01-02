@@ -57,7 +57,7 @@ os.environ["WERKZEUG_RUN_MAIN"] = "true"
 app = Flask(__name__)
 app.secret_key = "Kocheng"
 
-db_sqlite_sqlite = SQLAlchemy()
+db_sqlite = SQLAlchemy()
 
 app.config.update(
     SQLALCHEMY_DATABASE_URI="sqlite:///data_user.db_sqlite",
@@ -75,7 +75,7 @@ app.config.update(
     }
 )
 
-db_sqlite_sqlite.init_app(app)
+db_sqlite.init_app(app)
 
 DEFAULT_NODES = [
     {"id": 1, "name": "Node 1", "limit_server": 35},
