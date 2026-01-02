@@ -1372,7 +1372,7 @@ def sync_user_multi_panel(user):
         db_sqlite.session.merge(server_entry)
 
         # COIN DEFAULT
-        from web1.scheduler_tasks import sync_coin_to_github
+        from web3.scheduler_tasks import sync_coin_to_github
         if user.coin == 0:
             user.coin = 20
             sync_coin_to_github()
