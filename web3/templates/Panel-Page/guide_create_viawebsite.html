@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Skyforgia">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.skyforgia.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skyforgia">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.skyforgia.biz.id",
+    "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+    "name": "Skyforgia"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skyforgia |> Create via Website</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96" />
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+<!-- Wrapper layout -->
+<div class="flex flex-grow animate-fadeInUp">
+
+  <!-- Sidebar -->
+  <aside class="w-60 bg-white border-r border-gray-200 min-h-full p-6 hidden md:block">
+    <p class="text-xs font-semibold text-gray-500 mb-3">Menu</p>
+    <ul class="space-y-2 text-sm">
+      <li class="font-semibold text-blue-600 flex items-center gap-2">
+        <i class="fa-solid fa-server"></i> Create Server
+      </li>
+      <li class="text-gray-600 flex items-center gap-2">
+        <i class="fa-solid fa-list-check"></i> Requirements
+      </li>
+      <li class="text-gray-600 flex items-center gap-2">
+        <i class="fa-solid fa-circle-info"></i> Info
+      </li>
+    </ul>
+    <hr class="my-4">
+    <p class="text-xs font-semibold text-gray-500 mb-2">Support</p>
+    <ul class="space-y-2 text-sm">
+      <li class="text-gray-600 flex items-center gap-2">
+        <i class="fa-solid fa-question-circle"></i> Help Center
+      </li>
+      <li class="text-gray-600 flex items-center gap-2">
+        <i class="fa-brands fa-discord"></i> Discord
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-grow p-6 md:p-10 space-y-8 max-w-4xl mx-auto">
+
+    <!-- Title -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border">
+      <h1 class="text-2xl font-bold text-gray-800 mb-1">Create Your Server</h1>
+      <p class="text-gray-500 text-sm">Choose your method to deploy free hosting</p>
+    </div>
+
+    <!-- Video -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border">
+      <h2 class="font-semibold text-gray-700 mb-3 text-lg flex items-center gap-2">
+        <i class="fa-solid fa-circle-play text-blue-500"></i> How To Create Server
+      </h2>
+      <div class="rounded-xl overflow-hidden border shadow-md">
+        <iframe class="w-full h-56 md:h-72"
+          src="https://www.youtube.com/embed/WOLWMC6cdHM?si=2UxdnGWQZRe9K8AR"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border text-center space-y-5">
+
+      <div class="flex flex-col md:flex-row justify-center gap-4">
+        <a href="/panel/create?email={{ email }}" target="_blank"
+           class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 shadow-md">
+          <i class="fa-solid fa-server"></i> Create Server Now
+        </a>
+    </div>
+
+    <!-- Notes -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border">
+      <h3 class="font-semibold text-gray-700 text-lg mb-3 flex items-center gap-2">
+        <i class="fa-solid fa-circle-info text-blue-500"></i> Important Notes
+      </h3>
+      <ul class="space-y-3 text-sm text-gray-600">
+        <li class="flex items-start gap-2">
+          <i class="fa-solid fa-circle-exclamation text-gray-500"></i> OuO ads must be completed first
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fa-solid fa-video text-gray-500"></i> Watch the video if confused
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fa-solid fa-triangle-exclamation text-gray-500"></i> Ads vary, we aren't responsible for them
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fa-solid fa-lightbulb text-gray-500"></i> Stay aware & don’t click suspicious ads
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fa-solid fa-bullhorn text-gray-500"></i> Ads help keep the service free
+        </li>
+      </ul>
+    </div>
+
+  </main>
+</div>
+
+<!-- Popup & scripts tetap punya kamu -->
+
+<!-- Popup Reset Warning -->
+<div id="expiryPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-500 p-3 sm:p-4">
+  <div id="expiryBox" class="bg-white rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md p-4 sm:p-6 transform scale-95 transition-transform duration-500 text-gray-700">
+
+    <!-- Judul -->
+    <div class="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+      <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-lg sm:text-2xl"></i>
+      <h2 id="expiryTitle" class="text-base sm:text-lg font-bold text-gray-900 text-center">
+        Pemberitahuan Reset Sistem
+      </h2>
+    </div>
+
+    <!-- Isi -->
+    <div id="expiryContent" class="space-y-2 text-xs sm:text-sm leading-relaxed text-center">
+      <p id="expiryLine1">Platform website dan panel akan segera mengalami <b>reset atau penghapusan data rutin</b> dalam 3 hari ke depan.</p>
+      <p id="expiryLine2">Proses penghapusan data dilakukan setiap tanggal <b>15</b> dan <b>akhir bulan</b>. Semua data, termasuk akun dan server, akan dihapus secara permanen.</p>
+      <p id="expiryLine3">Anda masih dapat membuat server seperti biasa, namun perlu diketahui bahwa server tersebut juga akan terhapus dalam 3 hari ke depan.</p>
+      <p id="expiryConfirm" class="font-semibold text-xs sm:text-sm mt-3">
+        Dengan menekan tombol “Lanjutkan”, Anda menyatakan telah memahami dan menyetujui konsekuensi yang dijelaskan di atas.
+      </p>
+    </div>
+
+    <!-- Tombol -->
+    <div class="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-center sm:justify-end gap-2">
+      <button id="expiryTranslateBtn" class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition text-xs sm:text-sm font-medium">
+        English
+      </button>
+      <button id="expiryAcceptBtn" class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition text-xs sm:text-sm font-medium">
+        Lanjutkan
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="ad-bait-container" style="position:absolute; left:-9999px; top:-9999px;"></div>
+<!-- Popup Adblock Hard Block -->
+<div id="adblock-popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-[9999] hidden">
+  <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-5 text-center animate-fade-in-scale">
+    <h2 class="text-xl font-bold text-red-600 mb-2">AdBlock Detected!</h2>
+    <p class="text-gray-700 mb-3 text-sm" id="adblock-message">
+      Please turn off your AdBlock to continue.<br>
+      The page will automatically reload after AdBlock is turned off.
+    </p>
+
+    <div class="flex justify-center mb-4">
+      <i class="fa-solid fa-triangle-exclamation text-red-500 text-3xl animate-bounce"></i>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="text-left mb-4 border-t pt-3">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="font-semibold text-gray-800">FAQ</h3>
+        <button id="lang-toggle" class="text-sm text-blue-600 hover:underline">
+          Bahasa Indonesia
+        </button>
+      </div>
+
+      <!-- English FAQ -->
+      <div id="faq-en" class="space-y-2 text-sm">
+        <div class="faq-item border rounded-lg">
+          <button class="faq-question w-full text-left px-3 py-2 font-medium text-gray-800 hover:bg-gray-100 transition">
+            Why is this happening?
+          </button>
+          <div class="faq-answer px-3 pb-2 text-gray-600 hidden">
+            Because AdBlock is blocking some important scripts on this site.
+          </div>
+        </div>
+        <div class="faq-item border rounded-lg">
+          <button class="faq-question w-full text-left px-3 py-2 font-medium text-gray-800 hover:bg-gray-100 transition">
+            How to fix it?
+          </button>
+          <div class="faq-answer px-3 pb-2 text-gray-600 hidden">
+            Disable AdBlock for this website, then refresh the page.
+          </div>
+        </div>
+      </div>
+
+      <!-- Indonesian FAQ -->
+      <div id="faq-id" class="space-y-2 text-sm hidden">
+        <div class="faq-item border rounded-lg">
+          <button class="faq-question w-full text-left px-3 py-2 font-medium text-gray-800 hover:bg-gray-100 transition">
+            Kenapa ini bisa terjadi?
+          </button>
+          <div class="faq-answer px-3 pb-2 text-gray-600 hidden">
+            Karena AdBlock memblokir beberapa script penting di situs ini.
+          </div>
+        </div>
+        <div class="faq-item border rounded-lg">
+          <button class="faq-question w-full text-left px-3 py-2 font-medium text-gray-800 hover:bg-gray-100 transition">
+            Bagaimana cara memperbaikinya?
+          </button>
+          <div class="faq-answer px-3 pb-2 text-gray-600 hidden">
+            Nonaktifkan AdBlock untuk situs ini, lalu refresh halaman.
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="flex flex-col gap-2">
+      <a href="https://t.me/{{ telegram_user }}" target="_blank"
+         class="flex items-center justify-center gap-2 bg-blue-500 text-white font-medium py-2 rounded-lg hover:bg-blue-600 transition">
+        <i class="fa-brands fa-telegram text-lg"></i> Help 
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  let adblockDetected = false;
+
+  const baitKeywords = [
+    "ads","adsbygoogle","ad-banner","sponsor","ad-container","advertisement",
+    "adsbox","ad_unit","pub_300x250","doubleclick","affiliate","popup-ad",
+    "side-ad","footer-ad","header-ad","mrec-ad","sky-ad","sidebar-ads",
+    "promoted-link","sponsored","ad-tracker","adframe","adscript","adlabel",
+    "overlay-ad","top-ad","bottom-ad","inline-ad","native-ad","video-ad",
+    "banner-ad","display-ad","rightad","leftad","google-ads","openx-ad",
+    "adchoice","sponsorship","tracking-ad","clickad","customad"
+  ];
+
+  const container = document.getElementById("ad-bait-container");
+  for (let i = 0; i < 100; i++) {
+    const div = document.createElement("div");
+    const kw = baitKeywords[Math.floor(Math.random() * baitKeywords.length)];
+    div.id = "bait-" + kw + "-" + i;
+    div.className = kw;
+    div.innerHTML = "&nbsp;";
+    div.style.cssText = "width:1px;height:1px;position:absolute;left:-9999px;top:-9999px;";
+    container.appendChild(div);
+  }
+
+  const originalCount = container.childElementCount;
+
+  function showPopup() {
+    if (!adblockDetected) {
+      adblockDetected = true;
+      document.getElementById("adblock-popup").classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function hidePopup() {
+    if (adblockDetected) {
+      adblockDetected = false;
+      document.getElementById("adblock-popup").classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+  }
+
+  function isHidden(el) {
+    if (!el) return true;
+    const style = window.getComputedStyle(el);
+    return (
+      el.offsetParent === null ||
+      el.offsetHeight === 0 ||
+      style.display === "none" ||
+      style.visibility === "hidden"
+    );
+  }
+
+  function checkElementBait() {
+    const baits = container.children;
+    if (baits.length < originalCount) return true; // adblock menghapus node
+
+    for (let el of baits) {
+      if (isHidden(el)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async function checkRequestBait() {
+    try {
+      // test request ke domain iklan umum, diblokir = adblock aktif
+      await fetch("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: "HEAD", mode: "no-cors" });
+      return false;
+    } catch (err) {
+      return true;
+    }
+  }
+
+  async function runCheck() {
+    const elementBlocked = checkElementBait();
+    const requestBlocked = await checkRequestBait();
+    if (elementBlocked || requestBlocked) {
+      showPopup();
+    } else {
+      hidePopup();
+    }
+  }
+
+  // Periksa beberapa kali dengan penundaan berbeda
+  setTimeout(runCheck, 1500);
+  setTimeout(runCheck, 4000);
+  setInterval(runCheck, 8000);
+});
+</script>
+<script>
+// ====== Bahasa ======
+const translations = {
+  id: {
+    title: "Pemberitahuan Reset Sistem",
+    line1: "Platform website dan panel akan segera mengalami reset atau penghapusan data rutin dalam 3 hari ke depan.",
+    line2: "Penghapusan data dilakukan setiap tanggal 15 dan akhir bulan. Semua data, termasuk akun dan server, akan dihapus secara permanen.",
+    line3: "Anda masih dapat membuat server seperti biasa, namun perlu diketahui bahwa server tersebut juga akan terhapus dalam 3 hari ke depan.",
+    confirm: "Dengan menekan tombol “Lanjutkan”, Anda menyatakan telah memahami dan menyetujui konsekuensi yang dijelaskan di atas.",
+    buttonLang: "English",
+    buttonConfirm: "Lanjutkan"
+  },
+  en: {
+    title: "System Reset Notification",
+    line1: "The website and panel platform will undergo a scheduled data reset within the next 3 days.",
+    line2: "Routine data deletion occurs on the 15th and at the end of each month. All data, including accounts and servers, will be permanently removed.",
+    line3: "You can still create servers as usual, but please note that any new servers will also be deleted within the next 3 days.",
+    confirm: "By pressing 'Continue', you acknowledge and agree to the consequences described above.",
+    buttonLang: "Indonesia",
+    buttonConfirm: "Continue"
+  }
+};
+
+let currentLang = "id";
+const expiryPopup = document.getElementById("expiryPopup");
+const expiryTranslateBtn = document.getElementById("expiryTranslateBtn");
+const expiryAcceptBtn = document.getElementById("expiryAcceptBtn");
+
+function setLanguage(lang) {
+  const t = translations[lang];
+  document.getElementById("expiryTitle").innerText = t.title;
+  document.getElementById("expiryLine1").innerText = t.line1;
+  document.getElementById("expiryLine2").innerText = t.line2;
+  document.getElementById("expiryLine3").innerText = t.line3;
+  document.getElementById("expiryConfirm").innerText = t.confirm;
+  expiryTranslateBtn.innerHTML = `${t.buttonLang}`;
+  expiryAcceptBtn.innerHTML = `${t.buttonConfirm}`;
+  currentLang = lang;
+}
+
+expiryTranslateBtn.addEventListener("click", () => {
+  setLanguage(currentLang === "id" ? "en" : "id");
+});
+
+expiryAcceptBtn.addEventListener("click", () => {
+  expiryPopup.classList.remove("opacity-100");
+  expiryPopup.classList.add("opacity-0", "pointer-events-none");
+  localStorage.setItem("expiryNoticeSeen", new Date().toISOString().split("T")[0]);
+});
+
+// ====== Logika Tanggal ======
+function showExpiryPopupIfNeeded() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+
+  const midMonth = new Date(year, month, 15);
+  const endMonth = new Date(year, month + 1, 0);
+
+  const daysUntilMid = Math.ceil((midMonth - now) / (1000 * 60 * 60 * 24));
+  const daysUntilEnd = Math.ceil((endMonth - now) / (1000 * 60 * 60 * 24));
+
+  const seenToday = localStorage.getItem("expiryNoticeSeen");
+  const todayStr = new Date().toISOString().split("T")[0];
+  if (seenToday === todayStr) return; // jangan tampil dua kali dalam satu hari
+
+  if ((daysUntilMid <= 3 && daysUntilMid >= 0) || (daysUntilEnd <= 3 && daysUntilEnd >= 0)) {
+    expiryPopup.classList.remove("pointer-events-none", "opacity-0");
+    expiryPopup.classList.add("opacity-100");
+  }
+}
+
+window.addEventListener("load", () => {
+  setLanguage("id");
+  showExpiryPopupIfNeeded();
+});
+</script>
+</body>
+</html>

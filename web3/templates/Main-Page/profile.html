@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Skyforgia">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.skyforgia.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skyforgia">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.skyforgia.biz.id",
+    "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+    "name": "Skyforgia"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skyforgia |> Profile</title>
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body { background:#f8f9fb; font-family:"Inter", sans-serif; }
+  @keyframes fade {0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:translateY(0)}}
+  .fade { animation: fade .45s ease-out; }
+  .btn-main { @apply bg-gradient-to-b from-blue-700 to-blue-900 text-white font-medium rounded-lg px-5 py-2.5 text-sm hover:opacity-90 transition; }
+  .btn-outline { @apply border border-gray-300 hover:bg-gray-100 px-5 py-2.5 rounded-lg font-medium text-sm transition; }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  function showPopup(id) {
+    const p = document.getElementById(id);
+    p.classList.remove("opacity-0", "-translate-y-2");
+    p.classList.add("opacity-100", "translate-y-0");
+    setTimeout(() => {
+      p.classList.add("opacity-0", "-translate-y-2");
+      const url = new URL(window.location);
+      url.searchParams.delete("change");
+      url.searchParams.delete("changemail");
+      window.history.replaceState({}, "", url);
+    }, 3000);
+  }
+  if (params.get("changemail")==="success") showPopup("popupubahMail");
+  if (params.get("change")==="success") showPopup("popupubah");
+});
+</script>
+</head>
+
+
+<body class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow flex items-center justify-center px-4 py-10 fade">
+
+  <div class="w-full max-w-4xl grid md:grid-cols-2 rounded-2xl overflow-hidden shadow-xl border bg-white">
+
+    <!-- LEFT: Profile Hero -->
+    <div class="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-8 flex flex-col items-center justify-center gap-4">
+
+      <!-- Photo -->
+      <div class="w-32 h-32 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50">
+        {% if user.login_google and user.photo_google %}
+          <img src="{{ user.photo_google }}" class="w-full h-full object-cover">
+        {% else %}
+          <img src="{{ photo }}" class="w-full h-full object-cover">
+        {% endif %}
+      </div>
+
+      <!-- Name + Email -->
+      <div class="text-center">
+        <h1 class="text-2xl font-bold">{{ user.nama }}</h1>
+        <p class="text-blue-100 text-sm break-all">{{ user.email }}</p>
+      </div>
+
+      <!-- Bio -->
+      <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3 text-sm text-blue-100 italic text-center shadow">
+        {% if user.bio %}
+          {{ user.bio }}
+        {% else %}
+          <span class="opacity-60">No bio added yet.</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- RIGHT: Information -->
+    <div class="p-8 flex flex-col justify-between">
+      
+      <div class="space-y-4">
+        <h2 class="text-lg font-semibold text-gray-800">
+          <i class="fa-solid fa-circle-info mr-2 text-blue-600"></i>Account Information
+        </h2>
+
+        <!-- Info list -->
+        <div class="space-y-3 text-sm">
+          <div class="bg-gray-50 p-3 rounded-lg border flex items-center">
+            <i class="fa-solid fa-envelope text-blue-600 w-6"></i>
+            <span class="ml-2 text-gray-700 break-all">{{ user.email }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 mt-8">
+        <a href="{{ url_for('edit_profil') }}"
+          class="flex-1 text-center py-2 rounded-lg font-medium bg-blue-600 hover:bg-blue-700 text-white shadow transition">
+          <i class="fa-solid fa-pen-to-square mr-1"></i>Edit Profile
+        </a>
+
+        <a href="{{ url_for('dashboard') }}"
+          class="flex-1 text-center py-2 rounded-lg font-medium bg-gray-200 hover:bg-gray-300 text-gray-700 shadow transition">
+          <i class="fa-solid fa-arrow-left mr-1"></i>Back
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- TOAST SUCCESS -->
+<div id="popupubahMail" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+  <i class="fa-solid fa-circle-check"></i> Successfully changed email!
+</div>
+
+<div id="popupubah" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+  <i class="fa-solid fa-circle-check"></i> Profile updated!
+</div>
+
+</body>
+</html>

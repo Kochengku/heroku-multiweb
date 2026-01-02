@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skyforgia |> Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  const openBtn = document.getElementById('sidebarToggleBtn');
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+
+  if (sidebar) sidebar.classList.add('z-[9999]');
+  if (overlay) overlay.classList.add('z-40');
+
+  function setSidebar(open) {
+    if (!sidebar || !overlay) return;
+    if (open) {
+      sidebar.classList.remove('-translate-x-full');
+      overlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('sidebar-open');
+    } else {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+      document.body.classList.remove('sidebar-open');
+    }
+  }
+
+  window.setSidebar = setSidebar;
+
+  if (openBtn) openBtn.addEventListener('click', () => setSidebar(true));
+  if (closeBtn) closeBtn.addEventListener('click', () => setSidebar(false));
+  if (overlay) overlay.addEventListener('click', () => setSidebar(false));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") setSidebar(false);
+  });
+});
+</script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.getElementById("panelToggle");
+    const dropdownMenu = document.getElementById("panelMenu");
+    const chevronIcon = document.getElementById("chevronIcon");
+
+    toggleBtn.addEventListener("click", () => {
+      dropdownMenu.classList.toggle("hidden");
+      chevronIcon.classList.toggle("rotate-180");
+    });
+  });
+  
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.getElementById("coinToggle");
+    const dropdownMenu = document.getElementById("coinMenu");
+    const coincon = document.getElementById("coincon");
+
+    toggleBtn.addEventListener("click", () => {
+      dropdownMenu.classList.toggle("hidden");
+      coincon.classList.toggle("rotate-180");
+    });
+  });
+  
+</script>
+
+<script>
+function openDeletePopup() {
+    const popup = document.getElementById("delete-popup");
+
+    popup.classList.remove("invisible", "opacity-0", "pointer-events-none");
+    popup.classList.add("opacity-100");
+
+    // Tutup drawer jika ada
+    const overlay = document.querySelector(".drawer-overlay");
+    if (overlay) overlay.click();
+
+    // Reset body lock bila ada
+    document.body.classList.remove("overflow-hidden", "drawer-open", "touch-none");
+}
+
+function closeSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar) {
+        sidebar.classList.add("hidden");
+    }
+}
+</script>
+
+<style>
+  .digit {
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .digit.change {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+</style>
+<style>
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-fade-in-scale {
+  animation: fadeInScale 0.4s ease-out;
+}
+
+@media (max-width: 640px) {
+  .card-responsive {
+    padding: 0.75rem !important; /* padding lebih kecil */
+    font-size: 0.9rem;            /* kecilkan font agar pas di mobile */
+  }
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(15deg); }
+  30% { transform: rotate(-10deg); }
+  45% { transform: rotate(15deg); }
+  60% { transform: rotate(-5deg); }
+  75% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wave {
+  display: inline-block;
+  transform-origin: 70% 70%; /* pusat rotasi agak ke bawah */
+  animation: wave 2s infinite;
+}
+
+</style>
+
+<style>
+.sync-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(59, 130, 246, 0.3);
+  border-top: 3px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+<style>
+  /* Default bubble & panel terlihat */
+  #helpBubble, 
+  #helpPanel {
+    transition: opacity 0.3s ease;
+  }
+
+  /* Kalau sidebar terbuka → bubble & panel jadi transparan */
+  body.sidebar-open #helpBubble,
+  body.sidebar-open #helpPanel {
+    opacity: 0;
+    pointer-events: none; /* biar gak bisa diklik */
+  }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-white flex flex-col min-h-screen overflow-x-hidden">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-xl mx-auto flex justify-between items-center px-4">
+      <!-- Sidebar toggle -->
+      <button id="sidebarToggleBtn" class="text-gray-700 text-2xl p-2 rounded-md hover:bg-gray-100" aria-label="Toggle sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Header title (minimal) -->
+      <div class="flex items-center gap-3">
+        <h1 class="text-lg font-semibold text-gray-800 hidden sm:block">Dashboard</h1>
+      </div>
+
+      <!-- Info kanan -->
+      <div class="flex items-center space-x-4">
+        <!-- Coin -->
+        <div class="flex items-center text-sm font-medium text-gray-700 bg-white/60 px-3 py-2 rounded-xl shadow-sm border border-gray-100 ">
+          <i class="fa-solid fa-coins text-yellow-500 mr-2"></i>
+          <span>{{ user.coin }}</span>
+        </div>
+
+        <!-- Server -->
+        <div class="flex items-center text-sm font-medium text-gray-700 bg-white/60 px-3 py-2 rounded-xl shadow-sm border border-gray-100">
+          <i class="fa-solid fa-cloud text-blue-500 mr-2"></i>
+          <span>{{ user.server }}/1</span>
+        </div>
+
+        <!-- Role -->
+        {% if user.email == admin_mail %}
+          <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-red-100 text-red-600 flex items-center">
+            <i class="fa-solid fa-user-shield mr-1"></i> Admin
+          </span>
+        {% elif user.is_moderator %}
+          <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-blue-100 text-blue-600 flex items-center">
+            <i class="fa-solid fa-user-tie mr-1"></i> Moderator
+          </span>
+        {% else %}
+          <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-green-100 text-green-600 flex items-center">
+            <i class="fa-solid fa-user mr-1"></i> Member
+          </span>
+        {% endif %}
+
+        <!-- Foto / Inisial -->
+        <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gray-200">
+          {% if user.login_google and user.photo_google %}
+            <img src="{{ user.photo_google }}" alt="Profile" class="w-full h-full object-cover">
+          {% else %}
+            <img src="{{ photo }}" alt="Profile" class="w-full h-full object-cover">
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR OVERLAY -->
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
+
+  <!-- WRAPPER -->
+  <div class="flex flex-grow relative">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" 
+      class="fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 p-4 z-50 
+             transform -translate-x-full transition-transform duration-300 ease-in-out 
+             flex flex-col overflow-y-auto rounded-r-2xl shadow-lg">
+             
+      <div class="flex items-center justify-between mb-6 flex-shrink-0">
+        <a href="/dashboard" class="flex items-center gap-2">
+          <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+          <span class="font-bold text-lg text-gray-800 hidden sm:inline">Skyforgia</span>
+        </a>
+        <button id="sidebarCloseBtn" type="button" 
+          class="text-gray-700 text-xl p-2 hover:bg-gray-100 rounded-lg">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- NAV -->
+      <nav class="space-y-2 text-sm flex-grow">
+        <a href="/dashboard" class="flex items-center p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+          <i class="fa-solid fa-house mr-3 text-gray-600 w-4"></i> Home
+        </a>
+
+        <a href="/profile" class="flex items-center p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+          <i class="fa-solid fa-circle-user mr-3 text-gray-600 w-4"></i> Profile
+        </a>
+
+        <div class="my-2 border-t-2 border-gray-100"></div>
+
+        <!-- Server accordion -->
+        <div>
+    <button id="panelToggle" class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+        <span class="flex items-center"><i class="fa-solid fa-cloud mr-3 text-gray-600 w-4"></i> Server</span>
+        <i id="chevronIcon" class="fas fa-chevron-down transition-transform duration-300"></i>
+    </button>
+
+    <div id="panelMenu" class="ml-4 mt-2 space-y-1 hidden">
+        {% if user.server == 0 %}
+            {% if not blokir_create %}
+                <a href="/panel/create/viawebsite" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Create Server</a>
+            {% endif %}
+        {% elif user.server == 1 %}
+            <a href="/panel/detail?email={{ user.email }}&username={{ user.email.split('@')[0] }}" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Detail Akun</a>
+        {% endif %}
+
+        <a href="/panel/upgrade/ram" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Upgrade Ram Server</a>
+        <a href="/panel/backup" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Backup file</a>
+    </div>
+</div>
+
+        {% if user.email == admin_mail or user.is_moderator %}
+        <div>
+          <button id="adminToggle" class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+            <span class="flex items-center"><i class="fa-solid fa-user-shield mr-3 text-gray-500 w-4"></i> Admin Panel</span>
+            <i id="adminChevron" class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+
+          <div id="adminMenu" class="ml-4 mt-2 space-y-1 hidden">
+            {% if user.email == admin_mail %}
+              <a href="/admin/server/clear" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Clear Server</a>
+              <a href="/admin/setting" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Setting Website</a>
+            {% endif %}
+            <a href="/admin/list/user" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">List User</a>
+            <a href="/admin/list/server" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">List Server</a>
+            <a href="/tickets" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">List Ticket User</a>
+            <a href="/admin/coin/control" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Statistik Coin</a>
+          </div>
+        </div>
+        {% endif %}
+
+        <div>
+          <button id="coinToggle" class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+            <span class="flex items-center"><i class="fa-solid fa-coins mr-3 text-gray-500 w-4"></i> Get Coin</span>
+            <i id="coincon" class="fas fa-chevron-down transition-transform duration-300"></i>
+          </button>
+          <div id="coinMenu" class="ml-4 mt-2 space-y-1 hidden">
+            <a href="/getcoin/afk" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Afk</a>
+            <a href="/getcoin/misi" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Reward Mission</a>
+            <a href="/getcoin/referral" class="block p-2 rounded-lg hover:bg-gray-50 text-sm text-gray-700">Invite Friends</a>
+          </div>
+        </div>
+
+        <div class="my-2 border-t-2 border-gray-100"></div>
+
+        <a href="/blog" class="flex items-center p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+          <i class="fa-solid fa-book mr-3 text-gray-600 w-4"></i> Blog
+        </a>
+
+        <a href="/privacy" class="flex items-center p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+          <i class="fa-solid fa-file-contract mr-3 text-gray-600 w-4"></i> Privacy policy
+        </a>
+
+        <a href="/advertisingagreement" class="flex items-center p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+          <i class="fa-solid fa-bullhorn mr-3 text-gray-600 w-4"></i> Ads Disclosure
+        </a>
+
+        <a href="/tos" class="flex items-center p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+          <i class="fa-solid fa-scale-balanced mr-3 text-gray-600 w-4"></i> Terms of service
+        </a>
+
+        <div class="my-2 border-t-2 border-gray-100"></div>
+
+        <a href="/contact" class="flex items-center p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+          <i class="fa-solid fa-headset mr-3 text-gray-600 w-4"></i> Help
+        </a>
+
+        <a href="/tickets" class="flex items-center p-3 rounded-xl hover:bg-gray-50 font-medium text-gray-700">
+          <i class="fa-solid fa-ticket mr-3 text-gray-600 w-4"></i> Support Ticket
+        </a>
+
+        <a href="/logout" class="flex items-center p-3 rounded-xl hover:bg-red-50 font-medium text-red-500">
+          <i class="fa-solid fa-right-from-bracket mr-3 w-4"></i> Logout
+        </a>
+        
+        <!-- Tombol Delete Account -->
+<a onclick="openDeletePopup(); closeSidebar();" class="flex items-center p-3 rounded-xl hover:bg-red-50 font-medium text-red-500">
+  <i class="fa-solid fa-user-xmark mr-3 w-4"></i> Delete account
+</a>
+      </nav>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-grow flex flex-col min-h-0">
+      <main class="flex-grow p-6 sm:p-8 relative z-0">
+
+        <!-- HERO (minimal clean) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 items-center">
+          <div class="md:col-span-2 bg-white rounded-2xl shadow-xl p-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+              {% if user.login_google and user.photo_google %}
+                <img src="{{ user.photo_google }}" alt="Profile" class="w-full h-full object-cover">
+              {% else %}
+                <img src="{{ photo }}" alt="Profile" class="w-full h-full object-cover">
+              {% endif %}
+            </div>
+            <div>
+              <h2 class="text-lg font-bold text-gray-800">Welcome, {{ user.nama }} <span class="text-gray-400 font-normal">👋</span></h2>
+              <p class="text-sm text-gray-500">Good to see you — quick summary of your account status.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl p-5 flex flex-col justify-center">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500">Account Type</p>
+                <p class="text-sm font-semibold text-gray-800">
+                  {% if user.email == admin_mail %}Admin{% elif user.is_moderator %}Moderator{% else %}Member{% endif %}
+                </p>
+              </div>
+              <div class="text-right">
+                <p class="text-xs text-gray-500">Coins</p>
+                <p class="text-sm font-semibold text-yellow-600">{{ user.coin }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+  <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+    <h3 class="font-semibold text-sm text-gray-600 mb-2">Account Status</h3>
+
+    <!-- LOADING SYNC -->
+    <div id="sync-status" class="hidden flex items-center gap-2 text-blue-600 font-medium">
+      <span class="sync-spinner"></span>
+      <span>Synchronizing your account...</span>
+    </div>
+
+    <!-- NORMAL STATUS -->
+    <div id="normal-status">
+      {% if blokir_create is defined and blokir_create %}
+        <p class="text-gray-600 flex items-center gap-2">
+          <i class="fas fa-ban text-red-500"></i> Restricted
+        </p>
+      {% else %}
+        <p class="text-gray-600 flex items-center gap-2">
+          <i class="fas fa-check-circle text-green-500"></i> Registered & Verified
+        </p>
+      {% endif %}
+    </div>
+
+  </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Username</h3>
+            <p class="text-gray-700">{{ user.nama }}</p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Active Email</h3>
+            <p class="text-gray-700">{{ user.email }}</p>
+          </div>
+        </div>
+        
+        {% if ram_upgrade_end %}
+<div
+  class="bg-white p-4 md:p-5 rounded-2xl shadow-md mb-6 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal"
+  id="ram-upgrade-box"
+>
+  <h2 class="font-semibold text-base mb-2">
+    RAM Upgrade in Progress
+  </h2>
+
+  <p class="text-sm text-gray-500 mb-3">
+    Your RAM upgrade will finish soon. Please wait until the process is completed.
+  </p>
+
+  <!-- Progress Bar -->
+  <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden mb-2">
+    <div
+      id="ram-progress-bar"
+      class="bg-blue-500 h-3 rounded-full transition-all duration-500"
+      style="width: 0%;"
+    ></div>
+  </div>
+
+  <!-- Countdown -->
+  <p class="text-sm font-medium text-gray-700">
+    Time remaining:
+    <span id="countdown" class="text-blue-600 font-semibold"></span>
+  </p>
+</div>
+{% endif %}
+
+        <hr class="my-8 border-gray-200">
+
+        <!-- Server Panel Info + Performance -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Panel Performance</h3>
+            <div class="w-full bg-gray-200 rounded-full h-3 mt-3 overflow-hidden">
+              <div id="performanceBar" class="h-3 rounded-full transition-all duration-700 ease-in-out" style="width: 0%"></div>
+            </div>
+            <p id="performanceLabel" class="text-sm mt-2 font-medium text-gray-700"></p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Countdown Reset</h3>
+            {% if locked %}
+              <p class="text-gray-600 flex items-center gap-2"><i class="fa-solid fa-lock text-red-500"></i> Dashboard locked for maintenance</p>
+            {% else %}
+              <p class="text-gray-600"><span id="days">0</span>d <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span> remaining</p>
+            {% endif %}
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Last Login</h3>
+            <p class="text-gray-700">{{ last_login.strftime('%d %B %Y - %H:%M WIB') }}</p>
+            <p class="text-sm text-gray-500">Log back in {{ sisa_login_hari }} the day after this</p>
+          </div>
+        </div>
+
+        <!-- Limits -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Server Made</h3>
+            <p class="text-gray-700">{{ user.server }}/1</p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Limit CPU</h3>
+            <p class="text-gray-700">{{ user.cpu }}/{{ panel_cpu }}%</p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Limit RAM</h3>
+            <p class="text-gray-700">{{ user.ram }}/10120 MIB</p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl shadow-md reveal">
+            <h3 class="font-semibold text-sm text-gray-600 mb-2">Limit Disk</h3>
+            <p class="text-gray-700">{{ user.disk }}/3072 MIB</p>
+          </div>
+        </div>
+
+      </main>
+
+  <!-- HELP BUBBLE -->
+  <div id="helpBubble" class="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg cursor-pointer z-[9999]">
+    <i class="fa-solid fa-circle-question text-2xl"></i>
+  </div>
+  
+  <!-- Popup Background -->
+<div id="delete-popup"
+     class="fixed inset-0 w-full h-full bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-[999999] invisible opacity-0 pointer-events-none transition-all duration-200">
+  <!-- Popup Card -->
+  <div class="bg-white w-96 p-6 rounded-2xl shadow-2xl animate-scaleIn">
+
+    <!-- Warning Icon -->
+    <div class="flex justify-center mb-4">
+      <div class="text-yellow-500 text-6xl animate-shake">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h2 class="text-xl font-bold text-center mb-2">Delete Account</h2>
+
+    <!-- Description -->
+    <p class="text-gray-600 text-center mb-6">
+      By deleting this account, all data associated with it will be permanently removed, 
+      including any Pterodactyl servers created under this account. This action cannot be undone.
+    </p>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3">
+      <a href="/dashboard"
+         class="w-1/2 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 font-medium text-center block">
+        Cancel
+      </a>
+      <form action="/hapus-akun" method="POST" class="w-1/2">
+        <button type="submit"
+                class="w-full py-2 rounded-xl bg-red-600 text-white hover:bg-red-700 font-medium">
+          Confirm
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+  <!-- HELP PANEL -->
+  <div id="helpPanel" class="fixed bottom-20 right-5 w-80 max-h-[450px] bg-white rounded-xl shadow-2xl p-4 flex-col z-[9999] overflow-y-auto opacity-0 scale-95 pointer-events-none transition-all duration-300">
+    <header class="flex justify-between items-center mb-3">
+      <h3 id="helpTitle" class="text-lg font-semibold">FAQ Panel</h3>
+      <button id="closeHelp" class="text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+    </header>
+
+    <select id="langSwitch" class="mb-3 border rounded p-1 text-sm w-full">
+      <option value="id">Bahasa Indonesia</option>
+      <option value="en">English</option>
+    </select>
+
+    <input id="faqSearch" type="text" placeholder="Cari pertanyaan..." class="mb-3 w-full border rounded p-2 text-sm" />
+    <div id="faqContainer" class="space-y-2 text-sm"></div>
+  </div>
+
+<!-- Notifikasi Login -->
+<div id="popupLogin" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+  <span>Login successfully!</span>
+</div>
+
+<!-- Notifikasi Daftar -->
+<div id="popupDaftar" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+  <span>Registration Successful!</span>
+</div>
+
+<!-- Notifikasi Upram -->
+<div id="popupUpram" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+  <span>Ram Upgrade Successful!</span>
+</div>
+
+<!-- Notifikasi No Server -->
+<div id="popupNoserver" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 text-green-700 flex items-center gap-3 opacity-0 translate-y-[-12px] transition-all duration-500 hover:scale-[1.02]">
+<i class="fa-solid fa-triangle-exclamation text-yellow-500 text-xl"></i>
+  <span>You Don't Have a Server Yet!</span>
+</div>
+
+<!-- Popup Persetujuan -->
+<div id="agreementPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-500 p-2">
+  <div id="agreementBox" class="bg-white rounded-xl shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-md p-3 sm:p-4 transform scale-95 transition-transform duration-500">
+    
+    <!-- Judul -->
+    <h2 id="agreeTitle" class="text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 text-center">
+      Pemberitahuan Penting
+    </h2>
+
+    <!-- Isi -->
+    <div class="space-y-2 text-gray-700 text-xs sm:text-sm leading-relaxed">
+      <p id="agreeLine1">1. Dengan melanjutkan penggunaan layanan ini, Anda menyetujui bahwa iklan dapat ditampilkan di dashboard.</p>
+      <p id="agreeLine2">2. Kami meminta Anda untuk menonaktifkan AdBlock agar seluruh fitur dapat berfungsi dengan baik.</p>
+      <p id="agreeLine3">3. Harap diketahui, server yang tidak menunjukkan aktivitas selama <b>7 (tujuh) hari berturut-turut</b> akan secara otomatis dihapus untuk menjaga efisiensi sistem.</p>
+      <p id="agreeLine4">4. Kami tidak bertanggung jawab atas script atau file yang diunggah oleh pengguna. Kami telah menyediakan fitur <i>Backup</i> dan <i>Auto Backup</i> yang dapat digunakan untuk menjaga keamanan data Anda.</p>
+      <p id="agreeLine5">5. Platform akan di-<i>reset</i> setiap tanggal 15 dan akhir bulan. Seluruh data akan dihapus secara permanen, sehingga kami sangat menyarankan Anda untuk selalu melakukan <i>backup</i> secara berkala.</p>
+      <p id="agreeConfirm" class="font-semibold text-xs sm:text-sm">
+        <b>Dengan menekan tombol “Saya Setuju”, Anda menyatakan telah membaca, memahami, dan menyetujui ketentuan di atas.</b>
+      </p>
+    </div>
+
+    <!-- Tombol -->
+    <div class="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-end gap-2">
+      <button id="translateBtn" class="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition text-xs sm:text-sm">
+        English
+      </button>
+      <button id="acceptBtn" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition text-xs sm:text-sm">
+        Saya Setuju
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="ad-bait-container" style="position:absolute; left:-9999px; top:-9999px;"></div>
+<!-- Popup Adblock Hard Block -->
+<div id="adblock-popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-[9999] hidden">
+  <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-5 text-center animate-fade-in-scale">
+    <h2 class="text-xl font-bold text-red-600 mb-2">AdBlock Detected!</h2>
+    <p class="text-gray-700 mb-3 text-sm" id="adblock-message">
+      Please turn off your AdBlock to continue.<br>
+      The page will automatically reload after AdBlock is turned off.
+    </p>
+
+    <div class="flex justify-center mb-4">
+      <i class="fa-solid fa-triangle-exclamation text-red-500 text-3xl animate-bounce"></i>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="text-left mb-4 border-t pt-3">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="font-semibold text-gray-800">FAQ</h3>
+        <button id="lang-toggle" class="text-sm text-blue-600 hover:underline">
+          Bahasa Indonesia
+        </button>
+      </div>
+
+      <!-- English FAQ -->
+      <div id="faq-en" class="space-y-2 text-sm">
+        <div class="faq-item border rounded-lg">
+          <button class="faq-question w-full text-left px-3 py-2 font-medium text-gray-800 hover:bg-gray-100 transition">
+            Why is this happening?
+          </button>
+          <div class="faq-answer px-3 pb-2 text-gray-600 hidden">
+            Because AdBlock is blocking some important scripts on this site.
+          </div>
+        </div>
+        <div class="faq-item border rounded-lg">
+          <button class="faq-question w-full text-left px-3 py-2 font-medium text-gray-800 hover:bg-gray-100 transition">
+            How to fix it?
+          </button>
+          <div class="faq-answer px-3 pb-2 text-gray-600 hidden">
+            Disable AdBlock for this website, then refresh the page.
+          </div>
+        </div>
+      </div>
+
+      <!-- Indonesian FAQ -->
+      <div id="faq-id" class="space-y-2 text-sm hidden">
+        <div class="faq-item border rounded-lg">
+          <button class="faq-question w-full text-left px-3 py-2 font-medium text-gray-800 hover:bg-gray-100 transition">
+            Kenapa ini bisa terjadi?
+          </button>
+          <div class="faq-answer px-3 pb-2 text-gray-600 hidden">
+            Karena AdBlock memblokir beberapa script penting di situs ini.
+          </div>
+        </div>
+        <div class="faq-item border rounded-lg">
+          <button class="faq-question w-full text-left px-3 py-2 font-medium text-gray-800 hover:bg-gray-100 transition">
+            Bagaimana cara memperbaikinya?
+          </button>
+          <div class="faq-answer px-3 pb-2 text-gray-600 hidden">
+            Nonaktifkan AdBlock untuk situs ini, lalu refresh halaman.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <a href="https://t.me/{{ telegram_user }}" target="_blank"
+         class="flex items-center justify-center gap-2 bg-blue-500 text-white font-medium py-2 rounded-lg hover:bg-blue-600 transition">
+        <i class="fa-brands fa-telegram text-lg"></i> Help 
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const DO_SYNC = {{ do_sync|tojson }};
+
+document.addEventListener("DOMContentLoaded", function () {
+  const syncStatus = document.getElementById("sync-status");
+  const normalStatus = document.getElementById("normal-status");
+
+  if (DO_SYNC) {
+    // Sembunyikan status normal
+    normalStatus.classList.add("hidden");
+
+    // Tampilkan animasi sync
+    syncStatus.classList.remove("hidden");
+
+    // Setelah 5 detik, balik ke normal
+    setTimeout(() => {
+      syncStatus.classList.add("hidden");
+      normalStatus.classList.remove("hidden");
+    }, 5000); // 5 detik
+  }
+});
+</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        document.getElementById("map").classList.remove("scale-0");
+        document.getElementById("map").classList.add("scale-100");
+      }, 300);
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.remove("opacity-0", "translate-y-4");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      revealElements.forEach(el => observer.observe(el));
+    });
+  </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+
+  function showPopup(id) {
+    const popup = document.getElementById(id);
+    if (!popup) return;
+
+    popup.classList.remove("opacity-0", "translate-y-[-10px]");
+    popup.classList.add("opacity-100", "translate-y-0");
+
+    setTimeout(() => {
+      popup.classList.remove("opacity-100", "translate-y-0");
+      popup.classList.add("opacity-0", "translate-y-[-10px]");
+
+      // hapus query string tanpa reload
+      const url = new URL(window.location);
+      url.searchParams.delete("signin");
+      url.searchParams.delete("signup");
+      url.searchParams.delete("upram");
+      url.searchParams.delete("noserver");
+      window.history.replaceState({}, "", url);
+    }, 3000);
+  }
+
+  // =========================
+  // 🔁 REFRESH 1× KHUSUS LOGIN
+  // =========================
+  if (params.get("signin") === "success") {
+    if (!sessionStorage.getItem("dashboard_login_refreshed")) {
+      sessionStorage.setItem("dashboard_login_refreshed", "1");
+      location.reload();
+      return; // STOP supaya popup tidak jalan dulu
+    }
+    sessionStorage.removeItem("dashboard_login_refreshed");
+  }
+  
+  if (params.get("signup") === "success") {
+    if (!sessionStorage.getItem("dashboard_daftar_refreshed")) {
+      sessionStorage.setItem("dashboard_daftar_refreshed", "1");
+      location.reload();
+      return; // STOP supaya popup tidak jalan dulu
+    }
+    sessionStorage.removeItem("dashboard_daftar_refreshed");
+  }
+
+  // =========================
+  // 🎉 POPUP
+  // =========================
+  if (params.get("signin") === "success") {
+    showPopup("popupLogin");
+  }
+
+  if (params.get("signup") === "success") {
+    showPopup("popupDaftar");
+  }
+
+  if (params.get("upram") === "success") {
+    showPopup("popupUpram");
+  }
+
+  if (params.get("noserver") === "success") {
+    showPopup("popupNoserver");
+  }
+
+  // =========================
+  // ✨ ANIMASI MASUK MAIN
+  // =========================
+  const main = document.getElementById("mainContent");
+  if (main) {
+    setTimeout(() => {
+      main.classList.remove("opacity-0", "translate-y-4");
+      main.classList.add("opacity-100", "translate-y-0");
+    }, 100);
+  }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const adminToggle = document.getElementById("adminToggle");
+  const adminMenu = document.getElementById("adminMenu");
+  const adminChevron = document.getElementById("adminChevron");
+
+  if (adminToggle) {
+    adminToggle.addEventListener("click", () => {
+      adminMenu.classList.toggle("hidden");
+      adminChevron.classList.toggle("rotate-180");
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const helpBubble = document.getElementById("helpBubble");
+  const helpPanel = document.getElementById("helpPanel");
+  const closeHelp = document.getElementById("closeHelp");
+  const langSwitch = document.getElementById("langSwitch");
+  const faqContainer = document.getElementById("faqContainer");
+  const helpTitle = document.getElementById("helpTitle");
+  const faqSearch = document.getElementById("faqSearch");
+
+  const faqData = {
+    id: {
+      title: "FAQ Panel",
+      items: [
+        { q: "Bagaimana cara membuat server baru?", a: "Klik tombol <em>Create Server</em> pada garis atas kiri lalu klik server kemudian ada pilihan create server." },
+        { q: "Kenapa tidak bisa memilih node?", a: "Karena node sedang full, pilih node yang sedang tidak full." },
+        { q: "Kapan node yang full akan tersedia kembali?", a: "Cukup tunggu beberapa jam saja maka node yang penuh akan kembali bisa digunakan kembali." },
+        { q: "Kenapa muncul notifikasi harap matikan AdBlock?", a: "Karena kamu menggunakan browser yang ada sistem AdBlock nya, solusinya kamu matikan fitur tersebut lalu refresh halaman otomatis peringatan akan hilang" },
+        { q: "Notifikasi peringatan AdBlock masih muncul padahal sudah di matikan", a: "Itu mungkin hanya bug tampilan saja, cukup dengan cara refresh halaman masalah akan hilang." }
+      ]
+    },
+    en: {
+      title: "Panel FAQ",
+      items: [
+        { q: "How do I create a new server?", a: "Click the <em>Create Server</em> button on the top left line then click server then there is a create server option." },
+        { q: "Why can't select node?", a: "Since the node is full, select a node that is not full." },
+        { q: "When will the full node be available again??", a: "Just wait a few hours and the full node will be usable again.." },
+        { q: "Why does the notification appear please turn off AdBlock?", a: "Because you are using a browser that has an AdBlock system, the solution is to turn off this feature and then refresh the page, the warning will automatically disappear." },
+        { q: "AdBlock warning notification still appears even though it has been turned off", a: "It might just be a display bug, just refresh the page and the problem will disappear." }
+      ]
+    }
+  };
+
+  let currentLang = "id";
+
+  function renderFAQ(lang, filter="") {
+    const data = faqData[lang];
+    helpTitle.textContent = data.title;
+    faqContainer.innerHTML = "";
+
+    data.items
+      .filter(item => item.q.toLowerCase().includes(filter.toLowerCase()))
+      .forEach(item => {
+        const div = document.createElement("div");
+        div.className = "border-b pb-2";
+        div.innerHTML = `
+          <div class="faq-question font-semibold cursor-pointer">${item.q}</div>
+          <div class="faq-answer hidden mt-1 text-gray-600">${item.a}</div>
+        `;
+        div.querySelector(".faq-question").onclick = () => {
+          div.querySelector(".faq-answer").classList.toggle("hidden");
+        };
+        faqContainer.appendChild(div);
+      });
+  }
+
+  function openPanel() {
+    helpPanel.classList.remove("pointer-events-none", "opacity-0", "scale-95");
+    helpPanel.classList.add("opacity-100", "scale-100");
+  }
+
+  function closePanel() {
+    helpPanel.classList.add("pointer-events-none", "opacity-0", "scale-95");
+    helpPanel.classList.remove("opacity-100", "scale-100");
+  }
+
+  helpBubble.onclick = openPanel;
+  closeHelp.onclick = closePanel;
+
+  langSwitch.onchange = () => {
+    currentLang = langSwitch.value;
+    renderFAQ(currentLang, faqSearch.value);
+  };
+
+  faqSearch.oninput = () => {
+    renderFAQ(currentLang, faqSearch.value);
+  };
+
+  renderFAQ(currentLang);
+});
+
+// Toggle Bahasa
+  const toggleBtn = document.getElementById("lang-toggle");
+  const faqEn = document.getElementById("faq-en");
+  const faqId = document.getElementById("faq-id");
+
+  toggleBtn.addEventListener("click", () => {
+    if (faqEn.classList.contains("hidden")) {
+      faqEn.classList.remove("hidden");
+      faqId.classList.add("hidden");
+      toggleBtn.textContent = "Indonesia";
+    } else {
+      faqEn.classList.add("hidden");
+      faqId.classList.remove("hidden");
+      toggleBtn.textContent = "English";
+    }
+  });
+
+  // Accordion FAQ
+  document.querySelectorAll(".faq-question").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const answer = btn.nextElementSibling;
+      answer.classList.toggle("hidden");
+
+      // Animasi fade + slide
+      if (!answer.classList.contains("hidden")) {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        answer.style.transition = "all 0.3s ease";
+        answer.style.opacity = "1";
+      } else {
+        answer.style.maxHeight = "0";
+        answer.style.opacity = "0";
+      }
+    });
+  });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("agreementPopup");
+  const box = document.getElementById("agreementBox");
+  const acceptBtn = document.getElementById("acceptBtn");
+  const translateBtn = document.getElementById("translateBtn");
+
+  // hanya tampil kalau belum pernah setuju
+  if (!localStorage.getItem("agreementAccepted")) {
+    showPopup();
+  }
+
+  function showPopup() {
+    popup.classList.remove("pointer-events-none", "opacity-0");
+    popup.classList.add("opacity-100");
+    box.classList.remove("scale-95");
+    box.classList.add("scale-100");
+  }
+
+  function hidePopup() {
+    popup.classList.add("opacity-0");
+    popup.classList.remove("opacity-100");
+    box.classList.add("scale-95");
+    box.classList.remove("scale-100");
+    setTimeout(() => {
+      popup.classList.add("pointer-events-none");
+    }, 500); // waktu sesuai durasi animasi
+  }
+
+  acceptBtn.addEventListener("click", () => {
+    localStorage.setItem("agreementAccepted", "true");
+    hidePopup();
+  });
+
+  let currentLang = "id";
+  translateBtn.addEventListener("click", () => {
+    if (currentLang === "id") {
+      document.getElementById("agreeTitle").innerText = "Important Notice";
+      document.getElementById("agreeLine1").innerText = "1. By continuing to use this service, you agree that advertisements may be displayed on the dashboard.";
+      document.getElementById("agreeLine2").innerText = "2. We kindly request that you disable AdBlock to ensure all features function properly.";
+      document.getElementById("agreeLine3").innerHTML = "3. Please note that servers with <b>no activity for seven (7) consecutive days</b> will be automatically deleted to maintain system efficiency.";
+      document.getElementById("agreeLine4").innerHTML = "4. We are not responsible for any scripts or files uploaded by users. Backup and Auto Backup features are provided to help secure your data.";
+      document.getElementById("agreeLine5").innerHTML = "5. The platform will be <i>reset</i> every 15th and end of the month. All data will be permanently deleted, therefore we strongly recommend performing regular backups.";
+      document.getElementById("agreeConfirm").innerHTML = "<b>By clicking “I Agree”, you confirm that you have read, understood, and accepted the terms above.</b>";
+      acceptBtn.innerText = "I Agree";
+      translateBtn.innerText = "Indonesia";
+      currentLang = "en";
+    } else {
+      document.getElementById("agreeTitle").innerText = "Pemberitahuan Penting";
+      document.getElementById("agreeLine1").innerText = "1. Dengan melanjutkan penggunaan layanan ini, Anda menyetujui bahwa iklan dapat ditampilkan di dashboard.";
+      document.getElementById("agreeLine2").innerText = "2. Kami meminta Anda untuk menonaktifkan AdBlock agar seluruh fitur dapat berfungsi dengan baik.";
+      document.getElementById("agreeLine3").innerHTML = "3. Harap diketahui, server yang tidak menunjukkan aktivitas selama <b>7 (tujuh) hari berturut-turut</b> akan secara otomatis dihapus untuk menjaga efisiensi sistem.";
+      document.getElementById("agreeLine4").innerHTML = "4. Kami tidak bertanggung jawab atas script atau file yang diunggah oleh pengguna. Kami telah menyediakan fitur <i>Backup</i> dan <i>Auto Backup</i> yang dapat digunakan untuk menjaga keamanan data Anda.";
+      document.getElementById("agreeLine5").innerHTML = "5. Platform akan di-<i>reset</i> setiap tanggal 15 dan akhir bulan. Seluruh data akan dihapus secara permanen, sehingga kami sangat menyarankan Anda untuk selalu melakukan <i>backup</i> secara berkala.";
+      document.getElementById("agreeConfirm").innerHTML = "<b>Dengan menekan tombol “Saya Setuju”, Anda menyatakan telah membaca, memahami, dan menyetujui ketentuan di atas.</b>";
+      acceptBtn.innerText = "Saya Setuju";
+      translateBtn.innerText = "English";
+      currentLang = "id";
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  let remainingSeconds = parseInt("{{ countdown_seconds }}"); // dari server
+
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+
+  function padZero(num) {
+    return num.toString().padStart(2, '0');
+  }
+
+  function animateChange(el, value) {
+    if (el.textContent !== value) {
+      el.classList.add("change");
+      setTimeout(() => {
+        el.textContent = value;
+        el.classList.remove("change");
+      }, 150);
+    }
+  }
+
+  function updateCountdown() {
+    if (remainingSeconds <= 0) {
+      daysEl.textContent = 0;
+      animateChange(hoursEl, "00");
+      animateChange(minutesEl, "00");
+      animateChange(secondsEl, "00");
+      clearInterval(interval);
+      return;
+    }
+
+    const days = Math.floor(remainingSeconds / (24*3600));
+    const hours = Math.floor((remainingSeconds % (24*3600)) / 3600);
+    const minutes = Math.floor((remainingSeconds % 3600) / 60);
+    const seconds = remainingSeconds % 60;
+
+    daysEl.textContent = days;
+    animateChange(hoursEl, padZero(hours));
+    animateChange(minutesEl, padZero(minutes));
+    animateChange(secondsEl, padZero(seconds));
+
+    remainingSeconds--;
+  }
+
+  updateCountdown();
+  const interval = setInterval(updateCountdown, 1000);
+});
+</script>
+<script>
+function bukaIklan() {
+  window.open('https://ouo.io/jqy8uj', '_blank');
+}
+function createviatele() {
+  window.open('http://t.me/kochengs_bot', '_blank');
+}
+</script>
+<script>
+let lastCheck = null; // untuk pencatatan waktu pengecekan terakhir
+const notifCard = document.getElementById("notif-card");
+const notifTitle = document.getElementById("notif-title");
+const notifText = document.getElementById("notif-text");
+
+// Fungsi untuk menampilkan notifikasi card dengan animasi
+function showNotification(type) {
+  notifCard.classList.remove("hidden");
+  setTimeout(() => {
+    notifCard.classList.remove("opacity-0", "translate-y-4");
+  }, 50);
+
+  if (type === "new_ticket") {
+    notifTitle.innerHTML = `<i class="fa-solid fa-ticket text-blue-500"></i> You have a new ticket`;
+    notifText.textContent = `Please check the latest ticket submitted by a user.`;
+  } else if (type === "new_reply") {
+    notifTitle.innerHTML = `<i class="fa-solid fa-envelope text-green-500"></i> You have a new message`;
+    notifText.textContent = `An admin has replied to your ticket.`;
+  }
+}
+
+// Fungsi untuk menyembunyikan notifikasi card
+function hideNotification() {
+  notifCard.classList.add("opacity-0", "translate-y-4");
+  setTimeout(() => {
+    notifCard.classList.add("hidden");
+  }, 500);
+}
+
+// Fungsi untuk melakukan pengecekan notifikasi
+async function checkNotifications() {
+  try {
+    let url = "/check_notifications";
+    if (lastCheck) {
+      url += `?last_check=${encodeURIComponent(lastCheck)}`;
+    }
+
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const data = await res.json();
+
+    if (data.notifications.length > 0) {
+      const notif = data.notifications[0];
+
+      // Tampilkan notifikasi card sesuai jenisnya
+      showNotification(notif.type);
+    } else {
+      // Jika tidak ada notifikasi → sembunyikan box
+      hideNotification();
+    }
+
+    // Update lastCheck ke waktu sekarang (format yyyy-MM-dd HH:mm:ss)
+    lastCheck = new Date().toISOString().slice(0, 19).replace("T", " ");
+  } catch (err) {
+    console.error("Error checking notifications:", err);
+  }
+}
+
+// Jalankan saat halaman dimuat
+checkNotifications();
+
+// Polling setiap 30 detik
+setInterval(checkNotifications, 30000);
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  let adblockDetected = false;
+
+  const baitKeywords = [
+    "ads","adsbygoogle","ad-banner","sponsor","ad-container","advertisement",
+    "adsbox","ad_unit","pub_300x250","doubleclick","affiliate","popup-ad",
+    "side-ad","footer-ad","header-ad","mrec-ad","sky-ad","sidebar-ads",
+    "promoted-link","sponsored","ad-tracker","adframe","adscript","adlabel",
+    "overlay-ad","top-ad","bottom-ad","inline-ad","native-ad","video-ad",
+    "banner-ad","display-ad","rightad","leftad","google-ads","openx-ad",
+    "adchoice","sponsorship","tracking-ad","clickad","customad"
+  ];
+
+  const container = document.getElementById("ad-bait-container");
+  for (let i = 0; i < 100; i++) {
+    const div = document.createElement("div");
+    const kw = baitKeywords[Math.floor(Math.random() * baitKeywords.length)];
+    div.id = "bait-" + kw + "-" + i;
+    div.className = kw;
+    div.innerHTML = "&nbsp;";
+    div.style.cssText = "width:1px;height:1px;position:absolute;left:-9999px;top:-9999px;";
+    container.appendChild(div);
+  }
+
+  const originalCount = container.childElementCount;
+
+  function showPopup() {
+    if (!adblockDetected) {
+      adblockDetected = true;
+      document.getElementById("adblock-popup").classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function hidePopup() {
+    if (adblockDetected) {
+      adblockDetected = false;
+      document.getElementById("adblock-popup").classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+  }
+
+  function isHidden(el) {
+    if (!el) return true;
+    const style = window.getComputedStyle(el);
+    return (
+      el.offsetParent === null ||
+      el.offsetHeight === 0 ||
+      style.display === "none" ||
+      style.visibility === "hidden"
+    );
+  }
+
+  function checkElementBait() {
+    const baits = container.children;
+    if (baits.length < originalCount) return true; // adblock menghapus node
+
+    for (let el of baits) {
+      if (isHidden(el)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async function checkRequestBait() {
+    try {
+      // test request ke domain iklan umum, diblokir = adblock aktif
+      await fetch("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: "HEAD", mode: "no-cors" });
+      return false;
+    } catch (err) {
+      return true;
+    }
+  }
+
+  async function runCheck() {
+    const elementBlocked = checkElementBait();
+    const requestBlocked = await checkRequestBait();
+    if (elementBlocked || requestBlocked) {
+      showPopup();
+    } else {
+      hidePopup();
+    }
+  }
+
+  // Periksa beberapa kali dengan penundaan berbeda
+  setTimeout(runCheck, 1500);
+  setTimeout(runCheck, 4000);
+  setInterval(runCheck, 8000);
+});
+</script>
+<script>
+  const today = new Date();
+  const day = today.getDate();
+  const totalDays = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+  const progressPercent = Math.round((day / totalDays) * 100);
+
+  let color = "";
+  let label = "";
+  let emoji = "";
+
+  // Tentukan warna dan label berdasarkan tanggal
+  if (day >= 1 && day <= 10) {
+    color = "bg-green-500";
+    label = "Good Performance";
+    emoji = "🟢";
+  } else if (day >= 11 && day <= 13) {
+    color = "bg-yellow-400";
+    label = "Moderate Performance";
+    emoji = "🟡";
+  } else if (day >= 14 && day <= 15) {
+    color = "bg-red-500";
+    label = "Low Performance";
+    emoji = "🔴";
+  } else if (day >= 16 && day <= 20) {
+    color = "bg-green-500";
+    label = "Good Performance";
+    emoji = "🟢";
+  } else if (day >= 21 && day <= 25) {
+    color = "bg-yellow-400";
+    label = "Moderate Performance";
+    emoji = "🟡";
+  } else {
+    color = "bg-red-500";
+    label = "Low Performance";
+    emoji = "🔴";
+  }
+
+  const bar = document.getElementById("performanceBar");
+  const labelElement = document.getElementById("performanceLabel");
+
+  // Terapkan warna dan animasi progress
+  bar.classList.add(color);
+  bar.style.width = "0%";
+  setTimeout(() => {
+    bar.style.width = progressPercent + "%";
+  }, 200);
+
+  // Tampilkan label dengan emoji dan tanggal
+  labelElement.textContent = `${emoji} ${label} — Day ${day} of ${totalDays} (${progressPercent}%)`;
+</script>
+{% if ram_upgrade_end and ram_upgrade_start %}
+<script>
+  const startTime = new Date("{{ ram_upgrade_start.isoformat() }}Z").getTime();
+  const endTime   = new Date("{{ ram_upgrade_end.isoformat() }}Z").getTime();
+
+  const countdownEl = document.getElementById("countdown");
+  const progressBar = document.getElementById("ram-progress-bar");
+  const box = document.getElementById("ram-upgrade-box");
+
+  requestAnimationFrame(() => {
+    box.classList.remove("opacity-0", "translate-y-4");
+  });
+
+  function updateCountdown() {
+    const now = Date.now();
+
+    const totalDuration = endTime - startTime;
+    const remaining = endTime - now;
+    const elapsed = now - startTime;
+
+    if (remaining <= 0) {
+      countdownEl.textContent = "Upgrade complete";
+      progressBar.style.width = "100%";
+      setTimeout(() => location.reload(), 1500);
+      return;
+    }
+
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+
+    countdownEl.textContent =
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+    const progress = Math.min((elapsed / totalDuration) * 100, 100);
+    progressBar.style.width = progress.toFixed(4) + "%";
+
+    requestAnimationFrame(updateCountdown);
+  }
+
+  updateCountdown();
+</script>
+{% endif %}
+</body>
+</html>

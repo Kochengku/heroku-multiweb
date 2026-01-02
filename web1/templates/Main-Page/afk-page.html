@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sahabat Ai Nusantara |> Afk</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .blink {
+      animation: blink 1s step-start infinite;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: gold;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: sparkleMove 0.8s ease-out forwards;
+    }
+
+    @keyframes sparkleMove {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: translateY(-50px) scale(0); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col relative">
+
+<!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="Logo" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+<!-- MAIN -->
+<main class="flex-grow flex items-center justify-center px-4 py-10 animate-fadeInUp">
+  <div class="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+    <h1 class="text-3xl font-bold mb-4">AFK and Get Coins!</h1>
+    <p class="text-gray-600 mb-6">Stay on this page for <strong>1 minute</strong> without changing tabs.</p>
+    <div class="text-6xl font-mono font-bold text-blue-600" id="countdown">60</div>
+    <div class="mt-6 text-xl font-semibold text-green-600" id="coinMsg"></div>
+
+    <!-- Progress Harian -->
+    <p class="mt-4 text-sm text-gray-600" id="dailyProgressText">Daily progress: 0/200</p>
+    <div class="w-full bg-gray-200 rounded-full h-3 mt-1 overflow-hidden">
+      <div id="dailyProgressBar" class="h-3 rounded-full bg-blue-500 transition-all duration-700 ease-out" style="width: 0%"></div>
+    </div>
+
+    <!-- Progress Total -->
+    <p class="mt-4 text-sm text-gray-600" id="totalProgressText">Total Coin: 0/1000</p>
+    <div class="w-full bg-gray-200 rounded-full h-3 mt-1 overflow-hidden">
+      <div id="totalProgressBar" class="h-3 rounded-full bg-blue-500 transition-all duration-700 ease-out" style="width: 0%"></div>
+    </div>
+
+    <!-- BONUS Progress Bulanan -->
+    {% if not (user.afk_bonus_50 and user.afk_bonus_100 and user.afk_bonus_200) %}
+      {% set afk_current = user.afk_total_coin_bulanan %}
+      {% if not user.afk_bonus_50 and afk_current < 50 %}
+        {% set afk_target = 50 %}
+        {% set afk_bonus = 20 %}
+      {% elif not user.afk_bonus_100 and afk_current < 100 %}
+        {% set afk_target = 100 %}
+        {% set afk_bonus = 50 %}
+      {% elif not user.afk_bonus_200 and afk_current < 200 %}
+        {% set afk_target = 200 %}
+        {% set afk_bonus = 70 %}
+      {% else %}
+        {% set afk_target = 0 %}
+        {% set afk_bonus = 0 %}
+      {% endif %}
+
+      {% if afk_target > 0 %}
+      <p class="mt-4 text-sm text-gray-600">AFK Bonus Progress: {{ afk_current }}/{{ afk_target }} (Bonus +{{ afk_bonus }} coin)</p>
+      <div class="w-full bg-gray-200 rounded-full h-3 mt-1 overflow-hidden">
+        <div class="h-3 rounded-full bg-green-500 transition-all duration-700 ease-out" style="width: {{ (afk_current / afk_target * 100) | round(0) }}%"></div>
+      </div>
+      {% endif %}
+    {% endif %}
+
+    <p class="mt-3 text-xs text-red-500">* Maximum 200 coins can be claimed per day<br>* Maximum 1000 coins can be collected in total</p>
+  </div>
+</main>
+
+<!-- SPARKLE & AUDIO -->
+<div id="sparkleContainer" class="absolute pointer-events-none top-0 left-0 w-full h-full z-50"></div>
+<audio id="coinSound" src="/static/sounds/coin.mp3" preload="auto"></audio>
+
+<!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+      <p>
+        <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+    </div>
+  </footer>
+
+<!-- SCRIPT -->
+<script>
+  let afkTime = 60;
+  let countdown = afkTime;
+  let interval;
+  const countdownEl = document.getElementById('countdown');
+  const coinMsg = document.getElementById('coinMsg');
+
+  function getRandomCoin() {
+    const weighted = [
+      1,1,1,1,1,2,2,2,3,3,4,5
+    ];
+    const index = Math.floor(Math.random() * weighted.length);
+    return weighted[index];
+  }
+
+  function playCoinSound() {
+    const audio = document.getElementById("coinSound");
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
+  }
+
+  function showSparkle() {
+    const container = document.getElementById("sparkleContainer");
+    for (let i = 0; i < 8; i++) {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+      sparkle.style.left = Math.random() * window.innerWidth + "px";
+      sparkle.style.top = (window.innerHeight / 2 + Math.random() * 100 - 50) + "px";
+      container.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 800);
+    }
+  }
+
+  function updateProgressBar(bar, percent) {
+    bar.style.width = percent + "%";
+    if (percent >= 80) {
+      bar.className = "h-3 rounded-full bg-red-500 transition-all duration-700 ease-out";
+    } else if (percent >= 60) {
+      bar.className = "h-3 rounded-full bg-orange-400 transition-all duration-700 ease-out";
+    } else {
+      bar.className = "h-3 rounded-full bg-blue-500 transition-all duration-700 ease-out";
+    }
+  }
+
+  function startCountdown() {
+    clearInterval(interval);
+    countdown = afkTime;
+    updateDisplay();
+
+    interval = setInterval(() => {
+      countdown--;
+      updateDisplay();
+
+      if (countdown <= 0) {
+        clearInterval(interval);
+        const coin = getRandomCoin();
+
+        fetch("/getcoin/afk/earn", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ coin: coin })
+        })
+        .then(res => res.json())
+        .then(data => {
+          const progressText = document.getElementById('dailyProgressText');
+          const progressBar = document.getElementById('dailyProgressBar');
+          const totalProgressText = document.getElementById('totalProgressText');
+          const totalProgressBar = document.getElementById('totalProgressBar');
+
+          if (data.success) {
+            coinMsg.innerText = `You get ${coin} coin! Total now: ${data.coin_now}`;
+            progressText.innerText = `Daily progress: ${data.harian_now}/200`;
+            totalProgressText.innerText = `Total Coin: ${data.coin_now}/1000`;
+            updateProgressBar(progressBar, (data.harian_now / 200) * 100);
+            updateProgressBar(totalProgressBar, (data.coin_now / 1000) * 100);
+            showSparkle();
+            playCoinSound();
+          } else {
+            coinMsg.innerText = data.message;
+          }
+        })
+        .catch(() => {
+          coinMsg.innerText = "Failed to connect to server.";
+        });
+      }
+    }, 1000);
+  }
+
+  function updateDisplay() {
+    countdownEl.innerText = countdown;
+    if (countdown <= 10 && countdown > 0) {
+      countdownEl.classList.add("text-red-500", "blink");
+    } else {
+      countdownEl.classList.remove("text-red-500", "blink");
+    }
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      clearInterval(interval);
+      countdown = afkTime;
+      updateDisplay();
+      coinMsg.innerText = "";
+    } else {
+      startCountdown();
+    }
+  });
+
+  window.onload = () => {
+    fetch("/getcoin/afk/status")
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const progressText = document.getElementById('dailyProgressText');
+          const progressBar = document.getElementById('dailyProgressBar');
+          const totalProgressText = document.getElementById('totalProgressText');
+          const totalProgressBar = document.getElementById('totalProgressBar');
+
+          const harian_now = data.harian_now || 0;
+          const coin_now = data.coin_now || 0;
+
+          progressText.innerText = `Daily progress: ${harian_now}/200`;
+          totalProgressText.innerText = `Total Coin: ${coin_now}/1000`;
+          updateProgressBar(progressBar, (harian_now / 200) * 100);
+          updateProgressBar(totalProgressBar, (coin_now / 1000) * 100);
+
+          if (coin_now >= 1000) {
+            countdownEl.innerText = "MAX";
+            coinMsg.innerText = "Your coins have reached the maximum limit (1000).";
+          } else {
+            startCountdown();
+          }
+        } else {
+          coinMsg.innerText = data.message || "Failed to retrieve status.";
+        }
+      })
+      .catch(() => {
+        coinMsg.innerText = "Failed to connect to server.";
+      });
+  };
+</script>
+<script type="text/javascript">
+    atOptions = {
+      'key' : '5421a4eaef5512f495c9b7eed6910590',
+      'format' : 'iframe',
+      'height' : 60,
+      'width' : 468,
+      'params' : {}
+    };
+  </script>
+<script src="https://fpyf8.com/88/tag.min.js" data-zone="148964" async data-cfasync="false"></script>
+</body>
+</html>

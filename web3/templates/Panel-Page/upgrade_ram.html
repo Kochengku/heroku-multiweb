@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Skyforgia">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.skyforgia.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skyforgia">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.skyforgia.biz.id",
+    "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+    "name": "Skyforgia"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skyforgia |> RAM Upgrade</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+  </style>
+  <style>
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+
+  .progress-container {
+    background-color: #f3f4f6;
+    border-radius: 9999px;
+    height: 12px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Progress bar dengan animasi gradient */
+  .progress-bar {
+    background: linear-gradient(
+      270deg,
+      #3b82f6,
+      #60a5fa,
+      #3b82f6
+    );
+    background-size: 200% 200%;
+    height: 12px;
+    width: 0%;
+    animation: gradientMove 3s linear infinite;
+    transition: width 1s linear;
+    border-radius: 9999px;
+  }
+
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+<!-- Page Wrapper -->
+<div class="w-full flex flex-grow relative">
+
+  <!-- TOOLS FLOATING SIDEBAR -->
+  <aside class="hidden lg:flex flex-col gap-4 fixed left-6 top-28 bg-white rounded-2xl shadow-lg border border-gray-200 px-5 py-6 z-10">
+    <p class="text-xs font-semibold text-gray-500 mb-2">Server Tools</p>
+
+    <button class="tool-btn flex items-center gap-3 px-4 py-2 rounded-xl bg-blue-50 text-blue-700 font-medium hover:bg-blue-100 transition">
+      <i class="fa-solid fa-rocket"></i> Upgrade RAM
+    </button>
+
+    <button class="tool-btn flex items-center gap-3 px-4 py-2 rounded-xl text-gray-400 font-medium cursor-not-allowed bg-gray-50">
+      <i class="fa-solid fa-database"></i> Storage Boost
+    </button>
+
+    <button class="tool-btn flex items-center gap-3 px-4 py-2 rounded-xl text-gray-400 font-medium cursor-not-allowed bg-gray-50">
+      <i class="fa-solid fa-gauge"></i> CPU Priority
+    </button>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-grow flex justify-center items-start py-10 px-6 sm:px-12">
+
+    <div class="w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-gray-100 p-10 
+      opacity-0 translate-y-4 transition-all duration-700 reveal">
+
+      <h1 class="text-xl sm:text-2xl font-bold mb-6 text-gray-900 text-center flex items-center justify-center gap-3">
+        <i class="fa-solid fa-memory text-blue-600 text-2xl"></i>
+        Upgrade Server RAM
+      </h1>
+
+      <!-- ORIGINAL LOGIC (unchanged) -->
+      {% if ram_upgrade_end %}
+      <div class="mb-4 text-sm text-yellow-700 bg-yellow-100 p-4 rounded-xl shadow-inner">
+        <i class="fa-solid fa-hourglass-half mr-1"></i> 
+        Remaining Boost: <span id="countdown-upgrade" class="font-semibold"></span>
+      </div>
+      {% endif %}
+
+      {% if ram_boost_active %}
+      <p class="text-red-600 font-semibold mb-3 flex items-center gap-2">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        Your RAM boost is currently active.
+      </p>
+      {% endif %}
+
+      <div id="coinWarning" class="hidden p-3 rounded-lg bg-red-100 text-red-600 text-sm font-semibold mb-4 shadow-inner flex items-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        Not enough coins to upgrade!
+      </div>
+
+      <div class="text-sm bg-blue-50 p-4 rounded-xl text-gray-700 flex items-center gap-3 mb-5 shadow-inner">
+        <i class="fa-solid fa-coins text-yellow-500 text-xl"></i>
+        <div>
+          <p>Your current coin: <strong id="coinUser">{{ coin }}</strong></p>
+          <p>Coins required: <strong id="coinNeeded">0</strong></p>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <form id="upgradeForm" class="space-y-5">
+        <div>
+          <label class="text-sm font-medium text-gray-700 mb-1 block">Select RAM</label>
+          <select id="ram" class="w-full p-3 border border-gray-300 rounded-lg">
+    <option value="1">1 GB - 50/90/100 Coin (SPECIAL)</option>
+    <option value="2">2 GB - 100/150/200 Coin</option>
+    <option value="3">3 GB - 150/190/250 Coin</option>
+    <option value="4">4 GB - 200/310/450 Coin</option>
+    <option value="5">5 GB - 250/510/650 Coin</option>
+  </select>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium text-gray-700 mb-1 block">Upgrade Duration</label>
+          <select id="durasi" class="w-full p-3 border border-gray-300 rounded-lg">
+          <option value="3">3 Day</option>
+          <option value="5">5 Day</option>
+          <option value="7">7 Day</option>
+        </select>
+        </div>
+
+        <button id="upgradeButton" type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold shadow transition">
+          <i class="fa-solid fa-rocket"></i> Upgrade Now 
+        </button>
+      </form>
+
+      <div id="result" class="mt-5 text-sm text-gray-700"></div>
+    </div>
+  </main>
+</body>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove("opacity-0", "translate-y-4");
+        entry.target.classList.add("opacity-100", "translate-y-0");
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+</script>
+
+<script>
+// --- existing vars (pastikan id elemen sama seperti di HTML) ---
+const coinHarga = {
+  "1": { "3": 50, "5": 90, "7": 100 },
+  "2": { "3": 100, "5": 150, "7": 200 },
+  "3": { "3": 150, "5": 190, "7": 250 },
+  "4": { "3": 200, "5": 310, "7": 450 },
+  "5": { "3": 250, "5": 510, "7": 650 }
+};
+
+const ramSelect = document.getElementById('ram');
+const durasiSelect = document.getElementById('durasi');
+const coinNeededText = document.getElementById('coinNeeded');
+const coinUserText = document.getElementById('coinUser');
+const warningBox = document.getElementById('coinWarning');
+const resultBox = document.getElementById('result');
+const upgradeButton = document.getElementById('upgradeButton');
+
+// Flags dari server (Jinja) — true/false diset oleh template
+const ramUpgradeActive = {% if ram_upgrade_end %} true {% else %} false {% endif %};
+const ramBoostActive   = {% if ram_boost_active %} true {% else %} false {% endif %};
+
+// Utility: ambil angka coin dari teks (tahan jika ada karakter lain)
+function parseCoins(text) {
+  const n = Number(String(text).replace(/\D/g, '')) || 0;
+  return n;
+}
+
+// --- updateHarga: hanya update UI, tidak melakukan fetch ---
+function updateHarga() {
+  const ram = ramSelect.value;
+  const durasi = durasiSelect.value;
+  const needed = coinHarga[ram][durasi] || 0;
+
+  coinNeededText.textContent = needed;
+  const userCoin = parseCoins(coinUserText.textContent);
+
+  let shouldDisable = false;
+  let reason = null;
+
+  if (userCoin < needed) {
+    shouldDisable = true;
+    reason = 'coin';
+    warningBox.classList.remove("hidden");
+  } else {
+    warningBox.classList.add("hidden");
+  }
+
+  if (ramBoostActive) {
+    shouldDisable = true;
+    // prioritas message jika belum ada alasan lain
+    if (!reason) reason = 'boost';
+  }
+
+  if (ramUpgradeActive) {
+    shouldDisable = true;
+    if (!reason) reason = 'upgrade';
+  }
+
+  if (shouldDisable) {
+    upgradeButton.disabled = true;
+    upgradeButton.classList.remove("bg-blue-500", "hover:bg-blue-600");
+    upgradeButton.classList.add("bg-gray-400", "cursor-not-allowed");
+
+    // Tooltip/pesan singkat agar user tahu kenapa disabled
+    let titleText = '';
+    if (reason === 'coin') titleText = '💰 Add coins to upgrade RAM';
+    else if (reason === 'boost') titleText = '⚠️ RAM boost is active, wait for it to finish';
+    else if (reason === 'upgrade') titleText = '⏳ Wait for the previous RAM upgrade to complete';
+    if (titleText) upgradeButton.setAttribute('title', titleText);
+  } else {
+    upgradeButton.disabled = false;
+    upgradeButton.classList.remove("bg-gray-400", "cursor-not-allowed");
+    upgradeButton.classList.add("bg-blue-500", "hover:bg-blue-600");
+    upgradeButton.removeAttribute('title');
+  }
+}
+
+// Jalankan saat load & saat pilihan berubah
+ramSelect.addEventListener("change", updateHarga);
+durasiSelect.addEventListener("change", updateHarga);
+window.addEventListener('load', updateHarga);
+
+
+// --- Submit handler: panggil API sekali saat user submit ---
+document.getElementById('upgradeForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const ram = ramSelect.value;
+  const durasi = durasiSelect.value;
+  const needed = coinHarga[ram][durasi] || 0;
+  const userCoin = parseCoins(coinUserText.textContent);
+
+  // Final check: jangan submit kalau tombol disabled atau kondisi tidak terpenuhi
+  if (upgradeButton.disabled) {
+    resultBox.textContent = "Tidak bisa upgrade: kondisi belum terpenuhi.";
+    resultBox.classList.remove("text-green-600");
+    resultBox.classList.add("text-red-500");
+    return;
+  }
+
+  // Disable tombol & tunjukkan spinner kecil
+  upgradeButton.disabled = true;
+  const originalHTML = upgradeButton.innerHTML;
+  upgradeButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i>Processing...';
+
+  try {
+    const res = await fetch('/panel/upgrade/ram/start', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ram: ram, durasi: durasi })
+    });
+
+    // parsing response
+    const data = await res.json().catch(() => ({ success: false, message: 'Invalid JSON response' }));
+
+    resultBox.textContent = data.message || (data.success ? 'Upgrade started' : 'Upgrade failed');
+
+    if (data.success) {
+      resultBox.classList.remove("text-red-500");
+      resultBox.classList.add("text-green-600");
+      // update koin user (gunakan nilai dari server jika ada)
+      coinUserText.textContent = (typeof data.coin_now !== 'undefined') ? data.coin_now : (userCoin - needed);
+      // update UI setelah perubahan koin
+      updateHarga();
+
+      // redirect jika server mengirimkan redirect_url
+      if (data.redirect_url) {
+        setTimeout(() => { window.location.href = data.redirect_url; }, 1000);
+      } else {
+        // restore tombol jika tidak redirect
+        upgradeButton.innerHTML = originalHTML;
+        upgradeButton.disabled = true; // biasanya jadi disabled karena ramUpgradeActive
+      }
+    } else {
+      // gagal: tampilkan pesan dan restore tombol sesuai kondisi
+      resultBox.classList.remove("text-green-600");
+      resultBox.classList.add("text-red-500");
+      upgradeButton.innerHTML = originalHTML;
+      updateHarga();
+    }
+  } catch (err) {
+    resultBox.textContent = err.message || "Terjadi error jaringan.";
+    resultBox.classList.remove("text-green-600");
+    resultBox.classList.add("text-red-500");
+    upgradeButton.innerHTML = originalHTML;
+    updateHarga();
+  }
+});
+
+{% if ram_upgrade_start and ram_upgrade_end %}
+  const upgradeStartTime = new Date("{{ ram_upgrade_start.isoformat() }}Z").getTime();
+  const upgradeEndTime   = new Date("{{ ram_upgrade_end.isoformat() }}Z").getTime();
+
+  const upgradeCountdownEl = document.getElementById("countdown-upgrade");
+
+  function updateUpgradeCountdown() {
+    if (!upgradeCountdownEl) return; // safeguard ringan (tidak mematikan loop lain)
+
+    const now = Date.now();
+    const remaining = upgradeEndTime - now;
+
+    if (remaining <= 0) {
+      upgradeCountdownEl.textContent = "Upgrade complete, refreshing...";
+      setTimeout(() => location.reload(), 1500);
+      return;
+    }
+
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+
+    upgradeCountdownEl.textContent =
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+    requestAnimationFrame(updateUpgradeCountdown);
+  }
+
+  updateUpgradeCountdown();
+{% endif %}
+</script>
+<!-- INISIALISASI TOM SELECT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // inisialisasi untuk select RAM
+  new TomSelect("#ram", {
+    create: false,
+    sortField: { field: "text", direction: "asc" }
+  });
+
+  // inisialisasi untuk select Durasi
+  new TomSelect("#durasi", {
+    create: false,
+    sortField: { field: "text", direction: "asc" }
+  });
+});
+</script>
+
+
+</body>
+</html>
+
+</body>
+</html>

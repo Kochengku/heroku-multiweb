@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Skyforgia">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.skyforgia.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skyforgia">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.skyforgia.biz.id",
+    "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+    "name": "Skyforgia"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+
+<title>Skyforgia |> Panel Account</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+body{background:#f8f9fb;font-family:"Inter",sans-serif;}
+.card{ @apply bg-white rounded-xl shadow-sm border border-gray-200 ; }
+.btn-main{ @apply bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-5 py-2.5 text-sm transition ; }
+.btn-secondary{ @apply border border-gray-300 hover:bg-gray-100 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium ; }
+.fade{animation:fade .4s ease-out;}
+@keyframes fade{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+</style>
+<style>
+  .cred-card {
+    @apply bg-gray-50 border rounded-lg p-3;
+  }
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+<!-- NOTIFIKASI POPUP -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    {% if category == 'has_server' %}
+      <div id="popupAccount_existing" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-yellow-400/50 shadow-xl rounded-xl px-5 py-4 flex items-center gap-3 text-yellow-700">
+        <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-xl"></i>
+        <span>{{ message }}</span>
+      </div>
+    {% elif category == 'server_created' %}
+      <div id="popupAccount_create" class="fixed top-5 right-5 backdrop-blur-md bg-white/80 border border-green-400/50 shadow-xl rounded-xl px-5 py-4 flex items-center gap-3 text-green-700">
+        <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+        <span>{{ message }}</span>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+<!-- MAIN -->
+<main class="flex-grow flex items-center justify-center px-4 py-10 fade">
+
+  <div class="w-full max-w-5xl grid lg:grid-cols-2 rounded-2xl overflow-hidden shadow-xl border bg-white">
+
+    <!-- HERO ACCOUNT INFO -->
+    <div class="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-8 flex flex-col justify-center space-y-6">
+      <div class="text-center">
+        <i class="fa-solid fa-shield-halved text-white/90 text-6xl drop-shadow"></i>
+        <h2 class="text-2xl font-bold mt-4">Account Details</h2>
+        <p class="text-blue-100 text-sm mt-1">Your secure login information</p>
+      </div>
+
+      <div class="space-y-3 text-sm text-blue-100">
+        <p><i class="fa-solid fa-at mr-2"></i>Email: <strong class="text-white">{{ account.email }}</strong></p>
+        <p><i class="fa-solid fa-user mr-2"></i>Username: <strong class="text-white">{{ account.username }}</strong></p>
+        <p><i class="fa-solid fa-key mr-2"></i>Password: <strong class="text-white">{{ account.username }}</strong></p>
+
+        <a href="{{ account.panel_url }}" target="_blank"
+          class="inline-block mt-2 text-white underline text-xs">
+          <i class="fa-solid fa-globe mr-1"></i>Open Panel
+        </a>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-xs space-y-1 border border-white/20 shadow-sm">
+        <p>Today's Boost: <strong>{{ '1/1' if boost_used else '0/1' }}</strong></p>
+        <p>Slot Remaining: <strong>{{ slot_sisa }}/5</strong></p>
+
+        {% if remaining_time > 0 %}
+        <p class="text-green-300">Boost Active: <span id="countdown">{{ remaining_time }}</span></p>
+        {% elif remaining_daily_seconds > 0 %}
+        <p class="text-gray-200">Next Boost: <span id="dailyCountdown">{{ remaining_daily_seconds }}</span></p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="p-8 space-y-6">
+
+      <h2 class="font-bold text-xl text-gray-800">
+        <i class="fa-solid fa-server mr-2 text-blue-600"></i>Panel Credentials
+      </h2>
+
+      <div class="grid sm:grid-cols-2 gap-3 text-sm">
+        <div class="cred-card"><strong>Email</strong><br>{{ account.email }}</div>
+        <div class="cred-card"><strong>Username</strong><br>{{ account.username }}</div>
+        <div class="cred-card"><strong>Password</strong><br>{{ account.username }}</div>
+        <div class="cred-card"><strong>Panel</strong><br><a href="{{ account.panel_url }}" class="text-blue-600 break-words">{{ account.panel_url }}</a></div>
+      </div>
+
+      <form id="boostForm" class="pt-3">
+        <input type="hidden" name="panel_id" value="{{ panel_id }}">
+        <button 
+          {% set disabled_btn = boost_used or slot_sisa == 0 or ram_upgrade_active %}
+          {% if disabled_btn %}disabled{% endif %}
+          class="w-full py-3 rounded-lg font-semibold text-white shadow transition
+          {% if disabled_btn %}
+            bg-gray-400 cursor-not-allowed
+          {% else %}
+            bg-blue-600 hover:bg-blue-700
+          {% endif %}">
+          ⚡ Boost RAM to 1.5GB for 1 Hour
+        </button>
+
+        {% if ram_upgrade_active %}
+        <p class="text-xs text-red-500 mt-1">Using RAM upgrade, boost disabled.</p>
+        {% endif %}
+        <p id="boostStatus" class="text-xs mt-2 text-gray-600"></p>
+      </form>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- SCRIPT -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Fade-in animasi
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    const element = document.querySelector(".fade-in-up");
+    if (element) observer.observe(element);
+
+    // Popup notifikasi
+    ["popupAccount_existing","popupAccount_create"].forEach(id=>{
+      const p=document.getElementById(id);
+      if(p){
+        setTimeout(()=>{p.classList.remove("opacity-0","translate-y-[-10px]");p.classList.add("opacity-100","translate-y-0");},100);
+        setTimeout(()=>{p.classList.remove("opacity-100","translate-y-0");p.classList.add("opacity-0","translate-y-[-10px]");},4000);
+      }
+    });
+
+    // Boost submit
+    const form = document.getElementById('boostForm');
+    form?.addEventListener('submit', async (e) => {
+      if (form.querySelector('button').disabled) return;
+      e.preventDefault();
+      const statusText = document.getElementById('boostStatus');
+      statusText.textContent = 'Processing requests...';
+
+      try {
+        const res = await fetch('/boost-ram', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({})
+});
+        const data  = await res.json();
+        if (data.success) {
+          statusText.textContent = '✅ RAM successfully upgraded to 1.5 GB for 1 hour!';
+          statusText.classList.remove('text-red-600');
+          statusText.classList.add('text-green-600');
+          setTimeout(()=>location.reload(), 2000);
+        } else {
+          statusText.textContent = '⚠️ ' + data.message;
+          statusText.classList.remove('text-green-600');
+          statusText.classList.add('text-red-600');
+        }
+      } catch {
+        statusText.textContent = '❌ Failed to contact server.';
+        statusText.classList.add('text-red-600');
+      }
+    });
+  });
+
+  /* Countdown */
+{% if remaining_time > 0 %}
+(function startCountdown(seconds){
+  const c=document.getElementById('countdown');
+  (function update(){
+    const h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), s=seconds%60;
+    c.textContent=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if(seconds-->0)setTimeout(update,1000); else{c.textContent="00:00:00";location.reload();}
+  })();
+})({{ remaining_time }});
+{% elif remaining_daily_seconds > 0 %}
+(function startCountdown(seconds){
+  const c=document.getElementById('dailyCountdown');
+  (function update(){
+    const h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), s=seconds%60;
+    c.textContent=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if(seconds-->0)setTimeout(update,1000); else{c.textContent="00:00:00";location.reload();}
+  })();
+})({{ remaining_daily_seconds }});
+{% endif %}
+</script>
+<script src="https://fpyf8.com/88/tag.min.js" data-zone="183700" async data-cfasync="false"></script>
+</body>
+</html>

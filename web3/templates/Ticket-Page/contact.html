@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skyforgia |> Contact</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Skyforgia">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.skyforgia.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skyforgia">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.skyforgia.biz.id",
+    "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+    "name": "Skyforgia"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+  </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+<!-- Content -->
+<main class="flex-grow flex items-center justify-center py-10 px-4 animate-fadeInUp">
+
+  <div class="bg-white shadow-xl rounded-2xl border w-full max-w-4xl grid md:grid-cols-2 overflow-hidden">
+
+    <!-- Left info / illustration -->
+    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8 flex flex-col justify-center space-y-4">
+      <div class="space-y-2">
+        <h1 class="text-2xl font-bold">Contact Support</h1>
+        <p class="text-blue-100 text-sm leading-relaxed">
+          Need help? You can contact us or join our community channels.
+        </p>
+      </div>
+
+      <!-- Icon -->
+      <div class="flex justify-center mt-4">
+        <i class="fa-solid fa-headset text-white/90 text-7xl drop-shadow-md"></i>
+      </div>
+
+      <p class="text-xs text-blue-100 mt-2">
+        Response usually within a few minutes.
+      </p>
+    </div>
+
+    <!-- Right content -->
+    <div class="p-8 space-y-5">
+
+      <h2 class="text-xl font-semibold text-gray-800 text-center">Contact Us</h2>
+
+      <p class="text-gray-500 text-sm text-center">
+        Choose one of the following ways to reach our team:
+      </p>
+
+      <div class="space-y-3">
+
+        <a href="https://wa.me/{{ whatsapp_number }}" target="_blank"
+          class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-2.5 text-sm rounded-lg shadow transition">
+          <i class="fa-brands fa-whatsapp"></i> Chat via WhatsApp
+        </a>
+
+        <a href="https://t.me/{{ telegram_user }}" target="_blank"
+          class="flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white py-2.5 text-sm rounded-lg shadow transition">
+          <i class="fa-brands fa-telegram"></i> Chat via Telegram
+        </a>
+
+        <hr class="border-gray-200 my-2">
+
+        <a href="{{ whatsapp_channel }}" target="_blank"
+          class="flex items-center justify-center gap-2 bg-green-100 hover:bg-green-200 text-green-700 font-semibold py-2.5 text-sm rounded-lg transition">
+          <i class="fa-solid fa-bullhorn"></i> Join WhatsApp Channel
+        </a>
+
+        <a href="{{ telegram_channel }}" target="_blank"
+          class="flex items-center justify-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2.5 text-sm rounded-lg transition">
+          <i class="fa-solid fa-bullhorn"></i> Join Telegram Channel
+        </a>
+
+        <hr class="border-gray-200 my-2">
+
+        <a href="/support"
+          class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 text-sm rounded-lg shadow transition">
+          <i class="fa-solid fa-ticket"></i> Submit a Support Ticket
+        </a>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <title>Sahabat Ai Nusantara |> Pterodactyl Account Details </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity .6s ease-out, transform .6s ease-out; }
+    .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col text-sm sm:text-base">
+
+<!-- NOTIFIKASI POPUP -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    {% if category == 'has_server' %}
+      <div id="popupAccount_existing" class="fixed top-5 right-5 bg-white border-l-4 border-yellow-500 shadow-lg rounded-md px-4 py-3 text-yellow-700 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500 z-50">
+        <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-xl"></i>
+        <span>{{ message }}</span>
+      </div>
+    {% elif category == 'server_created' %}
+      <div id="popupAccount_create" class="fixed top-5 right-5 bg-white border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-700 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500 z-50">
+        <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+        <span>{{ message }}</span>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+<!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="Logo" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+<!-- MAIN CONTENT -->
+<main class="flex-grow flex items-center justify-center px-4 py-8">
+  <div class="bg-white shadow-xl rounded-xl p-5 sm:p-8 w-full max-w-lg fade-in-up">
+    <h2 class="text-xl font-bold text-blue-600 mb-4 text-center">Your Pterodactyl Account Details</h2>
+    <div class="text-gray-700 space-y-3 text-center sm:text-left">
+      <p><strong>Email:</strong> {{ account.email }}</p>
+      <p><strong>Username:</strong> {{ account.username }}</p>
+      <p><strong>Password:</strong> {{ account.username }}</p>
+      <p><strong>Access Your Server:</strong><br>
+        <a href="{{ account.panel_url }}" target="_blank" class="text-blue-600 hover:underline break-words">
+          {{ account.panel_url }}
+        </a>
+      </p>
+
+      <!-- Informasi Limit Boost -->
+      <div class="mt-4 text-center">
+        <p class="text-sm">
+          Today's Boost: <strong>{{ '1/1' if boost_used else '0/1' }}</strong>
+        </p>
+
+        {% if remaining_time > 0 %}
+        <p class="text-xs text-gray-500 mt-1">
+          Boost active, time remaining: <span id="countdown">{{ remaining_time }}</span>
+        </p>
+        {% elif remaining_daily_seconds > 0 %}
+        <p class="text-xs text-gray-500 mt-1">
+          You can boost again in: <span id="dailyCountdown">{{ remaining_daily_seconds }}</span>
+        </p>
+        {% endif %}
+
+        <!-- Slot Boost -->
+        {% if slot_sisa == 0 %}
+        <p class="text-xs text-red-500 mt-1">⚠️ Full boost slot (5/5)</p>
+        {% else %}
+        <p class="text-xs text-gray-500 mt-1">Remaining boost slots: {{ slot_sisa }}/5</p>
+        {% endif %}
+      </div>
+      {% set disabled_btn = boost_used or slot_sisa == 0 or ram_upgrade_active %}
+      <form id="boostForm" class="mt-4 text-center">
+        <input type="hidden" name="panel_id" value="{{ panel_id }}">
+        <button type="submit"
+          {% if disabled_btn %} disabled {% endif %}
+          class="{% if disabled_btn %}
+                   bg-gray-400 cursor-not-allowed
+                 {% else %}
+                   bg-blue-600 hover:bg-blue-700
+                 {% endif %}
+                 text-white font-semibold py-2 px-4 rounded-lg transition">
+          Upgrade RAM (1.5 GB / 1 hours)
+        </button>
+
+        {% if ram_upgrade_active %}
+          <p class="mt-2 text-xs text-red-500">You are using a RAM upgrade, you cannot use RAM boost at this time.</p>
+        {% endif %}
+
+        <p id="boostStatus" class="mt-2 text-sm text-gray-600"></p>
+      </form>
+    </div>
+
+    <a href="/dashboard" class="mt-6 block bg-gray-200 hover:bg-gray-300 text-gray-800 py-2.5 px-6 rounded-full font-semibold text-center transition w-full">
+      Back to Dashboard
+    </a>
+  </div>
+</main>
+
+<!-- GUIDE SECTION -->
+<section class="bg-white border-t border-gray-200 py-10">
+  <div class="max-w-screen-lg mx-auto px-4 text-center">
+    <h3 class="text-lg sm:text-xl font-semibold text-blue-600 mb-6">Pterodactyl Panel User Guide</h3>
+    <ol class="space-y-4 text-left text-gray-700">
+      <li class="flex items-start"><span class="mr-2 text-blue-600 font-bold">1.</span><p>Open your Pterodactyl panel link.</p></li>
+      <li class="flex items-start"><span class="mr-2 text-blue-600 font-bold">2.</span><p>Login with <strong>email</strong> and <strong>password</strong>.</p></li>
+      <li class="flex items-start"><span class="mr-2 text-blue-600 font-bold">3.</span><p>Enter the menu <strong>“Servers”</strong>.</p></li>
+      <li class="flex items-start"><span class="mr-2 text-blue-600 font-bold">4.</span><p>Select and click <strong>“Start”</strong>.</p></li>
+      <li class="flex items-start"><span class="mr-2 text-blue-600 font-bold">5.</span><p>Use tabs <strong>Console</strong> and <strong>File</strong>.</p></li>
+      <li class="flex items-start"><span class="mr-2 text-blue-600 font-bold">6.</span><p>Forgot password? Click <strong>“Forgot Password”</strong>.</p></li>
+    </ol>
+    <p class="mt-8 text-sm text-gray-500">Get the latest information here <a href="https://whatsapp.com/channel/0029Vb2IjRwFi8xZpEVes12h" class="text-blue-500 hover:underline">WhatsApp Channel</a>.</p>
+    <p class="mt-8 text-sm text-gray-500">Need help? <a href="https://wa.me/6281775155057" class="text-blue-500 hover:underline">Contact via WhatsApp</a>.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-white border-t border-gray-200 py-4 text-xs">
+  <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+    <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+    <p>
+      <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+      <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+      <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+      <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+    </p>
+    <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+    <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+  </div>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Fade-in animasi
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    const element = document.querySelector(".fade-in-up");
+    if (element) observer.observe(element);
+
+    // Popup notifikasi
+    ["popupAccount_existing","popupAccount_create"].forEach(id=>{
+      const p=document.getElementById(id);
+      if(p){
+        setTimeout(()=>{p.classList.remove("opacity-0","translate-y-[-10px]");p.classList.add("opacity-100","translate-y-0");},100);
+        setTimeout(()=>{p.classList.remove("opacity-100","translate-y-0");p.classList.add("opacity-0","translate-y-[-10px]");},4000);
+      }
+    });
+
+    // Boost submit
+    const form = document.getElementById('boostForm');
+    form?.addEventListener('submit', async (e) => {
+      if (form.querySelector('button').disabled) return;
+      e.preventDefault();
+      const statusText = document.getElementById('boostStatus');
+      statusText.textContent = 'Processing requests...';
+
+      try {
+        const res = await fetch('/boost-ram', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({})
+});
+        const data  = await res.json();
+        if (data.success) {
+          statusText.textContent = '✅ RAM successfully upgraded to 1.5 GB for 1 hour!';
+          statusText.classList.remove('text-red-600');
+          statusText.classList.add('text-green-600');
+          setTimeout(()=>location.reload(), 2000);
+        } else {
+          statusText.textContent = '⚠️ ' + data.message;
+          statusText.classList.remove('text-green-600');
+          statusText.classList.add('text-red-600');
+        }
+      } catch {
+        statusText.textContent = '❌ Failed to contact server.';
+        statusText.classList.add('text-red-600');
+      }
+    });
+  });
+
+  /* Countdown */
+{% if remaining_time > 0 %}
+(function startCountdown(seconds){
+  const c=document.getElementById('countdown');
+  (function update(){
+    const h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), s=seconds%60;
+    c.textContent=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if(seconds-->0)setTimeout(update,1000); else{c.textContent="00:00:00";location.reload();}
+  })();
+})({{ remaining_time }});
+{% elif remaining_daily_seconds > 0 %}
+(function startCountdown(seconds){
+  const c=document.getElementById('dailyCountdown');
+  (function update(){
+    const h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), s=seconds%60;
+    c.textContent=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if(seconds-->0)setTimeout(update,1000); else{c.textContent="00:00:00";location.reload();}
+  })();
+})({{ remaining_daily_seconds }});
+{% endif %}
+</script>
+<script src="https://fpyf8.com/88/tag.min.js" data-zone="175419" async data-cfasync="false"></script>
+</body>
+</html>
