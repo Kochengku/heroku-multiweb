@@ -11,7 +11,7 @@ import json
 try:
     from web1.app import (
     app,
-    db,
+    db_pg,
     User,
     Server,
     ServerSpec,
@@ -30,7 +30,7 @@ try:
     print("✅ Import web1.app berhasil")
 except Exception as e:
     print("❌ Gagal import web1.app:", e)
-    app = db = User = Server = ServerSpec = PANELS = None
+    app = db_pg = User = Server = ServerSpec = PANELS = None
     broadcast_lock_notification = None
     update_server_build = None
     get_allocation_from_api = None
@@ -72,8 +72,8 @@ def run_daily_broadcast():
         print("❌ ERROR run_daily_broadcast:", e)
     finally:
         try:
-            db.session.remove()
-            print("✅ db session dilepas (daily_broadcast)")
+            db_pg.session.remove()
+            print("✅ db_pg session dilepas (daily_broadcast)")
         except Exception:
             pass
 
@@ -87,7 +87,7 @@ update_status = "idle"
 def run_process_update_queue():
     global update_queue, update_status
 
-    # proses ini tidak butuh app context db kalau semua helper siap
+    # proses ini tidak butuh app context db_pg kalau semua helper siap
     if not update_queue:
         if update_status == "running":
             update_status = "done"
@@ -160,15 +160,15 @@ def run_reset_ram_boost():
                         allocation_id = get_allocation_from_api(panel_id, server_data.id)
                         if allocation_id:
                             server_data.allocation_id = allocation_id
-                            db.session.commit()
+                            db_pg.session.commit()
                         else:
                             print(f"⚠️ Allocation tidak ditemukan untuk server {server_data.id}, skip")
                             continue
 
-                    # reset flags di db
+                    # reset flags di db_pg
                     user.boostserver = 0
-                    db.session.commit()
-                    print(f"✅ db: boostserver=0 untuk {user.email}")
+                    db_pg.session.commit()
+                    print(f"✅ db_pg: boostserver=0 untuk {user.email}")
 
                     # ambil serverspec aman
                     serverspec = ServerSpec.query.filter_by(id=panel_id).first()
@@ -183,7 +183,7 @@ def run_reset_ram_boost():
 
                     # clear last_boost
                     user.last_boost = None
-                    db.session.commit()
+                    db_pg.session.commit()
                     print(f"✅ BOOST DIRESET: {user.email}")
 
                 except Exception as e:
@@ -194,8 +194,8 @@ def run_reset_ram_boost():
 
     finally:
         try:
-            db.session.remove()
-            print("✅ db session dilepas (reset_boost)")
+            db_pg.session.remove()
+            print("✅ db_pg session dilepas (reset_boost)")
         except Exception:
             pass
 
@@ -230,7 +230,7 @@ def run_reset_ram_upgrade():
                         allocation_id = get_allocation_from_api(panel_id, server.id)
                         if allocation_id:
                             server.allocation_id = allocation_id
-                            db.session.commit()
+                            db_pg.session.commit()
                         else:
                             print(f"⚠️ Allocation tidak ditemukan untuk server {server.id}, skip")
                             continue
@@ -248,7 +248,7 @@ def run_reset_ram_upgrade():
                         user.ram = 512
                         user.ram_upgrade_start = None
                         user.ram_upgrade_end = None
-                        db.session.commit()
+                        db_pg.session.commit()
                         print(f"✅ UPGRADE DIRESET: {user.email}")
 
                 except Exception as e:
@@ -259,8 +259,8 @@ def run_reset_ram_upgrade():
 
     finally:
         try:
-            db.session.remove()
-            print("✅ db session dilepas (reset_upgrade)")
+            db_pg.session.remove()
+            print("✅ db_pg session dilepas (reset_upgrade)")
         except Exception:
             pass
 
@@ -308,8 +308,8 @@ def run_shutdown_inactive_servers():
 
     finally:
         try:
-            db.session.remove()
-            print("✅ db session dilepas (shutdown)")
+            db_pg.session.remove()
+            print("✅ db_pg session dilepas (shutdown)")
         except Exception:
             pass
 
@@ -329,19 +329,19 @@ def weekly_backup():
                     panel_id = str(user.serverid) if user.serverid else None
                     if not panel_id:
                         user.auto_backup_enabled = False
-                        db.session.commit()
+                        db_pg.session.commit()
                         continue
 
                     p_user = get_ptero_user(user.email, panel_id)
                     if not p_user:
                         user.auto_backup_enabled = False
-                        db.session.commit()
+                        db_pg.session.commit()
                         continue
 
                     servers = get_servers_by_userid(p_user["id"], panel_id)
                     if not servers:
                         user.auto_backup_enabled = False
-                        db.session.commit()
+                        db_pg.session.commit()
                         continue
 
                     has_files = False
@@ -354,20 +354,20 @@ def weekly_backup():
 
                     if not has_files:
                         user.auto_backup_enabled = False
-                        db.session.commit()
+                        db_pg.session.commit()
                         continue
 
                     backup_and_upload(user)
 
                     user.last_backup = datetime.utcnow()
                     user.next_backup = user.last_backup + timedelta(weeks=1)
-                    db.session.commit()
+                    db_pg.session.commit()
                     print(f"✅ Backup dijalankan: {user.email}")
 
                 except Exception as e:
                     print(f"[ERROR weekly_backup] {user.email}:", e)
                     user.auto_backup_enabled = False
-                    db.session.commit()
+                    db_pg.session.commit()
 
                 time.sleep(60)
 
@@ -376,8 +376,8 @@ def weekly_backup():
 
     finally:
         try:
-            db.session.remove()
-            print("✅ db session dilepas (weekly_backup)")
+            db_pg.session.remove()
+            print("✅ db_pg session dilepas (weekly_backup)")
         except Exception:
             pass
             

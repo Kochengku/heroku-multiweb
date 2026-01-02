@@ -54,10 +54,10 @@ from pterodactyl_web1 import create_user, create_server, get_all_nodes, hapus_us
 from werkzeug.security import generate_password_hash, check_password_hash
 os.environ["WERKZEUG_RUN_MAIN"] = "true"
 
-db = SQLAlchemy()
-
 app = Flask(__name__)
 app.secret_key = "Kocheng"
+
+db_pg_pg = SQLAlchemy()
 
 raw_uri = os.getenv("DATABASE_URL")
 if not raw_uri:
@@ -77,7 +77,7 @@ app.config.update(
     }
 )
 
-db.init_app(app)
+db_pg_pg.init_app(app)
 
 DEFAULT_NODES = [
     {"id": 1, "name": "Node 1", "limit_server": 35},
@@ -90,136 +90,136 @@ DEFAULT_NODES = [
     {"id": 8, "name": "Node 8", "limit_server": 35},
 ]
 
-class User(db.Model):
+class User(db_pg.Model):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(100))
-    bio = db.Column(db.String(100))
-    email = db.Column(db.String(100), unique=True)
-    password_hash = db.Column(db.String(128))
+    id = db_pg.Column(db_pg.Integer, primary_key=True)
+    nama = db_pg.Column(db_pg.String(100))
+    bio = db_pg.Column(db_pg.String(100))
+    email = db_pg.Column(db_pg.String(100), unique=True)
+    password_hash = db_pg.Column(db_pg.String(128))
 
-    is_verified = db.Column(db.Boolean, default=False)
-    login_google = db.Column(db.Boolean, default=False)
+    is_verified = db_pg.Column(db_pg.Boolean, default=False)
+    login_google = db_pg.Column(db_pg.Boolean, default=False)
 
-    photo_url = db.Column(db.String(255))
-    photo_google = db.Column(db.String(255))
+    photo_url = db_pg.Column(db_pg.String(255))
+    photo_google = db_pg.Column(db_pg.String(255))
 
-    server = db.Column(db.Integer, default=0)
-    cpu = db.Column(db.Integer, default=0)
-    ram = db.Column(db.Integer, default=0)
-    disk = db.Column(db.Integer, default=0)
+    server = db_pg.Column(db_pg.Integer, default=0)
+    cpu = db_pg.Column(db_pg.Integer, default=0)
+    ram = db_pg.Column(db_pg.Integer, default=0)
+    disk = db_pg.Column(db_pg.Integer, default=0)
 
-    coin = db.Column(db.Integer, default=0)
-    special_ram_last_used = db.Column(db.DateTime)
-    trialramused = db.Column(db.Integer, default=0)
+    coin = db_pg.Column(db_pg.Integer, default=0)
+    special_ram_last_used = db_pg.Column(db_pg.DateTime)
+    trialramused = db_pg.Column(db_pg.Integer, default=0)
 
-    last_login = db.Column(db.DateTime, default=datetime.utcnow)
-    last_boost = db.Column(db.DateTime)
-    last_boost_used = db.Column(db.DateTime)
+    last_login = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
+    last_boost = db_pg.Column(db_pg.DateTime)
+    last_boost_used = db_pg.Column(db_pg.DateTime)
 
-    ram_upgrade_start = db.Column(db.DateTime)
-    ram_upgrade_end = db.Column(db.DateTime)
+    ram_upgrade_start = db_pg.Column(db_pg.DateTime)
+    ram_upgrade_end = db_pg.Column(db_pg.DateTime)
 
-    harian_coin = db.Column(db.Integer, default=0)
-    harian_coin_tanggal = db.Column(db.Date)
+    harian_coin = db_pg.Column(db_pg.Integer, default=0)
+    harian_coin_tanggal = db_pg.Column(db_pg.Date)
 
-    token = db.Column(db.String(64), unique=True)
-    timestamp = db.Column(db.Integer)
+    token = db_pg.Column(db_pg.String(64), unique=True)
+    timestamp = db_pg.Column(db_pg.Integer)
 
-    iklan = db.Column(db.Integer, default=0)
-    iklan_expiry = db.Column(db.DateTime)
+    iklan = db_pg.Column(db_pg.Integer, default=0)
+    iklan_expiry = db_pg.Column(db_pg.DateTime)
 
-    boostserver = db.Column(db.Integer, default=0)
+    boostserver = db_pg.Column(db_pg.Integer, default=0)
 
-    referral_code = db.Column(db.String(20), unique=True)
-    referred_by = db.Column(db.String(20))
+    referral_code = db_pg.Column(db_pg.String(20), unique=True)
+    referred_by = db_pg.Column(db_pg.String(20))
 
-    milestone_3 = db.Column(db.Boolean, default=False)
-    milestone_5 = db.Column(db.Boolean, default=False)
-    milestone_10 = db.Column(db.Boolean, default=False)
-    milestone_15 = db.Column(db.Boolean, default=False)
-    milestone_20 = db.Column(db.Boolean, default=False)
-    milestone_25 = db.Column(db.Boolean, default=False)
-    milestone_30 = db.Column(db.Boolean, default=False)
+    milestone_3 = db_pg.Column(db_pg.Boolean, default=False)
+    milestone_5 = db_pg.Column(db_pg.Boolean, default=False)
+    milestone_10 = db_pg.Column(db_pg.Boolean, default=False)
+    milestone_15 = db_pg.Column(db_pg.Boolean, default=False)
+    milestone_20 = db_pg.Column(db_pg.Boolean, default=False)
+    milestone_25 = db_pg.Column(db_pg.Boolean, default=False)
+    milestone_30 = db_pg.Column(db_pg.Boolean, default=False)
 
-    device_id = db.Column(db.String(255))
-    ip_address = db.Column(db.String(45))
-    user_agent = db.Column(db.Text)
+    device_id = db_pg.Column(db_pg.String(255))
+    ip_address = db_pg.Column(db_pg.String(45))
+    user_agent = db_pg.Column(db_pg.Text)
 
-    daily_claim_day = db.Column(db.Integer, default=0)
-    daily_claim_last = db.Column(db.Date)
+    daily_claim_day = db_pg.Column(db_pg.Integer, default=0)
+    daily_claim_last = db_pg.Column(db_pg.Date)
 
-    afk_total_coin_bulanan = db.Column(db.Integer, default=0)
-    afk_bonus_bulan = db.Column(db.String(7))
-    afk_bonus_50 = db.Column(db.Boolean, default=False)
-    afk_bonus_100 = db.Column(db.Boolean, default=False)
-    afk_bonus_200 = db.Column(db.Boolean, default=False)
+    afk_total_coin_bulanan = db_pg.Column(db_pg.Integer, default=0)
+    afk_bonus_bulan = db_pg.Column(db_pg.String(7))
+    afk_bonus_50 = db_pg.Column(db_pg.Boolean, default=False)
+    afk_bonus_100 = db_pg.Column(db_pg.Boolean, default=False)
+    afk_bonus_200 = db_pg.Column(db_pg.Boolean, default=False)
 
-    created_server_before = db.Column(db.Boolean, default=False)
-    create_mission_rewarded = db.Column(db.Boolean, default=False)
+    created_server_before = db_pg.Column(db_pg.Boolean, default=False)
+    create_mission_rewarded = db_pg.Column(db_pg.Boolean, default=False)
 
-    is_moderator = db.Column(db.Boolean, default=False)
-    is_banned = db.Column(db.Boolean, default=False)
+    is_moderator = db_pg.Column(db_pg.Boolean, default=False)
+    is_banned = db_pg.Column(db_pg.Boolean, default=False)
 
-    is_backup_mega = db.Column(db.Boolean, default=False)
-    auto_backup_enabled = db.Column(db.Boolean, default=False)
+    is_backup_mega = db_pg.Column(db_pg.Boolean, default=False)
+    auto_backup_enabled = db_pg.Column(db_pg.Boolean, default=False)
 
-    last_backup = db.Column(db.DateTime)
-    next_backup = db.Column(db.DateTime)
-    last_filename = db.Column(db.String(255))
+    last_backup = db_pg.Column(db_pg.DateTime)
+    next_backup = db_pg.Column(db_pg.DateTime)
+    last_filename = db_pg.Column(db_pg.String(255))
 
-    serverid = db.Column(db.String(50))
-    mega_link = db.Column(db.Text)
+    serverid = db_pg.Column(db_pg.String(50))
+    mega_link = db_pg.Column(db_pg.Text)
     
-class ServerSpec(db.Model):
+class ServerSpec(db_pg.Model):
     __tablename__ = "server_spec"
 
-    id = db.Column(db.String, primary_key=True)
-    ram = db.Column(db.Integer, default=1024)
-    cpu = db.Column(db.Integer, default=80)
-    disk = db.Column(db.Integer, default=5024)
+    id = db_pg.Column(db_pg.String, primary_key=True)
+    ram = db_pg.Column(db_pg.Integer, default=1024)
+    cpu = db_pg.Column(db_pg.Integer, default=80)
+    disk = db_pg.Column(db_pg.Integer, default=5024)
 
 
-class Node(db.Model):
+class Node(db_pg.Model):
     __tablename__ = "node"
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    limit_server = db.Column(db.Integer, default=35)
+    id = db_pg.Column(db_pg.Integer, primary_key=True)
+    name = db_pg.Column(db_pg.String(50))
+    limit_server = db_pg.Column(db_pg.Integer, default=35)
 
 
-class Server(db.Model):
+class Server(db_pg.Model):
     __tablename__ = "server"
 
-    id = db.Column(db.Integer, primary_key=True)
-    serverid = db.Column(db.String(50))
-    name = db.Column(db.String(100), nullable=False)
-    uuid = db.Column(db.String(36), unique=True, nullable=False)
+    id = db_pg.Column(db_pg.Integer, primary_key=True)
+    serverid = db_pg.Column(db_pg.String(50))
+    name = db_pg.Column(db_pg.String(100), nullable=False)
+    uuid = db_pg.Column(db_pg.String(36), unique=True, nullable=False)
 
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db_pg.Column(db_pg.Integer, nullable=False)
 
-    server = db.Column(db.Integer, default=0)
-    cpu = db.Column(db.Integer, default=0)
-    ram = db.Column(db.Integer, default=0)
-    disk = db.Column(db.Integer, default=0)
+    server = db_pg.Column(db_pg.Integer, default=0)
+    cpu = db_pg.Column(db_pg.Integer, default=0)
+    ram = db_pg.Column(db_pg.Integer, default=0)
+    disk = db_pg.Column(db_pg.Integer, default=0)
 
-    allocation_id = db.Column(db.Integer)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    allocation_id = db_pg.Column(db_pg.Integer)
+    created_at = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
     
-class Ticket(db.Model):
+class Ticket(db_pg.Model):
     __tablename__ = "ticket"
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_email = db.Column(db.String(120), nullable=False)
-    subject = db.Column(db.String(255), nullable=False)
-    category = db.Column(db.String(100), nullable=False)
-    status = db.Column(db.String(50), default="open")
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    id = db_pg.Column(db_pg.Integer, primary_key=True)
+    user_email = db_pg.Column(db_pg.String(120), nullable=False)
+    subject = db_pg.Column(db_pg.String(255), nullable=False)
+    category = db_pg.Column(db_pg.String(100), nullable=False)
+    status = db_pg.Column(db_pg.String(50), default="open")
+    created_at = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
 
-    is_notified_admin = db.Column(db.Boolean, default=False)
+    is_notified_admin = db_pg.Column(db_pg.Boolean, default=False)
 
-    replies = db.relationship(
+    replies = db_pg.relationship(
         "Reply",
         backref="ticket",
         cascade="all, delete-orphan",
@@ -227,49 +227,49 @@ class Ticket(db.Model):
     )
 
 
-class Reply(db.Model):
+class Reply(db_pg.Model):
     __tablename__ = "reply"
 
-    id = db.Column(db.Integer, primary_key=True)
-    ticket_id = db.Column(db.Integer, db.ForeignKey("ticket.id", ondelete="CASCADE"))
-    sender = db.Column(db.String(50))
-    message = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    id = db_pg.Column(db_pg.Integer, primary_key=True)
+    ticket_id = db_pg.Column(db_pg.Integer, db_pg.ForeignKey("ticket.id", ondelete="CASCADE"))
+    sender = db_pg.Column(db_pg.String(50))
+    message = db_pg.Column(db_pg.Text, nullable=False)
+    created_at = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
 
-    is_notified_user = db.Column(db.Boolean, default=False)
-    is_notified_admin = db.Column(db.Boolean, default=False)
+    is_notified_user = db_pg.Column(db_pg.Boolean, default=False)
+    is_notified_admin = db_pg.Column(db_pg.Boolean, default=False)
 
-    images = db.relationship(
+    images = db_pg.relationship(
         "ReplyImage",
         backref="reply",
         cascade="all, delete-orphan"
     )
 
 
-class ReplyImage(db.Model):
+class ReplyImage(db_pg.Model):
     __tablename__ = "reply_image"
 
-    id = db.Column(db.Integer, primary_key=True)
-    reply_id = db.Column(db.Integer, db.ForeignKey("reply.id"), nullable=False)
-    image_url = db.Column(db.String(255), nullable=False)
+    id = db_pg.Column(db_pg.Integer, primary_key=True)
+    reply_id = db_pg.Column(db_pg.Integer, db_pg.ForeignKey("reply.id"), nullable=False)
+    image_url = db_pg.Column(db_pg.String(255), nullable=False)
     
-class ReferralActivity(db.Model):
+class ReferralActivity(db_pg.Model):
     __tablename__ = "referral_activity"
 
-    id = db.Column(db.Integer, primary_key=True)
-    inviter_id = db.Column(db.Integer)
-    invited_id = db.Column(db.Integer)
-    action = db.Column(db.String(50))
-    reward = db.Column(db.Integer, default=0)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    id = db_pg.Column(db_pg.Integer, primary_key=True)
+    inviter_id = db_pg.Column(db_pg.Integer)
+    invited_id = db_pg.Column(db_pg.Integer)
+    action = db_pg.Column(db_pg.String(50))
+    reward = db_pg.Column(db_pg.Integer, default=0)
+    timestamp = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
 
 
-class SiteSetting(db.Model):
+class SiteSetting(db_pg.Model):
     __tablename__ = "site_setting"
 
-    id = db.Column(db.Integer, primary_key=True)
-    key = db.Column(db.String(100), unique=True, nullable=False)
-    value = db.Column(db.String(255), nullable=False)
+    id = db_pg.Column(db_pg.Integer, primary_key=True)
+    key = db_pg.Column(db_pg.String(100), unique=True, nullable=False)
+    value = db_pg.Column(db_pg.String(255), nullable=False)
 
     @staticmethod
     def get(key, default=None):
@@ -282,8 +282,8 @@ class SiteSetting(db.Model):
         if s:
             s.value = str(value)
         else:
-            db.session.add(SiteSetting(key=key, value=str(value)))
-        db.session.commit()
+            db_pg.session.add(SiteSetting(key=key, value=str(value)))
+        db_pg.session.commit()
     
 update_queue = []
 update_logs = []
@@ -313,8 +313,8 @@ def init_nodes():
     if Node.query.count() == 0:
         for n in DEFAULT_NODES:
             node = Node(id=n["id"], name=n["name"], limit_server=n["limit_server"])
-            db.session.add(node)
-        db.session.commit()
+            db_pg.session.add(node)
+        db_pg.session.commit()
         print("Node default berhasil ditambahkan!")
         
 def init_server_spec():
@@ -327,15 +327,15 @@ def init_server_spec():
                 cpu=80,
                 disk=5024
             )
-            db.session.add(default_server)
+            db_pg.session.add(default_server)
             print(f"[INIT] ServerSpec untuk {panel_id} berhasil ditambahkan")
         else:
             print(f"[INIT] ServerSpec untuk {panel_id} sudah ada, dilewati")
 
-    db.session.commit()
+    db_pg.session.commit()
         
 with app.app_context():
-    db.create_all()
+    db_pg.create_all()
     init_nodes()
     init_server_spec()
 
@@ -717,14 +717,14 @@ def enqueue_spec_update(panel_id: str, ram: int, disk: int, cpu: int):
             allocation = attrs["allocation"]
 
             # Gunakan UUID, bukan numeric id
-            server_db = Server.query.filter_by(uuid=server_uuid).first()
-            if not server_db:
-                add_log(f"⚠️ Server {server_uuid} tidak ditemukan di db")
+            server_db_pg = Server.query.filter_by(uuid=server_uuid).first()
+            if not server_db_pg:
+                add_log(f"⚠️ Server {server_uuid} tidak ditemukan di db_pg")
                 continue
 
-            user = User.query.filter_by(id=server_db.user_id).first()
+            user = User.query.filter_by(id=server_db_pg.user_id).first()
             if not user:
-                add_log(f"⚠️ User {server_db.user_id} tidak ditemukan")
+                add_log(f"⚠️ User {server_db_pg.user_id} tidak ditemukan")
                 continue
 
             if user.ram_upgrade_start is not None or user.last_boost is not None:
@@ -741,11 +741,11 @@ def enqueue_spec_update(panel_id: str, ram: int, disk: int, cpu: int):
                 "cpu": cpu
             })
 
-            # Update spec di db
+            # Update spec di db_pg
             user.cpu = cpu
             user.ram = ram
             user.disk = disk
-            db.session.commit()
+            db_pg.session.commit()
 
         if data["meta"]["pagination"]["current_page"] >= data["meta"]["pagination"]["total_pages"]:
             break
@@ -1015,7 +1015,7 @@ def hapus_server_tidak_valid(panel_id, simulasi=True):
                     user.ram_upgrade_start = None
                     user.ram_upgrade_end = None
 
-                db.session.delete(srv)
+                db_pg.session.delete(srv)
                 total_dihapus += 1
                 output.append("Server berhasil dihapus dan state user di-reset.")
 
@@ -1023,7 +1023,7 @@ def hapus_server_tidak_valid(panel_id, simulasi=True):
             total_dilewatkan += 1
 
     if not simulasi:
-        db.session.commit()
+        db_pg.session.commit()
 
     output.append("")
     output.append("Ringkasan:")
@@ -1044,7 +1044,7 @@ def mark_trial(user):
     user.cpu = 80
     user.trialramused = 1
 
-    db.session.commit()
+    db_pg.session.commit()
     
 def mark_trial_two(user):
     now = datetime.utcnow()
@@ -1080,7 +1080,7 @@ def mark_trial_two(user):
         print(f"⚠️ Revert gagal {user.email}:", e)
         return False
 
-    db.session.commit()
+    db_pg.session.commit()
     
 def ensure_trial_on_dashboard(user):
 
@@ -1191,9 +1191,9 @@ def check_invite_milestone(user, inviter):
                 action=attr,
                 reward=reward
             )
-            db.session.add(inviter)
-            db.session.add(activity)
-            db.session.commit()
+            db_pg.session.add(inviter)
+            db_pg.session.add(activity)
+            db_pg.session.commit()
     
 def log_referral_activity(user, action):
     if not user.referred_by:
@@ -1220,7 +1220,7 @@ def log_referral_activity(user, action):
         reward = 100
 
     inviter.coin += reward
-    db.session.add(inviter)
+    db_pg.session.add(inviter)
 
     activity = ReferralActivity(
         inviter_id=inviter.id,
@@ -1228,8 +1228,8 @@ def log_referral_activity(user, action):
         action=action,
         reward=reward
     )
-    db.session.add(activity)
-    db.session.commit()
+    db_pg.session.add(activity)
+    db_pg.session.commit()
 
     check_invite_milestone(user, inviter)    
     
@@ -1500,7 +1500,7 @@ def reset_user_server_data(user):
     user.ram_upgrade_start = None
     user.ram_upgrade_end = None
 
-    db.session.commit()
+    db_pg.session.commit()
 
 def sync_user_multi_panel(user):
     email = user.email
@@ -1566,7 +1566,7 @@ def sync_user_multi_panel(user):
             disk=server_disk,
             allocation_id=allocation_id
         )
-        db.session.merge(server_entry)
+        db_pg.session.merge(server_entry)
 
         # COIN DEFAULT
         from web1.scheduler_tasks import sync_coin_to_github
@@ -1594,7 +1594,7 @@ def sync_user_multi_panel(user):
         except Exception as e:
             print(f"[WARN] Gagal cek/revert RAM: {e}")
 
-        db.session.commit()
+        db_pg.session.commit()
         return True  # ⬅️ STOP, SERVER SUDAH DITEMUKAN
 
     # =========================
@@ -1691,7 +1691,7 @@ def backup_and_upload(user):
     user.is_backup_mega = True
     user.last_filename = backup_name
 
-    db.session.commit()
+    db_pg.session.commit()
     return True
     
 #------ SISTEM UPDATE LAST LOGIN ------#
@@ -1704,19 +1704,19 @@ def update_last_login():
     user = User.query.filter_by(email=user_email).first()
     if user:
         user.last_login = datetime.utcnow()
-        db.session.commit()
+        db_pg.session.commit()
 #------ IKLAN ------#
 def aktifkan_iklan(user):
     user.iklan = 1
     user.iklan_expiry = datetime.utcnow() + timedelta(hours=1)
-    db.session.commit()
+    db_pg.session.commit()
     
 def cek_iklan_kedaluwarsa(user):
     if user.iklan == 1 and user.iklan_expiry:
         if datetime.utcnow() > user.iklan_expiry:
             user.iklan = 0
             user.iklan_expiry = None
-            db.session.commit()
+            db_pg.session.commit()
             
 @app.route("/iklan-selesai")
 def iklan_selesai():
@@ -1793,7 +1793,7 @@ def dashboard():
         return resp
         
     if not user:
-        logging.warning(f"[DASHBOARD] User ID {session.get('user_id')} tidak ditemukan di db. Session direset.")
+        logging.warning(f"[DASHBOARD] User ID {session.get('user_id')} tidak ditemukan di db_pg. Session direset.")
         session.clear()
         return redirect('/')
 
@@ -1825,7 +1825,7 @@ def dashboard():
         blokir_create = False
         ip_users = []  # list email akun lain
         user.ip_address = ip_addr
-        db.session.commit()
+        db_pg.session.commit()
         
         if ip_addr:
            ip_users = User.query.filter(
@@ -1847,7 +1847,7 @@ def dashboard():
 
            if coin_sync > user.coin:
                user.coin = coin_sync
-               db.session.commit()
+               db_pg.session.commit()
                session["coin_synced"] = True
         else:
             print("[SYNC] Dilewati (sudah pernah sync di session ini)")
@@ -1920,8 +1920,8 @@ def hapus_akun_ip():
         print("[SKIP DELETE SERVER] User tidak punya server (>0). Tidak menghapus server Pterodactyl.")
 
     try:
-        db.session.delete(user)
-        db.session.commit()
+        db_pg.session.delete(user)
+        db_pg.session.commit()
         print("[DELETE USER] User berhasil dihapus.")
     except Exception as e:
         print("[DELETE USER ERROR]", str(e))
@@ -1949,8 +1949,8 @@ def hapus_akun():
         print("[SKIP DELETE SERVER] User tidak punya server (>0). Tidak menghapus server Pterodactyl.")
 
     try:
-        db.session.delete(user)
-        db.session.commit()
+        db_pg.session.delete(user)
+        db_pg.session.commit()
         print("[DELETE USER] User berhasil dihapus.")
     except Exception as e:
         print("[DELETE USER ERROR]", str(e))
@@ -2100,7 +2100,7 @@ def edit_profil():
                 file.save(file_path)
                 user.photo_url = f'uploads/{filename}'
 
-        db.session.commit()
+        db_pg.session.commit()
         return redirect('/profile?change=success')
 
     return render_template('Main-Page/edit_profile.html', user=user, message=message)
@@ -2137,7 +2137,7 @@ def verifikasi_edit_email():
             if 'photo_url' in pending:
                 user.photo_url = pending['photo_url']
 
-            db.session.commit()
+            db_pg.session.commit()
             session.pop('pending_update', None)
             return redirect('/profile?changemail=success')
         else:
@@ -2297,8 +2297,8 @@ def verifikasi():
                     ip_address=ip_address,
                     coin=20 if referred_by else 0  # bonus koin 20 kalau referral
                 )
-                db.session.add(new_user)
-                db.session.commit()
+                db_pg.session.add(new_user)
+                db_pg.session.commit()
 
                 # ✅ set session lengkap biar konsisten dengan login google
                 session['user_id'] = new_user.id
@@ -2381,12 +2381,12 @@ def authorize_google():
     photo_google = user_info["picture"]
     referral_code = uuid.uuid4().hex[:8].upper()
 
-    existing_user = db.session.query(User).filter_by(email=email).first()
+    existing_user = db_pg.session.query(User).filter_by(email=email).first()
 
     if not existing_user:
         new_user = User(email=email, nama=nama, photo_google=photo_google, login_google=True, referral_code=referral_code)
-        db.session.add(new_user)
-        db.session.commit()
+        db_pg.session.add(new_user)
+        db_pg.session.commit()
         user = new_user
     else:
         user = existing_user
@@ -2422,8 +2422,8 @@ def support_page():
                 status="Open",
                 is_notified_admin=False
             )
-            db.session.add(new_ticket)
-            db.session.commit()
+            db_pg.session.add(new_ticket)
+            db_pg.session.commit()
 
             # 2. Tambahkan reply pertama
             first_reply = Reply(
@@ -2432,8 +2432,8 @@ def support_page():
                 message=message,
                 is_notified_admin=False
             )
-            db.session.add(first_reply)
-            db.session.commit()
+            db_pg.session.add(first_reply)
+            db_pg.session.commit()
 
             return redirect('/tickets?newticket=success')
 
@@ -2474,7 +2474,7 @@ def tickets_page():
         if hasattr(Ticket, "is_notified_admin"):
             Ticket.query.filter_by(is_notified_admin=False).update({"is_notified_admin": True})
 
-        db.session.commit()
+        db_pg.session.commit()
 
         tickets = Ticket.query.order_by(Ticket.created_at.desc()).all()
 
@@ -2511,8 +2511,8 @@ def ticket_detail(ticket_id):
             else:
                 reply.is_notified_admin = False  # Admin perlu dapat notif
 
-            db.session.add(reply)
-            db.session.commit()
+            db_pg.session.add(reply)
+            db_pg.session.commit()
 
             # Simpan gambar jika ada
             image_urls = []
@@ -2525,9 +2525,9 @@ def ticket_detail(ticket_id):
                     image_urls.append(image_url)
 
                     reply_image = ReplyImage(reply_id=reply.id, image_url=image_url)
-                    db.session.add(reply_image)
+                    db_pg.session.add(reply_image)
 
-            db.session.commit()
+            db_pg.session.commit()
 
             return jsonify({
                 "sender": sender,
@@ -2562,7 +2562,7 @@ def ticket_detail(ticket_id):
             Reply.is_notified_user == False
         ).update({"is_notified_user": True})
 
-    db.session.commit()
+    db_pg.session.commit()
 
     return render_template(
         "Ticket-Page/ticket_detail.html",
@@ -2576,14 +2576,14 @@ def ticket_detail(ticket_id):
 def update_status(ticket_id, new_status):
     ticket = Ticket.query.get_or_404(ticket_id)
     ticket.status = new_status
-    db.session.commit()
+    db_pg.session.commit()
     return redirect('/tickets?changestatus=success')
 
 @app.route("/ticket/<int:ticket_id>/delete")
 def delete_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
-    db.session.delete(ticket)
-    db.session.commit()
+    db_pg.session.delete(ticket)
+    db_pg.session.commit()
     return redirect('/tickets?delete=success')
     
 @app.route("/check_notifications")
@@ -2711,7 +2711,7 @@ def afk_earn():
         user.afk_bonus_50 = True
         bonus_text = "+20 bonus (AFK 50)"
 
-    db.session.commit()
+    db_pg.session.commit()
 
     return jsonify({
         "success": True,
@@ -2788,8 +2788,8 @@ def referral():
         user.device_id = device_id
         user.coin += 20
 
-        db.session.add(user)
-        db.session.commit()
+        db_pg.session.add(user)
+        db_pg.session.commit()
 
         # ✅ Catat aktivitas
         log_referral_activity(user, "input_code")
@@ -2808,7 +2808,7 @@ def referral():
         action="input_code"
     ).count()
 
-    total_coin = db.session.query(func.sum(ReferralActivity.reward)).filter(
+    total_coin = db_pg.session.query(func.sum(ReferralActivity.reward)).filter(
         ReferralActivity.inviter_id == user.id
     ).scalar() or 0
 
@@ -2938,7 +2938,7 @@ def klaim_harian():
     user.daily_claim_day = hari_ke
     user.daily_claim_last = today
 
-    db.session.commit()
+    db_pg.session.commit()
 
     return jsonify({
         "success": True,
@@ -2961,8 +2961,8 @@ def misi():
 @moderator_required
 def delete_user(user_id):
     user = User.query.get_or_404(user_id)
-    db.session.delete(user)
-    db.session.commit()
+    db_pg.session.delete(user)
+    db_pg.session.commit()
     flash("User Successfully Deleted.", "success")
     return redirect('/admin/list/user?delete=success')
 
@@ -3036,15 +3036,15 @@ def delete_server_web(server_id):
     user = User.query.get(server.user_id)
 
     try:
-        db.session.delete(server)
+        db_pg.session.delete(server)
         user.server = 0
         user.cpu = 0
         user.ram = 0
         user.disk = 0
-        db.session.commit()
+        db_pg.session.commit()
         flash('Server Successfully Deleted.', 'success')
     except SQLAlchemyError:
-        db.session.rollback()
+        db_pg.session.rollback()
         flash('Gagal menghapus server.', 'error')
 
     return redirect('/admin/list/server?delete=success')
@@ -3143,7 +3143,7 @@ def kelola_koin():
                 flash("Invalid action.", "error")
                 return redirect(url_for('kelola_koin'))
 
-            db.session.commit()
+            db_pg.session.commit()
             flash(f"Coins successfully in{'plus' if aksi == 'tambah' else 'reduce'} for {email}.", "success")
 
     # Query user dengan filter pencarian dan min coin
@@ -3190,13 +3190,13 @@ def admin_panel():
             user = User.query.get(user_id)
             if user:
                 user.is_moderator = not user.is_moderator
-                db.session.commit()
+                db_pg.session.commit()
 
         elif action == "toggle_banned" and user_id:
             user = User.query.get(user_id)
             if user:
                 user.is_banned = not user.is_banned
-                db.session.commit()
+                db_pg.session.commit()
 
         elif action == "update_spec":
             ram = int(request.form.get("ram"))
@@ -3210,7 +3210,7 @@ def admin_panel():
                 server_spec.ram = ram
                 server_spec.cpu = cpu
                 server_spec.disk = disk
-                db.session.commit()
+                db_pg.session.commit()
                 enqueue_spec_update(panel_id=panel_id, ram=ram, disk=disk, cpu=cpu)
 
         elif action == "update_node" and node_id:
@@ -3218,7 +3218,7 @@ def admin_panel():
             node = Node.query.get(node_id)
             if node:
                 node.limit_server = limit
-                db.session.commit()
+                db_pg.session.commit()
 
         elif action == "toggle_maintenance":
             maintenance_mode = SiteSetting.get("maintenance_mode", "false") == "true"
@@ -3263,8 +3263,8 @@ def admin_panel():
     server_spec = ServerSpec.query.filter_by(id=panel_id).first()
     if not server_spec:
         server_spec = ServerSpec(id=panel_id, ram=1024, cpu=80, disk=5072)
-        db.session.add(server_spec)
-        db.session.commit()
+        db_pg.session.add(server_spec)
+        db_pg.session.commit()
 
     nodes = Node.query.all()
 
@@ -3321,11 +3321,11 @@ def get_node_server_counts():
     if result is None:
         return jsonify({"error": f"Gagal mengambil data dari panel {panel_id}"}), 500
 
-    # Ambil limit terbaru dari db
+    # Ambil limit terbaru dari db_pg
     nodes = Node.query.all()
     node_limits = {str(node.id): node.limit_server for node in nodes}
 
-    # Gabungkan result dengan limit dari db
+    # Gabungkan result dengan limit dari db_pg
     for node_id, info in result.items():
         info["limit"] = node_limits.get(str(node_id), 35)  # default 35
 
@@ -3335,7 +3335,7 @@ def get_node_server_counts():
 def get_all_panels_status():
     result = {}
 
-    # Ambil limit terbaru dari db
+    # Ambil limit terbaru dari db_pg
     nodes = Node.query.all()
     node_limits = {str(node.id): node.limit_server for node in nodes}
 
@@ -3601,11 +3601,11 @@ def boost_ram():
     except requests.exceptions.RequestException as e:
         return jsonify({"success": False, "message": f"⚠️ RAM boost failed: {e}"})
 
-    # Update waktu boost di db
+    # Update waktu boost di db_pg
     user.last_boost = now
     user.last_boost_used = now
     user.boostserver = 1
-    db.session.commit()
+    db_pg.session.commit()
 
     return jsonify({
         "success": True,
@@ -3754,7 +3754,7 @@ def upgrade_ram():
         user.ram_upgrade_start = now
         user.ram_upgrade_end = now + timedelta(days=durasi)
 
-        db.session.commit()
+        db_pg.session.commit()
 
         return jsonify({
             "success": True,
@@ -3794,7 +3794,7 @@ def panel_set_serverid():
 
         # update serverid user
         user.serverid = panel_id
-        db.session.commit()
+        db_pg.session.commit()
 
         app.logger.info(f"✅ User {user.id} set serverid = {panel_id}")
         return {"success": True, "message": f"Serverid set to {panel_id}"}
@@ -3816,8 +3816,8 @@ def create_ptero_user():
         user = User.query.filter_by(email=email).first()
         if not user:
             user = User(email=email)
-            db.session.add(user)
-            db.session.commit()
+            db_pg.session.add(user)
+            db_pg.session.commit()
             print(f"[DEBUG] Auto-create user {email} dengan id={user.id}")
 
         session["user_id"] = user.id
@@ -3833,7 +3833,7 @@ def create_ptero_user():
     ptero_user = create_user(panel_id, user.email, username)
     if ptero_user and "id" in ptero_user:
         user.ptero_id = ptero_user["id"]
-        db.session.commit()
+        db_pg.session.commit()
         return jsonify({"success": True, "id": user.ptero_id})
     else:
         return jsonify({"success": False, "msg": "Failed to create Ptero user"}), 500
@@ -3906,7 +3906,7 @@ def panel_create_get():
         # reset iklan jika kadaluarsa
         user.iklan = 0
         user.iklan_expiry = None
-        db.session.commit()
+        db_pg.session.commit()
 
     # ---- Token ----
     email = request.args.get("email")
@@ -3993,7 +3993,7 @@ def panel_create_post():
         flash("Incomplete data", "error")
         return redirect("/panel/create")
 
-    # 2️⃣ Ambil spesifikasi server dari db
+    # 2️⃣ Ambil spesifikasi server dari db_pg
     server = ServerSpec.query.filter_by(id=panel_id).first()
     if not server:
         flash("Server spec tidak ditemukan!", "error")
@@ -4037,7 +4037,7 @@ def panel_create_post():
         flash("Server created but not ready yet. Please wait a moment.", "warning")
         return redirect("/dashboard")
 
-    # 4️⃣ Simpan server ke db
+    # 4️⃣ Simpan server ke db_pg
     data = server_ready
     server_entry = Server(
         id=data["id"],
@@ -4050,7 +4050,7 @@ def panel_create_post():
         ram=server.ram,
         disk=server.disk
     )
-    db.session.merge(server_entry)
+    db_pg.session.merge(server_entry)
 
     # Update data user
     user.server = 1
@@ -4072,7 +4072,7 @@ def panel_create_post():
     if user.referred_by:
         log_referral_activity(user, "create_server")
 
-    db.session.commit()
+    db_pg.session.commit()
 
     flash("Server Created Successfully!", "server_created")
     return redirect(f"/panel/detail?email={user.email}&username={username}&panel_id={panel_id}")
@@ -4181,7 +4181,7 @@ def api_create_server():
         ram=server_spec.ram,
         disk=server_spec.disk,
     )
-    db.session.merge(server_entry)
+    db_pg.session.merge(server_entry)
 
     # Update user
     user.server = 1
@@ -4201,7 +4201,7 @@ def api_create_server():
     if user.referred_by:
         log_referral_activity(user, "create_server")
 
-    db.session.commit()
+    db_pg.session.commit()
 
     return jsonify({
         "status": "success",
@@ -4290,7 +4290,7 @@ def miniapp_main():
 
     user.device_id = device_id
     user.ip_address = ip_addr
-    db.session.commit()
+    db_pg.session.commit()
 
     if check_maintenance():
         return check_maintenance()
@@ -4311,7 +4311,7 @@ def backup_page():
         return resp
 
     panel_id = str(user.serverid) if user.serverid else None
-    db.session.refresh(user)
+    db_pg.session.refresh(user)
 
     has_files = False
     no_server = False
@@ -4398,7 +4398,7 @@ def backup():
     # ✅ RESET STATUS
     user.is_backup_mega = False
     user.mega_link = None
-    db.session.commit()
+    db_pg.session.commit()
 
     panel_id = str(user.serverid)
 
@@ -4481,7 +4481,7 @@ def upload_mega_route():
         )
     except Exception as e:
         user.is_backup_mega = False
-        db.session.commit()
+        db_pg.session.commit()
         return jsonify({
             "error": "Gagal menghubungi MEGA API",
             "detail": str(e)
@@ -4489,7 +4489,7 @@ def upload_mega_route():
 
     if r.status_code != 200:
         user.is_backup_mega = False
-        db.session.commit()
+        db_pg.session.commit()
         return jsonify({
             "error": "Gagal upload ke Railway",
             "detail": r.text
@@ -4500,7 +4500,7 @@ def upload_mega_route():
     # ================================
     user.is_backup_mega = True
     user.last_filename = filename
-    db.session.commit()
+    db_pg.session.commit()
 
     return jsonify({
         "message": "Upload berhasil",
@@ -4525,7 +4525,7 @@ def backup_finished():
     user.is_backup_mega = True
     user.last_filename = filename
     user.mega_link = mega_link
-    db.session.commit()
+    db_pg.session.commit()
 
     print("✅ Backup selesai diterima di Control Server")
     return jsonify({"status": "ok"}), 200
@@ -4590,12 +4590,12 @@ def check_mega():
     if data.get("has_backup"):
         user.is_backup_mega = True
         user.last_filename = filename
-        db.session.commit()
+        db_pg.session.commit()
         return jsonify({"has_backup": True, "filename": filename})
 
     # Jika tidak ada
     user.is_backup_mega = False
-    db.session.commit()
+    db_pg.session.commit()
     return jsonify({"has_backup": False})
 
 @app.route("/toggle-auto-backup", methods=["POST"])
@@ -4606,7 +4606,7 @@ def toggle_auto_backup():
     user = User.query.get(session["user_id"])
     enabled = request.json.get("enabled", False)
     user.auto_backup_enabled = enabled
-    db.session.commit()
+    db_pg.session.commit()
 
     if enabled:
         backup_and_upload(user)
