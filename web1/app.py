@@ -57,7 +57,7 @@ os.environ["WERKZEUG_RUN_MAIN"] = "true"
 app = Flask(__name__)
 app.secret_key = "Kocheng"
 
-db_pg_pg = SQLAlchemy()
+db_pg = SQLAlchemy()
 
 raw_uri = os.getenv("DATABASE_URL")
 if not raw_uri:
@@ -77,7 +77,7 @@ app.config.update(
     }
 )
 
-db_pg_pg.init_app(app)
+db_pg.init_app(app)
 
 DEFAULT_NODES = [
     {"id": 1, "name": "Node 1", "limit_server": 35},
