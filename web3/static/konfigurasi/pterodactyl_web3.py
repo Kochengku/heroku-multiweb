@@ -14,8 +14,8 @@ from config_web3 import admin_mail
 PANELS = {
     "server1": {
         "url": "https://console.skyforgia.web.id",
-        "api_key": "ptla_sfxcCSAf959sFijRDvxdBkQB3cJpHz9GQ29hdvuFmMF",
-        "client_api_key": "ptlc_MlTVJMXzOAIhpXePzrrMtjaeyMQCCEiBsnxXttZqK4p"
+        "api_key": "ptla_aEg4VS7iYEeRbfcDSKu7nvuBV9HyV1kQJslkf6IFGyA",
+        "client_api_key": "ptlc_UsFtTTE8vH6JteAeuDP8u48WM8IjYO8igVg8F2KvVVk"
     }
     # Bisa ditambah server3, dst...
 }
