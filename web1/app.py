@@ -3681,10 +3681,20 @@ def upgrade_ram():
             }), 400
 
         if ram not in (1, 2, 3, 4, 5) or durasi not in (3, 5, 7):
-            return jsonify({
-                "success": False,
-                "message": "Invalid RAM or duration selection."
-            }), 400
+           return jsonify({
+           "success": False,
+           "message": "Invalid RAM or duration selection."
+         }), 400
+
+# ================= SPECIAL RAM COOLDOWN =================
+        if ram == 1:
+            allowed, remaining = can_use_special_ram(user)
+        if not allowed:
+           return jsonify({
+            "success": False,
+            "message": "SPECIAL RAM can only be used once every 7 days.",
+            "remaining_seconds": int(remaining.total_seconds())
+        }), 403
 
         # ================= PRICE =================
         harga_coin = {
@@ -3752,6 +3762,10 @@ def upgrade_ram():
         user.ram = ram * 1024
         user.ram_upgrade_start = now
         user.ram_upgrade_end = now + timedelta(days=durasi)
+
+# 🔒 START SPECIAL COOLDOWN (HANYA RAM SPECIAL)
+        if ram == 1:
+            user.special_ram_last_used = now
 
         db_pg.session.commit()
 
