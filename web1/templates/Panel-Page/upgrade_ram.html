@@ -343,7 +343,6 @@ function updateHarga() {
   shouldDisable = true;
   reason = 'special';
 }
-if (reason === 'special') titleText = '⏳ SPECIAL RAM can only be used once in 7 days';
 
   if (shouldDisable) {
     upgradeButton.disabled = true;
@@ -352,9 +351,10 @@ if (reason === 'special') titleText = '⏳ SPECIAL RAM can only be used once in 
 
     // Tooltip/pesan singkat agar user tahu kenapa disabled
     let titleText = '';
-    if (reason === 'coin') titleText = '💰 Add coins to upgrade RAM';
-    else if (reason === 'boost') titleText = '⚠️ RAM boost is active, wait for it to finish';
-    else if (reason === 'upgrade') titleText = '⏳ Wait for the previous RAM upgrade to complete';
+if (reason === 'coin') titleText = '💰 Add coins to upgrade RAM';
+else if (reason === 'boost') titleText = '⚠️ RAM boost is active, wait for it to finish';
+else if (reason === 'upgrade') titleText = '⏳ Wait for the previous RAM upgrade to complete';
+else if (reason === 'special') titleText = '⏳ SPECIAL RAM can only be used once every 7 days';
     if (titleText) upgradeButton.setAttribute('title', titleText);
   } else {
     upgradeButton.disabled = false;
