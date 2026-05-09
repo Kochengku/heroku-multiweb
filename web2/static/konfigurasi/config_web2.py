@@ -1,0 +1,5 @@
+web_control = 'control.kocheng.biz.id'
+status_page = 'https://status.kocheng.biz.id'
+whatsapp_channel = 'https://whatsapp.com/channel/0029Vb2IjRwFi8xZpEVes12h'
+whattsapp_admin = 'https://wa.me/6281775155057'
+url_order = 'https://site.kocheng.biz.id/store'

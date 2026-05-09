@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║   ɴᴏx ᴛᴇᴀᴍ  —  ᴘᴀɴᴇʟ ᴄᴏɴᴛʀᴏʟ ʜᴏsᴛɪɴɢ                ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+  <link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta property="og:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta property="og:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.nox-team.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta name="twitter:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta name="twitter:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.nox-team.biz.id",
+    "logo": "https://control.nox-team.biz.id/static/logo-512x512.webp",
+    "name": "ɴᴏx ᴛᴇᴀᴍ"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is ɴᴏx ᴛᴇᴀᴍ Hosting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ɴᴏx ᴛᴇᴀᴍ provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+      }
+    },{
+      "@type": "Question",
+      "name": "Is it free forever?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+      }
+    }]
+  }
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ɴᴏx ᴛᴇᴀᴍ  |>  Sign up</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-indigo-950 min-h-screen flex flex-col">
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ʜᴇᴀᴅᴇʀ  —  ɴᴀᴠɪɢᴀᴛɪᴏɴ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <header class="bg-white/10 backdrop-blur-md border-b border-white/10 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="ɴᴏx ᴛᴇᴀᴍ" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-400 font-medium">EN</span>
+    </div>
+  </header>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ᴍᴀɪɴ  —  sɪɢɴ ᴜᴘ  ғᴏʀᴍ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <main class="flex-grow flex items-center justify-center px-4 py-10">
+    <div class="bg-white/10 backdrop-blur-xl shadow-2xl rounded-2xl w-full max-w-md p-6 sm:p-8 text-center border border-white/10 fade-in">
+      <h1 class="text-xl sm:text-2xl font-bold mb-6 text-white tracking-wide">
+        <i class="fa-solid fa-user-plus mr-2 text-indigo-400"></i>Sign up
+      </h1>
+
+      <!-- Login Google -->
+      <a href="/login/google" class="flex items-center justify-center border border-white/20 rounded-full py-3 px-4 mb-4 hover:bg-white/10 transition bg-white/5 w-full text-sm sm:text-base text-white">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5 mr-2" />
+        <span class="font-medium">Sign in with Google</span>
+      </a>
+
+      <!-- Login Email -->
+      <a href="/signup/email" class="flex items-center justify-center border border-white/20 rounded-full py-3 px-4 mb-4 hover:bg-white/10 transition bg-white/5 w-full text-sm sm:text-base text-white">
+        <i class="fa-solid fa-envelope text-lg mr-2 text-indigo-400"></i>
+        <span class="font-medium">Sign up with Email</span>
+      </a>
+
+      <!-- Separator -->
+      <div class="flex items-center my-4">
+        <hr class="flex-grow border-t border-white/20" />
+        <span class="mx-3 text-gray-400 text-xs sm:text-sm">or sign in with email</span>
+        <hr class="flex-grow border-t border-white/20" />
+      </div>
+
+      <!-- Form Email Login -->
+      <form action="/signin/email" method="POST" class="space-y-4">
+        <input type="email" name="email" placeholder="Email" 
+          class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 text-white placeholder-gray-500 text-sm sm:text-base transition" required>
+        <input type="password" name="password" placeholder="Password" 
+          class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 text-white placeholder-gray-500 text-sm sm:text-base transition" required>
+        <button type="submit" 
+          class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-full font-semibold transition shadow-lg shadow-indigo-600/30">
+          <i class="fa-solid fa-arrow-right-to-bracket mr-2"></i>Sign in
+        </button>
+      </form>
+
+      <!-- Link Daftar -->
+      <p class="mt-6 text-xs sm:text-sm text-gray-400">
+        Don't have an account yet?
+        <a href="/signup/email" class="text-indigo-400 hover:text-indigo-300 hover:underline font-medium transition">Sign up</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ғᴏᴏᴛᴇʀ  —  ʟɪɴᴋs & ɪɴғᴏ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <footer class="bg-white/5 backdrop-blur-sm border-t border-white/10 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-400 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-200 text-sm tracking-wider">
+        <i class="fa-solid fa-bolt text-yellow-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ
+      </p>
+      <p class="space-x-2">
+        <a href="/privacy" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Privacy Policy</a> | 
+        <a href="/tos" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Ads Disclosure</a> | 
+        <a href="/blog" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Blog</a>
+      </p>
+      <p class="text-gray-500">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+      <p><i class="fa-solid fa-envelope text-indigo-400 mr-1"></i>support@nox-team.biz.id</p>
+    </div>
+  </footer>
+
+</body>
+</html>

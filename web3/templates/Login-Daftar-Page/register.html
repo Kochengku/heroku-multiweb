@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║   ɴᴏx ᴛᴇᴀᴍ  —  ᴘᴀɴᴇʟ ᴄᴏɴᴛʀᴏʟ ʜᴏsᴛɪɴɢ                ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+  <link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta property="og:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta property="og:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.nox-team.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta name="twitter:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta name="twitter:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.nox-team.biz.id",
+    "logo": "https://control.nox-team.biz.id/static/logo-512x512.webp",
+    "name": "ɴᴏx ᴛᴇᴀᴍ"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is ɴᴏx ᴛᴇᴀᴍ Hosting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ɴᴏx ᴛᴇᴀᴍ provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+      }
+    },{
+      "@type": "Question",
+      "name": "Is it free forever?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+      }
+    }]
+  }
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ɴᴏx ᴛᴇᴀᴍ  |>  Sign Up</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-indigo-950 min-h-screen flex flex-col">
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ʜᴇᴀᴅᴇʀ  —  ɴᴀᴠɪɢᴀᴛɪᴏɴ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <header class="bg-white/10 backdrop-blur-md border-b border-white/10 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="ɴᴏx ᴛᴇᴀᴍ" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-400 font-medium">EN</span>
+    </div>
+  </header>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ᴍᴀɪɴ  —  sɪɢɴ ᴜᴘ  ғᴏʀᴍ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <main class="flex-grow flex items-center justify-center px-4">
+    <div class="bg-white/10 backdrop-blur-xl shadow-2xl rounded-2xl p-6 sm:p-8 w-full max-w-md fade-in border border-white/10">
+      <h2 class="text-2xl font-bold text-center mb-6 text-white tracking-wide">
+        <i class="fa-solid fa-user-plus mr-2 text-indigo-400"></i>Sign Up
+      </h2>
+
+      {% if message %}
+        <div class="mb-4 p-3 bg-red-500/20 text-red-300 rounded text-center border border-red-500/30">{{ message }}</div>
+      {% endif %}
+
+      <form action="/signup/email" method="POST" class="space-y-4 text-left" id="form-daftar">
+        <div>
+          <label for="nama" class="block text-sm font-medium text-gray-300">Username</label>
+          <input type="text" id="nama" name="nama" required placeholder="Enter your username"
+            class="mt-2 w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 text-white placeholder-gray-500 transition" />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email"
+            class="mt-2 w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 text-white placeholder-gray-500 transition" />
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password"
+            class="mt-2 w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 text-white placeholder-gray-500 transition" />
+        </div>
+
+        <div>
+          <label for="referral_code" class="block text-sm font-medium text-gray-300">Referral Code <span class="text-gray-500 text-xs">(optional)</span></label>
+          <input type="text" id="referral_code" name="referral_code" value="{{ referral_code or '' }}"
+            class="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 text-white placeholder-gray-500 transition" />
+          <p id="referral_error" class="text-sm text-red-400 mt-1"></p>
+          <input type="hidden" name="device_id" id="device_id" />
+        </div>
+
+        <button id="submit-btn" type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-full font-semibold transition shadow-lg shadow-indigo-600/30">
+          <i class="fa-solid fa-arrow-right-to-bracket mr-2"></i>Sign up
+        </button>
+      </form>
+
+      <p class="mt-6 text-sm text-center text-gray-400">
+        Already have an account?
+        <a href="/signin/email" class="text-indigo-400 hover:text-indigo-300 hover:underline font-medium transition">Sign in</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ғᴏᴏᴛᴇʀ  —  ʟɪɴᴋs & ɪɴғᴏ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <footer class="bg-white/5 backdrop-blur-sm border-t border-white/10 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-400 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-200 text-sm tracking-wider">
+        <i class="fa-solid fa-bolt text-yellow-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ
+      </p>
+      <p class="space-x-2">
+        <a href="/privacy" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Privacy Policy</a> | 
+        <a href="/tos" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Ads Disclosure</a> | 
+        <a href="/blog" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Blog</a>
+      </p>
+      <p class="text-gray-500">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+      <p><i class="fa-solid fa-envelope text-indigo-400 mr-1"></i>support@nox-team.biz.id</p>
+    </div>
+  </footer>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   sᴄʀɪᴘᴛ  —  ʀᴇғᴇʀʀᴀʟ  ᴠᴀʟɪᴅᴀᴛɪᴏɴ   ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <script>
+    // Ambil elemen penting
+    const referralInput = document.getElementById("referral_code");
+    const errorDiv = document.getElementById("referral_error");
+    const submitBtn = document.getElementById("submit-btn");
+    const deviceInput = document.getElementById("device_id");
+    const form = document.getElementById("form-daftar");
+    let referralValid = true;
+
+    // ✅ Generate device ID
+    function getDeviceId() {
+      let id = localStorage.getItem("device_id");
+      if (!id) {
+        id = crypto.randomUUID();
+        localStorage.setItem("device_id", id);
+      }
+      return id;
+    }
+
+    // Set device_id input
+    deviceInput.value = getDeviceId();
+
+    // ✅ Fungsi AJAX ke /validate/referral
+    async function validateReferral() {
+      const code = referralInput.value.trim();
+      const device_id = deviceInput.value;
+
+      if (code === "") {
+        // Kosong = dianggap valid (karena opsional)
+        errorDiv.textContent = "";
+        referralInput.classList.remove("border-red-500");
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        referralValid = true;
+        return;
+      }
+
+      try {
+        const res = await fetch(`/validate/referral?code=${encodeURIComponent(code)}&device_id=${device_id}`);
+        const data = await res.json();
+
+        if (!data.valid) {
+          errorDiv.textContent = data.message;
+          referralInput.classList.add("border-red-500");
+          submitBtn.disabled = true;
+          submitBtn.classList.add("opacity-50", "cursor-not-allowed");
+          referralValid = false;
+        } else {
+          errorDiv.textContent = "";
+          referralInput.classList.remove("border-red-500");
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+          referralValid = true;
+        }
+      } catch (err) {
+        console.error("Gagal memvalidasi referral:", err);
+        referralValid = false;
+      }
+    }
+
+    // ✅ Validasi saat mengetik
+    referralInput.addEventListener("input", validateReferral);
+
+    // ✅ Auto isi dari URL ?referral=
+    window.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const referralFromUrl = urlParams.get("referral");
+
+      if (referralFromUrl && referralInput && !referralInput.value) {
+        referralInput.value = referralFromUrl.toUpperCase();
+        setTimeout(() => validateReferral(), 200); // beri waktu render
+      }
+    });
+
+    // ✅ Validasi saat submit
+    form.addEventListener("submit", async (e) => {
+      await validateReferral();
+
+      if (!referralValid) {
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>

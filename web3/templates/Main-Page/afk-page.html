@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║   ɴᴏx ᴛᴇᴀᴍ  —  ᴀғᴋ  ᴄᴏɪɴ  ᴇᴀʀɴɪɴɢ                     ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+  <link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta property="og:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta property="og:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.nox-team.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta name="twitter:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta name="twitter:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.nox-team.biz.id",
+    "logo": "https://control.nox-team.biz.id/static/logo-512x512.webp",
+    "name": "ɴᴏx ᴛᴇᴀᴍ"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is ɴᴏx ᴛᴇᴀᴍ Hosting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ɴᴏx ᴛᴇᴀᴍ provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+      }
+    },{
+      "@type": "Question",
+      "name": "Is it free forever?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+      }
+    }]
+  }
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ɴᴏx ᴛᴇᴀᴍ  |>  AFK Coins</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .blink {
+      animation: blink 1s step-start infinite;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #fbbf24;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: sparkleMove 0.8s ease-out forwards;
+    }
+
+    @keyframes sparkleMove {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: translateY(-50px) scale(0); opacity: 0; }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6); }
+    }
+    
+    .coin-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .progress-glow {
+      box-shadow: 0 0 10px currentColor;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 min-h-screen flex flex-col relative">
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ʜᴇᴀᴅᴇʀ  —  ɴᴀᴠɪɢᴀᴛɪᴏɴ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <header class="bg-black/40 backdrop-blur-md border-b border-white/5 py-3 shadow-lg">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="ɴᴏx ᴛᴇᴀᴍ" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-400 font-medium">EN</span>
+    </div>
+  </header>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ᴍᴀɪɴ  —  ᴀғᴋ  ᴄᴏɪɴ  ᴘᴀɴᴇʟ         ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <main class="flex-grow flex items-center justify-center px-4 py-10 animate-fadeInUp">
+    <div class="bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl p-8 max-w-md w-full text-center border border-white/10 relative overflow-hidden">
+      
+      <!-- Decorative background element -->
+      <div class="absolute -top-20 -right-20 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl"></div>
+
+      <div class="relative z-10">
+        <!-- Icon -->
+        <div class="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg coin-glow float-anim">
+          <i class="fa-solid fa-coins text-3xl text-white"></i>
+        </div>
+
+        <h1 class="text-3xl font-bold mb-2 text-white tracking-wide">AFK & Earn Coins!</h1>
+        <p class="text-gray-400 mb-8 text-sm">Stay on this page for <span class="text-amber-400 font-semibold">1 minute</span> without changing tabs.</p>
+        
+        <!-- Countdown -->
+        <div class="relative inline-block mb-8">
+          <div class="text-7xl font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500" id="countdown">60</div>
+          <div class="text-xs text-gray-500 mt-1 uppercase tracking-widest">Seconds</div>
+        </div>
+
+        <!-- Coin Message -->
+        <div class="text-xl font-semibold text-emerald-400 min-h-[1.75rem] mb-6" id="coinMsg"></div>
+
+        <!-- Daily Progress -->
+        <div class="mb-4">
+          <div class="flex justify-between text-xs text-gray-400 mb-1">
+            <span><i class="fa-solid fa-calendar-day mr-1 text-blue-400"></i>Daily Progress</span>
+            <span id="dailyProgressText">0/200</span>
+          </div>
+          <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden border border-white/10">
+            <div id="dailyProgressBar" class="h-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-700 ease-out progress-glow" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Total Progress -->
+        <div class="mb-4">
+          <div class="flex justify-between text-xs text-gray-400 mb-1">
+            <span><i class="fa-solid fa-wallet mr-1 text-amber-400"></i>Total Coin</span>
+            <span id="totalProgressText">0/1000</span>
+          </div>
+          <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden border border-white/10">
+            <div id="totalProgressBar" class="h-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-400 transition-all duration-700 ease-out progress-glow" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Bonus Progress -->
+        {% if not (user.afk_bonus_50 and user.afk_bonus_100 and user.afk_bonus_200) %}
+          {% set afk_current = user.afk_total_coin_bulanan %}
+          {% if not user.afk_bonus_50 and afk_current < 50 %}
+            {% set afk_target = 50 %}
+            {% set afk_bonus = 20 %}
+          {% elif not user.afk_bonus_100 and afk_current < 100 %}
+            {% set afk_target = 100 %}
+            {% set afk_bonus = 50 %}
+          {% elif not user.afk_bonus_200 and afk_current < 200 %}
+            {% set afk_target = 200 %}
+            {% set afk_bonus = 70 %}
+          {% else %}
+            {% set afk_target = 0 %}
+            {% set afk_bonus = 0 %}
+          {% endif %}
+
+          {% if afk_target > 0 %}
+          <div class="mb-4">
+            <div class="flex justify-between text-xs text-gray-400 mb-1">
+              <span><i class="fa-solid fa-gift mr-1 text-emerald-400"></i>AFK Bonus</span>
+              <span>{{ afk_current }}/{{ afk_target }} (+{{ afk_bonus }})</span>
+            </div>
+            <div class="w-full bg-white/5 rounded-full h-3 overflow-hidden border border-white/10">
+              <div class="h-3 rounded-full bg-gradient-to-r from-emerald-500 to-green-400 transition-all duration-700 ease-out progress-glow" style="width: {{ (afk_current / afk_target * 100) | round(0) }}%"></div>
+            </div>
+          </div>
+          {% endif %}
+        {% endif %}
+
+        <!-- Warning -->
+        <div class="mt-6 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+          <p class="text-xs text-red-400 leading-relaxed">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+            Maximum 200 coins/day &bull; Maximum 1000 coins total
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   sᴘᴀʀᴋʟᴇ  &  ᴀᴜᴅɪᴏ                ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <div id="sparkleContainer" class="absolute pointer-events-none top-0 left-0 w-full h-full z-50"></div>
+  <audio id="coinSound" src="/static/sounds/coin.mp3" preload="auto"></audio>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ғᴏᴏᴛᴇʀ  —  ʟɪɴᴋs & ɪɴғᴏ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <footer class="bg-black/40 backdrop-blur-sm border-t border-white/5 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-300 text-sm tracking-wider">
+        <i class="fa-solid fa-bolt text-amber-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ
+      </p>
+      <p class="space-x-2">
+        <a href="/privacy" class="text-gray-400 hover:text-amber-400 hover:underline transition">Privacy Policy</a> | 
+        <a href="/tos" class="text-gray-400 hover:text-amber-400 hover:underline transition">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-gray-400 hover:text-amber-400 hover:underline transition">Ads Disclosure</a> | 
+        <a href="/blog" class="text-gray-400 hover:text-amber-400 hover:underline transition">Blog</a>
+      </p>
+      <p class="text-gray-600">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+      <p><i class="fa-solid fa-envelope text-amber-400 mr-1"></i>support@nox-team.biz.id</p>
+    </div>
+  </footer>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   sᴄʀɪᴘᴛ  —  ᴀғᴋ  ʟᴏɢɪᴄ             ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <script>
+    let afkTime = 60;
+    let countdown = afkTime;
+    let interval;
+    const countdownEl = document.getElementById('countdown');
+    const coinMsg = document.getElementById('coinMsg');
+
+    function getRandomCoin() {
+      const weighted = [1,1,1,1,1,2,2,2,3,3,4,5];
+      const index = Math.floor(Math.random() * weighted.length);
+      return weighted[index];
+    }
+
+    function playCoinSound() {
+      const audio = document.getElementById("coinSound");
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+    }
+
+    function showSparkle() {
+      const container = document.getElementById("sparkleContainer");
+      for (let i = 0; i < 8; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.classList.add("sparkle");
+        sparkle.style.left = Math.random() * window.innerWidth + "px";
+        sparkle.style.top = (window.innerHeight / 2 + Math.random() * 100 - 50) + "px";
+        container.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 800);
+      }
+    }
+
+    function updateProgressBar(bar, percent) {
+      bar.style.width = percent + "%";
+      if (percent >= 80) {
+        bar.className = "h-3 rounded-full bg-gradient-to-r from-red-500 to-rose-400 transition-all duration-700 ease-out progress-glow";
+      } else if (percent >= 60) {
+        bar.className = "h-3 rounded-full bg-gradient-to-r from-orange-400 to-amber-400 transition-all duration-700 ease-out progress-glow";
+      } else {
+        bar.className = bar.className.replace(/bg-gradient-to-r from-\w+-\d+ to-\w+-\d+/, 'bg-gradient-to-r from-blue-500 to-cyan-400');
+      }
+    }
+
+    function startCountdown() {
+      clearInterval(interval);
+      countdown = afkTime;
+      updateDisplay();
+
+      interval = setInterval(() => {
+        countdown--;
+        updateDisplay();
+
+        if (countdown <= 0) {
+          clearInterval(interval);
+          const coin = getRandomCoin();
+
+          fetch("/getcoin/afk/earn", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ coin: coin })
+          })
+          .then(res => res.json())
+          .then(data => {
+            const progressText = document.getElementById('dailyProgressText');
+            const progressBar = document.getElementById('dailyProgressBar');
+            const totalProgressText = document.getElementById('totalProgressText');
+            const totalProgressBar = document.getElementById('totalProgressBar');
+
+            if (data.success) {
+              coinMsg.innerText = `+${coin} coin! Total: ${data.coin_now}`;
+              progressText.innerText = `${data.harian_now}/200`;
+              totalProgressText.innerText = `${data.coin_now}/1000`;
+              updateProgressBar(progressBar, (data.harian_now / 200) * 100);
+              updateProgressBar(totalProgressBar, (data.coin_now / 1000) * 100);
+              showSparkle();
+              playCoinSound();
+            } else {
+              coinMsg.innerText = data.message;
+            }
+          })
+          .catch(() => {
+            coinMsg.innerText = "Failed to connect to server.";
+          });
+        }
+      }, 1000);
+    }
+
+    function updateDisplay() {
+      countdownEl.innerText = countdown;
+      if (countdown <= 10 && countdown > 0) {
+        countdownEl.classList.add("text-red-400", "blink");
+        countdownEl.classList.remove("text-transparent", "bg-clip-text", "bg-gradient-to-r", "from-amber-400", "to-orange-500");
+      } else {
+        countdownEl.classList.remove("text-red-400", "blink");
+        countdownEl.classList.add("text-transparent", "bg-clip-text", "bg-gradient-to-r", "from-amber-400", "to-orange-500");
+      }
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearInterval(interval);
+        countdown = afkTime;
+        updateDisplay();
+        coinMsg.innerText = "";
+      } else {
+        startCountdown();
+      }
+    });
+
+    window.onload = () => {
+      fetch("/getcoin/afk/status")
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            const progressText = document.getElementById('dailyProgressText');
+            const progressBar = document.getElementById('dailyProgressBar');
+            const totalProgressText = document.getElementById('totalProgressText');
+            const totalProgressBar = document.getElementById('totalProgressBar');
+
+            const harian_now = data.harian_now || 0;
+            const coin_now = data.coin_now || 0;
+
+            progressText.innerText = `${harian_now}/200`;
+            totalProgressText.innerText = `${coin_now}/1000`;
+            updateProgressBar(progressBar, (harian_now / 200) * 100);
+            updateProgressBar(totalProgressBar, (coin_now / 1000) * 100);
+
+            if (coin_now >= 1000) {
+              countdownEl.innerText = "MAX";
+              countdownEl.classList.add("text-red-400");
+              coinMsg.innerText = "Your coins have reached the maximum limit (1000).";
+            } else {
+              startCountdown();
+            }
+          } else {
+            coinMsg.innerText = data.message || "Failed to retrieve status.";
+          }
+        })
+        .catch(() => {
+          coinMsg.innerText = "Failed to connect to server.";
+        });
+    };
+  </script>
+  
+  <script type="text/javascript">
+    atOptions = {
+      'key' : '5421a4eaef5512f495c9b7eed6910590',
+      'format' : 'iframe',
+      'height' : 60,
+      'width' : 468,
+      'params' : {}
+    };
+  </script>
+  <script src="https://fpyf8.com/88/tag.min.js" data-zone="148964" async data-cfasync="false"></script>
+</body>
+</html>

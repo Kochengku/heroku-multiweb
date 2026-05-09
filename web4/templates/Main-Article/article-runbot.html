@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Skyforgia">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.skyforgia.web.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.skyforgia.web.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skyforgia">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.skyforgia.web.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.skyforgia.web.id",
+    "logo": "https://control.skyforgia.web.id/static/logo-512x512.webp",
+    "name": "Skyforgia"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8">
+  <title>Building a Hosting Panel with WhatsApp Bot Integration | Skyforgia Hosting</title>
+  <meta name="description" content="Step-by-step tutorial on setting up a hosting panel and integrating it with a WhatsApp Bot for automated notifications and monitoring.">
+  <meta name="category" content="bots,hosting">
+  <meta name="date" content="2025-09-14">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="bg-white text-gray-800 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/blog" class="transition-transform duration-200 hover:scale-105 flex items-center space-x-2">
+        <i class="fa-solid fa-arrow-left text-blue-600"></i>
+        <span>Back to Blog</span>
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+    <h1 class="text-3xl font-bold text-blue-900 mb-6">How to Create a Panel and Run a WhatsApp Bot</h1>
+    <p class="text-gray-500 mb-6">Published on September 14, 2025 · 7 min read</p>
+
+    <p class="mb-4">In this guide, we will walk you through the process of creating a new panel on skyforgia Hosting and deploying a WhatsApp bot using the Pterodactyl panel. The steps below cover the <strong>website method</strong>. If you want to set up your server via Telegram, click here.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 1: Register an Account</h2>
+    <p class="mb-4">Go to the skyforgia Hosting homepage and register for a free account. You can sign up using Google or an email address.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 2: Navigate to the Bot Server Menu</h2>
+    <p class="mb-4">
+      Once inside the dashboard, click the menu icon (three lines at the top-left). Then select 
+      <strong>Bot Server</strong>. You will see two options: <em>Create via Website</em> or <em>Create via Telegram</em>. 
+      For this article, we will continue with the website method. 
+      If you want to set up your server via Telegram, 
+      <a href="{{ url_for('blog_article', slug='article-telegram') }}" class="text-blue-600 hover:underline">click here</a>.
+    </p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 3: Follow the Ad-Supported Setup</h2>
+    <p class="mb-4">
+      You will be redirected to an ad page. Simply follow the instructions provided 
+      <a href="{{ url_for('blog_article', slug='article-ads-setup') }}" class="text-blue-600 hover:underline">click here</a>.  
+    </p>
+    <ul class="list-disc ml-6 mb-4">
+      <li>Fill in the required server details such as <strong>name</strong>.</li>
+      <li>Select the available <strong>Node</strong> for your server.</li>
+      <li>Choose the appropriate <strong>egg</strong> depending on your needs (e.g., WhatsApp bot environment).</li>
+      <li>Complete the CAPTCHA verification.</li>
+      <li>Click the yellow <strong>Watch Ad</strong> button. Wait around 5 seconds, then press the back button on your device.</li>
+    </ul>
+    <p class="mb-4">After this, the button will change to <strong>Create Server Now</strong>. Click it to proceed.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 4: Get Your Server Credentials</h2>
+    <p class="mb-4">Your server will be created automatically. You will then see the server details including <strong>email, password, and panel URL</strong> for the Pterodactyl dashboard.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 5: Log in to the Pterodactyl Panel</h2>
+    <p class="mb-4">Go to the provided panel URL and log in using the credentials displayed in your account details.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 6: Upload Your Bot Script</h2>
+    <p class="mb-4">Once inside the panel, select your server. Then go to the <strong>Files</strong> section and upload your bot script (e.g., a ZIP archive).</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 7: Extract Your Script Files</h2>
+    <p class="mb-4">After uploading, click the menu icon (three dots) next to your uploaded ZIP file and select <strong>Unarchive</strong>. The ZIP file will be extracted into a folder.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 8: Move Script Files</h2>
+    <p class="mb-4">Open the extracted script folder, select all files using the checkbox in the top-left, then click <strong>Move</strong>. Enter <code>../</code> as the destination so that all files are placed in the main directory.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 9: Start the Bot</h2>
+    <p class="mb-4">Go to the <strong>Console</strong> tab and press <strong>Start</strong>. The system will begin installing dependencies and launch your WhatsApp bot.</p>
+
+    <p class="mt-8 font-semibold">Congratulations! You have successfully created a panel and deployed your WhatsApp bot on skyforgia Hosting.</p>
+  </main>
+
+<!-- FOOTER -->
+<footer class="bg-gradient-to-b from-white to-blue-50 border-t border-gray-200 pt-8 pb-6 text-sm">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start text-center sm:text-left gap-6">
+      <div>
+        <h3 class="text-blue-800 font-extrabold text-lg">Skyforgia</h3>
+      </div>
+      <div class="space-x-3 text-gray-600">
+        <a href="/privacypolicy" class="hover:text-blue-600 hover:underline">Privacy Policy</a>
+        <span class="text-gray-400">•</span>
+        <a href="/tos" class="hover:text-blue-600 hover:underline">Terms of Service</a>
+        <span class="text-gray-400">•</span>
+        <a href="/advertisingagreement" class="hover:text-blue-600 hover:underline">Ads Disclosure</a>
+      </div>
+      <div class="text-gray-600 space-y-1">
+        <p class="flex items-center justify-center sm:justify-start gap-2">
+          <i class="fa-solid fa-envelope text-greey-600"></i>
+          <span>supporthosting@skyforgia.web.id</span>
+        </p>
+        <p class="text-xs leading-tight text-gray-500">
+          Jl. Pahlawan No.31, Kartoharjo, Kota Madiun, Jawa Timur (63121)
+        </p>
+      </div>
+    </div>
+    <div class="border-t border-gray-200 mt-6 pt-4 text-center text-xs text-gray-400">
+      © <span id="year"></span> Skyforgia. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("main").classList.add("visible");
+    });
+  </script>
+</body>
+</html>

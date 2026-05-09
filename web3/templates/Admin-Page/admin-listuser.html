@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin |> User List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(10px);}
+      to   { opacity:1; transform:translateY(0);}
+    }
+    .fade-in{ animation:fadeIn .6s ease-out both;}
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="Logo" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+<!-- MAIN CONTENT -->
+<main class="flex-grow px-4 py-6 fade-in">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6">Registered User List</h2>
+
+    <!-- FORM PENCARIAN EMAIL -->
+    <div class="flex justify-between items-center mb-4">
+      <form method="GET" action="{{ url_for('admin_users') }}" class="flex items-center gap-2">
+        <input type="text"
+               name="email"
+               value="{{ email_query or '' }}"
+               placeholder="Search user email..."
+               class="w-64 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button type="submit"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm flex items-center gap-1">
+          <i class="fa fa-search"></i> Search
+        </button>
+        {% if email_query %}
+        <a href="{{ url_for('admin_users') }}"
+           class="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300 text-sm flex items-center gap-1">
+          <i class="fa fa-times-circle"></i> Reset
+        </a>
+        {% endif %}
+      </form>
+    </div>
+
+    <!-- TABEL USER -->
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white shadow-lg rounded-lg overflow-hidden">
+        <thead class="bg-blue-600 text-white text-left">
+          <tr>
+            <th class="px-4 py-3">ID</th>
+            <th class="px-4 py-3">Name</th>
+            <th class="px-4 py-3">Email</th>
+            <th class="px-4 py-3">Bio</th>
+            <th class="px-4 py-3">CPU</th>
+            <th class="px-4 py-3">RAM</th>
+            <th class="px-4 py-3">Disk</th>
+            <th class="px-4 py-3">Verification</th>
+            <th class="px-4 py-3">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users.items %}
+          <tr class="border-b border-gray-200 hover:bg-gray-100">
+            <td class="px-4 py-2">{{ user.id }}</td>
+            <td class="px-4 py-2">{{ user.nama }}</td>
+            <td class="px-4 py-2">{{ user.email }}</td>
+            <td class="px-4 py-2">{{ user.bio or '-' }}</td>
+            <td class="px-4 py-2">{{ user.cpu }}</td>
+            <td class="px-4 py-2">{{ user.ram }}</td>
+            <td class="px-4 py-2">{{ user.disk }}</td>
+            <td class="px-4 py-2">
+              {% if user.is_verified %}
+                <span class="text-green-600 font-semibold">Yes</span>
+              {% else %}
+                <span class="text-red-500">No</span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-2">
+              <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}"
+                    onsubmit="return confirm('Are you sure you want to delete this user??');">
+                <button type="submit" class="text-red-500 hover:underline">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="9" class="px-4 py-4 text-center text-gray-500">No users yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="mt-6 flex justify-center items-center space-x-2">
+      {% if users.has_prev %}
+        <a href="{{ url_for('admin_users', page=users.prev_num, email=email_query) }}"
+           class="px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
+          &laquo;
+        </a>
+      {% endif %}
+
+      {% set total_pages = users.pages %}
+      {% set current = users.page %}
+      {% set page_range = range(1, total_pages + 1) %}
+
+      {% for page_num in page_range %}
+        {% if page_num == 1 or page_num == total_pages or (page_num >= current - 2 and page_num <= current + 2) %}
+          {% if page_num == current %}
+            <span class="px-3 py-2 bg-blue-600 text-white rounded-md">{{ page_num }}</span>
+          {% else %}
+            <a href="{{ url_for('admin_users', page=page_num, email=email_query) }}"
+               class="px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
+              {{ page_num }}
+            </a>
+          {% endif %}
+        {% elif page_num == 2 and current > 4 %}
+          <span class="px-2">...</span>
+        {% elif page_num == total_pages - 1 and current < total_pages - 3 %}
+          <span class="px-2">...</span>
+        {% endif %}
+      {% endfor %}
+
+      {% if users.has_next %}
+        <a href="{{ url_for('admin_users', page=users.next_num, email=email_query) }}"
+           class="px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
+          &raquo;
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+      <p>
+        <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+    </div>
+  </footer>
+
+<!-- Notifikasi -->
+<div id="popupDelete"
+     class="fixed top-5 right-5 bg-white border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-700 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
+  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+  <span>Successfully Deleted User!</span>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+
+  function showPopup(id) {
+    const popup = document.getElementById(id);
+    popup.classList.remove("opacity-0", "translate-y-[-10px]");
+    popup.classList.add("opacity-100", "translate-y-0");
+
+    setTimeout(() => {
+      popup.classList.remove("opacity-100", "translate-y-0");
+      popup.classList.add("opacity-0", "translate-y-[-10px]");
+      // hapus query string tanpa reload
+      const url = new URL(window.location);
+      url.searchParams.delete("delete");
+      window.history.replaceState({}, "", url);
+    }, 3000);
+  }
+
+  if (params.get("delete") === "success") {
+    showPopup("popupDelete");
+  }
+
+  // ANIMASI MASUK MAIN
+  const main = document.getElementById("mainContent");
+  setTimeout(() => {
+    main.classList.remove("opacity-0", "translate-y-4");
+    main.classList.add("opacity-100", "translate-y-0");
+  }, 100);
+});
+</script>
+</body>
+</html>

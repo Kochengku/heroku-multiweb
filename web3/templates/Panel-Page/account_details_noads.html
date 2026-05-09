@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║   ɴᴏx ᴛᴇᴀᴍ  —  ᴘᴛᴇʀᴏᴅᴀᴄᴛʏʟ  ᴅᴇᴛᴀɪʟs  ᴘᴀɢᴇ            ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta property="og:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta property="og:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.nox-team.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta name="twitter:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta name="twitter:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.nox-team.biz.id",
+    "logo": "https://control.nox-team.biz.id/static/logo-512x512.webp",
+    "name": "ɴᴏx ᴛᴇᴀᴍ"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is ɴᴏx ᴛᴇᴀᴍ Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ɴᴏx ᴛᴇᴀᴍ provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <title>ɴᴏx ᴛᴇᴀᴍ  |>  ᴘᴛᴇʀᴏᴅᴀᴄᴛʏʟ ᴀᴄᴄᴏᴜɴᴛ ᴅᴇᴛᴀɪʟs</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ════════════════════════════════════════ */
+    /* ║   ᴀɴɪᴍᴀᴛɪᴏɴs  —  ᴅᴇᴄᴏʀᴀᴛɪᴠᴇ        ║ */
+    /* ════════════════════════════════════════ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity .6s ease-out, transform .6s ease-out; }
+    .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+      50% { box-shadow: 0 0 50px rgba(34, 197, 94, 0.6); }
+    }
+    .pulse-green-glow {
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen flex flex-col text-sm sm:text-base">
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ  ᴘᴏᴘᴜᴘ              ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    {% if category == 'has_server' %}
+      <div id="popupAccount_existing" class="fixed top-5 right-5 bg-white/10 backdrop-blur-md border-l-4 border-yellow-500 shadow-lg rounded-md px-4 py-3 text-yellow-400 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500 z-50">
+        <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-xl"></i>
+        <span>{{ message }}</span>
+      </div>
+    {% elif category == 'server_created' %}
+      <div id="popupAccount_create" class="fixed top-5 right-5 bg-white/10 backdrop-blur-md border-l-4 border-emerald-500 shadow-lg rounded-md px-4 py-3 text-emerald-400 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500 z-50">
+        <i class="fa-solid fa-circle-check text-emerald-500 text-xl"></i>
+        <span>{{ message }}</span>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   ʜᴇᴀᴅᴇʀ  —  ɴᴀᴠɪɢᴀᴛɪᴏɴ            ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+  <header class="bg-black/40 backdrop-blur-md border-b border-emerald-500/20 py-3 shadow-lg">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="ɴᴏx ᴛᴇᴀᴍ" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-emerald-400 font-medium tracking-widest">EN</span>
+    </div>
+  </header>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   ᴍᴀɪɴ  —  ᴀᴄᴄᴏᴜɴᴛ  ᴅᴇᴛᴀɪʟs       ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<main class="flex-grow flex items-center justify-center px-4 py-8">
+  <div class="w-full max-w-lg mx-auto bg-white/5 backdrop-blur-xl p-5 sm:p-8 rounded-2xl shadow-2xl text-center border border-emerald-500/20 relative overflow-hidden fade-in-up">
+
+    <!-- Decorative background elements -->
+    <div class="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-green-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10">
+      <!-- ═══════ GREEN GLOWING USER ICON ═══════ -->
+      <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg pulse-green-glow float-anim">
+        <i class="fa-solid fa-user-gear text-3xl text-white"></i>
+      </div>
+
+      <h2 class="text-xl sm:text-2xl font-bold text-emerald-400 mb-4 text-center tracking-wide">ʏᴏᴜʀ ᴘᴛᴇʀᴏᴅᴀᴄᴛʏʟ ᴀᴄᴄᴏᴜɴᴛ ᴅᴇᴛᴀɪʟs</h2>
+      <div class="text-gray-300 space-y-3 text-center sm:text-left">
+        <p><strong class="text-emerald-400">ᴇᴍᴀɪʟ:</strong> {{ account.email }}</p>
+        <p><strong class="text-emerald-400">ᴜsᴇʀɴᴀᴍᴇ:</strong> {{ account.username }}</p>
+        <p><strong class="text-emerald-400">ᴘᴀssᴡᴏʀᴅ:</strong> {{ account.username }}</p>
+        <p><strong class="text-emerald-400">ᴀᴄᴄᴇss ʏᴏᴜʀ sᴇʀᴠᴇʀ:</strong><br>
+          <a href="{{ account.panel_url }}" target="_blank" class="text-emerald-400 hover:text-emerald-300 hover:underline break-words transition">
+            {{ account.panel_url }}
+          </a>
+        </p>
+
+        <!-- ═══════ ʙᴏᴏsᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ═══════ -->
+        <div class="mt-4 text-center">
+          <p class="text-sm">
+            <span class="text-gray-400">ᴛᴏᴅᴀʏ's ʙᴏᴏsᴛ:</span> <strong class="text-emerald-400">{{ '1/1' if boost_used else '0/1' }}</strong>
+          </p>
+
+          {% if remaining_time > 0 %}
+          <p class="text-xs text-gray-500 mt-1">
+            ʙᴏᴏsᴛ ᴀᴄᴛɪᴠᴇ, ᴛɪᴍᴇ ʀᴇᴍᴀɪɴɪɴɢ: <span id="countdown" class="text-emerald-400 font-mono">{{ remaining_time }}</span>
+          </p>
+          {% elif remaining_daily_seconds > 0 %}
+          <p class="text-xs text-gray-500 mt-1">
+            ʏᴏᴜ ᴄᴀɴ ʙᴏᴏsᴛ ᴀɢᴀɪɴ ɪɴ: <span id="dailyCountdown" class="text-emerald-400 font-mono">{{ remaining_daily_seconds }}</span>
+          </p>
+          {% endif %}
+
+          <!-- Slot Boost -->
+          {% if slot_sisa == 0 %}
+          <p class="text-xs text-red-400 mt-1">⚠️ ғᴜʟʟ ʙᴏᴏsᴛ sʟᴏᴛ (5/5)</p>
+          {% else %}
+          <p class="text-xs text-gray-500 mt-1">ʀᴇᴍᴀɪɴɪɴɢ ʙᴏᴏsᴛ sʟᴏᴛs: <span class="text-emerald-400">{{ slot_sisa }}/5</span></p>
+          {% endif %}
+        </div>
+        {% set disabled_btn = boost_used or slot_sisa == 0 or ram_upgrade_active %}
+        <form id="boostForm" class="mt-4 text-center">
+          <input type="hidden" name="panel_id" value="{{ panel_id }}">
+          <button type="submit"
+            {% if disabled_btn %} disabled {% endif %}
+            class="{% if disabled_btn %}
+                     bg-gray-700 cursor-not-allowed text-gray-500
+                   {% else %}
+                     bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white shadow-lg shadow-emerald-500/30
+                   {% endif %}
+                   font-semibold py-2.5 px-6 rounded-xl transition-all duration-300">
+            <i class="fa-solid fa-rocket mr-2"></i>ᴜᴘɢʀᴀᴅᴇ ʀᴀᴍ (1.5 ɢʙ / 1 ʜᴏᴜʀ)
+          </button>
+
+          {% if ram_upgrade_active %}
+            <p class="mt-2 text-xs text-red-400">ʏᴏᴜ ᴀʀᴇ ᴜsɪɴɢ ᴀ ʀᴀᴍ ᴜᴘɢʀᴀᴅᴇ, ʏᴏᴜ ᴄᴀɴɴᴏᴛ ᴜsᴇ ʀᴀᴍ ʙᴏᴏsᴛ ᴀᴛ ᴛʜɪs ᴛɪᴍᴇ.</p>
+          {% endif %}
+
+          <p id="boostStatus" class="mt-2 text-sm text-gray-400"></p>
+        </form>
+      </div>
+
+      <a href="/dashboard" class="mt-6 block bg-white/10 hover:bg-white/20 text-gray-300 py-2.5 px-6 rounded-full font-semibold text-center transition w-full border border-emerald-500/20 hover:border-emerald-500/40">
+        <i class="fa-solid fa-arrow-left mr-2"></i>ʙᴀᴄᴋ ᴛᴏ ᴅᴀsʜʙᴏᴀʀᴅ
+      </a>
+    </div>
+  </div>
+</main>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   ɢᴜɪᴅᴇ  sᴇᴄᴛɪᴏɴ                    ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<section class="bg-black/20 border-t border-emerald-500/10 py-10">
+  <div class="max-w-screen-lg mx-auto px-4 text-center">
+    <h3 class="text-lg sm:text-xl font-semibold text-emerald-400 mb-6 tracking-wide">ᴘᴛᴇʀᴏᴅᴀᴄᴛʏʟ ᴘᴀɴᴇʟ ᴜsᴇʀ ɢᴜɪᴅᴇ</h3>
+    <ol class="space-y-4 text-left text-gray-300 max-w-lg mx-auto">
+      <li class="flex items-start"><span class="mr-3 text-emerald-400 font-bold text-lg">1.</span><p>ᴏᴘᴇɴ ʏᴏᴜʀ ᴘᴛᴇʀᴏᴅᴀᴄᴛʏʟ ᴘᴀɴᴇʟ ʟɪɴᴋ.</p></li>
+      <li class="flex items-start"><span class="mr-3 text-emerald-400 font-bold text-lg">2.</span><p>ʟᴏɢɪɴ ᴡɪᴛʜ <strong class="text-emerald-400">ᴇᴍᴀɪʟ</strong> ᴀɴᴅ <strong class="text-emerald-400">ᴘᴀssᴡᴏʀᴅ</strong>.</p></li>
+      <li class="flex items-start"><span class="mr-3 text-emerald-400 font-bold text-lg">3.</span><p>ᴇɴᴛᴇʀ ᴛʜᴇ ᴍᴇɴᴜ <strong class="text-emerald-400">"sᴇʀᴠᴇʀs"</strong>.</p></li>
+      <li class="flex items-start"><span class="mr-3 text-emerald-400 font-bold text-lg">4.</span><p>sᴇʟᴇᴄᴛ ᴀɴᴅ ᴄʟɪᴄᴋ <strong class="text-emerald-400">"sᴛᴀʀᴛ"</strong>.</p></li>
+      <li class="flex items-start"><span class="mr-3 text-emerald-400 font-bold text-lg">5.</span><p>ᴜsᴇ ᴛᴀʙs <strong class="text-emerald-400">ᴄᴏɴsᴏʟᴇ</strong> ᴀɴᴅ <strong class="text-emerald-400">ғɪʟᴇ</strong>.</p></li>
+      <li class="flex items-start"><span class="mr-3 text-emerald-400 font-bold text-lg">6.</span><p>ғᴏʀɢᴏᴛ ᴘᴀssᴡᴏʀᴅ? ᴄʟɪᴄᴋ <strong class="text-emerald-400">"ғᴏʀɢᴏᴛ ᴘᴀssᴡᴏʀᴅ"</strong>.</p></li>
+    </ol>
+    <p class="mt-8 text-sm text-gray-500">ɢᴇᴛ ᴛʜᴇ ʟᴀᴛᴇsᴛ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ʜᴇʀᴇ <a href="https://whatsapp.com/channel/0029Vb2IjRwFi8xZpEVes12h" class="text-emerald-400 hover:text-emerald-300 hover:underline transition">ᴡʜᴀᴛsᴀᴘᴘ ᴄʜᴀɴɴᴇʟ</a>.</p>
+    <p class="mt-4 text-sm text-gray-500">ɴᴇᴇᴅ ʜᴇʟᴘ? <a href="https://wa.me/6281775155057" class="text-emerald-400 hover:text-emerald-300 hover:underline transition">ᴄᴏɴᴛᴀᴄᴛ ᴠɪᴀ ᴡʜᴀᴛsᴀᴘᴘ</a>.</p>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   ғᴏᴏᴛᴇʀ  —  ʟɪɴᴋs & ɪɴғᴏ            ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<footer class="bg-black/40 backdrop-blur-sm border-t border-emerald-500/10 py-3 sm:py-4 text-xs sm:text-sm">
+  <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-3 sm:px-4">
+    <p class="font-semibold text-emerald-400 text-sm tracking-wider">
+      <i class="fa-solid fa-bolt text-emerald-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ
+    </p>
+    <p class="space-x-2">
+      <a href="/privacy" class="text-gray-400 hover:text-emerald-400 hover:underline transition">ᴘʀɪᴠᴀᴄʏ ᴘᴏʟɪᴄʏ</a> | 
+      <a href="/tos" class="text-gray-400 hover:text-emerald-400 hover:underline transition">ᴛᴇʀᴍs ᴏғ sᴇʀᴠɪᴄᴇ</a> | 
+      <a href="/advertisingagreement" class="text-gray-400 hover:text-emerald-400 hover:underline transition">ᴀᴅs ᴅɪsᴄʟᴏsᴜʀᴇ</a> | 
+      <a href="/blog" class="text-gray-400 hover:text-emerald-400 hover:underline transition">ʙʟᴏɢ</a>
+    </p>
+    <p class="text-gray-600">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+    <p><i class="fa-solid fa-envelope text-emerald-400 mr-1"></i>support@nox-team.biz.id</p>
+  </div>
+</footer>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   sᴄʀɪᴘᴛ                             ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Fade-in animasi
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    const element = document.querySelector(".fade-in-up");
+    if (element) observer.observe(element);
+
+    // Popup notifikasi
+    ["popupAccount_existing","popupAccount_create"].forEach(id=>{
+      const p=document.getElementById(id);
+      if(p){
+        setTimeout(()=>{p.classList.remove("opacity-0","translate-y-[-10px]");p.classList.add("opacity-100","translate-y-0");},100);
+        setTimeout(()=>{p.classList.remove("opacity-100","translate-y-0");p.classList.add("opacity-0","translate-y-[-10px]");},4000);
+      }
+    });
+
+    // Boost submit
+    const form = document.getElementById('boostForm');
+    form?.addEventListener('submit', async (e) => {
+      if (form.querySelector('button').disabled) return;
+      e.preventDefault();
+      const statusText = document.getElementById('boostStatus');
+      statusText.textContent = 'ᴘʀᴏᴄᴇssɪɴɢ ʀᴇǫᴜᴇsᴛs...';
+
+      try {
+        const res = await fetch('/boost-ram', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({})
+});
+        const data  = await res.json();
+        if (data.success) {
+          statusText.textContent = '✅ ʀᴀᴍ sᴜᴄᴄᴇssғᴜʟʟʏ ᴜᴘɢʀᴀᴅᴇᴅ ᴛᴏ 1.5 ɢʙ ғᴏʀ 1 ʜᴏᴜʀ!';
+          statusText.classList.remove('text-red-600');
+          statusText.classList.add('text-emerald-400');
+          setTimeout(()=>location.reload(), 2000);
+        } else {
+          statusText.textContent = '⚠️ ' + data.message;
+          statusText.classList.remove('text-emerald-400');
+          statusText.classList.add('text-red-400');
+        }
+      } catch {
+        statusText.textContent = '❌ ғᴀɪʟᴇᴅ ᴛᴏ ᴄᴏɴᴛᴀᴄᴛ sᴇʀᴠᴇʀ.';
+        statusText.classList.add('text-red-400');
+      }
+    });
+  });
+
+  /* Countdown */
+{% if remaining_time > 0 %}
+(function startCountdown(seconds){
+  const c=document.getElementById('countdown');
+  (function update(){
+    const h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), s=seconds%60;
+    c.textContent=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if(seconds-->0)setTimeout(update,1000); else{c.textContent="00:00:00";location.reload();}
+  })();
+})({{ remaining_time }});
+{% elif remaining_daily_seconds > 0 %}
+(function startCountdown(seconds){
+  const c=document.getElementById('dailyCountdown');
+  (function update(){
+    const h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), s=seconds%60;
+    c.textContent=`${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if(seconds-->0)setTimeout(update,1000); else{c.textContent="00:00:00";location.reload();}
+  })();
+})({{ remaining_daily_seconds }});
+{% endif %}
+</script>
+<script src="https://fpyf8.com/88/tag.min.js" data-zone="175419" async data-cfasync="false"></script>
+</body>
+</html>

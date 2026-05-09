@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║   ɴᴏx ᴛᴇᴀᴍ  —  ʙᴀᴄᴋᴜᴘ  sᴇʀᴠᴇʀ  ᴘᴀɢᴇ              ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta property="og:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta property="og:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.nox-team.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta name="twitter:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta name="twitter:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.nox-team.biz.id",
+    "logo": "https://control.nox-team.biz.id/static/logo-512x512.webp",
+    "name": "ɴᴏx ᴛᴇᴀᴍ"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is ɴᴏx ᴛᴇᴀᴍ Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ɴᴏx ᴛᴇᴀᴍ provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* ════════════════════════════════════════ */
+    /* ║   ᴀɴɪᴍᴀᴛɪᴏɴs  —  ᴅᴇᴄᴏʀᴀᴛɪᴠᴇ        ║ */
+    /* ════════════════════════════════════════ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    @keyframes pulse-purple {
+      0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
+      50% { box-shadow: 0 0 50px rgba(168, 85, 247, 0.6); }
+    }
+    .pulse-purple-glow {
+      animation: pulse-purple 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+  <title>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴀᴄᴋᴜᴘ sᴇʀᴠᴇʀ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" href="/static/favicon-96x96.png" />
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen flex flex-col relative">
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   ʜᴇᴀᴅᴇʀ  —  ɴᴀᴠɪɢᴀᴛɪᴏɴ            ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+  <header class="bg-black/40 backdrop-blur-md border-b border-purple-500/20 py-3 shadow-lg">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="ɴᴏx ᴛᴇᴀᴍ" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-purple-400 font-medium tracking-widest">EN</span>
+    </div>
+  </header>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   ᴍᴀɪɴ  —  ʙᴀᴄᴋᴜᴘ  ᴘᴀɴᴇʟ          ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+<main class="flex-grow flex items-center justify-center px-4 py-10 animate-fadeInUp">
+  <div class="w-full max-w-md mx-auto bg-white/5 backdrop-blur-xl p-8 rounded-2xl shadow-2xl text-center border border-purple-500/20 relative overflow-hidden">
+    
+    <!-- Decorative background elements -->
+    <div class="absolute -top-20 -right-20 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10">
+      <!-- ═══════ PURPLE GLOWING BACKUP ICON ═══════ -->
+      <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-violet-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg pulse-purple-glow float-anim">
+        <i class="fa-solid fa-cloud-arrow-up text-3xl text-white"></i>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-bold mb-4 text-white tracking-wide">ғɪʟᴇ sᴇʀᴠᴇʀ ʙᴀᴄᴋᴜᴘ</h1>
+      <p class="text-gray-400 text-sm mb-6">sᴇʟᴇᴄᴛ ᴀɴ ᴏᴘᴛɪᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ᴍᴀɴᴀɢᴇ ʏᴏᴜʀ ʙᴀᴄᴋᴜᴘs.</p>
+      
+      <!-- ═══════ ᴛᴏɢɢʟᴇ ᴀᴜᴛᴏ ʙᴀᴄᴋᴜᴘ ═══════ -->
+      <div class="flex items-center justify-between w-52 mb-3 mx-auto">
+        <span class="text-sm font-medium text-gray-300">ᴀᴜᴛᴏ ʙᴀᴄᴋᴜᴘ</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input 
+            type="checkbox" 
+            id="toggleAutoBackup" 
+            class="sr-only peer"
+            {% if auto_backup_enabled %}checked{% endif %}
+            {% if not user_data.server or user_data.server == 0 %}disabled{% endif %}
+          >
+          <div class="w-11 h-6 bg-gray-700 rounded-full peer peer-checked:bg-purple-500 peer-disabled:opacity-50 peer-disabled:cursor-not-allowed transition"></div>
+          <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition peer-checked:translate-x-5"></div>
+        </label>
+      </div>
+
+      <div class="flex flex-col gap-3 items-center">
+        <button id="startBackup"
+          class="bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-400 hover:to-violet-500 text-white px-5 py-2.5 rounded-full font-medium shadow-lg shadow-purple-500/30 text-sm w-52 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+          <i class="fa-solid fa-database mr-2"></i>sᴛᴀʀᴛ ʙᴀᴄᴋᴜᴘ
+        </button>
+
+        <button id="uploadMega"
+          class="bg-gradient-to-r from-fuchsia-500 to-purple-600 hover:from-fuchsia-400 hover:to-purple-500 text-white px-5 py-2.5 rounded-full font-medium shadow-lg shadow-purple-500/30 text-sm w-52 hidden transition-all duration-300">
+          <i class="fa-brands fa-megaport mr-2"></i>ᴜᴘʟᴏᴀᴅ ᴛᴏ ᴄʟᴏᴜᴅ
+        </button>
+
+        <button id="restoreMega"
+          class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white px-5 py-2.5 rounded-full font-medium shadow-lg shadow-orange-500/30 text-sm w-52 hidden transition-all duration-300">
+          <i class="fa-solid fa-download mr-2"></i>ʀᴇsᴛᴏʀᴇ ғɪʟᴇs
+        </button>
+      </div>
+      
+      <!-- ═══════ ʟɪsᴛ ʏᴏᴜʀ ғɪʟᴇs ═══════ -->
+      <div class="mt-6">
+        <h2 class="text-lg font-semibold mb-3 text-purple-400 tracking-wide">ʟɪsᴛ ʏᴏᴜʀ ғɪʟᴇs</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse" id="fileTable">
+            <thead>
+              <tr class="bg-white/5 text-purple-300 text-xs uppercase">
+                <th class="px-3 py-2 border border-purple-500/20">ɴᴀᴍᴇ</th>
+                <th class="px-3 py-2 border border-purple-500/20">ᴛʏᴘᴇ</th>
+                <th class="px-3 py-2 border border-purple-500/20">sɪᴢᴇ</th>
+              </tr>
+            </thead>
+            <tbody id="fileList" class="text-sm text-gray-300">
+              <tr>
+                <td colspan="3" class="text-center py-3 text-gray-500">ʟᴏᴀᴅɪɴɢ ᴅᴀᴛᴀ...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════ ᴀᴜᴛᴏ ʙᴀᴄᴋᴜᴘ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ═══════ -->
+      <div id="autoBackupInfo" class="hidden mt-6">
+        <h2 class="text-lg font-semibold mb-3 text-purple-400 tracking-wide">ᴀᴜᴛᴏ ʙᴀᴄᴋᴜᴘ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-white/5 text-purple-300 text-xs uppercase">
+                <th class="px-3 py-2 border border-purple-500/20">ʟᴀsᴛ ʙᴀᴄᴋᴜᴘ</th>
+                <th class="px-3 py-2 border border-purple-500/20">ɴᴇxᴛ ʙᴀᴄᴋᴜᴘ</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm text-gray-300">
+              <tr>
+                <td class="px-3 py-2 border border-purple-500/20">
+                  {% if last_backup %}
+                    {{ last_backup.strftime("%A, %d %B %Y %H:%M:%S") }}
+                  {% else %}
+                    ɴᴇᴠᴇʀ
+                  {% endif %}
+                </td>
+                <td class="px-3 py-2 border border-purple-500/20">
+                  {% if next_backup and auto_backup_enabled %}
+                    {{ next_backup.strftime("%A, %d %B %Y %H:%M:%S") }}
+                  {% elif auto_backup_enabled %}
+                    ᴄᴜʀʀᴇɴᴛʟʏ sᴄʜᴇᴅᴜʟᴇᴅ...
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════ ᴘʀᴏɢʀᴇss ʙᴀʀ ═══════ -->
+      <div id="progressSection" class="hidden mt-6">
+        <p class="text-sm text-gray-400 mb-2">ʙᴀᴄᴋᴜᴘ ᴘʀᴏᴄᴇss ɪs ʀᴜɴɴɪɴɢ...</p>
+        <div class="w-full bg-gray-700 rounded-full h-3">
+          <div id="progressBar"
+            class="bg-gradient-to-r from-purple-500 to-violet-500 h-3 rounded-full transition-all duration-500 ease-out"
+            style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto mt-6">
+        <table class="w-full text-left border-collapse hidden" id="fileTable">
+          <thead>
+            <tr class="bg-white/5 text-purple-300 text-xs uppercase">
+              <th class="px-3 py-2 border border-purple-500/20">ɴᴀᴍᴇ</th>
+              <th class="px-3 py-2 border border-purple-500/20">ᴛʏᴘᴇ</th>
+              <th class="px-3 py-2 border border-purple-500/20">sɪᴢᴇ</th>
+            </tr>
+          </thead>
+          <tbody id="fileList" class="text-sm text-gray-300"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════ ʟᴏᴀᴅɪɴɢ ᴏᴠᴇʀʟᴀʏ ═══════ -->
+<div id="globalLoading"
+     class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[99999]
+            transition-opacity duration-300">
+  <div class="flex flex-col items-center gap-3">
+    <div class="w-14 h-14 border-4 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
+    <span class="text-purple-300 text-sm">ᴄʜᴇᴄᴋɪɴɢ ᴄʟᴏᴜᴅ sᴛᴏʀᴀɢᴇ...</span>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════╗ -->
+<!-- ║   ғᴏᴏᴛᴇʀ  —  ʟɪɴᴋs & ɪɴғᴏ            ║ -->
+<!-- ╚══════════════════════════════════════╝ -->
+  <footer class="bg-black/40 backdrop-blur-sm border-t border-purple-500/10 py-3 sm:py-4 text-xs sm:text-sm">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-3 sm:px-4">
+      <p class="font-semibold text-purple-400 text-sm tracking-wider">
+        <i class="fa-solid fa-bolt text-purple-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ
+      </p>
+      <p class="space-x-2">
+        <a href="/privacy" class="text-gray-400 hover:text-purple-400 hover:underline transition">ᴘʀɪᴠᴀᴄʏ ᴘᴏʟɪᴄʏ</a> | 
+        <a href="/tos" class="text-gray-400 hover:text-purple-400 hover:underline transition">ᴛᴇʀᴍs ᴏғ sᴇʀᴠɪᴄᴇ</a> | 
+        <a href="/advertisingagreement" class="text-gray-400 hover:text-purple-400 hover:underline transition">ᴀᴅs ᴅɪsᴄʟᴏsᴜʀᴇ</a> | 
+        <a href="/blog" class="text-gray-400 hover:text-purple-400 hover:underline transition">ʙʟᴏɢ</a>
+      </p>
+      <p class="text-gray-600">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+      <p><i class="fa-solid fa-envelope text-purple-400 mr-1"></i>support@nox-team.biz.id</p>
+    </div>
+  </footer>
+  
+<!-- ═══════ ᴘᴏᴘᴜᴘ ᴘᴇʀsᴇᴛᴜᴊᴜᴀɴ ʙᴀᴄᴋᴜᴘ ═══════ -->
+<div id="backupAgreementPopup" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-500 p-2">
+  <div id="backupAgreementBox" class="bg-slate-800/90 backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-md p-3 sm:p-4 transform scale-95 transition-transform duration-500 border border-purple-500/20">
+    
+    <!-- Judul -->
+    <h2 id="backupAgreeTitle" class="text-base sm:text-lg font-bold text-purple-400 mb-2 sm:mb-3 text-center tracking-wide">
+      ᴘᴇᴍʙᴇʀɪᴛᴀʜᴜᴀɴ ᴘᴇɴᴛɪɴɢ
+    </h2>
+
+    <!-- Isi -->
+    <div class="space-y-2 text-gray-300 text-xs sm:text-sm leading-relaxed">
+      <p id="backupAgreeLine1">1. ᴅᴇɴɢᴀɴ ᴍᴇɴɢɢᴜɴᴀᴋᴀɴ ʙᴀᴄᴋᴜᴘ ᴅɪsɪɴɪ ᴋᴀᴍᴜ ᴍᴇᴍᴘᴇʀᴄᴀʏᴀɪ ᴋᴀᴍɪ sᴇʙᴀɢᴀɪ ᴛᴇᴍᴘᴀᴛ ᴍᴇɴʏɪᴍᴘᴀɴ ғɪʟᴇ sᴄʀɪᴘᴛ.</p>
+      <p id="backupAgreeLine2">2. ᴇᴍᴀɪʟ ʏᴀɴɢ ᴅɪɢᴜɴᴀᴋᴀɴ ʜᴀʀᴜs sᴀᴍᴀ ᴅᴇɴɢᴀɴ ᴇᴍᴀɪʟ ʏᴀɴɢ ᴅɪɢᴜɴᴀᴋᴀɴ ᴜɴᴛᴜᴋ ʙᴀᴄᴋᴜᴘ ᴘᴇʀᴛᴀᴍᴀ ᴋᴀʟɪ sᴜᴘᴀʏᴀ sᴄʀɪᴘᴛ ᴅᴀᴘᴀᴛ ᴅɪ ᴅᴏᴡɴʟᴏᴀᴅ ᴜʟᴀɴɢ ᴋᴇᴍʙᴀʟɪ.</p>
+      <p id="backupAgreeLine3">3. sᴄʀɪᴘᴛ ᴋᴀᴍᴜ ᴀᴍᴀɴ ᴋᴀʀᴇɴᴀ ʜᴀɴʏᴀ ᴅɪ ᴋᴇʟᴏʟᴀ ᴏʟᴇʜ ᴘɪʜᴀᴋ ᴋᴀᴍɪ ᴛᴀɴᴘᴀ ᴀᴅᴀ ᴄᴀᴍᴘᴜʀ ᴛᴀɴɢᴀɴ ᴏʟᴇʜ ᴘɪʜᴀᴋ ʟᴀɪɴ.</p>
+      <p id="backupAgreeConfirm" class="font-semibold text-xs sm:text-sm text-purple-300">
+        ᴅᴇɴɢᴀɴ ᴍᴇɴᴇᴋᴀɴ ᴛᴏᴍʙᴏʟ "sᴀʏᴀ sᴇᴛᴜᴊᴜ", ᴀɴᴅᴀ ᴍᴇɴʏᴀᴛᴀᴋᴀɴ ᴛᴇʟᴀʜ ᴍᴇᴍʙᴀᴄᴀ, ᴍᴇᴍᴀʜᴀᴍɪ, ᴅᴀɴ ᴍᴇɴʏᴇᴛᴜᴊᴜɪ ᴋᴇᴛᴇɴᴛᴜᴀɴ ᴅɪ ᴀᴛᴀs.
+      </p>
+    </div>
+
+    <!-- Tombol -->
+    <div class="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-end gap-2">
+      <button id="backupTranslateBtn" class="px-3 py-1.5 rounded-lg bg-white/10 text-gray-300 hover:bg-white/20 transition text-xs sm:text-sm border border-purple-500/20">
+        ᴇɴɢʟɪsʜ
+      </button>
+      <button id="backupAcceptBtn" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-500 to-violet-600 text-white hover:from-purple-400 hover:to-violet-500 transition text-xs sm:text-sm shadow-lg shadow-purple-500/30">
+        sᴀʏᴀ sᴇᴛᴜᴊᴜ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ ᴘᴏᴘᴜᴘ ɴᴏᴛɪғɪᴋᴀsɪ ═══════ -->
+<div id="popupNoserver" class="fixed top-5 right-5 bg-white/10 backdrop-blur-md border-l-4 border-yellow-500 shadow-lg rounded-md px-4 py-3 text-yellow-400 flex items-center space-x-3 opacity-0 -translate-y-2 transition-all duration-500 z-50">
+  <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-xl"></i>
+  <span>sᴇʀᴠᴇʀ ʜᴀs ɴᴏ ғɪʟᴇ</span>
+</div>
+<div id="popupSuccess" class="fixed top-5 right-5 bg-white/10 backdrop-blur-md border-l-4 border-emerald-500 shadow-lg rounded-md px-4 py-3 text-emerald-400 flex items-center space-x-3 opacity-0 -translate-y-2 transition-all duration-500 z-50">
+  <i class="fa-solid fa-circle-check text-emerald-500 text-xl"></i>
+  <span>sᴜᴄᴄᴇᴇᴅ!</span>
+</div>
+<div id="popupError" class="fixed top-5 right-5 bg-white/10 backdrop-blur-md border-l-4 border-red-500 shadow-lg rounded-md px-4 py-3 text-red-400 flex items-center space-x-3 opacity-0 -translate-y-2 transition-all duration-500 z-50">
+  <i class="fa-solid fa-circle-xmark text-red-500 text-xl"></i>
+  <span>ᴛʜᴇʀᴇ ɪs ᴀɴ ᴇʀʀᴏʀ!</span>
+</div>
+
+<script>
+const userEmail = "{{ user_email }}"; // dari backend template
+const user = {{ user_data | tojson }};
+let lastFilename = null;
+
+function showPopup(id) {
+  const popup = document.getElementById(id);
+  popup.classList.remove("opacity-0", "-translate-y-2");
+  popup.classList.add("opacity-100", "translate-y-0");
+  setTimeout(() => {
+    popup.classList.remove("opacity-100", "translate-y-0");
+    popup.classList.add("opacity-0", "-translate-y-2");
+  }, 3000);
+}
+
+function forceDownload(url, filename) {
+  try {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename || "";
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    return true;
+  } catch (e) {
+    console.error("forceDownload failed:", e);
+    return false;
+  }
+}
+
+// ====== START BACKUP ======
+document.getElementById("startBackup").addEventListener("click", async () => {
+  let interval;
+
+  try {
+    const email = userEmail;
+
+    const progressSection = document.getElementById("progressSection");
+    const progressBar = document.getElementById("progressBar");
+
+    // ✅ TAMPILKAN PROGRESS
+    progressSection.classList.remove("hidden");
+    progressBar.style.width = "5%";
+
+    // ✅ AMBIL LIST FILE
+    const filesRes = await fetch(`/list-files?email=${email}`);
+    const files = await filesRes.json();
+
+    if (files.warning) {
+      showPopup("popupNoserver");
+      progressSection.classList.add("hidden");
+      return;
+    }
+
+    // ✅ TAMPILKAN FILE KE TABEL
+  const fileTable = document.getElementById("fileTable");
+  const fileList = document.getElementById("fileList");
+  fileList.innerHTML = "";
+  files.forEach((f) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="px-4 py-2 border border-purple-500/20">${f.name}</td>
+      <td class="px-4 py-2 border border-purple-500/20">${f.type}</td>
+      <td class="px-4 py-2 border border-purple-500/20">${f.size}</td>
+    `;
+    fileList.appendChild(tr);
+  });
+  fileTable.classList.remove("hidden");
+
+    // ✅ SIMULASI PROGRESS (UI SAJA)
+    let progress = 10;
+    interval = setInterval(() => {
+      if (progress < 90) {
+        progress += 10;
+        progressBar.style.width = progress + "%";
+      }
+    }, 500);
+
+    // ✅ PANGGIL BACKUP
+    const backupRes = await fetch("/backup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+
+    // ✅ PAKSA SELESAI UI BEGITU REQUEST BALIK
+    clearInterval(interval);
+    progressBar.style.width = "100%";
+
+    setTimeout(() => {
+      progressSection.classList.add("hidden"); // ✅ BAR HILANG TOTAL
+    }, 300);
+
+    // ✅ STATUS APA PUN, TETAP TAMPILKAN SUKSES PROSES
+    showPopup("popupSuccess");
+
+  } catch (error) {
+    console.error("Backup Error:", error);
+
+    clearInterval(interval);
+
+    // ✅ PAKSA HILANG BIAR NGGAK STUCK
+    document.getElementById("progressSection").classList.add("hidden");
+
+    showPopup("popupError");
+  }
+});
+// ====== UPLOAD MEGA ======
+document.getElementById("uploadMega").addEventListener("click", async () => {
+  if (!lastFilename) return;
+  const res = await fetch("/upload-mega", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ filename: lastFilename, email: userEmail }),
+  });
+  const result = await res.json();
+  if (result.mega_url || result.message) {
+    const text = result.mega_url
+      ? `ᴜᴘʟᴏᴀᴅ ᴛᴏ ᴄʟᴏᴜᴅ sᴜᴄᴄᴇssғᴜʟ : ${result.mega_url}`
+      : result.message;
+    alert(text);
+    showPopup("popupSuccess");
+  } else {
+    alert(result.error || "ᴜᴘʟᴏᴀᴅ ғᴀɪʟᴇᴅ");
+    showPopup("popupError");
+  }
+});
+
+// ====== RESTORE MEGA ======
+document.getElementById("restoreMega").addEventListener("click", async () => {
+  const restoreBtn = document.getElementById("restoreMega");
+  const filename = restoreBtn.dataset.filename || lastFilename;
+
+  if (!filename) {
+    alert("ɴᴏ ʙᴀᴄᴋᴜᴘ ғɪʟᴇ ɴᴀᴍᴇ sᴇʟᴇᴄᴛᴇᴅ.");
+    return;
+  }
+
+  // 🔥 langsung download file dari backend
+  const downloadUrl = `/restore-mega?filename=${encodeURIComponent(filename)}`;
+
+  // Membuat link download secara otomatis
+  const a = document.createElement("a");
+  a.href = downloadUrl;
+  a.download = filename; // memastikan browser mendownload
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  // Tampilkan popup / notifikasi
+  showPopup("popupSuccess");
+});
+
+// ====== CEK STATUS BACKUP MEGA SAAT PAGE LOAD ======
+document.addEventListener("DOMContentLoaded", async () => {
+  const restoreBtn = document.getElementById("restoreMega");
+
+  try {
+    const res = await fetch(`/check-mega?email=${userEmail}`);
+    const result = await res.json();
+
+    if (result.has_backup) {
+      // tampilkan tombol restore langsung
+      restoreBtn.classList.remove("hidden");
+      // simpan nama file dari backend
+      restoreBtn.dataset.filename = result.filename;
+    } else {
+      // kalau belum ada backup di Mega, tombol restore tetap hidden
+      restoreBtn.classList.add("hidden");
+    }
+  } catch (err) {
+    console.error("Failed to check backup:", err);
+  }
+});
+
+// ====== LOAD FILE LIST SAAT PAGE LOAD ======
+document.addEventListener("DOMContentLoaded", () => {
+    const startBtn = document.getElementById("startBackup");
+    const fileList = document.getElementById("fileList");
+
+    // 🔹 Jika server user = 0, nonaktifkan tombol + tampilkan pesan tabel
+    if (user.server === 0) {
+      startBtn.disabled = true;
+
+      fileList.innerHTML = `
+        <tr>
+          <td colspan="3" class="text-center py-3 text-gray-500">
+            ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀ sᴇʀᴠᴇʀ
+          </td>
+        </tr>
+      `;
+      return; // supaya tidak lanjut loadFileList()
+    }
+
+    // 🔹 Kalau server > 0, baru load daftar file
+    loadFileList();
+  });
+
+  async function loadFileList() {
+    const fileList = document.getElementById("fileList");
+    fileList.innerHTML = `
+      <tr>
+        <td colspan="3" class="text-center py-3 text-gray-500">ʟᴏᴀᴅɪɴɢ ᴅᴀᴛᴀ...</td>
+      </tr>
+    `;
+
+    try {
+      const res = await fetch(`/list-files?email=${userEmail}`);
+      const files = await res.json();
+
+      fileList.innerHTML = "";
+
+      if (!files || files.length === 0) {
+        fileList.innerHTML = `
+          <tr>
+            <td colspan="3" class="text-center py-3 text-gray-500">ᴇᴍᴘᴛʏ ғɪʟᴇ</td>
+          </tr>
+        `;
+        return;
+      }
+
+      files.forEach((f) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="px-3 py-2 border border-purple-500/20">${f.name}</td>
+          <td class="px-3 py-2 border border-purple-500/20">${f.type}</td>
+          <td class="px-3 py-2 border border-purple-500/20">${f.size}</td>
+        `;
+        fileList.appendChild(tr);
+      });
+    } catch (err) {
+      console.error("Gagal load file list:", err);
+      fileList.innerHTML = `
+        <tr>
+          <td colspan="3" class="text-center py-3 text-gray-500">ᴇᴍᴘᴛʏ ғɪʟᴇ</td>
+        </tr>
+      `;
+    }
+  }
+  
+ // ====== TOGGLE AUTO BACKUP ======
+document.addEventListener("DOMContentLoaded", async () => {
+  const toggle = document.getElementById("toggleAutoBackup");
+  const infoSection = document.getElementById("autoBackupInfo");
+  const userEmail = "{{ user_data.email }}";   
+  const hasServer = {{ "true" if user_data.server else "false" }}; 
+
+
+  // tampilkan info saat page load kalau dari backend sudah aktif
+  if (toggle.checked) {
+    infoSection.classList.remove("hidden");
+  }
+
+  try {
+    const res = await fetch(`/list-files?email=${userEmail}`);
+    const files = await res.json();
+
+    if (!hasServer || !files || files.length === 0) {
+      toggle.checked = false;
+      toggle.disabled = true;
+      infoSection.classList.add("hidden");
+    }
+  } catch (err) {
+    console.error("Gagal cek server:", err);
+    toggle.checked = false;
+    toggle.disabled = true;
+    infoSection.classList.add("hidden");
+  }
+
+  // simpan perubahan saat toggle diklik
+  toggle.addEventListener("change", async () => {
+    const enabled = toggle.checked;
+
+    try {
+      const res = await fetch("/toggle-auto-backup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled })
+      });
+
+      if (!res.ok) throw new Error("Update gagal");
+
+      if (enabled) {
+        infoSection.classList.remove("hidden");
+      } else {
+        infoSection.classList.add("hidden");
+      }
+    } catch (err) {
+      console.error("Gagal update auto backup:", err);
+      toggle.checked = !enabled;
+    }
+  });
+});
+</script>
+<script src="https://fpyf8.com/88/tag.min.js" data-zone="175419" async data-cfasync="false"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Complete Guide to Installing Pterodactyl Panel">
+<meta property="og:description" content="Step-by-step instructions to install Pterodactyl Panel and Wings daemon, including prerequisites, server setup, database configuration, and security best practices.">
+<meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://control.kocheng.biz.id">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Complete Guide to Installing Pterodactyl Panel">
+<meta name="twitter:description" content="A detailed tutorial covering everything from server preparation to installing Pterodactyl Panel and the Wings daemon for efficient game server management.">
+<meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+<meta charset="UTF-8" />
+<title>Complete Guide to Installing Pterodactyl Panel</title>
+<meta name="description" content="Step-by-step guide to installing Pterodactyl Panel and Wings daemon, with prerequisites, configuration tips, and security recommendations.">
+<meta name="category" content="hosting,information">
+<meta name="date" content="2025-09-21">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+.fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.lead { color: #475569; }
+.note { background: rgba(59,130,246,.06); border-left: 4px solid rgba(59,130,246,.3); padding:.75rem 1rem; border-radius:.375rem; }
+</style>
+</head>
+
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/blog" class="flex items-center space-x-2 hover:scale-105 transition">
+      <i class="fa-solid fa-arrow-left text-blue-600"></i>
+      <span class="text-sm text-gray-700">Back to Blog</span>
+    </a>
+    <span class="text-sm text-gray-500">EN</span>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+  <h1 class="text-3xl font-bold text-blue-900 mb-4">
+    Complete Guide to Installing Pterodactyl Panel
+  </h1>
+
+  <p class="text-gray-500 mb-6">Published on September 21, 2025 · 12 min read</p>
+
+  <p class="lead mb-4">
+    Pterodactyl Panel is a robust, open-source game server management platform that allows administrators to deploy and control multiple game servers efficiently. This guide provides a complete, step-by-step tutorial for installing both the Pterodactyl Panel and the Wings daemon.
+  </p>
+
+  <div class="note mb-6">
+    <strong>Important:</strong> Ensure that you have a clean Linux server and backups of any important data before starting the installation process.
+  </div>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 1 — Prepare Your Server</h2>
+  <p class="mb-4">
+    Choose a supported operating system such as Ubuntu 22.04 LTS or Debian 12. Update all system packages and ensure you have a non-root user with sudo privileges for installation.
+  </p>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Run <code>sudo apt update && sudo apt upgrade -y</code></li>
+    <li>Create a new user: <code>adduser ptero</code> and assign sudo privileges.</li>
+    <li>Install essential packages: <code>sudo apt install curl wget git tar unzip -y</code></li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 2 — Install Dependencies</h2>
+  <p class="mb-4">
+    Pterodactyl requires PHP, a web server, a database, and additional software:
+  </p>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>PHP 8.1 with extensions: BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML</li>
+    <li>MySQL or MariaDB database server</li>
+    <li>Nginx web server</li>
+    <li>Node.js and Composer for panel dependencies</li>
+    <li>Redis (optional but recommended for queues)</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 3 — Configure Database</h2>
+  <p class="mb-4">
+    Create a dedicated database and user for Pterodactyl:
+  </p>
+  <pre class="bg-gray-100 p-4 rounded mb-4">mysql -u root -p
+CREATE DATABASE pterodactyl;
+CREATE USER 'ptero'@'localhost' IDENTIFIED BY 'strong_password';
+GRANT ALL PRIVILEGES ON pterodactyl.* TO 'ptero'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</pre>
+  <p>Ensure to replace <code>strong_password</code> with a secure password.</p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 4 — Download and Install Panel</h2>
+  <p class="mb-4">
+    Switch to your new user and download the latest Pterodactyl Panel:
+  </p>
+  <pre class="bg-gray-100 p-4 rounded mb-4">cd /var/www/
+git clone https://github.com/pterodactyl/panel.git pterodactyl
+cd pterodactyl
+composer install --no-dev --optimize-autoloader</pre>
+  <p>Set proper permissions:</p>
+  <pre class="bg-gray-100 p-4 rounded mb-4">chown -R www-data:www-data /var/www/pterodactyl
+chmod -R 755 /var/www/pterodactyl</pre>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 5 — Configure Environment</h2>
+  <p class="mb-4">
+    Copy the example environment file and edit it according to your database and domain:
+  </p>
+  <pre class="bg-gray-100 p-4 rounded mb-4">cp .env.example .env
+nano .env</pre>
+  <p>Update <code>DB_DATABASE</code>, <code>DB_USERNAME</code>, <code>DB_PASSWORD</code>, and <code>APP_URL</code> values.</p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 6 — Run Migrations and Seeds</h2>
+  <p class="mb-4">
+    Apply database migrations and seed default data:
+  </p>
+  <pre class="bg-gray-100 p-4 rounded mb-4">php artisan key:generate --force
+php artisan migrate --seed --force</pre>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 7 — Set Up Web Server</h2>
+  <p class="mb-4">
+    Configure Nginx to serve the panel and enable SSL using Let's Encrypt:
+  </p>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Create a server block pointing to <code>/var/www/pterodactyl/public</code></li>
+    <li>Enable the site and reload Nginx: <code>sudo ln -s /etc/nginx/sites-available/pterodactyl /etc/nginx/sites-enabled/</code> and <code>sudo systemctl reload nginx</code></li>
+    <li>Use Certbot to generate SSL certificate: <code>sudo certbot --nginx -d yourdomain.com</code></li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 8 — Install Wings Daemon</h2>
+  <p class="mb-4">
+    Wings manages the game servers themselves. Install Docker and configure Wings:
+  </p>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Install Docker and Docker Compose</li>
+    <li>Create Wings configuration using the panel-generated API key</li>
+    <li>Start Wings service and ensure it runs on boot</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 9 — Finalize and Test</h2>
+  <p class="mb-4">
+    Access your panel through the browser, create an admin account, and verify that the Wings daemon communicates correctly. Deploy a test server to ensure the complete setup works.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 10 — Security and Maintenance</h2>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Regularly update the panel and Wings daemon</li>
+    <li>Secure your database and panel with strong passwords</li>
+    <li>Enable firewalls and monitoring for unusual activity</li>
+    <li>Schedule backups for both the panel and game server data</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Conclusion</h2>
+  <p class="mb-4">
+    By carefully following these steps, you can successfully install Pterodactyl Panel and Wings daemon, creating a stable and secure environment to manage multiple game servers efficiently. Proper preparation, attention to detail, and adherence to best practices ensure long-term reliability and performance.
+  </p>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-white border-t border-gray-200 py-4 text-xs">
+  <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 px-4">
+    <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+    <p>
+      <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+      <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+      <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
+      <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+    </p>
+    <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+    <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector("main").classList.add("visible");
+});
+</script>
+
+</body>
+</html>

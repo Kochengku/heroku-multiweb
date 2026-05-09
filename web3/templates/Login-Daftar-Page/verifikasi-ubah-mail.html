@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║   ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴏғɪʟᴇ  ᴇᴍᴀɪʟ  ᴠᴇʀɪғɪᴄᴀᴛɪᴏɴ          ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+  <link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta property="og:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta property="og:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.nox-team.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta name="twitter:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta name="twitter:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.nox-team.biz.id",
+    "logo": "https://control.nox-team.biz.id/static/logo-512x512.webp",
+    "name": "ɴᴏx ᴛᴇᴀᴍ"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is ɴᴏx ᴛᴇᴀᴍ Hosting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ɴᴏx ᴛᴇᴀᴍ provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+      }
+    },{
+      "@type": "Question",
+      "name": "Is it free forever?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+      }
+    }]
+  }
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ɴᴏx ᴛᴇᴀᴍ  |>  Profile Verification</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .digit-input:focus {
+      animation: scaleInput 0.2s ease-in-out;
+    }
+
+    @keyframes scaleInput {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+  </style>
+  
+  <script>
+    function setupInputs() {
+      const inputs = document.querySelectorAll('.digit-input');
+      inputs.forEach((input, i) => {
+        input.addEventListener('input', () => {
+          input.classList.add('scale-110');
+          setTimeout(() => input.classList.remove('scale-110'), 150);
+          if (input.value.length === 1 && i < inputs.length - 1) {
+            inputs[i + 1].focus();
+          }
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !input.value && i > 0) {
+            inputs[i - 1].focus();
+          }
+        });
+      });
+
+      document.getElementById('formKode').addEventListener('submit', () => {
+        const kode = Array.from(inputs).map(input => input.value).join('');
+        document.getElementById('kodeLengkap').value = kode;
+      });
+    }
+
+    function setupCooldown() {
+      const resendButton = document.getElementById('resendButton');
+      let cooldown = 60;
+
+      const savedTime = localStorage.getItem("resendCooldownEnd");
+      if (savedTime) {
+        const remaining = Math.floor((new Date(savedTime) - new Date()) / 1000);
+        if (remaining > 0) startCooldown(remaining);
+      }
+
+      function startCooldown(duration) {
+        resendButton.disabled = true;
+        let timeLeft = duration;
+        resendButton.innerText = `Resend in ${timeLeft}s`;
+        const interval = setInterval(() => {
+          timeLeft--;
+          resendButton.innerText = `Resend in ${timeLeft}s`;
+          if (timeLeft <= 0) {
+            clearInterval(interval);
+            resendButton.disabled = false;
+            resendButton.innerText = 'Resend Code';
+            localStorage.removeItem("resendCooldownEnd");
+          }
+        }, 1000);
+      }
+
+      document.getElementById('resendForm').addEventListener('submit', (e) => {
+        const cooldownEnd = new Date(new Date().getTime() + cooldown * 1000);
+        localStorage.setItem("resendCooldownEnd", cooldownEnd);
+        startCooldown(cooldown);
+      });
+    }
+
+    window.onload = function () {
+      setupInputs();
+      setupCooldown();
+    };
+  </script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-indigo-950 min-h-screen flex flex-col">
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ʜᴇᴀᴅᴇʀ  —  ɴᴀᴠɪɢᴀᴛɪᴏɴ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <header class="bg-white/10 backdrop-blur-md border-b border-white/10 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="ɴᴏx ᴛᴇᴀᴍ" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-400 font-medium">EN</span>
+    </div>
+  </header>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ᴍᴀɪɴ  —  ᴘʀᴏғɪʟᴇ  ᴠᴇʀɪғɪᴄᴀᴛɪᴏɴ   ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <main class="flex-grow flex items-center justify-center px-4">
+    <div class="bg-white/10 backdrop-blur-xl w-full max-w-sm px-6 py-8 rounded-2xl shadow-2xl fade-in border border-white/10">
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-indigo-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-user-shield text-2xl text-indigo-400"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-white tracking-wide">Email Verification</h2>
+        <p class="text-gray-400 text-sm mt-2">Enter the 6 digit code sent to your new email.</p>
+      </div>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="mb-4 p-3 bg-red-500/20 text-red-300 rounded text-center text-sm border border-red-500/30">
+            {% for message in messages %}{{ message }}{% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <form id="formKode" method="POST" action="/profile/verification/new-email" class="space-y-6">
+        <div class="flex justify-center gap-2">
+          {% for i in range(6) %}
+          <input type="text" maxlength="1" pattern="\d*" required name="digit{{ i }}"
+            class="digit-input w-10 h-12 sm:w-12 sm:h-14 text-center bg-white/5 border border-white/20 rounded-lg text-white text-base transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 placeholder-gray-500" />
+          {% endfor %}
+        </div>
+        <input type="hidden" name="kode" id="kodeLengkap" />
+        <button type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-full font-semibold transition shadow-lg shadow-indigo-600/30">
+          <i class="fa-solid fa-check mr-2"></i>Verification
+        </button>
+      </form>
+
+      <form id="resendForm" method="POST" action="/profile/verification/new-code" class="mt-5 text-center">
+        <button id="resendButton" type="submit" 
+          class="text-sm text-indigo-400 hover:text-indigo-300 hover:underline font-medium transition">
+          <i class="fa-solid fa-rotate-right mr-1"></i>Resend Code
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ғᴏᴏᴛᴇʀ  —  ʟɪɴᴋs & ɪɴғᴏ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <footer class="bg-white/5 backdrop-blur-sm border-t border-white/10 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-400 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-200 text-sm tracking-wider">
+        <i class="fa-solid fa-bolt text-yellow-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ
+      </p>
+      <p class="space-x-2">
+        <a href="/privacy" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Privacy Policy</a> | 
+        <a href="/tos" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Ads Disclosure</a> | 
+        <a href="/blog" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Blog</a>
+      </p>
+      <p class="text-gray-500">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+      <p><i class="fa-solid fa-envelope text-indigo-400 mr-1"></i>support@nox-team.biz.id</p>
+    </div>
+  </footer>
+
+</body>
+</html>

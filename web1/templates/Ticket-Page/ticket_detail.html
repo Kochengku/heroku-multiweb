@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Sahabat Ai Nusantara |> Ticket Detail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+  <link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="transition-transform duration-200 hover:scale-105 flex-shrink-0">
+      <img src="/static/logo2.webp" alt="Logo" class="h-8 w-auto max-w-[150px]" />
+    </a>
+    <span class="text-sm text-gray-500">EN</span>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow px-3 sm:px-4 py-6 fade-in-up">
+  <div class="w-full max-w-screen-md mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-lg space-y-4">
+    <h1 class="text-lg sm:text-2xl font-bold break-words">Ticket #{{ ticket.id }} - {{ ticket.subject }}</h1>
+    <p class="text-sm sm:text-base break-all"><b>Email:</b> {{ ticket.user_email }}</p>
+    <p class="text-sm sm:text-base"><b>Category:</b> {{ ticket.category }}</p>
+    <p class="text-sm sm:text-base"><b>Status:</b> <span class="font-semibold">{{ ticket.status }}</span></p>
+
+{% if ticket.status == 'Open' %}
+  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 rounded-md text-sm sm:text-base mt-3">
+    <p><i class="fa-solid fa-circle-info mr-2"></i>
+    Thank you for contacting Kocheng Support. Please note that our team may take up to <b>7 business days</b> to review and respond to your ticket. We appreciate your patience and understanding.</p>
+  </div>
+{% endif %}
+
+    <!-- Replies -->
+    <div id="replies-container" class="bg-gray-100 p-2 sm:p-3 rounded-lg space-y-2 max-h-[60vh] overflow-y-auto scroll-smooth">
+      {% for reply in replies %}
+        <div class="{% if reply.sender == 'admin' %}text-right{% else %}text-left{% endif %}">
+          {% if reply.message %}
+            <p class="px-2.5 py-1.5 inline-block rounded-lg break-words max-w-[85%] sm:max-w-[65%] text-sm sm:text-base {% if reply.sender == 'admin' %}bg-blue-500 text-white{% else %}bg-gray-300{% endif %}">
+              <b>{{ reply.sender|capitalize }}:</b> {{ reply.message }}
+            </p><br>
+          {% endif %}
+
+          {% for img in reply.images %}
+            <img src="{{ img.image_url }}" alt="Attachment" class="inline-block max-w-[70%] sm:max-w-[200px] rounded-lg mt-1 shadow">
+          {% endfor %}
+
+          <p class="text-xs text-gray-500 mt-1">{{ reply.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Form -->
+    <form id="reply-form" method="POST" enctype="multipart/form-data" class="flex flex-col sm:flex-row gap-2 items-stretch mt-3">
+      {% if user.email == admin_mail %}
+        <input type="hidden" name="sender" value="admin">
+        <span class="font-semibold text-blue-600 text-sm sm:self-center">Admin</span>
+      {% else %}
+        <input type="hidden" name="sender" value="user">
+        <span class="font-semibold text-gray-700 text-sm sm:self-center">User</span>
+      {% endif %}
+
+      <div class="flex flex-grow items-center gap-2 min-w-0">
+        <input 
+          type="text" 
+          name="message" 
+          placeholder="Type a reply..." 
+          class="flex-grow border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm min-w-0"
+          required
+        />
+
+        <button 
+          type="button" 
+          id="file-button" 
+          class="bg-gray-200 text-gray-700 p-2.5 rounded-lg hover:bg-gray-300 flex items-center justify-center flex-shrink-0 w-9 h-9"
+          title="Attach file"
+        >
+          <i class="fa-solid fa-paperclip text-sm"></i>
+        </button>
+
+        <button 
+          type="submit" 
+          class="bg-blue-500 text-white p-2.5 rounded-lg hover:bg-blue-600 text-sm flex items-center justify-center flex-shrink-0 w-9 h-9"
+          title="Send"
+        >
+          <i class="fa-solid fa-paper-plane text-sm"></i>
+        </button>
+      </div>
+
+      <input type="file" name="images" accept="image/*" multiple class="hidden" id="file-input">
+    </form>
+
+    <!-- Preview Container -->
+    <div id="preview-container" class="mt-2 flex flex-wrap gap-2"></div>
+
+    <!-- Admin status buttons -->
+    {% if user.email == admin_mail %}
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mt-4 text-sm">
+      <a href="/ticket/{{ ticket.id }}/status/Open" class="px-3 py-2 bg-green-500 text-white rounded-lg text-center hover:bg-green-600">Open</a>
+      <a href="/ticket/{{ ticket.id }}/status/In Progress" class="px-3 py-2 bg-yellow-500 text-white rounded-lg text-center hover:bg-yellow-600">In Progress</a>
+      <a href="/ticket/{{ ticket.id }}/status/Resolved" class="px-3 py-2 bg-blue-500 text-white rounded-lg text-center hover:bg-blue-600">Resolved</a>
+      <a href="/ticket/{{ ticket.id }}/status/Rejected" class="px-3 py-2 bg-red-500 text-white rounded-lg text-center hover:bg-red-600">Rejected</a>
+      <a href="/ticket/{{ ticket.id }}/status/Closed" class="px-3 py-2 bg-gray-600 text-white rounded-lg text-center hover:bg-gray-700">Closed</a>
+    </div>
+    {% endif %}
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-white border-t border-gray-200 py-4 text-xs">
+  <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 px-3">
+    <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+    <p>
+      <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+      <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+      <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+      <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+    </p>
+    <p class="break-words">JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+    <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const replyForm = document.getElementById("reply-form");
+  const repliesContainer = document.getElementById("replies-container");
+  const fileInput = document.getElementById("file-input");
+  const fileButton = document.getElementById("file-button");
+  const previewContainer = document.getElementById("preview-container");
+
+  let selectedFiles = [];
+
+  // 📜 Scroll ke bawah saat halaman dimuat
+  setTimeout(() => {
+    repliesContainer.scrollTo({
+      top: repliesContainer.scrollHeight,
+      behavior: "smooth"
+    });
+  }, 200);
+
+  fileButton.addEventListener("click", () => fileInput.click());
+
+  fileInput.addEventListener("change", () => {
+    selectedFiles = Array.from(fileInput.files);
+    renderPreviews();
+  });
+
+  function renderPreviews() {
+    previewContainer.innerHTML = "";
+    selectedFiles.forEach((file, index) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "relative inline-block";
+
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.className = "w-20 h-20 object-cover rounded-lg shadow";
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.innerHTML = "❌";
+        removeBtn.className = "absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center";
+        removeBtn.addEventListener("click", () => {
+          selectedFiles.splice(index, 1);
+          renderPreviews();
+        });
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(removeBtn);
+        previewContainer.appendChild(wrapper);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  replyForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("sender", replyForm.querySelector("input[name='sender']").value);
+    formData.append("message", replyForm.querySelector("input[name='message']").value);
+
+    selectedFiles.forEach(file => formData.append("images", file));
+
+    const response = await fetch(window.location.pathname, {
+      method: "POST",
+      body: formData
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const newReply = document.createElement("div");
+      newReply.className = `${data.sender === 'admin' ? 'text-right' : 'text-left'} fade-in-up`;
+
+      let html = "";
+      if (data.message) {
+        html += `
+          <p class="px-2.5 py-1.5 inline-block rounded-lg break-words max-w-[85%] sm:max-w-[65%] text-sm sm:text-base ${data.sender === 'admin' ? 'bg-blue-500 text-white' : 'bg-gray-300'}">
+            <b>${data.sender.charAt(0).toUpperCase() + data.sender.slice(1)}:</b> ${data.message}
+          </p><br>`;
+      }
+
+      if (data.images && data.images.length > 0) {
+        html += data.images.map(url =>
+          `<img src="${url}" alt="Attachment" class="inline-block max-w-[70%] sm:max-w-[200px] rounded-lg mt-1 shadow">`
+        ).join("");
+      }
+
+      html += `<p class="text-xs text-gray-500 mt-1">${data.created_at}</p>`;
+      newReply.innerHTML = html;
+
+      repliesContainer.appendChild(newReply);
+      repliesContainer.scrollTo({
+        top: repliesContainer.scrollHeight,
+        behavior: "smooth"
+      });
+
+      replyForm.reset();
+      selectedFiles = [];
+      previewContainer.innerHTML = "";
+    } else {
+      alert("Gagal mengirim pesan atau gambar");
+    }
+  });
+});
+</script>
+</body>
+</html>

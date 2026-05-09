@@ -1,0 +1,402 @@
+
+html_content = '''<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin |> Website Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root{--neon:#00d4ff;--neon2:#a855f7;--bg:#0a0a0f;--panel:#0f111a;--border:#1a1d2e}
+    *{font-family:'Rajdhani',sans-serif}
+    body{background:var(--bg);color:#e2e8f0;min-height:100vh}
+    .grid-bg{position:fixed;inset:0;pointer-events:none;opacity:.04;background-image:linear-gradient(var(--neon)1px,transparent 1px),linear-gradient(90deg,var(--neon)1px,transparent 1px);background-size:50px 50px;z-index:0}
+    .scanline{position:fixed;inset:0;pointer-events:none;z-index:1;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,.03)2px,rgba(0,212,255,.03)4px)}
+    .orbitron{font-family:'Orbitron',sans-serif}
+    .mono{font-family:'Share Tech Mono',monospace}
+    .neon-text{text-shadow:0 0 10px rgba(0,212,255,.5),0 0 20px rgba(0,212,255,.3)}
+    .neon-border{box-shadow:0 0 5px rgba(0,212,255,.2),inset 0 0 5px rgba(0,212,255,.05)}
+    .neon-btn{transition:all .3s;box-shadow:0 0 8px rgba(0,212,255,.3)}
+    .neon-btn:hover{box-shadow:0 0 20px rgba(0,212,255,.6);transform:translateY(-1px)}
+    .neon-btn-red{box-shadow:0 0 8px rgba(239,68,68,.3)}
+    .neon-btn-red:hover{box-shadow:0 0 20px rgba(239,68,68,.6)}
+    .neon-btn-yellow{box-shadow:0 0 8px rgba(234,179,8,.3)}
+    .neon-btn-yellow:hover{box-shadow:0 0 20px rgba(234,179,8,.6)}
+    .neon-btn-green{box-shadow:0 0 8px rgba(34,197,94,.3)}
+    .neon-btn-green:hover{box-shadow:0 0 20px rgba(34,197,94,.6)}
+    .terminal-bar{background:linear-gradient(90deg,var(--panel),#1a1d2e);border-bottom:1px solid var(--border)}
+    .terminal-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+    .glow-input:focus{box-shadow:0 0 15px rgba(0,212,255,.3);border-color:var(--neon)!important}
+    .glow-select:focus{box-shadow:0 0 15px rgba(0,212,255,.3);border-color:var(--neon)!important}
+    @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+    .pulse{animation:pulse-dot 2s infinite}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .fade-in{animation:fadeIn .6s ease-out both}
+    .tab-active{color:var(--neon)!important;border-bottom-color:var(--neon)!important;text-shadow:0 0 10px rgba(0,212,255,.5)}
+    .tab-btn{transition:all .3s}
+    .tab-btn:hover{color:var(--neon)}
+    .console-box{background:#050508;border:1px solid var(--border);border-radius:8px;font-family:'Share Tech Mono',monospace;color:#00ff41}
+    .status-idle{color:#6b7280}
+    .status-run{color:var(--neon)}
+    .status-done{color:#22c55e}
+    .user-card{background:rgba(0,212,255,.03);border:1px solid var(--border);transition:all .2s}
+    .user-card:hover{background:rgba(0,212,255,.08);border-color:rgba(0,212,255,.3)}
+  </style>
+</head>
+<body class="flex flex-col relative">
+  <div class="grid-bg"></div>
+  <div class="scanline"></div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 bg-[#0f111a]/90 backdrop-blur-md border-b border-[#1a1d2e]">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-4 py-3">
+      <a href="/getstarted" class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded bg-gradient-to-br from-[#00d4ff] to-[#a855f7] flex items-center justify-center neon-border">
+          <i class="fa-solid fa-terminal text-white text-sm"></i>
+        </div>
+        <div>
+          <span class="orbitron font-bold text-lg text-white tracking-wider">NOX TEAM</span>
+          <span class="ml-2 text-[10px] bg-[#00d4ff]/10 text-[#00d4ff] px-2 py-0.5 rounded border border-[#00d4ff]/30 orbitron">ADMIN PANEL</span>
+        </div>
+      </a>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 text-xs text-gray-400 mono">
+          <span class="terminal-dot bg-green-500 pulse"></span>
+          <span>ONLINE</span>
+        </div>
+        <span class="text-xs text-gray-500">EN</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="relative z-10 max-w-6xl mx-auto w-full px-4 pt-4">
+    <nav class="flex items-center gap-2 text-xs text-gray-500 mono">
+      <a href="/" class="hover:text-[#00d4ff] transition-colors"><i class="fa-solid fa-house"></i></a>
+      <span class="text-gray-700">/</span>
+      <span class="text-[#00d4ff]">Settings</span>
+    </nav>
+  </div>
+
+  <!-- MAIN -->
+  <main class="relative z-10 flex-grow px-4 py-6 fade-in">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Terminal Card -->
+      <div class="bg-[#0f111a] rounded-lg border border-[#1a1d2e] neon-border overflow-hidden">
+        <div class="terminal-bar px-4 py-2 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="terminal-dot bg-red-500"></span>
+            <span class="terminal-dot bg-yellow-500"></span>
+            <span class="terminal-dot bg-green-500"></span>
+            <span class="ml-3 text-xs text-gray-500 mono">settings.exe</span>
+          </div>
+          <span class="text-[10px] text-gray-600 mono">v2.0.1</span>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <h1 class="orbitron text-2xl font-bold text-white text-center neon-text">WEBSITE SETTINGS</h1>
+
+          <!-- TABS -->
+          <div class="flex justify-center gap-6 text-sm border-b border-[#1a1d2e] pb-1">
+            <button class="tab-btn tab-active text-gray-400 pb-2 border-b-2 border-transparent flex items-center gap-2" data-tab="spec">
+              <i class="fa-solid fa-server"></i> <span class="hidden sm:inline">Server Spec</span>
+            </button>
+            <button class="tab-btn text-gray-400 pb-2 border-b-2 border-transparent flex items-center gap-2" data-tab="node">
+              <i class="fa-solid fa-network-wired"></i> <span class="hidden sm:inline">Node Limit</span>
+            </button>
+            <button class="tab-btn text-gray-400 pb-2 border-b-2 border-transparent flex items-center gap-2" data-tab="other">
+              <i class="fa-solid fa-gear"></i> <span class="hidden sm:inline">Other</span>
+            </button>
+          </div>
+
+          <!-- TAB: SERVER SPEC -->
+          <div class="tab-panel space-y-6" id="tab-spec">
+            <div class="flex items-center gap-2 text-lg orbitron text-white">
+              <i class="fa-solid fa-server text-[#00d4ff]"></i> Server Specifications
+            </div>
+
+            <form method="GET" class="flex flex-wrap items-center gap-3 text-sm">
+              <input type="hidden" name="q" value="{{ search_query }}">
+              <label class="text-gray-400 mono">Select Panel:</label>
+              <select name="panel_id" onchange="this.form.submit()" 
+                class="bg-[#0a0a0f] border border-[#1a1d2e] rounded px-3 py-2 text-sm text-white focus:outline-none glow-select">
+                {% for pid, pdata in PANELS.items() %}
+                  <option value="{{ pid }}" {% if pid == panel_id %}selected{% endif %}>
+                    {{ pid }} ({{ pdata.url }})
+                  </option>
+                {% endfor %}
+              </select>
+            </form>
+
+            <div class="border border-[#1a1d2e] rounded-lg p-4 space-y-4">
+              <h2 class="text-sm text-gray-400 mono">Server Specs ({{ panel_id }})</h2>
+              <form method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input type="hidden" name="action" value="update_spec">
+                <input type="hidden" name="panel_id" value="{{ panel_id }}">
+                <div>
+                  <label class="block text-xs text-gray-500 mono mb-1">RAM (MB)</label>
+                  <input type="number" name="ram" value="{{ server_spec.ram }}" 
+                    class="w-full bg-[#0a0a0f] border border-[#1a1d2e] rounded px-3 py-2 text-sm text-white focus:outline-none glow-input"/>
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-500 mono mb-1">CPU (%)</label>
+                  <input type="number" name="cpu" value="{{ server_spec.cpu }}" 
+                    class="w-full bg-[#0a0a0f] border border-[#1a1d2e] rounded px-3 py-2 text-sm text-white focus:outline-none glow-input"/>
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-500 mono mb-1">Disk (MB)</label>
+                  <input type="number" name="disk" value="{{ server_spec.disk }}" 
+                    class="w-full bg-[#0a0a0f] border border-[#1a1d2e] rounded px-3 py-2 text-sm text-white focus:outline-none glow-input"/>
+                </div>
+                <div class="md:col-span-3">
+                  <button type="submit" class="bg-[#00d4ff]/10 border border-[#00d4ff]/50 text-[#00d4ff] px-4 py-2 rounded text-sm font-semibold neon-btn hover:bg-[#00d4ff]/20">
+                    <i class="fa-solid fa-floppy-disk mr-1"></i> Update Spec
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- LIVE CONSOLE -->
+            <div class="border border-[#1a1d2e] rounded-lg p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span id="statusText" class="text-sm mono"><i class="fa-solid fa-circle text-gray-600 mr-1"></i>Idle</span>
+                <button id="toggleConsole" class="bg-[#0a0a0f] border border-[#1a1d2e] text-gray-300 px-3 py-1.5 rounded text-xs hover:border-[#00d4ff]/50 hover:text-[#00d4ff] transition-all mono">
+                  <i class="fa-solid fa-terminal mr-1"></i> Show Console
+                </button>
+              </div>
+              <div id="consoleBox" class="hidden console-box p-3 text-xs max-h-60 overflow-y-auto"></div>
+            </div>
+          </div>
+
+          <!-- TAB: NODE LIMIT -->
+          <div class="tab-panel space-y-6 hidden" id="tab-node">
+            <div class="flex items-center gap-2 text-lg orbitron text-white">
+              <i class="fa-solid fa-network-wired text-[#a855f7]"></i> Node Limit
+            </div>
+            <div class="space-y-3">
+              {% for node in nodes %}
+              <form method="POST" class="user-card flex flex-wrap items-center justify-between gap-3 p-3 rounded-lg">
+                <input type="hidden" name="action" value="update_node">
+                <input type="hidden" name="panel_id" value="{{ panel_id }}">
+                <input type="hidden" name="node_id" value="{{ node.id }}">
+                <span class="text-white font-medium"><i class="fa-solid fa-server text-[#00d4ff] mr-2"></i>{{ node.name }}</span>
+                <div class="flex items-center gap-2">
+                  <input type="number" name="limit_server" value="{{ node.limit_server }}" 
+                    class="w-20 bg-[#0a0a0f] border border-[#1a1d2e] rounded px-2 py-1 text-center text-sm text-white focus:outline-none glow-input mono"/>
+                  <button type="submit" class="bg-[#00d4ff]/10 border border-[#00d4ff]/50 text-[#00d4ff] px-3 py-1 rounded text-xs font-semibold neon-btn hover:bg-[#00d4ff]/20">
+                    Update
+                  </button>
+                </div>
+              </form>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- TAB: OTHER -->
+          <div class="tab-panel space-y-6 hidden" id="tab-other">
+            <div class="flex items-center gap-2 text-lg orbitron text-white">
+              <i class="fa-solid fa-gear text-gray-400"></i> Other Settings
+            </div>
+            
+            <!-- MAINTENANCE -->
+            <div class="border border-[#1a1d2e] rounded-lg p-4 space-y-3">
+              <h2 class="text-sm text-yellow-400 flex items-center gap-2">
+                <i class="fa-solid fa-wrench"></i> Maintenance Mode
+              </h2>
+              <p class="text-sm">
+                Status: 
+                {% if maintenance_mode %}
+                  <span class="text-red-400 font-semibold mono"><i class="fa-solid fa-circle-exclamation mr-1"></i>ACTIVE</span>
+                {% else %}
+                  <span class="text-green-400 font-semibold mono"><i class="fa-solid fa-circle-check mr-1"></i>OFF</span>
+                {% endif %}
+              </p>
+              <form method="POST">
+                <input type="hidden" name="action" value="toggle_maintenance">
+                <button type="submit" 
+                  class="px-4 py-2 rounded text-sm font-semibold transition-all
+                  {% if maintenance_mode %} bg-red-500/10 border border-red-500/50 text-red-400 neon-btn-red hover:bg-red-500/20
+                  {% else %} bg-yellow-500/10 border border-yellow-500/50 text-yellow-400 neon-btn-yellow hover:bg-yellow-500/20 {% endif %}">
+                  {% if maintenance_mode %}
+                    <i class="fa-solid fa-play mr-1"></i> Disable
+                  {% else %}
+                    <i class="fa-solid fa-pause mr-1"></i> Enable
+                  {% endif %}
+                </button>
+              </form>
+            </div>
+
+            <!-- DASHBOARD LOCK -->
+            <div class="border border-[#1a1d2e] rounded-lg p-4 space-y-3">
+              <h2 class="text-sm text-red-400 flex items-center gap-2">
+                <i class="fa-solid fa-lock"></i> Dashboard Lock
+              </h2>
+              <p class="text-sm">
+                Status:
+                {% if locked %}
+                  <span class="text-red-400 font-semibold mono"><i class="fa-solid fa-lock mr-1"></i>LOCKED
+                    {% if auto_locked %}<span class="text-gray-500 text-xs">(Auto)</span>{% else %}<span class="text-gray-500 text-xs">(Manual)</span>{% endif %}
+                  </span>
+                {% else %}
+                  <span class="text-green-400 font-semibold mono"><i class="fa-solid fa-lock-open mr-1"></i>UNLOCKED
+                    {% if force_unlock %}<span class="text-gray-500 text-xs">(Override)</span>{% endif %}
+                  </span>
+                {% endif %}
+              </p>
+              <form method="POST">
+                <input type="hidden" name="action" value="toggle_dashboard_lock">
+                <button type="submit"
+                  class="px-4 py-2 rounded text-sm font-semibold transition-all
+                  {% if force_unlock %} bg-yellow-500/10 border border-yellow-500/50 text-yellow-400 neon-btn-yellow hover:bg-yellow-500/20
+                  {% else %} bg-red-500/10 border border-red-500/50 text-red-400 neon-btn-red hover:bg-red-500/20 {% endif %}">
+                  {% if force_unlock %}
+                    <i class="fa-solid fa-rotate-left mr-1"></i> Disable Force Unlock
+                  {% else %}
+                    <i class="fa-solid fa-unlock mr-1"></i> Force Unlock
+                  {% endif %}
+                </button>
+              </form>
+            </div>
+
+            <!-- USER SEARCH -->
+            <div class="border border-[#1a1d2e] rounded-lg p-4 space-y-4">
+              <h2 class="text-sm text-[#00d4ff] flex items-center gap-2">
+                <i class="fa-solid fa-users"></i> User Management
+              </h2>
+              <form method="GET" class="flex gap-2">
+                <input type="text" name="q" placeholder="Search by email..." value="{{ search_query }}" 
+                  class="flex-grow bg-[#0a0a0f] border border-[#1a1d2e] rounded px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none glow-input"/>
+                <button type="submit" class="bg-[#00d4ff]/10 border border-[#00d4ff]/50 text-[#00d4ff] px-4 py-2 rounded text-sm font-semibold neon-btn hover:bg-[#00d4ff]/20">
+                  <i class="fa-solid fa-search"></i>
+                </button>
+              </form>
+
+              {% if search_query %}
+                {% if users.items %}
+                  {% for user in users.items %}
+                  <div class="user-card flex flex-wrap justify-between items-center gap-3 p-3 rounded-lg">
+                    <div>
+                      <span class="text-white font-medium">{{ user.nama }}</span>
+                      <span class="text-gray-500 mono text-xs"> - {{ user.email }}</span>
+                    </div>
+                    <div class="flex gap-2">
+                      <form method="POST">
+                        <input type="hidden" name="action" value="toggle_moderator">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button type="submit" class="min-w-[110px] px-3 py-1.5 rounded text-xs font-semibold transition-all
+                          {{ 'bg-green-500/10 border border-green-500/50 text-green-400 neon-btn-green hover:bg-green-500/20' if user.is_moderator else 'bg-gray-500/10 border border-gray-500/50 text-gray-400 hover:bg-gray-500/20 hover:text-white' }}">
+                          {{ 'Stop Mod' if user.is_moderator else 'Set Mod' }}
+                        </button>
+                      </form>
+                      <form method="POST">
+                        <input type="hidden" name="action" value="toggle_banned">
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <button type="submit" class="min-w-[110px] px-3 py-1.5 rounded text-xs font-semibold transition-all
+                          {{ 'bg-green-500/10 border border-green-500/50 text-green-400 neon-btn-green hover:bg-green-500/20' if user.is_banned else 'bg-red-500/10 border border-red-500/50 text-red-400 neon-btn-red hover:bg-red-500/20' }}">
+                          {{ 'Unban' if user.is_banned else 'Ban' }}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                  {% endfor %}
+                {% else %}
+                  <p class="text-gray-600 mono text-sm text-center py-4">No users found for "<span class="text-[#00d4ff]">{{ search_query }}</span>"</p>
+                {% endif %}
+              {% else %}
+                <p class="text-gray-600 mono text-sm text-center py-4 italic">Use search to find users.</p>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 border-t border-[#1a1d2e] bg-[#0f111a]/80 backdrop-blur py-4 mt-8">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p class="orbitron text-sm text-white tracking-wider mb-2">NOX TEAM</p>
+      <div class="flex justify-center gap-4 text-xs text-gray-500 mono mb-2">
+        <a href="/privacy" class="hover:text-[#00d4ff] transition-colors">Privacy</a>
+        <a href="/tos" class="hover:text-[#00d4ff] transition-colors">ToS</a>
+        <a href="/advertisingagreement" class="hover:text-[#00d4ff] transition-colors">Ads</a>
+        <a href="/blog" class="hover:text-[#00d4ff] transition-colors">Blog</a>
+      </div>
+      <p class="text-[10px] text-gray-600 mono"><i class="fa-solid fa-envelope mr-1"></i>support@nox-team.biz.id</p>
+    </div>
+  </footer>
+
+  <!-- POPUP -->
+  <div id="popupChange" class="fixed top-5 right-5 bg-[#0f111a] border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-400 flex items-center gap-3 opacity-0 -translate-y-2 transition-all duration-500 z-50 neon-border">
+    <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+    <span class="mono text-sm">Update Successful!</span>
+  </div>
+
+<script>
+    // Live Console
+  const toggleBtn = document.getElementById("toggleConsole");
+  const consoleBox = document.getElementById("consoleBox");
+  const statusText = document.getElementById("statusText");
+  let visible = false, interval;
+
+  toggleBtn.addEventListener("click", () => {
+    visible = !visible;
+    if (visible) {
+      consoleBox.classList.remove("hidden");
+      toggleBtn.innerHTML = '<i class="fa-solid fa-terminal mr-1"></i> Hide Console';
+      fetchLogs();
+      interval = setInterval(fetchLogs, 3000);
+    } else {
+      consoleBox.classList.add("hidden");
+      toggleBtn.innerHTML = '<i class="fa-solid fa-terminal mr-1"></i> Show Console';
+      clearInterval(interval);
+    }
+  });
+
+  function fetchLogs() {
+    fetch("/admin/update_logs")
+      .then(res => res.json())
+      .then(data => {
+        consoleBox.innerHTML = data.logs.map(line => `<div class="mb-1">${line}</div>`).join("");
+        consoleBox.scrollTop = consoleBox.scrollHeight;
+        let s = data.status;
+        statusText.innerHTML = s === "idle" ? '<i class="fa-solid fa-circle-pause text-gray-600 mr-1"></i><span class="text-gray-500">Idle</span>' :
+          s === "running" ? '<i class="fa-solid fa-spinner fa-spin text-[#00d4ff] mr-1"></i><span class="text-[#00d4ff]">Running</span>' :
+          '<i class="fa-solid fa-circle-check text-green-500 mr-1"></i><span class="text-green-400">Done</span>';
+      });
+  }
+
+  // Tabs
+  const tabBtns = document.querySelectorAll(".tab-btn");
+  const tabPanels = document.querySelectorAll(".tab-panel");
+
+  function activateTab(target) {
+    tabBtns.forEach(b => b.classList.remove("tab-active"));
+    tabPanels.forEach(p => p.classList.add("hidden"));
+    document.getElementById("tab-" + target).classList.remove("hidden");
+    document.querySelector(`[data-tab="${target}"]`).classList.add("tab-active");
+  }
+
+  tabBtns.forEach(btn => btn.addEventListener("click", () => activateTab(btn.dataset.tab)));
+  activateTab("spec");
+
+  // Popup
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("change") === "success") {
+      const popup = document.getElementById("popupChange");
+      popup.classList.remove("opacity-0", "-translate-y-2");
+      popup.classList.add("opacity-100", "translate-y-0");
+      setTimeout(() => {
+        popup.classList.remove("opacity-100", "translate-y-0");
+        popup.classList.add("opacity-0", "-translate-y-2");
+        const url = new URL(window.location);
+        url.searchParams.delete("change");
+        window.history.replaceState({}, "", url);
+      }, 3000);
+    }
+  });

@@ -1,0 +1,5 @@
+web_control = 'control.skyforgia.web.id'
+status_page = 'https://status.skyforgia.web.id'
+whatsapp_channel = 'https://whatsapp.com/channel/0029VbC6yE76BIEqqRYZia3W'
+whattsapp_admin = 'https://wa.me/6281775155057'
+url_order = 'https://nothing'

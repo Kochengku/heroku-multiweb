@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║   ɴᴏx ᴛᴇᴀᴍ  —  ᴘᴀɴᴇʟ ᴄᴏɴᴛʀᴏʟ ʜᴏsᴛɪɴɢ                ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+  <link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta property="og:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta property="og:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.nox-team.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ɴᴏx ᴛᴇᴀᴍ">
+  <meta name="twitter:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+  <meta name="twitter:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.nox-team.biz.id",
+    "logo": "https://control.nox-team.biz.id/static/logo-512x512.webp",
+    "name": "ɴᴏx ᴛᴇᴀᴍ"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is ɴᴏx ᴛᴇᴀᴍ Hosting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ɴᴏx ᴛᴇᴀᴍ provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+      }
+    },{
+      "@type": "Question",
+      "name": "Is it free forever?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+      }
+    }]
+  }
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>ɴᴏx ᴛᴇᴀᴍ  |>  Sign in</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 to-indigo-950 min-h-screen flex flex-col">
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ʜᴇᴀᴅᴇʀ  —  ɴᴀᴠɪɢᴀᴛɪᴏɴ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <header class="bg-white/10 backdrop-blur-md border-b border-white/10 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="ɴᴏx ᴛᴇᴀᴍ" class="h-10 max-w-[200px]" />
+      </a>
+      <span class="text-sm text-gray-400 font-medium">EN</span>
+    </div>
+  </header>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ᴍᴀɪɴ  —  ʟᴏɢɪɴ  ғᴏʀᴍ              ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <main class="flex-grow flex items-center justify-center px-4">
+    <div class="bg-white/10 backdrop-blur-xl shadow-2xl rounded-2xl p-6 sm:p-8 w-full max-w-md fade-in border border-white/10">
+      <h2 class="text-2xl font-bold text-center mb-6 text-white tracking-wide">
+        <i class="fa-solid fa-right-to-bracket mr-2 text-indigo-400"></i>Sign in to Account
+      </h2>
+
+      {% if message %}
+        <div class="mb-4 p-3 bg-red-500/20 text-red-300 rounded text-center border border-red-500/30">{{ message }}</div>
+      {% endif %}
+      
+      <!-- Login Google -->
+      <a href="/login/google" class="flex items-center justify-center border border-white/20 rounded-full py-3 px-4 mb-4 hover:bg-white/10 transition bg-white/5 w-full text-sm sm:text-base text-white">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5 mr-2" />
+        <span class="font-medium">Sign in with Google</span>
+      </a>
+      
+      <!-- Separator -->
+      <div class="flex items-center my-4">
+        <hr class="flex-grow border-t border-white/20" />
+        <span class="mx-3 text-gray-400 text-xs sm:text-sm">or sign in with email</span>
+        <hr class="flex-grow border-t border-white/20" />
+      </div>
+
+      <form action="/signin/email" method="POST" class="space-y-4 text-left">
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email"
+            class="mt-2 w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 text-white placeholder-gray-500 transition" />
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password"
+            class="mt-2 w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-400 text-white placeholder-gray-500 transition" />
+        </div>
+
+        <button type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-full font-semibold transition shadow-lg shadow-indigo-600/30">
+          <i class="fa-solid fa-arrow-right-to-bracket mr-2"></i>Sign in
+        </button>
+      </form>
+
+      <p class="mt-6 text-sm text-center text-gray-400">
+        Don't have an account yet?
+        <a href="/signup/email" class="text-indigo-400 hover:text-indigo-300 hover:underline font-medium transition">Sign up</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ғᴏᴏᴛᴇʀ  —  ʟɪɴᴋs & ɪɴғᴏ            ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <footer class="bg-white/5 backdrop-blur-sm border-t border-white/10 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-400 space-y-1 leading-tight px-4">
+      <p class="font-semibold text-gray-200 text-sm tracking-wider">
+        <i class="fa-solid fa-bolt text-yellow-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ
+      </p>
+      <p class="space-x-2">
+        <a href="/privacy" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Privacy Policy</a> | 
+        <a href="/tos" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Terms of Service</a> | 
+        <a href="/advertisingagreement" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Ads Disclosure</a> | 
+        <a href="/blog" class="text-indigo-400 hover:text-indigo-300 hover:underline transition">Blog</a>
+      </p>
+      <p class="text-gray-500">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+      <p><i class="fa-solid fa-envelope text-indigo-400 mr-1"></i>support@nox-team.biz.id</p>
+    </div>
+  </footer>
+
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║   ᴘᴏᴘᴜᴘs  —  ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴs          ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  
+  <!-- Logout Popup -->
+  <div id="logoutPopup" 
+       class="fixed top-5 right-5 bg-emerald-500/10 backdrop-blur-md border-l-4 border-emerald-500 shadow-lg rounded-md px-4 py-3 text-emerald-300 flex items-center space-x-3 
+              opacity-0 translate-x-5 transition-all duration-500 z-50">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
+    <span class="font-medium">Successfully Logged Out!</span>
+  </div>
+
+  <!-- Banned Popup -->
+  <div id="bannedPopup" 
+       class="fixed top-5 right-5 bg-amber-500/10 backdrop-blur-md border-l-4 border-amber-500 shadow-lg rounded-md px-4 py-3 text-amber-300 flex items-center space-x-3 
+              opacity-0 translate-x-5 transition-all duration-500 z-50">
+    <i class="fa-solid fa-triangle-exclamation text-amber-400 text-xl"></i>
+    <span class="font-medium">You Have Been Banned On This Site!</span>
+  </div>
+
+  <!-- Delete Account Popup -->
+  <div id="deleteakunPopup" 
+       class="fixed top-5 right-5 bg-rose-500/10 backdrop-blur-md border-l-4 border-rose-500 shadow-lg rounded-md px-4 py-3 text-rose-300 flex items-center space-x-3 
+              opacity-0 translate-x-5 transition-all duration-500 z-50">
+    <i class="fa-solid fa-circle-check text-rose-400 text-xl"></i>
+    <span class="font-medium">Successfully Deleted Account!</span>
+  </div>
+
+  <!-- Safe List Tailwind -->
+  <div class="hidden opacity-100 translate-x-0"></div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+
+    function showPopup(id) {
+      const popup = document.getElementById(id);
+      popup.classList.remove("opacity-0", "translate-y-[-10px]");
+      popup.classList.add("opacity-100", "translate-y-0");
+
+      setTimeout(() => {
+        popup.classList.remove("opacity-100", "translate-y-0");
+        popup.classList.add("opacity-0", "translate-y-[-10px]");
+        const url = new URL(window.location);
+        url.searchParams.delete("banned");
+        url.searchParams.delete("logout");
+        url.searchParams.delete("deleteaccount");
+        window.history.replaceState({}, "", url);
+      }, 3000);
+    }
+
+    if (params.get("logout") === "success") showPopup("logoutPopup");
+    if (params.get("banned") === "success") showPopup("bannedPopup");
+    if (params.get("deleteaccount") === "success") showPopup("deleteakunPopup");
+
+    const main = document.getElementById("mainContent");
+    setTimeout(() => {
+      main.classList.remove("opacity-0", "translate-y-4");
+      main.classList.add("opacity-100", "translate-y-0");
+    }, 100);
+  });
+  </script>
+
+</body>
+</html>

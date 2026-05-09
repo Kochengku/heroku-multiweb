@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin |> Server List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root{--neon:#00d4ff;--neon2:#a855f7;--bg:#0a0a0f;--panel:#0f111a;--border:#1a1d2e}
+    *{font-family:'Rajdhani',sans-serif}
+    body{background:var(--bg);color:#e2e8f0;min-height:100vh}
+    .grid-bg{position:fixed;inset:0;pointer-events:none;opacity:.04;background-image:linear-gradient(var(--neon)1px,transparent 1px),linear-gradient(90deg,var(--neon)1px,transparent 1px);background-size:50px 50px;z-index:0}
+    .scanline{position:fixed;inset:0;pointer-events:none;z-index:1;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,212,255,.03)2px,rgba(0,212,255,.03)4px)}
+    .orbitron{font-family:'Orbitron',sans-serif}
+    .mono{font-family:'Share Tech Mono',monospace}
+    .neon-text{text-shadow:0 0 10px rgba(0,212,255,.5),0 0 20px rgba(0,212,255,.3)}
+    .neon-border{box-shadow:0 0 5px rgba(0,212,255,.2),inset 0 0 5px rgba(0,212,255,.05)}
+    .neon-btn{transition:all .3s;box-shadow:0 0 8px rgba(0,212,255,.3)}
+    .neon-btn:hover{box-shadow:0 0 20px rgba(0,212,255,.6);transform:translateY(-1px)}
+    .neon-btn-red{box-shadow:0 0 8px rgba(239,68,68,.3)}
+    .neon-btn-red:hover{box-shadow:0 0 20px rgba(239,68,68,.6)}
+    .neon-btn-blue{box-shadow:0 0 8px rgba(59,130,246,.3)}
+    .neon-btn-blue:hover{box-shadow:0 0 20px rgba(59,130,246,.6)}
+    .terminal-bar{background:linear-gradient(90deg,var(--panel),#1a1d2e);border-bottom:1px solid var(--border)}
+    .terminal-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+    .glow-input:focus{box-shadow:0 0 15px rgba(0,212,255,.3);border-color:var(--neon)!important}
+    .table-row:nth-child(even){background:rgba(0,212,255,.03)}
+    .table-row:hover{background:rgba(0,212,255,.08)}
+    @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+    .pulse{animation:pulse-dot 2s infinite}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .fade-in{animation:fadeIn .6s ease-out both}
+    .page-btn{transition:all .2s}
+    .page-btn:hover{box-shadow:0 0 10px rgba(0,212,255,.3);border-color:var(--neon)!important}
+    .page-active{background:var(--neon)!important;color:#000!important;box-shadow:0 0 15px rgba(0,212,255,.5)}
+  </style>
+</head>
+<body class="flex flex-col relative">
+  <div class="grid-bg"></div>
+  <div class="scanline"></div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 bg-[#0f111a]/90 backdrop-blur-md border-b border-[#1a1d2e]">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+      <a href="/getstarted" class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded bg-gradient-to-br from-[#00d4ff] to-[#a855f7] flex items-center justify-center neon-border">
+          <i class="fa-solid fa-terminal text-white text-sm"></i>
+        </div>
+        <div>
+          <span class="orbitron font-bold text-lg text-white tracking-wider">NOX TEAM</span>
+          <span class="ml-2 text-[10px] bg-[#00d4ff]/10 text-[#00d4ff] px-2 py-0.5 rounded border border-[#00d4ff]/30 orbitron">ADMIN PANEL</span>
+        </div>
+      </a>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 text-xs text-gray-400 mono">
+          <span class="terminal-dot bg-green-500 pulse"></span>
+          <span>ONLINE</span>
+        </div>
+        <span class="text-xs text-gray-500">EN</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="relative z-10 max-w-7xl mx-auto w-full px-4 pt-4">
+    <nav class="flex items-center gap-2 text-xs text-gray-500 mono">
+      <a href="/" class="hover:text-[#00d4ff] transition-colors"><i class="fa-solid fa-house"></i></a>
+      <span class="text-gray-700">/</span>
+      <span class="text-[#00d4ff]">Server List</span>
+    </nav>
+  </div>
+
+  <!-- MAIN -->
+  <main class="relative z-10 flex-grow px-4 py-6 fade-in">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Terminal Card -->
+      <div class="bg-[#0f111a] rounded-lg border border-[#1a1d2e] neon-border overflow-hidden">
+        <div class="terminal-bar px-4 py-2 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="terminal-dot bg-red-500"></span>
+            <span class="terminal-dot bg-yellow-500"></span>
+            <span class="terminal-dot bg-green-500"></span>
+            <span class="ml-3 text-xs text-gray-500 mono">server_list.exe</span>
+          </div>
+          <span class="text-[10px] text-gray-600 mono">v2.0.1</span>
+        </div>
+        
+        <div class="p-6 space-y-6">
+          <h1 class="orbitron text-2xl font-bold text-white text-center neon-text">ACTIVE SERVER LIST</h1>
+
+          <!-- SEARCH -->
+          <div class="flex justify-between items-center">
+            <form method="GET" action="{{ url_for('admin_servers') }}" class="flex items-center gap-2">
+              <input type="text" name="email" value="{{ request.args.get('email', '') }}" placeholder="Search user email..."
+                class="w-64 bg-[#0a0a0f] border border-[#1a1d2e] rounded px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none glow-input" />
+              <button type="submit" class="bg-[#00d4ff]/10 border border-[#00d4ff]/50 text-[#00d4ff] px-4 py-2 rounded text-sm font-semibold neon-btn hover:bg-[#00d4ff]/20">
+                <i class="fa-solid fa-search mr-1"></i> Search
+              </button>
+              {% if request.args.get('email') %}
+              <a href="{{ url_for('admin_servers') }}" class="bg-gray-500/10 border border-gray-500/50 text-gray-400 px-3 py-2 rounded text-sm hover:bg-gray-500/20 transition-all">
+                <i class="fa-solid fa-times-circle"></i> Reset
+              </a>
+              {% endif %}
+            </form>
+          </div>
+
+          <!-- TABLE -->
+          <div class="overflow-x-auto border border-[#1a1d2e] rounded">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-[#00d4ff]/5 border-b border-[#1a1d2e]">
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">ID</th>
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">NAME</th>
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">SERVER ID</th>
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">USER ID</th>
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">UUID</th>
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">CPU</th>
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">RAM</th>
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">DISK</th>
+                  <th class="py-3 px-3 text-left text-xs text-[#00d4ff] mono font-normal">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for server in servers.items %}
+                <tr class="table-row border-b border-[#1a1d2e]/50 transition-colors">
+                  <td class="py-3 px-3 text-gray-500 mono">{{ server.id }}</td>
+                  <td class="py-3 px-3 text-white font-medium">{{ server.name }}</td>
+                  <td class="py-3 px-3 text-gray-400 mono text-xs">{{ server.serverid }}</td>
+                  <td class="py-3 px-3 text-gray-400 mono">{{ server.user_id }}</td>
+                  <td class="py-3 px-3 text-gray-500 mono text-xs">{{ server.uuid[:8] }}...</td>
+                  <td class="py-3 px-3"><span class="bg-[#a855f7]/10 text-[#a855f7] px-2 py-0.5 rounded text-xs mono border border-[#a855f7]/20">{{ server.cpu }}%</span></td>
+                  <td class="py-3 px-3"><span class="bg-[#00d4ff]/10 text-[#00d4ff] px-2 py-0.5 rounded text-xs mono border border-[#00d4ff]/20">{{ server.ram }}MB</span></td>
+                  <td class="py-3 px-3"><span class="bg-green-500/10 text-green-400 px-2 py-0.5 rounded text-xs mono border border-green-500/20">{{ server.disk }}GB</span></td>
+                  <td class="py-3 px-3 flex gap-2">
+                    <a href="{{ server.panel_url }}/admin/servers/view/{{ server.id }}" target="_blank"
+                      class="px-3 py-1 bg-blue-500/10 border border-blue-500/50 text-blue-400 rounded text-xs font-semibold neon-btn-blue hover:bg-blue-500/20 transition-all">
+                      <i class="fa-solid fa-eye mr-1"></i> Detail
+                    </a>
+                    <form method="POST" action="{{ url_for('delete_server_web', server_id=server.id) }}" onsubmit="return confirm('Delete this server?');">
+                      <button type="submit" class="px-3 py-1 bg-red-500/10 border border-red-500/50 text-red-400 rounded text-xs font-semibold neon-btn-red hover:bg-red-500/20 transition-all">
+                        <i class="fa-solid fa-trash mr-1"></i> Delete
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="9" class="py-8 text-center text-gray-600 mono text-xs">
+                    <i class="fa-solid fa-server text-2xl mb-2 block text-gray-700"></i>
+                    No servers registered.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PAGINATION -->
+          <div class="flex justify-center items-center gap-2">
+            {% if servers.has_prev %}
+              <a href="{{ url_for('admin_servers', page=servers.prev_num, email=request.args.get('email', '')) }}"
+                class="px-3 py-2 bg-[#0a0a0f] border border-[#1a1d2e] rounded text-gray-400 hover:text-[#00d4ff] page-btn text-sm">
+                <i class="fa-solid fa-chevron-left"></i>
+              </a>
+            {% endif %}
+
+            {% set total_pages = servers.pages %}
+            {% set current = servers.page %}
+            {% set page_range = range(1, total_pages + 1) %}
+            
+            {% for page_num in page_range %}
+              {% if page_num == 1 or page_num == total_pages or (page_num >= current - 2 and page_num <= current + 2) %}
+                {% if page_num == current %}
+                  <span class="px-3 py-2 rounded text-sm font-bold page-active mono">{{ page_num }}</span>
+                {% else %}
+                  <a href="{{ url_for('admin_servers', page=page_num, email=request.args.get('email', '')) }}"
+                    class="px-3 py-2 bg-[#0a0a0f] border border-[#1a1d2e] rounded text-gray-400 hover:text-[#00d4ff] page-btn text-sm mono">
+                    {{ page_num }}
+                  </a>
+                {% endif %}
+              {% elif page_num == 2 and current > 4 %}
+                <span class="text-gray-600 mono">...</span>
+              {% elif page_num == total_pages - 1 and current < total_pages - 3 %}
+                <span class="text-gray-600 mono">...</span>
+              {% endif %}
+            {% endfor %}
+
+            {% if servers.has_next %}
+              <a href="{{ url_for('admin_servers', page=servers.next_num, email=request.args.get('email', '')) }}"
+                class="px-3 py-2 bg-[#0a0a0f] border border-[#1a1d2e] rounded text-gray-400 hover:text-[#00d4ff] page-btn text-sm">
+                <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 border-t border-[#1a1d2e] bg-[#0f111a]/80 backdrop-blur py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="orbitron text-sm text-white tracking-wider mb-2">NOX TEAM</p>
+      <div class="flex justify-center gap-4 text-xs text-gray-500 mono mb-2">
+        <a href="/privacy" class="hover:text-[#00d4ff] transition-colors">Privacy</a>
+        <a href="/tos" class="hover:text-[#00d4ff] transition-colors">ToS</a>
+        <a href="/advertisingagreement" class="hover:text-[#00d4ff] transition-colors">Ads</a>
+        <a href="/blog" class="hover:text-[#00d4ff] transition-colors">Blog</a>
+      </div>
+      <p class="text-[10px] text-gray-600 mono"><i class="fa-solid fa-envelope mr-1"></i>support@nox-team.biz.id</p>
+    </div>
+  </footer>
+
+  <!-- POPUP -->
+  <div id="popupDelete" class="fixed top-5 right-5 bg-[#0f111a] border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-400 flex items-center gap-3 opacity-0 -translate-y-2 transition-all duration-500 z-50 neon-border">
+    <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+    <span class="mono text-sm">Server deleted successfully!</span>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("delete") === "success") {
+      const popup = document.getElementById("popupDelete");
+      popup.classList.remove("opacity-0", "-translate-y-2");
+      popup.classList.add("opacity-100", "translate-y-0");
+      setTimeout(() => {
+        popup.classList.remove("opacity-100", "translate-y-0");
+        popup.classList.add("opacity-0", "-translate-y-2");
+        const url = new URL(window.location);
+        url.searchParams.delete("delete");
+        window.history.replaceState({}, "", url);
+      }, 3000);
+    }
+  });
+  </script>
+</body>
+</html>

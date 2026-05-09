@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sahabat Ai Nusantara |> Support</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Tom Select CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://control.kocheng.biz.id",
+    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10 max-w-[200px]" />
+    </a>
+    <span class="text-sm text-gray-500">EN</span>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow flex items-center justify-center px-4 py-10 animate-fadeInUp">
+  <div class="w-full max-w-md bg-white p-6 rounded-2xl shadow-xl space-y-8">
+
+    <!-- Ticket Form Section -->
+    <section>
+      <h2 class="text-lg font-semibold mb-4 text-center">Submit a Ticket</h2>
+      <form method="POST" class="space-y-3">
+        <input 
+          type="email" 
+          id="email" 
+          value="{{ user.email }}" 
+          readonly
+          class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none bg-gray-50 text-gray-600"
+        />
+
+        <select 
+          id="category" 
+          name="category" 
+          placeholder="Select Category..." 
+          required
+        class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+        />
+          <option value="Panel">Panel</option>
+          <option value="Website">Website</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <input 
+          type="text" 
+          name="subject" 
+          placeholder="Subject" 
+          required
+          class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+        />
+
+        <textarea 
+          name="message" 
+          rows="4" 
+          placeholder="Describe your issue..." 
+          required
+          class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+        ></textarea>
+
+        <button 
+          type="submit"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold shadow-md transition"
+        >
+          <i class="fa-solid fa-paper-plane"></i> Submit Ticket
+        </button>
+      </form>
+    </section>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-white border-t border-gray-200 py-4 text-xs">
+  <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 px-4">
+    <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+    <p>
+      <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
+      <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
+      <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+      <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+    </p>
+    <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+    <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+  </div>
+</footer>
+
+<!-- Popup Persetujuan Support Ticket -->
+<div id="supportPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-500 p-3 sm:p-4">
+  <div id="supportBox" class="bg-white rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md p-4 sm:p-6 transform scale-95 transition-transform duration-500 text-gray-700">
+
+    <!-- Judul -->
+    <div class="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+      <i class="fa-solid fa-headset text-blue-600 text-lg sm:text-2xl"></i>
+      <h2 id="supportTitle" class="text-base sm:text-lg font-bold text-gray-900 text-center">
+        Persetujuan Ketentuan Support Ticket
+      </h2>
+    </div>
+
+    <!-- Isi -->
+    <div id="supportContent" class="space-y-2 text-xs sm:text-sm leading-relaxed text-center">
+      <p id="supportLine1">Admin support akan merespons dalam waktu maksimal <b>7 hari kerja</b>. Mohon untuk tidak melakukan spam chat atau tindakan yang tidak pantas.</p>
+      <p id="supportLine2">Dilarang mengirim foto atau konten yang mengandung unsur <b>pornografi, pelecehan, atau hal serupa</b>.</p>
+      <p id="supportLine3">Jika isi tiket tidak sesuai topik atau bersifat tidak relevan, tiket <b>tidak akan direspons</b> dan akan otomatis ditutup serta dihapus.</p>
+      <p id="supportLine4">Pelanggaran terhadap ketentuan dapat menyebabkan akun <b>ditangguhkan (suspend)</b> atau <b>diblokir (banned)</b> dari situs ini.</p>
+      <p id="supportConfirm" class="font-semibold text-xs sm:text-sm mt-3">
+        Dengan menekan tombol “Setuju”, Anda menyatakan telah memahami dan menyetujui seluruh peraturan dan konsekuensi yang berlaku.
+      </p>
+    </div>
+
+    <!-- Tombol -->
+    <div class="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-center sm:justify-end gap-2">
+      <button id="supportTranslateBtn" class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition text-xs sm:text-sm font-medium">
+        English
+      </button>
+      <button id="supportAcceptBtn" class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition text-xs sm:text-sm font-medium">
+        Setuju
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Tom Select JS -->
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+<script>
+  new TomSelect("#category", {
+    create: false,
+    sortField: { field: "text", direction: "asc" }
+  });
+</script>
+<script>
+// ====== Bahasa ======
+const supportTranslations = {
+  id: {
+    title: "Persetujuan Ketentuan Support Ticket",
+    line1: "Admin support akan merespons dalam waktu maksimal 7 hari kerja. Mohon untuk tidak melakukan spam chat atau tindakan yang tidak pantas.",
+    line2: "Dilarang mengirim foto atau konten yang mengandung unsur pornografi, pelecehan, atau hal serupa.",
+    line3: "Jika isi tiket tidak sesuai topik atau bersifat tidak relevan, tiket tidak akan direspons dan akan otomatis ditutup serta dihapus.",
+    line4: "Pelanggaran terhadap ketentuan dapat menyebabkan akun ditangguhkan (suspend) atau diblokir (banned) dari situs ini.",
+    confirm: "Dengan menekan tombol “Setuju”, Anda menyatakan telah memahami dan menyetujui seluruh peraturan dan konsekuensi yang berlaku.",
+    buttonLang: "English",
+    buttonConfirm: "Setuju"
+  },
+  en: {
+    title: "Support Ticket Terms Agreement",
+    line1: "Admin support will respond within a maximum of 7 business days. Please refrain from spamming messages or engaging in inappropriate behavior.",
+    line2: "Do not send any photos or content containing pornography, harassment, or similar material.",
+    line3: "If your ticket is off-topic or irrelevant, it will not receive a response and will be automatically closed and deleted.",
+    line4: "Violation of these rules may result in your account being suspended or permanently banned from this site.",
+    confirm: "By clicking “Agree”, you acknowledge that you have understood and accepted all applicable rules and consequences.",
+    buttonLang: "Indonesia",
+    buttonConfirm: "Agree"
+  }
+};
+
+let supportLang = "id";
+const supportPopup = document.getElementById("supportPopup");
+const supportTranslateBtn = document.getElementById("supportTranslateBtn");
+const supportAcceptBtn = document.getElementById("supportAcceptBtn");
+
+function setSupportLanguage(lang) {
+  const t = supportTranslations[lang];
+  document.getElementById("supportTitle").innerText = t.title;
+  document.getElementById("supportLine1").innerText = t.line1;
+  document.getElementById("supportLine2").innerText = t.line2;
+  document.getElementById("supportLine3").innerText = t.line3;
+  document.getElementById("supportLine4").innerText = t.line4;
+  document.getElementById("supportConfirm").innerText = t.confirm;
+  supportTranslateBtn.innerHTML = `${t.buttonLang}`;
+  supportAcceptBtn.innerHTML = `${t.buttonConfirm}`;
+  supportLang = lang;
+}
+
+supportTranslateBtn.addEventListener("click", () => {
+  setSupportLanguage(supportLang === "id" ? "en" : "id");
+});
+
+supportAcceptBtn.addEventListener("click", () => {
+  supportPopup.classList.remove("opacity-100");
+  supportPopup.classList.add("opacity-0", "pointer-events-none");
+  localStorage.setItem("supportAgreementSeen", new Date().toISOString().split("T")[0]);
+});
+
+// ====== Logika Muncul 1x Sehari ======
+function showSupportPopupIfNeeded() {
+  const todayStr = new Date().toISOString().split("T")[0];
+  const seenToday = localStorage.getItem("supportAgreementSeen");
+  if (seenToday === todayStr) return; // sudah setuju hari ini
+
+  // Tampilkan popup
+  supportPopup.classList.remove("pointer-events-none", "opacity-0");
+  supportPopup.classList.add("opacity-100");
+}
+
+window.addEventListener("load", () => {
+  setSupportLanguage("id");
+  showSupportPopupIfNeeded();
+});
+</script>
+
+</body>
+</html>

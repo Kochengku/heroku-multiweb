@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="What You Need to Prepare to Install Pterodactyl Panel">
+<meta property="og:description" content="A comprehensive guide detailing the essential preparations and requirements before installing Pterodactyl Panel for managing game servers efficiently.">
+<meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://control.kocheng.biz.id">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What You Need to Prepare to Install Pterodactyl Panel">
+<meta name="twitter:description" content="Learn the necessary hardware, software, and configuration steps students and server administrators need before installing Pterodactyl Panel.">
+<meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+
+<meta charset="UTF-8" />
+<title>What You Need to Prepare to Install Pterodactyl Panel</title>
+<meta name="description" content="A step-by-step guide covering hardware, software, and configuration requirements to prepare for installing Pterodactyl Panel efficiently.">
+<meta name="category" content="hosting,information">
+<meta name="date" content="2025-09-21">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+.fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.lead { color: #475569; }
+.note { background: rgba(59,130,246,.06); border-left: 4px solid rgba(59,130,246,.3); padding:.75rem 1rem; border-radius:.375rem; }
+</style>
+</head>
+
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/blog" class="flex items-center space-x-2 hover:scale-105 transition">
+      <i class="fa-solid fa-arrow-left text-blue-600"></i>
+      <span class="text-sm text-gray-700">Back to Blog</span>
+    </a>
+    <span class="text-sm text-gray-500">EN</span>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+  <h1 class="text-3xl font-bold text-blue-900 mb-4">
+    What You Need to Prepare to Install Pterodactyl Panel
+  </h1>
+
+  <p class="text-gray-500 mb-6">Published on September 21, 2025 · 9 min read</p>
+
+  <p class="lead mb-4">
+    Pterodactyl Panel is a powerful web-based game server management platform that allows administrators to deploy and control multiple game servers efficiently. Proper preparation is crucial to ensure a smooth installation and configuration process.
+  </p>
+
+  <div class="note mb-6">
+    <strong>Key Insight:</strong> Preparing your environment with the right hardware, software, and security considerations will save time and reduce installation errors.
+  </div>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">1. Hardware Requirements</h2>
+  <p class="mb-4">
+    Before installing Pterodactyl, ensure your server meets the minimum hardware requirements. Recommended specifications include:
+  </p>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><strong>CPU:</strong> Minimum 2 cores, preferably 4 cores for multiple servers.</li>
+    <li><strong>RAM:</strong> At least 2GB for the panel itself; additional RAM is needed for game servers.</li>
+    <li><strong>Storage:</strong> SSD storage recommended for faster performance, minimum 20GB free space.</li>
+    <li><strong>Network:</strong> Reliable high-speed internet connection to handle server traffic.</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">2. Supported Operating Systems</h2>
+  <p class="mb-4">
+    Pterodactyl Panel is compatible with most Linux distributions. Popular choices include:
+  </p>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Ubuntu 22.04 LTS or 20.04 LTS</li>
+    <li>Debian 11 or 12</li>
+    <li>CentOS 7/8 (though Ubuntu/Debian is preferred)</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">3. Software Dependencies</h2>
+  <p class="mb-4">
+    The panel and daemon require several software packages:
+  </p>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>PHP (version 8.1 or higher) with necessary extensions (BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML)</li>
+    <li>MySQL or MariaDB database</li>
+    <li>Nginx or Apache web server</li>
+    <li>Node.js and Composer for panel dependencies</li>
+    <li>Docker for the Wings daemon</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">4. Domain and SSL</h2>
+  <p class="mb-4">
+    A fully qualified domain name (FQDN) is required for accessing the panel securely. You should also prepare an SSL certificate using Let's Encrypt or another provider to ensure encrypted communication between users and the panel.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">5. Security Preparations</h2>
+  <p class="mb-4">
+    Prioritize security by:
+  </p>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Creating a dedicated server user with sudo privileges for panel installation.</li>
+    <li>Disabling root login over SSH and using key-based authentication.</li>
+    <li>Configuring a firewall (UFW or iptables) to restrict unnecessary ports.</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">6. Backups and Snapshots</h2>
+  <p class="mb-4">
+    Always prepare a backup or snapshot of your server before starting the installation. This allows you to revert to a safe state if any issues occur during setup.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">7. Preparing the Database</h2>
+  <p class="mb-4">
+    Create a dedicated database and user for Pterodactyl with proper permissions. This separation enhances security and ensures that the panel has exclusive access to its data.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">8. Understanding the Installation Process</h2>
+  <p class="mb-4">
+    Familiarize yourself with the official Pterodactyl installation documentation. Reviewing each step ahead of time—panel setup, Wings daemon configuration, queue workers, and cron jobs—reduces errors during deployment.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Conclusion</h2>
+  <p class="mb-4">
+    Proper preparation is the key to a successful Pterodactyl Panel installation. By ensuring your hardware, software, security, and backup systems are ready, you can deploy and manage game servers efficiently and safely.
+  </p>
+
+  <p class="mt-6">
+    With careful planning, even beginners can follow the installation steps confidently, paving the way for a stable and fully functional game server management environment.
+  </p>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-white border-t border-gray-200 py-4 text-xs">
+  <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 px-4">
+    <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+    <p>
+      <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+      <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+      <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
+      <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+    </p>
+    <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
+    <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector("main").classList.add("visible");
+});
+</script>
+
+</body>
+</html>

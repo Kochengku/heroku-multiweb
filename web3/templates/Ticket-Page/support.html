@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ɴᴏx ᴛᴇᴀᴍ  |>  sᴜᴘᴘᴏʀᴛ</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+<meta property="og:title" content="ɴᴏx ᴛᴇᴀᴍ">
+<meta property="og:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+<meta property="og:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://control.nox-team.biz.id">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ɴᴏx ᴛᴇᴀᴍ">
+<meta name="twitter:description" content="ғʀᴇᴇ ʙᴏᴛ ᴅɪsᴄᴏʀᴅ & ᴡʜᴀᴛsᴀᴘᴘ ʜᴏsᴛɪɴɢ">
+<meta name="twitter:image" content="https://control.nox-team.biz.id/static/logo-512x512.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","url":"https://control.nox-team.biz.id","logo":"https://control.nox-team.biz.id/static/logo-512x512.webp","name":"ɴᴏx ᴛᴇᴀᴍ"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is ɴᴏx ᴛᴇᴀᴍ Hosting?","acceptedAnswer":{"@type":"Answer","text":"ɴᴏx ᴛᴇᴀᴍ provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."}},{"@type":"Question","name":"Is it free forever?","acceptedAnswer":{"@type":"Answer","text":"Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."}}]}</script>
+<style>
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.animate-fadeInUp{animation:fadeInUp .8s ease-out forwards}
+@keyframes pulse-red{0%,100%{box-shadow:0 0 20px rgba(239,68,68,.3)}50%{box-shadow:0 0 50px rgba(239,68,68,.6)}}
+.pulse-red-glow{animation:pulse-red 2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.float-anim{animation:float 3s ease-in-out infinite}
+</style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen flex flex-col">
+
+<header class="bg-black/40 backdrop-blur-md border-b border-red-500/20 py-3 shadow-lg">
+<div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+<a href="/getstarted" class="transition-transform duration-200 hover:scale-105"><img src="/static/logo2.webp" alt="ɴᴏx ᴛᴇᴀᴍ" class="h-10 max-w-[200px]" /></a>
+<span class="text-sm text-red-400 font-medium tracking-widest">EN</span>
+</div>
+</header>
+
+<main class="flex-grow flex items-center justify-center px-4 py-10 animate-fadeInUp">
+<div class="w-full max-w-md bg-white/5 backdrop-blur-xl p-6 rounded-2xl shadow-2xl space-y-8 border border-red-500/20 relative overflow-hidden">
+<div class="absolute -top-20 -right-20 w-40 h-40 bg-red-500/10 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-20 -left-20 w-40 h-40 bg-rose-500/10 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+
+<div class="w-16 h-16 bg-gradient-to-br from-red-400 to-rose-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg pulse-red-glow float-anim">
+<i class="fa-solid fa-headset text-2xl text-white"></i>
+</div>
+
+<section>
+<h2 class="text-lg font-semibold mb-4 text-center text-white tracking-wide">sᴜʙᴍɪᴛ ᴀ ᴛɪᴄᴋᴇᴛ</h2>
+<form method="POST" class="space-y-3">
+<input type="email" id="email" value="{{ user.email }}" readonly class="w-full bg-white/10 border border-red-500/20 rounded-lg px-3 py-2 text-gray-400 focus:ring-2 focus:ring-red-400 outline-none" />
+<select id="category" name="category" required class="w-full bg-white/10 border border-red-500/20 rounded-lg px-3 py-2 text-gray-300 focus:ring-2 focus:ring-red-400 outline-none">
+<option value="Panel">Panel</option>
+<option value="Website">Website</option>
+<option value="Other">Other</option>
+</select>
+<input type="text" name="subject" placeholder="Subject" required class="w-full bg-white/10 border border-red-500/20 rounded-lg px-3 py-2 text-gray-300 focus:ring-2 focus:ring-red-400 outline-none placeholder-gray-500" />
+<textarea name="message" rows="4" placeholder="Describe your issue..." required class="w-full bg-white/10 border border-red-500/20 rounded-lg px-3 py-2 text-gray-300 focus:ring-2 focus:ring-red-400 outline-none placeholder-gray-500"></textarea>
+<button type="submit" class="w-full bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-400 hover:to-rose-500 text-white py-2 px-4 rounded-lg font-semibold shadow-lg shadow-red-500/30 transition">
+<i class="fa-solid fa-paper-plane"></i> sᴜʙᴍɪᴛ ᴛɪᴄᴋᴇᴛ
+</button>
+</form>
+</section>
+</div>
+</div>
+</main>
+
+<footer class="bg-black/40 backdrop-blur-sm border-t border-red-500/10 py-4 text-xs">
+<div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 px-4">
+<p class="font-semibold text-red-400 text-sm tracking-wider"><i class="fa-solid fa-bolt text-red-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ</p>
+<p class="space-x-2">
+<a href="/privacy" class="text-gray-400 hover:text-red-400 hover:underline transition">ᴘʀɪᴠᴀᴄʏ ᴘᴏʟɪᴄʏ</a> |
+<a href="/tos" class="text-gray-400 hover:text-red-400 hover:underline transition">ᴛᴇʀᴍs ᴏғ sᴇʀᴠɪᴄᴇ</a> |
+<a href="/advertisingagreement" class="text-gray-400 hover:text-red-400 hover:underline transition">ᴀᴅs ᴅɪsᴄʟᴏsᴜʀᴇ</a> |
+<a href="/blog" class="text-gray-400 hover:text-red-400 hover:underline transition">ʙʟᴏɢ</a>
+</p>
+<p class="text-gray-600">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+<p><i class="fa-solid fa-envelope text-red-400 mr-1"></i>support@nox-team.biz.id</p>
+</div>
+</footer>
+
+<div id="supportPopup" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-500 p-3 sm:p-4">
+<div id="supportBox" class="bg-slate-800/90 backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md p-4 sm:p-6 transform scale-95 transition-transform duration-500 text-gray-300 border border-red-500/20">
+<div class="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+<i class="fa-solid fa-headset text-red-400 text-lg sm:text-2xl"></i>
+<h2 id="supportTitle" class="text-base sm:text-lg font-bold text-white text-center tracking-wide">ᴘᴇʀsᴇᴛᴜᴊᴜᴀɴ ᴋᴇᴛᴇɴᴛᴜᴀɴ sᴜᴘᴘᴏʀᴛ ᴛɪᴄᴋᴇᴛ</h2>
+</div>
+<div id="supportContent" class="space-y-2 text-xs sm:text-sm leading-relaxed text-center">
+<p id="supportLine1">ᴀᴅᴍɪɴ sᴜᴘᴘᴏʀᴛ ᴀᴋᴀɴ ᴍᴇʀᴇsᴘᴏɴs ᴅᴀʟᴀᴍ ᴡᴀᴋᴛᴜ ᴍᴀᴋsɪᴍᴀʟ <b class="text-red-400">7 ʜᴀʀɪ ᴋᴇʀᴊᴀ</b>. ᴍᴏʜᴏɴ ᴜɴᴛᴜᴋ ᴛɪᴅᴀᴋ ᴍᴇʟᴀᴋᴜᴋᴀɴ sᴘᴀᴍ ᴄʜᴀᴛ ᴀᴛᴀᴜ ᴛɪɴᴅᴀᴋᴀɴ ʏᴀɴɢ ᴛɪᴅᴀᴋ ᴘᴀɴᴛᴀs.</p>
+<p id="supportLine2">ᴅɪʟᴀʀᴀɴɢ ᴍᴇɴɢɪʀɪᴍ ғᴏᴛᴏ ᴀᴛᴀᴜ ᴋᴏɴᴛᴇɴ ʏᴀɴɢ ᴍᴇɴɢᴀɴᴅᴜɴɢ ᴜɴsᴜʀ <b class="text-red-400">ᴘᴏʀɴᴏɢʀᴀғɪ, ᴘᴇʟᴇᴄᴇʜᴀɴ</b>.</p>
+<p id="supportLine3">ᴊɪᴋᴀ ɪsɪ ᴛɪᴋᴇᴛ ᴛɪᴅᴀᴋ sᴇsᴜᴀɪ, ᴛɪᴋᴇᴛ <b class="text-red-400">ᴛɪᴅᴀᴋ ᴀᴋᴀɴ ᴅɪʀᴇsᴘᴏɴs</b> ᴅᴀɴ ᴀᴋᴀɴ ᴅɪʜᴀᴘᴜs.</p>
+<p id="supportLine4">ᴘᴇʟᴀɴɢɢᴀʀᴀɴ ᴅᴀᴘᴀᴛ ᴍᴇɴʏᴇʙᴀʙᴋᴀɴ ᴀᴋᴜɴ <b class="text-red-400">ᴅɪᴛᴀɴɢɢᴜʜᴋᴀɴ ᴀᴛᴀᴜ ᴅɪʙʟᴏᴋɪʀ</b>.</p>
+<p id="supportConfirm" class="font-semibold text-xs sm:text-sm mt-3 text-red-400">ᴅᴇɴɢᴀɴ ᴍᴇɴᴇᴋᴀɴ ᴛᴏᴍʙᴏʟ "sᴇᴛᴜᴊᴜ", ᴀɴᴅᴀ ᴍᴇɴʏᴀᴛᴀᴋᴀɴ ᴛᴇʟᴀʜ ᴍᴇᴍᴀʜᴀᴍɪ ᴅᴀɴ ᴍᴇɴʏᴇᴛᴜᴊᴜɪ sᴇʟᴜʀᴜʜ ᴘᴇʀᴀᴛᴜʀᴀɴ.</p>
+</div>
+<div class="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-center sm:justify-end gap-2">
+<button id="supportTranslateBtn" class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-white/10 text-gray-300 hover:bg-white/20 transition text-xs sm:text-sm font-medium border border-red-500/20">ᴇɴɢʟɪsʜ</button>
+<button id="supportAcceptBtn" class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-gradient-to-r from-red-500 to-rose-600 text-white hover:from-red-400 hover:to-rose-500 transition text-xs sm:text-sm font-medium shadow-lg shadow-red-500/30">sᴇᴛᴜᴊᴜ</button>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+<script>
+new TomSelect("#category",{create:false,sortField:{field:"text",direction:"asc"}});
+const T={id:{title:"ᴘᴇʀsᴇᴛᴜᴊᴜᴀɴ ᴋᴇᴛᴇɴᴛᴜᴀɴ sᴜᴘᴘᴏʀᴛ ᴛɪᴄᴋᴇᴛ",line1:"ᴀᴅᴍɪɴ sᴜᴘᴘᴏʀᴛ ᴀᴋᴀɴ ᴍᴇʀᴇsᴘᴏɴs ᴅᴀʟᴀᴍ ᴡᴀᴋᴛᴜ ᴍᴀᴋsɪᴍᴀʟ 7 ʜᴀʀɪ ᴋᴇʀᴊᴀ. ᴍᴏʜᴏɴ ᴜɴᴛᴜᴋ ᴛɪᴅᴀᴋ ᴍᴇʟᴀᴋᴜᴋᴀɴ sᴘᴀᴍ ᴄʜᴀᴛ ᴀᴛᴀᴜ ᴛɪɴᴅᴀᴋᴀɴ ʏᴀɴɢ ᴛɪᴅᴀᴋ ᴘᴀɴᴛᴀs.",line2:"ᴅɪʟᴀʀᴀɴɢ ᴍᴇɴɢɪʀɪᴍ ғᴏᴛᴏ ᴀᴛᴀᴜ ᴋᴏɴᴛᴇɴ ʏᴀɴɢ ᴍᴇɴɢᴀɴᴅᴜɴɢ ᴜɴsᴜʀ ᴘᴏʀɴᴏɢʀᴀғɪ, ᴘᴇʟᴇᴄᴇʜᴀɴ.",line3:"ᴊɪᴋᴀ ɪsɪ ᴛɪᴋᴇᴛ ᴛɪᴅᴀᴋ sᴇsᴜᴀɪ, ᴛɪᴋᴇᴛ ᴛɪᴅᴀᴋ ᴀᴋᴀɴ ᴅɪʀᴇsᴘᴏɴs ᴅᴀɴ ᴀᴋᴀɴ ᴅɪʜᴀᴘᴜs.",line4:"ᴘᴇʟᴀɴɢɢᴀʀᴀɴ ᴅᴀᴘᴀᴛ ᴍᴇɴʏᴇʙᴀʙᴋᴀɴ ᴀᴋᴜɴ ᴅɪᴛᴀɴɢɢᴜʜᴋᴀɴ ᴀᴛᴀᴜ ᴅɪʙʟᴏᴋɪʀ.",confirm:"ᴅᴇɴɢᴀɴ ᴍᴇɴᴇᴋᴀɴ ᴛᴏᴍʙᴏʟ 'sᴇᴛᴜᴊᴜ', ᴀɴᴅᴀ ᴍᴇɴʏᴀᴛᴀᴋᴀɴ ᴛᴇʟᴀʜ ᴍᴇᴍᴀʜᴀᴍɪ ᴅᴀɴ ᴍᴇɴʏᴇᴛᴜᴊᴜɪ sᴇʟᴜʀᴜʜ ᴘᴇʀᴀᴛᴜʀᴀɴ.",btnLang:"ᴇɴɢʟɪsʜ",btnConfirm:"sᴇᴛᴜᴊᴜ"},en:{title:"sᴜᴘᴘᴏʀᴛ ᴛɪᴄᴋᴇᴛ ᴛᴇʀᴍs ᴀɢʀᴇᴇᴍᴇɴᴛ",line1:"ᴀᴅᴍɪɴ sᴜᴘᴘᴏʀᴛ ᴡɪʟʟ ʀᴇsᴘᴏɴᴅ ᴡɪᴛʜɪɴ ᴀ ᴍᴀxɪᴍᴜᴍ ᴏғ 7 ʙᴜsɪɴᴇss ᴅᴀʏs. ᴘʟᴇᴀsᴇ ʀᴇғʀᴀɪɴ ғʀᴏᴍ sᴘᴀᴍᴍɪɴɢ.",line2:"ᴅᴏ ɴᴏᴛ sᴇɴᴅ ᴀɴʏ ᴘʜᴏᴛᴏs ᴏʀ ᴄᴏɴᴛᴇɴᴛ ᴄᴏɴᴛᴀɪɴɪɴɢ ᴘᴏʀɴᴏɢʀᴀᴘʜʏ, ʜᴀʀᴀssᴍᴇɴᴛ.",line3:"ɪғ ʏᴏᴜʀ ᴛɪᴄᴋᴇᴛ ɪs ᴏғғ-ᴛᴏᴘɪᴄ, ɪᴛ ᴡɪʟʟ ɴᴏᴛ ʀᴇᴄᴇɪᴠᴇ ᴀ ʀᴇsᴘᴏɴsᴇ ᴀɴᴅ ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ.",line4:"ᴠɪᴏʟᴀᴛɪᴏɴ ᴍᴀʏ ʀᴇsᴜʟᴛ ɪɴ ʏᴏᴜʀ ᴀᴄᴄᴏᴜɴᴛ ʙᴇɪɴɢ sᴜsᴘᴇɴᴅᴇᴅ ᴏʀ ʙᴀɴɴᴇᴅ.",confirm:"ʙʏ ᴄʟɪᴄᴋɪɴɢ 'ᴀɢʀᴇᴇ', ʏᴏᴜ ᴀᴄᴋɴᴏᴡʟᴇᴅɢᴇ ᴀɴᴅ ᴀᴄᴄᴇᴘᴛ ᴀʟʟ ʀᴜʟᴇs.",btnLang:"ɪɴᴅᴏɴᴇsɪᴀ",btnConfirm:"ᴀɢʀᴇᴇ"}};
+let L="id";const P=document.getElementById("supportPopup"),B=document.getElementById("supportTranslateBtn"),A=document.getElementById("supportAcceptBtn");
+function S(l){const t=T[l];document.getElementById("supportTitle").innerText=t.title;document.getElementById("supportLine1").innerText=t.line1;document.getElementById("supportLine2").innerText=t.line2;document.getElementById("supportLine3").innerText=t.line3;document.getElementById("supportLine4").innerText=t.line4;document.getElementById("supportConfirm").innerText=t.confirm;B.innerHTML=t.btnLang;A.innerHTML=t.btnConfirm;L=l}
+B.addEventListener("click",()=>S(L==="id"?"en":"id"));
+A.addEventListener("click",()=>{P.classList.remove("opacity-100");P.classList.add("opacity-0","pointer-events-none");localStorage.setItem("supportAgreementSeen",new Date().toISOString().split("T")[0])});
+function showPopup(){const t=new Date().toISOString().split("T")[0];if(localStorage.getItem("supportAgreementSeen")!==t){P.classList.remove("pointer-events-none","opacity-0");P.classList.add("opacity-100")}}
+window.addEventListener("load",()=>{S("id");showPopup()});
+</script>
+</body>
+</html>
