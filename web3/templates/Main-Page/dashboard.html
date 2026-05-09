@@ -9,7 +9,7 @@
 <link rel="manifest" href="/static/site.webmanifest" />
 
   <!-- Open Graph (untuk share di media sosial) -->
-  <meta property="og:title" content="Kocheng's">
+  <meta property="og:title" content="'Nox Team">
   <meta property="og:description" content="Free bot discord & whatsapp hosting.">
   <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
   <meta property="og:url" content="https://control.kocheng.biz.id">
@@ -137,6 +137,23 @@ document.addEventListener("DOMContentLoaded", () => {
   .animate-pop { animation: pop 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  /* ════ DARK EMERALD THEME ════ */
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.2); }
+    50%       { box-shadow: 0 0 40px rgba(34, 197, 94, 0.5); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-6px); }
+  }
+  .pulse-green-glow { animation: pulse-green 2.5s ease-in-out infinite; }
+  .float-anim       { animation: float 3s ease-in-out infinite; }
+
+  /* Scrollbar dark */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #1e293b; }
+  ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 3px; }
 </style>
 
 <style>
@@ -227,8 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
 .sync-spinner {
   width: 20px;
   height: 20px;
-  border: 3px solid rgba(59, 130, 246, 0.3);
-  border-top: 3px solid #2563eb;
+  border: 3px solid rgba(16, 185, 129, 0.3);
+  border-top: 3px solid #10b981;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -266,44 +283,44 @@ function closeSidebar() {
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="bg-gradient-to-br from-white to-blue-100 flex flex-col min-h-screen overflow-x-hidden">
+<body class="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen flex flex-col text-sm sm:text-base overflow-x-hidden">
 
 <!-- HEADER -->
-<header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+<header class="bg-black/40 backdrop-blur-md border-b border-emerald-500/20 py-3 shadow-lg">
   <div class="max-w-screen-xl mx-auto flex justify-between items-center px-4">
     <!-- Sidebar toggle -->
-    <button id="sidebarToggleBtn" class="text-gray-700 text-2xl">
+    <button id="sidebarToggleBtn" class="text-emerald-400 text-2xl hover:text-emerald-300 transition">
       <i class="fas fa-bars"></i>
     </button>
 
     <!-- Info kanan -->
     <div class="flex items-center space-x-4">
       <!-- Coin -->
-      <div class="flex items-center text-sm font-medium text-gray-700">
-        <i class="fa-solid fa-coins text-gray-500 mr-1"></i>
+      <div class="flex items-center text-sm font-medium text-gray-300">
+        <i class="fa-solid fa-coins text-emerald-400 mr-1"></i>
         {{ user.coin }}
       </div>
       <!-- Server -->
-      <div class="flex items-center text-sm font-medium text-gray-700">
-        <i class="fa-solid fa-cloud text-gray-500 mr-1"></i>
+      <div class="flex items-center text-sm font-medium text-gray-300">
+        <i class="fa-solid fa-cloud text-emerald-400 mr-1"></i>
         {{ user.server }}/1
       </div>
       <!-- Role -->
       {% if user.email == admin_mail %}
-        <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-red-100 text-red-600 flex items-center">
+        <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-red-500/20 text-red-400 border border-red-500/30 flex items-center">
           <i class="fa-solid fa-user-shield mr-1"></i> Admin
         </span>
       {% elif user.is_moderator %}
-        <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-blue-100 text-blue-600 flex items-center">
+        <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center">
           <i class="fa-solid fa-user-tie mr-1"></i> Moderator
         </span>
       {% else %}
-        <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-green-100 text-green-600 flex items-center">
+        <span class="px-2 py-1 text-xs font-semibold rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center">
           <i class="fa-solid fa-user mr-1"></i> Member
         </span>
       {% endif %}
       <!-- Foto / Inisial -->
-      <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gray-200">
+      <div class="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-emerald-900/40 border border-emerald-500/30 pulse-green-glow">
         {% if user.login_google and user.photo_google %}
           <img src="{{ user.photo_google }}" alt="Profile" class="w-full h-full object-cover">
         {% else %}
@@ -315,20 +332,20 @@ function closeSidebar() {
 </header>
 
   <!-- OVERLAY -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div
+<div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-70 z-40 hidden transition-opacity duration-300"></div
 
   <!-- WRAPPER -->
   <div class="flex flex-grow relative">
     <!-- SIDEBAR -->
 <aside id="sidebar" 
-  class="fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 p-4 z-50 
+  class="fixed top-0 left-0 h-full w-64 bg-slate-900/95 backdrop-blur-md border-r border-emerald-500/20 p-4 z-50 
          transform -translate-x-full transition-transform duration-300 ease-in-out 
          flex flex-col overflow-y-auto">
          
   <div class="flex items-center justify-between mb-6 flex-shrink-0">
     <img src="/static/logo2.webp" alt="Logo" class="h-12" />
     <button id="sidebarCloseBtn" type="button" 
-      class="text-gray-700 text-xl p-2 hover:bg-gray-100 rounded-lg">
+      class="text-emerald-400 text-xl p-2 hover:bg-emerald-500/10 rounded-lg transition">
       <i class="fas fa-times"></i>
     </button>
   </div>
@@ -336,21 +353,21 @@ function closeSidebar() {
   <!-- isi menu -->
   <nav class="space-y-2 text-sm flex-grow">
     <!-- Menu dengan pembatas -->
-        <a href="/dashboard" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-          <i class="fa-solid fa-house mr-2"></i> Home page
+        <a href="/dashboard" class="flex items-center p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+          <i class="fa-solid fa-house mr-2 text-emerald-500"></i> Home page
         </a>
         
-        <a href="/profile" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-          <i class="fa-solid fa-circle-user mr-2"></i> Profile
+        <a href="/profile" class="flex items-center p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+          <i class="fa-solid fa-circle-user mr-2 text-emerald-500"></i> Profile
         </a>
         
         <!-- Pembatas garis -->
-        <div class="my-2 border-t-2 border-gray-200"></div>
+        <div class="my-2 border-t border-emerald-500/20"></div>
 <div>
   <button id="panelToggle"
-          class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-    <span><i class="fa-sharp-duotone fa-solid fa-cloud mr-2"></i> Server</span>
-    <i id="chevronIcon" class="fas fa-chevron-down transition-transform duration-300"></i>
+          class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+    <span><i class="fa-sharp-duotone fa-solid fa-cloud mr-2 text-emerald-500"></i> Server</span>
+    <i id="chevronIcon" class="fas fa-chevron-down transition-transform duration-300 text-emerald-500"></i>
   </button>
 
 <div id="panelMenu" class="ml-6 mt-1 space-y-1 hidden">
@@ -358,158 +375,147 @@ function closeSidebar() {
         {% if not blokir_create %}
             {% if user.iklan == 0 %}
                 <a href="/panel/create/viawebsite"
-                   class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">
+                   class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">
                    Create Server
-                </a>
-                <a href="/panel/create/viatelegram"
-                   class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">
-                   Create Server Via Telegram (No Ads)
                 </a>
             {% else %}
                 <a href="/panel/create?email={{ user.email }}&token={{ user.token }}&ts={{ user.timestamp }}"
-                   class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">
+                   class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">
                    Create Server (No Ads)
                 </a>
             {% endif %}
         {% endif %}
     {% elif user.server == 1 %}
         <a href="/panel/detail?email={{ user.email }}&username={{ user.email.split('@')[0] }}&panel_id={{ user.serverid }}"
-           class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">
+           class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">
            Detail Akun
         </a>
     {% endif %}
 
     <a href="/panel/upgrade/ram"
-       class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">
+       class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">
       Upgrade Ram Server
     </a>
     <a href="/panel/backup"
-       class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">
+       class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">
       Backup file
     </a>
 </div>
 
 <!-- Pembatas garis -->
-        <div class="my-2 border-t-2 border-gray-200"></div>
-<button id="panelSkyforgiaToggle"
-          class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-blue-100 font-medium text-blue-700">
-    <span><i class="fa-sharp-duotone fa-solid fa-cloud mr-2"></i> Server Skyforgia</span>
-    <i id="chevronIconSkyforgia" class="fas fa-chevron-down transition-transform duration-300"></i>
-  </button>
-  
 <div id="panelSkyforgiaMenu" class="ml-6 mt-1 space-y-1 hidden">
     <a href="https://skyforgia.web.id"
-       class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">
+       class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">
       Create Server Skyforgia
     </a>
 </div>
 
 <!-- Pembatas garis -->
-        <div class="my-2 border-t-2 border-gray-200"></div>
+        <div class="my-2 border-t border-emerald-500/20"></div>
 
 {% if user.email == admin_mail or user.is_moderator %}
 <div>
   <button id="adminToggle"
-          class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-    <span><i class="fa-solid fa-user-shield mr-2"></i> Admin Panel</span>
-    <i id="adminChevron" class="fas fa-chevron-down transition-transform duration-300"></i>
+          class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+    <span><i class="fa-solid fa-user-shield mr-2 text-emerald-500"></i> Admin Panel</span>
+    <i id="adminChevron" class="fas fa-chevron-down transition-transform duration-300 text-emerald-500"></i>
   </button>
 
   <div id="adminMenu" class="ml-6 mt-1 space-y-1 hidden">
     <!-- Menu khusus ADMIN -->
     {% if user.email == admin_mail %}
-      <a href="/admin/server/clear" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">Clear Server</a>
-      <a href="/admin/setting" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">Setting Website</a>
+      <a href="/admin/server/clear" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">Clear Server</a>
+      <a href="/admin/setting" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">Setting Website</a>
     {% endif %}
 
     <!-- Menu untuk ADMIN & MODERATOR -->
-    <a href="/admin/list/user" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">List User</a>
-    <a href="/admin/list/server" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">List Server</a>
-    <a href="/tickets" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">List Ticket User</a>
-    <a href="/admin/coin/control" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">Statistik Coin</a>
+    <a href="/admin/list/user" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">List User</a>
+    <a href="/admin/list/server" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">List Server</a>
+    <a href="/tickets" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">List Ticket User</a>
+    <a href="/admin/coin/control" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">Statistik Coin</a>
   </div>
 </div>
 {% endif %}
 
 <div>
-  <button id="coinToggle" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-    <span><i class="fa-duotone fa-solid fa-coins mr-2"></i> Get Coin</span>
-    <i id="coincon" class="fas fa-chevron-down transition-transform duration-300"></i>
+  <button id="coinToggle" class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+    <span><i class="fa-duotone fa-solid fa-coins mr-2 text-emerald-500"></i> Get Coin</span>
+    <i id="coincon" class="fas fa-chevron-down transition-transform duration-300 text-emerald-500"></i>
   </button>
   <div id="coinMenu" class="ml-6 mt-1 space-y-1 hidden">
-    <a href="/getcoin/afk" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">Afk</a>
-    <a href="/getcoin/misi" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">Reward Mission</a>
-    <a href="/getcoin/referral" class="block p-2 rounded hover:bg-gray-100 text-sm text-gray-700">Invite Friends</a>
+    <a href="/getcoin/afk" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">Afk</a>
+    <a href="/getcoin/misi" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">Reward Mission</a>
+    <a href="/getcoin/referral" class="block p-2 rounded hover:bg-emerald-500/10 text-sm text-gray-400 hover:text-emerald-400 transition">Invite Friends</a>
     <!---->
   </div>
 </div>
 
 <!-- Pembatas garis -->
-        <div class="my-2 border-t-2 border-gray-200"></div>
+        <div class="my-2 border-t border-emerald-500/20"></div>
         
-        <a href="/blog" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-          <i class="fa-solid fa-book mr-2"></i> Blog
+        <a href="/blog" class="flex items-center p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+          <i class="fa-solid fa-book mr-2 text-emerald-500"></i> Blog
         </a>
         
-        <a href="/privacy" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-          <i class="fa-solid fa-file-contract mr-2"></i> Privacy policy
+        <a href="/privacy" class="flex items-center p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+          <i class="fa-solid fa-file-contract mr-2 text-emerald-500"></i> Privacy policy
         </a>
         
-        <a href="/advertisingagreement" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-          <i class="fa-solid fa-bullhorn mr-2"></i> Ads Disclosure
+        <a href="/advertisingagreement" class="flex items-center p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+          <i class="fa-solid fa-bullhorn mr-2 text-emerald-500"></i> Ads Disclosure
         </a>
         
-        <a href="/tos" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-          <i class="fa-solid fa-scale-balanced mr-2"></i> Terms of service
-        </a>
-        
-        <!-- Pembatas garis tebal untuk kategori keluar -->
-        <div class="my-2 border-t-2 border-gray-200"></div>
-        
-        <a href="/contact" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-          <i class="fa-solid fa-headset mr-2"></i> Help
-        </a>
-        
-        <a href="/tickets" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-gray-700">
-          <i class="fa-solid fa-ticket mr-2"></i> Support Ticket
+        <a href="/tos" class="flex items-center p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+          <i class="fa-solid fa-scale-balanced mr-2 text-emerald-500"></i> Terms of service
         </a>
         
         <!-- Pembatas garis tebal untuk kategori keluar -->
-        <div class="my-2 border-t-2 border-gray-200"></div>
+        <div class="my-2 border-t border-emerald-500/20"></div>
         
-        <a href="/logout" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-red-500">
+        <a href="/contact" class="flex items-center p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+          <i class="fa-solid fa-headset mr-2 text-emerald-500"></i> Help
+        </a>
+        
+        <a href="/tickets" class="flex items-center p-2 rounded-lg hover:bg-emerald-500/10 font-medium text-gray-300 hover:text-emerald-400 transition">
+          <i class="fa-solid fa-ticket mr-2 text-emerald-500"></i> Support Ticket
+        </a>
+        
+        <!-- Pembatas garis tebal untuk kategori keluar -->
+        <div class="my-2 border-t border-emerald-500/20"></div>
+        
+        <a href="/logout" class="flex items-center p-2 rounded-lg hover:bg-red-500/10 font-medium text-red-400 hover:text-red-300 transition">
           <i class="fa-solid fa-right-from-bracket mr-2"></i> Logout
         </a>
         
         <!-- Tombol Delete Account -->
-<a onclick="openDeletePopup(); closeSidebar();" class="flex items-center p-2 rounded-lg hover:bg-gray-100 font-medium text-red-500 cursor-pointer">
+<a onclick="openDeletePopup(); closeSidebar();" class="flex items-center p-2 rounded-lg hover:bg-red-500/10 font-medium text-red-400 hover:text-red-300 cursor-pointer transition">
   <i class="fa-solid fa-user-xmark mr-2"></i> Delete account
 </a>
   </nav>
 
   <!-- Footer Sosial Media -->
-  <div class="mt-auto pt-4 border-t border-gray-200 flex-shrink-0">
+  <div class="mt-auto pt-4 border-t border-emerald-500/20 flex-shrink-0">
     <div class="text-center">
       <p class="text-gray-500 text-xs mb-3">Follow us</p>
       <div class="flex justify-center space-x-3">
         <a href="https://www.facebook.com/profile.php?id=100083083359189" target="_blank" 
-           class="text-gray-600 hover:text-blue-500 transition-colors">
+           class="text-gray-500 hover:text-blue-400 transition-colors">
           <i class="fab fa-facebook-f text-lg"></i>
         </a>
         <a href="https://www.instagram.com/dodolsigma?igsh=YzljYTk1ODg3Zg==" target="_blank" 
-           class="text-gray-600 hover:text-pink-500 transition-colors">
+           class="text-gray-500 hover:text-pink-400 transition-colors">
           <i class="fab fa-instagram text-lg"></i>
         </a>
         <a href="https://youtube.com/@kochengbotzofc?si=8YkV19az_AMbrsZI" target="_blank" 
-           class="text-gray-600 hover:text-red-500 transition-colors">
+           class="text-gray-500 hover:text-red-400 transition-colors">
           <i class="fab fa-youtube text-lg"></i>
         </a>
         <a href="https://www.tiktok.com/@gemoyberanak2" target="_blank" 
-           class="text-gray-600 hover:text-black transition-colors">
+           class="text-gray-500 hover:text-emerald-400 transition-colors">
           <i class="fab fa-tiktok text-lg"></i>
         </a>
       </div>
-      <p class="text-xs text-gray-500 mt-3">&copy; Kocheng's |> Sahabat Ai Nusantara.</p>
+      <p class="text-xs text-gray-600 mt-3">&copy; Nox Team.</p>
     </div>
   </div>
 </aside>
@@ -519,7 +525,7 @@ function closeSidebar() {
   <main class="flex-grow p-4 sm:p-6 relative z-0">
 
     <!-- Welcome -->
-<h1 class="text-2xl font-bold mb-4 flex items-center gap-2">
+<h1 class="text-2xl font-bold mb-4 flex items-center gap-2 text-white">
   Welcome, {{ user.nama }}!
   <span class="animate-wave">👋</span>
 </h1>
@@ -527,24 +533,24 @@ function closeSidebar() {
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
 
   <!-- Account Status -->
-  <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-    <h2 class="font-semibold text-base mb-2">
+  <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+    <h2 class="font-semibold text-base mb-2 text-emerald-400">
       <i class="fa-sharp-duotone fa-solid fa-magnifying-glass"></i>
       Account Status
     </h2>
 
-    <div id="sync-status" class="hidden flex items-center gap-2 text-blue-600 font-medium">
+    <div id="sync-status" class="hidden flex items-center gap-2 text-emerald-400 font-medium">
       <span class="sync-spinner"></span>
       <span>Synchronizing your account...</span>
     </div>
 
     <div id="normal-status">
       {% if blokir_create is defined and blokir_create %}
-        <p class="text-gray-600">
+        <p class="text-gray-300">
           Restricted <i class="fas fa-ban text-red-500"></i>
         </p>
       {% else %}
-        <p class="text-gray-600">
+        <p class="text-gray-300">
           Registered and verified <i class="fas fa-check-circle text-green-500"></i>
         </p>
       {% endif %}
@@ -552,94 +558,94 @@ function closeSidebar() {
   </div>
 
   <!-- Username -->
-  <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-    <h2 class="font-semibold text-base mb-2">
+  <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+    <h2 class="font-semibold text-base mb-2 text-emerald-400">
       <i class="fa-sharp-duotone fa-solid fa-user"></i>
       Username
     </h2>
-    <p class="text-gray-600">{{ user.nama }}</p>
+    <p class="text-gray-300">{{ user.nama }}</p>
   </div>
 
   <!-- Active Email -->
-  <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-    <h2 class="font-semibold text-base mb-2">
+  <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+    <h2 class="font-semibold text-base mb-2 text-emerald-400">
       <i class="fa-solid fa-envelope"></i>
       Active Email
     </h2>
-    <p class="text-gray-600">{{ user.email }}</p>
+    <p class="text-gray-300">{{ user.email }}</p>
   </div>
 </div>
 
 {% if ram_upgrade_end %}
 <div
-  class="bg-white p-4 md:p-5 rounded-2xl shadow-md mb-6 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal"
+  class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 mb-6 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal"
   id="ram-upgrade-box"
 >
-  <h2 class="font-semibold text-base mb-2">
+  <h2 class="font-semibold text-base mb-2 text-emerald-400">
     RAM Upgrade in Progress
   </h2>
 
-  <p class="text-sm text-gray-500 mb-3">
+  <p class="text-sm text-gray-400 mb-3">
     Your RAM upgrade will finish soon. Please wait until the process is completed.
   </p>
 
   <!-- Progress Bar -->
-  <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden mb-2">
+  <div class="w-full bg-gray-700 rounded-full h-3 overflow-hidden mb-2">
     <div
       id="ram-progress-bar"
-      class="bg-blue-500 h-3 rounded-full transition-all duration-500"
+      class="bg-emerald-500 h-3 rounded-full transition-all duration-500"
       style="width: 0%;"
     ></div>
   </div>
 
   <!-- Countdown -->
-  <p class="text-sm font-medium text-gray-700">
+  <p class="text-sm font-medium text-gray-300">
     Time remaining:
-    <span id="countdown" class="text-blue-600 font-semibold"></span>
+    <span id="countdown" class="text-emerald-400 font-semibold font-mono"></span>
   </p>
 </div>
 {% endif %}
 
-    <hr class="my-8 border-gray-200">
+    <hr class="my-8 border-emerald-500/20">
 
     <!-- Server Panel Info -->
-    <h1 class="text-2xl font-bold mb-2">Server panel information!</h1>
-    <p class="text-gray-500 mb-6">Displays panel reset time and last login time.</p>
+    <h1 class="text-2xl font-bold mb-2 text-white">Server panel information!</h1>
+    <p class="text-gray-400 mb-6">Displays panel reset time and last login time.</p>
     
     <!-- 🔔 Notification Card -->
 <div id="notif-card" 
-     class="bg-white p-4 md:p-5 rounded-2xl shadow-md mb-6 opacity-0 translate-y-4 transition-all duration-700 ease-in-out hidden">
-  <h2 id="notif-title" class="font-semibold text-base mb-2 flex items-center gap-2"></h2>
-  <p id="notif-text" class="text-gray-600"></p>
+     class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 mb-6 opacity-0 translate-y-4 transition-all duration-700 ease-in-out hidden">
+  <h2 id="notif-title" class="font-semibold text-base mb-2 flex items-center gap-2 text-emerald-400"></h2>
+  <p id="notif-text" class="text-gray-300"></p>
 </div>
 
-<div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal mb-5">
-  <h2 class="font-semibold text-base mb-2">
+<div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal mb-5">
+  <h2 class="font-semibold text-base mb-2 text-emerald-400">
     <i class="fa-sharp-duotone fa-solid fa-gauge-high"></i>
     Panel performance
   </h2>
 
-  <div class="w-full bg-gray-200 rounded-full h-3 mt-3 overflow-hidden">
+  <div class="w-full bg-gray-700 rounded-full h-3 mt-3 overflow-hidden">
     <div id="performanceBar" class="h-3 rounded-full transition-all duration-700 ease-in-out"></div>
   </div>
 
-  <p id="performanceLabel" class="text-sm mt-2 mb-1 font-medium text-gray-700 transition-opacity duration-500"></p>
+  <p id="performanceLabel" class="text-sm mt-2 mb-1 font-medium text-gray-300 transition-opacity duration-500"></p>
 </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-  <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-    <h2 class="font-semibold text-base mb-2">
-      <i class="fa-solid fa-hourglass-half text-blue-500"></i>
+  <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+    <h2 class="font-semibold text-base mb-2 text-emerald-400">
+      <i class="fa-solid fa-hourglass-half text-emerald-400"></i>
       Countdown Reset
     </h2>
     {% if locked %}
     <p class="text-gray-600 flex items-center gap-2">
-      <i class="fa-solid fa-lock text-red-500"></i>
+      <i class="fa-solid fa-lock text-red-400"></i>
       <span>Dashboard is currently <b>locked</b> for maintenance.</span>
     </p>
     {% else %}
     <p class="text-gray-600 flex items-center gap-2">
-      <i class="fa-solid fa-calendar-days text-green-500"></i>
+      <i class="fa-solid fa-calendar-days text-emerald-400"></i>
       <span id="countdownDisplay">
         <span id="days">0</span>d 
         <span id="time">
@@ -652,76 +658,76 @@ function closeSidebar() {
     {% endif %}
   </div>
 
-      <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-        <h2 class="font-semibold text-base mb-2">
-          <i class="fa-solid fa-clock"></i>
+      <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+        <h2 class="font-semibold text-base mb-2 text-emerald-400">
+          <i class="fa-solid fa-clock text-emerald-400"></i>
           Last Login
         </h2>
-        <p class="text-gray-600">{{ last_login.strftime('%d %B %Y - %H:%M WIB') }}</p>
-        <p class="text-gray-600">Log back in {{ sisa_login_hari }} the day after this</p>
+        <p class="text-gray-300">{{ last_login.strftime('%d %B %Y - %H:%M WIB') }}</p>
+        <p class="text-gray-300">Log back in {{ sisa_login_hari }} the day after this</p>
       </div>
     </div>
 
     <!-- Info Free Panels -->
-    <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md mb-6 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-      <h2 class="font-semibold text-base mb-2">Get information about free panels</h2>
-      <p class="mt-2 text-sm text-gray-500">
+    <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 mb-6 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+      <h2 class="font-semibold text-base mb-2 text-emerald-400">Get information about free panels</h2>
+      <p class="mt-2 text-sm text-gray-400">
         Get the latest information here
-        <a href="{{ whatsapp_channel }}" class="text-blue-500 hover:underline">WhatsApp channel</a>.
+        <a href="{{ whatsapp_channel }}" class="text-emerald-400 hover:text-emerald-300 hover:underline transition">WhatsApp channel</a>.
       </p>
     </div>
 
-    <hr class="my-8 border-gray-200">
+    <hr class="my-8 border-emerald-500/20">
 
     <!-- Limit Server -->
-    <h1 class="text-2xl font-bold mb-2">Limit your server creation!</h1>
-    <p class="text-gray-500 mb-6">If full, can't make any more.</p>
+    <h1 class="text-2xl font-bold mb-2 text-white">Limit your server creation!</h1>
+    <p class="text-gray-400 mb-6">If full, can't make any more.</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-      <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-        <h2 class="font-semibold text-base mb-2">
+      <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+        <h2 class="font-semibold text-base mb-2 text-emerald-400">
           <i class="fa-sharp-duotone fa-solid fa-cloud"></i>
           Server Made
         </h2>
-        <p class="text-gray-600">{{ user.server }}/1</p>
+        <p class="text-gray-300">{{ user.server }}/1</p>
       </div>
 
-      <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-        <h2 class="font-semibold text-base mb-2">
+      <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+        <h2 class="font-semibold text-base mb-2 text-emerald-400">
           <i class="fa-sharp-duotone fa-solid fa-gear"></i>
           Limit Cpu
         </h2>
-        <p class="text-gray-600">{{ user.cpu }}/{{ panel_cpu }}%</p>
+        <p class="text-gray-300">{{ user.cpu }}/{{ panel_cpu }}%</p>
       </div>
 
-      <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-        <h2 class="font-semibold text-base mb-2">
+      <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+        <h2 class="font-semibold text-base mb-2 text-emerald-400">
           <i class="fa-sharp-duotone fa-solid fa-memory"></i>
           Limit Ram
         </h2>
-        <p class="text-gray-600">{{ user.ram }}/10120 MIB</p>
+        <p class="text-gray-300">{{ user.ram }}/10120 MIB</p>
       </div>
 
-      <div class="bg-white p-4 md:p-5 rounded-2xl shadow-md opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
-        <h2 class="font-semibold text-base mb-2">
+      <div class="bg-white/5 backdrop-blur-sm p-4 md:p-5 rounded-2xl shadow-md border border-emerald-500/20 opacity-0 translate-y-4 transition-all duration-700 ease-in-out reveal">
+        <h2 class="font-semibold text-base mb-2 text-emerald-400">
           <i class="fa-sharp-duotone fa-solid fa-memory"></i>
           Limit Disk
         </h2>
-        <p class="text-gray-600">{{ user.disk }}/5024 MIB</p>
+        <p class="text-gray-300">{{ user.disk }}/5024 MIB</p>
       </div>
     </div>
 
   </main>
       
 <!-- Gelembung bantuan -->
-<div id="helpBubble" class="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg cursor-pointer z-[9999]">
+<div id="helpBubble" class="fixed bottom-5 right-5 w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 cursor-pointer z-[9999] pulse-green-glow">
   <i class="fa-solid fa-circle-question text-2xl"></i>
 </div>
 
 <!-- Panel FAQ -->
-<div id="helpPanel" class="fixed bottom-20 right-5 w-80 max-h-[450px] bg-white rounded-xl shadow-2xl p-4 flex-col z-[9999] overflow-y-auto opacity-0 scale-95 pointer-events-none transition-all duration-300">
+<div id="helpPanel" class="fixed bottom-20 right-5 w-80 max-h-[450px] bg-slate-800 border border-emerald-500/20 rounded-xl shadow-2xl p-4 flex-col z-[9999] overflow-y-auto opacity-0 scale-95 pointer-events-none transition-all duration-300">
   <header class="flex justify-between items-center mb-3">
-    <h3 id="helpTitle" class="text-lg font-semibold">FAQ Panel</h3>
+    <h3 id="helpTitle" class="text-lg font-semibold text-white">FAQ Panel</h3>
     <button id="closeHelp" class="text-gray-500 hover:text-gray-800 text-xl">&times;</button>
   </header>
   <select id="langSwitch" class="mb-3 border rounded p-1 text-sm">
@@ -730,25 +736,27 @@ function closeSidebar() {
   </select>
 
   <!-- Search bar -->
-  <input id="faqSearch" type="text" placeholder="Cari pertanyaan..." class="mb-3 w-full border rounded p-2 text-sm" />
+  <input id="faqSearch" type="text" placeholder="Cari pertanyaan..." class="mb-3 w-full border border-emerald-500/30 bg-slate-700 text-gray-300 rounded p-2 text-sm focus:outline-none focus:border-emerald-400" />
 
   <div id="faqContainer" class="space-y-2 text-sm"></div>
 </div>
 
       <!-- FOOTER -->
-  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
-    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
-      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
-      <p>
-        <a href="/privacy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
-        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
-        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
-        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
-      </p>
-      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
-      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
-    </div>
-  </footer>
+<footer class="bg-black/40 backdrop-blur-sm border-t border-emerald-500/10 py-3 sm:py-4 text-xs sm:text-sm">
+  <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-3 sm:px-4">
+    <p class="font-semibold text-emerald-400 text-sm tracking-wider">
+      <i class="fa-solid fa-bolt text-emerald-400 mr-1"></i>ɴᴏx ᴛᴇᴀᴍ  |>  ʙᴏᴛ ʜᴏsᴛɪɴɢ
+    </p>
+    <p class="space-x-2">
+      <a href="/privacy" class="text-gray-400 hover:text-emerald-400 hover:underline transition">ᴘʀɪᴠᴀᴄʏ ᴘᴏʟɪᴄʏ</a> | 
+      <a href="/tos" class="text-gray-400 hover:text-emerald-400 hover:underline transition">ᴛᴇʀᴍs ᴏғ sᴇʀᴠɪᴄᴇ</a> | 
+      <a href="/advertisingagreement" class="text-gray-400 hover:text-emerald-400 hover:underline transition">ᴀᴅs ᴅɪsᴄʟᴏsᴜʀᴇ</a> | 
+      <a href="/blog" class="text-gray-400 hover:text-emerald-400 hover:underline transition">ʙʟᴏɢ</a>
+    </p>
+    <p class="text-gray-600">ɴᴏx ᴛᴇᴀᴍ  —  ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ ʜᴏsᴛɪɴɢ sᴏʟᴜᴛɪᴏɴ</p>
+    <p><i class="fa-solid fa-envelope text-emerald-400 mr-1"></i>support@nox-team.biz.id</p>
+  </div>
+</footer>
     </div>
   </div>
   
@@ -756,7 +764,7 @@ function closeSidebar() {
 <div id="delete-popup"
      class="fixed inset-0 w-full h-full bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-[999999] invisible opacity-0 pointer-events-none transition-all duration-200">
   <!-- Popup Card -->
-  <div class="bg-white w-96 p-6 rounded-2xl shadow-2xl animate-scaleIn">
+  <div class="bg-slate-800 border border-emerald-500/20 w-96 p-6 rounded-2xl shadow-2xl animate-scaleIn">
 
     <!-- Warning Icon -->
     <div class="flex justify-center mb-4">
@@ -766,10 +774,10 @@ function closeSidebar() {
     </div>
 
     <!-- Title -->
-    <h2 class="text-xl font-bold text-center mb-2">Delete Account</h2>
+    <h2 class="text-xl font-bold text-center mb-2 text-white">Delete Account</h2>
 
     <!-- Description -->
-    <p class="text-gray-600 text-center mb-6">
+    <p class="text-gray-400 text-center mb-6">
       By deleting this account, all data associated with it will be permanently removed, 
       including any Pterodactyl servers created under this account. This action cannot be undone.
     </p>
@@ -777,7 +785,7 @@ function closeSidebar() {
     <!-- Buttons -->
     <div class="flex justify-end gap-3">
       <a href="/dashboard"
-         class="w-1/2 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 font-medium text-center block">
+         class="w-1/2 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-gray-300 font-medium text-center block border border-emerald-500/20">
         Cancel
       </a>
       <form action="/hapus-akun" method="POST" class="w-1/2">
@@ -797,7 +805,7 @@ function closeSidebar() {
   class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-50 animate-fadein">
 
   <!-- Popup Card -->
-  <div class="relative bg-white shadow-2xl rounded-2xl p-6 w-96 border border-gray-200 animate-pop">
+  <div class="relative bg-slate-800 shadow-2xl rounded-2xl p-6 w-96 border border-emerald-500/20 animate-pop">
 
     <!-- Close button -->
     <button onclick="closeBackupPopup()" 
@@ -807,10 +815,10 @@ function closeSidebar() {
 
     <!-- Header -->
     <div class="flex items-center gap-3 mb-4">
-      <div class="bg-orange-100 text-orange-600 p-2 rounded-full">
+      <div class="bg-orange-500/20 text-orange-400 p-2 rounded-full">
         <i class="fas fa-database"></i>
       </div>
-      <h2 class="text-xl font-bold text-gray-800 lang"
+      <h2 class="text-xl font-bold text-white lang"
         data-id="Peringatan Backup Server"
         data-en="Server Backup Warning">
         Peringatan Backup Server
@@ -818,7 +826,7 @@ function closeSidebar() {
     </div>
 
     <!-- Body -->
-    <p class="text-gray-600 mb-4 lang"
+    <p class="text-gray-400 mb-4 lang"
       data-id="Untuk menghindari kehilangan data yang tidak terduga, kami sangat menyarankan kamu untuk selalu melakukan backup server secara berkala."
       data-en="To prevent unexpected data loss, we strongly recommend that you always back up your server regularly.">
       Untuk menghindari kehilangan data yang tidak terduga, kami sangat menyarankan kamu untuk selalu melakukan backup server secara berkala.
@@ -857,7 +865,7 @@ function closeSidebar() {
   class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-50 animate-fadein">
 
   <!-- Popup Card -->
-  <div class="relative bg-white shadow-2xl rounded-2xl p-6 w-96 border border-gray-200 animate-pop">
+  <div class="relative bg-slate-800 shadow-2xl rounded-2xl p-6 w-96 border border-emerald-500/20 animate-pop">
 
     <!-- Close Button -->
     <button onclick="closeBlokirPopup()" 
@@ -867,10 +875,10 @@ function closeSidebar() {
 
     <!-- Header -->
     <div class="flex items-center gap-3 mb-4">
-      <div class="bg-red-100 text-red-600 p-3 rounded-full">
+      <div class="bg-red-500/20 text-red-400 p-3 rounded-full">
         <i class="fas fa-ban text-lg"></i>
       </div>
-      <h2 class="text-xl font-bold text-red-600 lang"
+      <h2 class="text-xl font-bold text-red-400 lang"
         data-en="Account Restricted"
         data-id="Akun Dibatasi">
         Account Restricted
@@ -985,7 +993,7 @@ document.addEventListener("DOMContentLoaded", showBlokirPopupIfAllowed);
   class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-50 animate-fadein">
 
   <!-- Popup Card -->
-  <div class="relative bg-white shadow-2xl rounded-2xl p-6 w-96 border border-gray-200 animate-pop">
+  <div class="relative bg-slate-800 shadow-2xl rounded-2xl p-6 w-96 border border-emerald-500/20 animate-pop">
 
     <!-- Close button -->
     <button onclick="closeIpPopup()" 
@@ -996,10 +1004,10 @@ document.addEventListener("DOMContentLoaded", showBlokirPopupIfAllowed);
     {% if ip_users|length < 3 %}
       <!-- Header -->
       <div class="flex items-center gap-3 mb-4">
-        <div class="bg-blue-100 text-blue-600 p-2 rounded-full">
+        <div class="bg-blue-500/20 text-blue-400 p-2 rounded-full">
           <i class="fas fa-shield-alt"></i>
         </div>
-        <h2 class="text-xl font-bold text-gray-800 lang"
+        <h2 class="text-xl font-bold text-white lang"
           data-en="Security Information"
           data-id="Informasi Keamanan">
           Security Information
@@ -1007,16 +1015,16 @@ document.addEventListener("DOMContentLoaded", showBlokirPopupIfAllowed);
       </div>
 
       <!-- Body -->
-      <p class="text-gray-600 mb-3 lang"
+      <p class="text-gray-400 mb-3 lang"
         data-en="Your account logged in from the same IP as:" 
         data-id="Akun kamu login dari IP yang sama dengan:">
         Your account logged in from the same IP as:
       </p>
 
-      <ul class="space-y-2 bg-gray-50 p-3 rounded-lg text-gray-700 text-sm">
+      <ul class="space-y-2 bg-slate-700/50 p-3 rounded-lg text-gray-300 text-sm">
         {% for u in ip_users %}
           <li class="flex items-center gap-2">
-            <i class="fas fa-user text-blue-500"></i> {{ u.email }}
+            <i class="fas fa-user text-emerald-400"></i> {{ u.email }}
           </li>
         {% endfor %}
       </ul>
@@ -1024,7 +1032,7 @@ document.addEventListener("DOMContentLoaded", showBlokirPopupIfAllowed);
       <!-- Buttons -->
       <div class="mt-5 space-y-3">
         <button onclick="closeIpPopup()" 
-          class="w-full bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition font-medium lang"
+          class="w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white py-2 rounded-xl hover:from-emerald-400 transition font-medium lang"
           data-en="Understand" 
           data-id="Mengerti">
           Understand
@@ -1044,7 +1052,7 @@ document.addEventListener("DOMContentLoaded", showBlokirPopupIfAllowed);
         <div class="bg-red-100 text-red-600 p-2 rounded-full">
           <i class="fas fa-exclamation-triangle"></i>
         </div>
-        <h2 class="text-xl font-bold text-red-600 lang"
+        <h2 class="text-xl font-bold text-red-400 lang"
           data-en="IP Limit Exceeded" 
           data-id="IP Melebihi Batas">
           IP Limit Exceeded
@@ -1107,14 +1115,14 @@ document.addEventListener("DOMContentLoaded", showBlokirPopupIfAllowed);
   class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-50 animate-fadein">
 
   <!-- Card -->
-  <div class="relative bg-white w-80 sm:w-96 p-6 rounded-2xl shadow-2xl border border-gray-200 animate-pop">
+  <div class="relative bg-slate-800 w-80 sm:w-96 p-6 rounded-2xl shadow-2xl border border-emerald-500/20 animate-pop">
 
     <!-- Icon Header -->
     <div class="flex items-center gap-3 mb-4">
-      <div class="bg-red-100 text-red-600 p-3 rounded-full">
+      <div class="bg-red-500/20 text-red-400 p-3 rounded-full">
         <i class="fas fa-exclamation-triangle text-lg"></i>
       </div>
-      <h2 class="text-xl font-bold text-red-600 lang"
+      <h2 class="text-xl font-bold text-red-400 lang"
         data-en="Delete Confirmation"
         data-id="Konfirmasi Penghapusan">
         Delete Confirmation
@@ -1122,7 +1130,7 @@ document.addEventListener("DOMContentLoaded", showBlokirPopupIfAllowed);
     </div>
 
     <!-- Body -->
-    <p class="text-gray-700 text-sm leading-relaxed mb-5 lang"
+    <p class="text-gray-400 text-sm leading-relaxed mb-5 lang"
       data-en="This action will permanently delete the account and all panel servers created by it. Are you sure you want to continue?"
       data-id="Ini akan menghapus akun tersebut dan juga server panel yang telah dibuat. Kamu yakin ingin melanjutkan?">
       This action will permanently delete the account and all panel servers created by it. Are you sure you want to continue?
@@ -1136,14 +1144,14 @@ document.addEventListener("DOMContentLoaded", showBlokirPopupIfAllowed);
     <!-- Buttons -->
     <div class="flex justify-end gap-3">
       <button onclick="hideConfirmDelete()"
-        class="px-4 py-2 rounded-lg bg-gray-500 text-white font-medium hover:bg-gray-600 transition lang"
+        class="px-4 py-2 rounded-lg bg-white/10 text-gray-300 font-medium hover:bg-white/20 transition lang"
         data-en="Cancel"
         data-id="Tidak">
         Cancel
       </button>
 
       <button onclick="submitDelete()"
-        class="px-4 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition lang"
+        class="px-4 py-2 rounded-lg bg-red-600/80 text-white font-medium hover:bg-red-600 transition lang"
         data-en="Confirm"
         data-id="Setuju">
         Confirm
@@ -1222,46 +1230,46 @@ function closeIpPopup() {
 </script>
 
 <!-- Notifikasi Login -->
-<div id="popupLogin" class="fixed top-5 right-5 bg-white border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-700 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
-  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+<div id="popupLogin" class="fixed top-5 right-5 bg-slate-800/90 backdrop-blur-md border-l-4 border-emerald-500 shadow-lg rounded-md px-4 py-3 text-emerald-400 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
+  <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
   <span>Login successfully!</span>
 </div>
 
 <!-- Notifikasi Daftar -->
-<div id="popupDaftar" class="fixed top-5 right-5 bg-white border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-700 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
-  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+<div id="popupDaftar" class="fixed top-5 right-5 bg-slate-800/90 backdrop-blur-md border-l-4 border-emerald-500 shadow-lg rounded-md px-4 py-3 text-emerald-400 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
+  <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
   <span>Registration Successful!</span>
 </div>
 
 <!-- Notifikasi Upram -->
-<div id="popupUpram" class="fixed top-5 right-5 bg-white border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-700 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
-  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+<div id="popupUpram" class="fixed top-5 right-5 bg-slate-800/90 backdrop-blur-md border-l-4 border-emerald-500 shadow-lg rounded-md px-4 py-3 text-emerald-400 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
+  <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
   <span>Ram Upgrade Successful!</span>
 </div>
 
 <!-- Notifikasi No Server -->
-<div id="popupNoserver" class="fixed top-5 right-5 bg-white border-l-4 border-yellow-500 shadow-lg rounded-md px-4 py-3 text-yellow-700 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500 z-50">
-<i class="fa-solid fa-triangle-exclamation text-yellow-500 text-xl"></i>
+<div id="popupNoserver" class="fixed top-5 right-5 bg-slate-800/90 backdrop-blur-md border-l-4 border-yellow-500 shadow-lg rounded-md px-4 py-3 text-yellow-400 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500 z-50">
+<i class="fa-solid fa-triangle-exclamation text-yellow-400 text-xl"></i>
   <span>You Don't Have a Server Yet!</span>
 </div>
 
 <!-- Notifikasi Hapus Akun -->
-<div id="popupDeleteakun" class="fixed top-5 right-5 bg-white border-l-4 border-green-500 shadow-lg rounded-md px-4 py-3 text-green-700 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
-  <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+<div id="popupDeleteakun" class="fixed top-5 right-5 bg-slate-800/90 backdrop-blur-md border-l-4 border-emerald-500 shadow-lg rounded-md px-4 py-3 text-emerald-400 flex items-center space-x-3 opacity-0 translate-y-[-10px] transition-all duration-500">
+  <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
   <span>Successfully Deleted The Account!</span>
 </div>
 
 <!-- Popup Persetujuan -->
 <div id="agreementPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-500 p-2">
-  <div id="agreementBox" class="bg-white rounded-xl shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-md p-3 sm:p-4 transform scale-95 transition-transform duration-500">
+  <div id="agreementBox" class="bg-slate-800 border border-emerald-500/20 rounded-xl shadow-2xl w-full max-w-xs sm:max-w-sm md:max-w-md p-3 sm:p-4 transform scale-95 transition-transform duration-500">
     
     <!-- Judul -->
-    <h2 id="agreeTitle" class="text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 text-center">
+    <h2 id="agreeTitle" class="text-base sm:text-lg font-bold text-white mb-2 sm:mb-3 text-center">
       Pemberitahuan Penting
     </h2>
 
     <!-- Isi -->
-    <div class="space-y-2 text-gray-700 text-xs sm:text-sm leading-relaxed">
+    <div class="space-y-2 text-gray-400 text-xs sm:text-sm leading-relaxed">
       <p id="agreeLine1">1. Dengan melanjutkan penggunaan layanan ini, Anda menyetujui bahwa iklan dapat ditampilkan di dashboard.</p>
       <p id="agreeLine2">2. Kami meminta Anda untuk menonaktifkan AdBlock agar seluruh fitur dapat berfungsi dengan baik.</p>
       <p id="agreeLine3">3. Harap diketahui, server yang tidak menunjukkan aktivitas selama <b>7 (tujuh) hari berturut-turut</b> akan secara otomatis dihapus untuk menjaga efisiensi sistem.</p>
@@ -1274,10 +1282,10 @@ function closeIpPopup() {
 
     <!-- Tombol -->
     <div class="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-end gap-2">
-      <button id="translateBtn" class="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition text-xs sm:text-sm">
+      <button id="translateBtn" class="px-3 py-1.5 rounded-lg bg-white/10 text-gray-300 hover:bg-white/20 transition text-xs sm:text-sm">
         English
       </button>
-      <button id="acceptBtn" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition text-xs sm:text-sm">
+      <button id="acceptBtn" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-500 to-green-600 text-white hover:from-emerald-400 hover:to-green-500 transition text-xs sm:text-sm">
         Saya Setuju
       </button>
     </div>
@@ -1287,9 +1295,9 @@ function closeIpPopup() {
 <div id="ad-bait-container" style="position:absolute; left:-9999px; top:-9999px;"></div>
 <!-- Popup Adblock Hard Block -->
 <div id="adblock-popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-[9999] hidden">
-  <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-5 text-center animate-fade-in-scale">
-    <h2 class="text-xl font-bold text-red-600 mb-2">AdBlock Detected!</h2>
-    <p class="text-gray-700 mb-3 text-sm" id="adblock-message">
+  <div class="bg-slate-800 border border-emerald-500/20 rounded-xl shadow-2xl max-w-sm w-full p-5 text-center animate-fade-in-scale">
+    <h2 class="text-xl font-bold text-red-400 mb-2">AdBlock Detected!</h2>
+    <p class="text-gray-400 mb-3 text-sm" id="adblock-message">
       Please turn off your AdBlock to continue.<br>
       The page will automatically reload after AdBlock is turned off.
     </p>
@@ -1299,9 +1307,9 @@ function closeIpPopup() {
     </div>
 
     <!-- FAQ Section -->
-    <div class="text-left mb-4 border-t pt-3">
+    <div class="text-left mb-4 border-t border-emerald-500/20 pt-3">
       <div class="flex justify-between items-center mb-2">
-        <h3 class="font-semibold text-gray-800">FAQ</h3>
+        <h3 class="font-semibold text-white">FAQ</h3>
         <button id="lang-toggle" class="text-sm text-blue-600 hover:underline">
           Bahasa Indonesia
         </button>
@@ -1710,7 +1718,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <script>
 function bukaIklan() {
-  window.open('https://ouo.io/jqy8uj', '_blank');
+  window.open('https://ouo.io/oiESr7M', '_blank');
 }
 function createviatele() {
   window.open('http://t.me/kochengs_bot', '_blank');
@@ -1885,7 +1893,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Tentukan warna dan label berdasarkan tanggal
   if (day >= 1 && day <= 10) {
-    color = "bg-green-500";
+    color = "bg-emerald-500";
     label = "Good Performance";
     emoji = "🟢";
   } else if (day >= 11 && day <= 13) {
@@ -1897,7 +1905,7 @@ document.addEventListener("DOMContentLoaded", () => {
     label = "Low Performance";
     emoji = "🔴";
   } else if (day >= 16 && day <= 20) {
-    color = "bg-green-500";
+    color = "bg-emerald-500";
     label = "Good Performance";
     emoji = "🟢";
   } else if (day >= 21 && day <= 25) {
