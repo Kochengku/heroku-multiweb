@@ -7,8 +7,8 @@ G_CLIENT_ID = "483762617301-nnqh4017o82p7euguoomhok4mlr9kshe.apps.googleusercont
 G_CLIENT_SECRET = "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"
 
 # Konfigurasi admin website
-admin_mail = 'kentukimeme@gmail.com' #ganti dengan email admin
-moderator_mail = 'amin@gmail.com'
+admin_mail = 'abm22818@gmail.com' #ganti dengan email admin
+moderator_mail = 'kentukimeme@gmail.com'
 
 # Konfigurasi link
 ouolink = 'https://ouo.io/7fQjGb'
