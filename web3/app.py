@@ -1197,7 +1197,7 @@ def can_use_special_ram(user: User):
     return False, remaining
     
 # Konfigurasi sync coin 
-COIN_JSON_URL = os.getenv("COIN_JSON_URL_KOCHENG")
+COIN_JSON_URL = os.getenv("COIN_JSON_URL_NOX")
 def load_coin_data():
     try:
         response = requests.get(COIN_JSON_URL, timeout=5)
