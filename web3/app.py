@@ -52,8 +52,8 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'static/konfigurasi'))
 
-from config_web1 import EMAIL_API_TOKEN, G_CLIENT_ID, G_CLIENT_SECRET, admin_mail, telegrambotlink, ouolink, whatsapp_number, whatsapp_channel, telegram_user, telegram_channel, FROM_NAME, FROM_EMAIL, ZEPTO_API_KEY, ZEPTO_API_URL, moderator_mail
-from pterodactyl_web1 import create_user, create_server, get_all_nodes, hapus_user_tanpa_server, fetch_node_server_counts, get_all_servers, get_all_users, fetch_egg_list, delete_server, PANELS, get_client_headers, get_headers
+from config_web3 import EMAIL_API_TOKEN, G_CLIENT_ID, G_CLIENT_SECRET, admin_mail, telegrambotlink, ouolink, whatsapp_number, whatsapp_channel, telegram_user, telegram_channel, FROM_NAME, FROM_EMAIL, ZEPTO_API_KEY, ZEPTO_API_URL, moderator_mail
+from pterodactyl_web3 import create_user, create_server, get_all_nodes, hapus_user_tanpa_server, fetch_node_server_counts, get_all_servers, get_all_users, fetch_egg_list, delete_server, PANELS, get_client_headers, get_headers
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -63,7 +63,7 @@ def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# ================== PATH ABSOLUT WEB1 ==================
+# ================== PATH ABSOLUT web3 ==================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 UPLOAD_FOLDER_KOCHENG = os.path.join(
@@ -1699,7 +1699,7 @@ def sync_user_multi_panel(user):
         db_pg.session.merge(server_entry)
 
         # COIN DEFAULT
-        from web1.scheduler_tasks import sync_coin_to_github
+        from web3.scheduler_tasks import sync_coin_to_github
         if user.coin == 0:
             user.coin = 20
             sync_coin_to_github()
@@ -4821,38 +4821,38 @@ def ram_status():
     
 @app.route("/internal/reset-boost", methods=["POST"])
 def internal_reset_boost():
-    from web1.scheduler_tasks import run_reset_ram_boost
+    from web3.scheduler_tasks import run_reset_ram_boost
     run_reset_ram_boost()
     return {"status": "ok", "job": "reset_boost"}, 200
 
 @app.route("/internal/reset-upgrade", methods=["POST"])
 def internal_reset_upgrade():
-    from web1.scheduler_tasks import run_reset_ram_upgrade
+    from web3.scheduler_tasks import run_reset_ram_upgrade
     run_reset_ram_upgrade()
     return {"status": "ok", "job": "reset_upgrade"}, 200
 
 @app.route("/internal/weekly-backup", methods=["POST"])
 def internal_weekly_backup():
-    from web1.scheduler_tasks import weekly_backup
+    from web3.scheduler_tasks import weekly_backup
     weekly_backup()
     return {"status": "ok", "job": "weekly_backup"}, 200
 
 @app.route("/internal/shutdown-inactive", methods=["POST"])
 def internal_shutdown_inactive():
-    from web1.scheduler_tasks import run_shutdown_inactive_servers
+    from web3.scheduler_tasks import run_shutdown_inactive_servers
     run_shutdown_inactive_servers()
     return {"status": "ok", "job": "shutdown_inactive"}, 200
 
 @app.route("/internal/daily-broadcast", methods=["POST"])
 def internal_daily_broadcast():
-    from web1.scheduler_tasks import run_daily_broadcast
+    from web3.scheduler_tasks import run_daily_broadcast
     run_daily_broadcast()
     return {"status": "ok", "job": "daily_broadcast"}, 200
     
 @app.route("/internal/sync-coin-github", methods=["POST"])
 def sync_coin_github():
     try:
-        from web1.scheduler_tasks import sync_coin_to_github
+        from web3.scheduler_tasks import sync_coin_to_github
         sync_coin_to_github()
         return jsonify({
             "status": "success",
