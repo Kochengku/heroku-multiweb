@@ -14,8 +14,8 @@ from config_web1 import admin_mail, moderator_mail
 PANELS = {
 "server1": {
         "url": "https://console.nox-team.biz.id",
-        "api_key": "ptla_1BeSDckqGIiwv92gwGP8jA8vG27qOXEMGLPh3sY3gsb,",
-        "client_api_key": "ptlc_DSsyQKUY6GWN4fUZ2A4gB5FNyyLqWN4S66YcLU16IGC"
+        "api_key": "ptla_EEzeO9NB1l2ogOBZyGLcCoPqqado3yDLEnkIEo8MHRc,",
+        "client_api_key": "ptlc_uqmvBVNd43lYarwj4k8BWPLARCvxm7uggfULb3o77cd"
     }
     # Bisa ditambah server3, dst...
 }
