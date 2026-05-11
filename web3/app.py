@@ -119,6 +119,7 @@ class User(db_sqlite.Model):
     login_google = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
     photo_url = db_sqlite.Column(db_sqlite.String(255))
+    iklan = db_sqlite.Column(db_sqlite.Integer, default=0)
     photo_google = db_sqlite.Column(db_sqlite.String(255), nullable=True)
 
     server = db_sqlite.Column(db_sqlite.Integer, default=0)
