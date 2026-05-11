@@ -11,7 +11,7 @@ admin_mail = 'abm22818@gmail.com' #ganti dengan email admin
 moderator_mail = 'kentukimeme@gmail.com'
 
 # Konfigurasi link
-ouolink = 'https://ouo.io/7fQjGb'
+ouolink = 'https://ouo.io/oiESr7M'
 telegrambotlink = 'http://t.me/kochengs_bot'
 whatsapp_number = '6281775155057'
 whatsapp_channel = 'https://whatsapp.com/channel/0029Vb2IjRwFi8xZpEVes12h'
