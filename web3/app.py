@@ -78,25 +78,23 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER_KOCHENG
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
-raw_uri = os.getenv("DATABASE_URL")
-if not raw_uri:
-    raise RuntimeError("DATABASE_URL tidak ditemukan")
-
-if raw_uri.startswith("postgres://"):
-    raw_uri = raw_uri.replace("postgres://", "postgresql://", 1)
-
 app.config.update(
-    SQLALCHEMY_DATABASE_URI=raw_uri,
+    SQLALCHEMY_DATABASE_URI="sqlite:///data_user.db_sqlite",
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    SQLALCHEMY_BINDS={
+        "data_panel": "sqlite:///data_panel.db_sqlite",
+        "data_refferal_user": "sqlite:///data_refferal_user.db_sqlite",
+        "data_global_server": "sqlite:///data_global_server.db_sqlite",
+        "data_global_limit_node": "sqlite:///data_global_limit_node.db_sqlite",
+        "data_dashboard": "sqlite:///data_dashboard.db_sqlite",
+        "data_ticket": "sqlite:///data_ticket.db_sqlite",
+    },
     SQLALCHEMY_ENGINE_OPTIONS={
-        "pool_size": 3,
-        "max_overflow": 2,
-        "pool_pre_ping": True,
-        "pool_recycle": 300,
+        "connect_args": {"check_same_thread": False}
     }
 )
 
-db_pg = SQLAlchemy(app)
+db_sqlite = SQLAlchemy(app)
 
 DEFAULT_NODES = [
     {"id": 1, "name": "Node 1", "limit_server": 35},
@@ -107,204 +105,189 @@ DEFAULT_NODES = [
     {"id": 6, "name": "Node 6", "limit_server": 35},
     {"id": 7, "name": "Node 7", "limit_server": 35},
     {"id": 8, "name": "Node 8", "limit_server": 35},
-    {"id": 9, "name": "Node 9", "limit_server": 35},
-    {"id": 10, "name": "Node 10", "limit_server": 35}
 ]
 
-class User(db_pg.Model):
-    __tablename__ = "users"
+class User(db_sqlite.Model):
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    nama = db_sqlite.Column(db_sqlite.String(100))
+    bio = db_sqlite.Column(db_sqlite.String(100))
+    email = db_sqlite.Column(db_sqlite.String(120), unique=True, nullable=False)
 
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    nama = db_pg.Column(db_pg.String(100))
-    bio = db_pg.Column(db_pg.String(100))
-    email = db_pg.Column(db_pg.String(120), unique=True, nullable=False)
+    password_hash = db_sqlite.Column(db_sqlite.String(255), nullable=True)
 
-    password_hash = db_pg.Column(db_pg.String(255), nullable=True)
+    is_verified = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    login_google = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
-    is_verified = db_pg.Column(db_pg.Boolean, default=False)
-    login_google = db_pg.Column(db_pg.Boolean, default=False)
+    photo_url = db_sqlite.Column(db_sqlite.String(255))
+    photo_google = db_sqlite.Column(db_sqlite.String(255), nullable=True)
 
-    photo_url = db_pg.Column(db_pg.String(255))
-    photo_google = db_pg.Column(db_pg.String(255))
+    server = db_sqlite.Column(db_sqlite.Integer, default=0)
+    cpu = db_sqlite.Column(db_sqlite.Integer, default=0)
+    ram = db_sqlite.Column(db_sqlite.Integer, default=0)
+    disk = db_sqlite.Column(db_sqlite.Integer, default=0)
 
-    server = db_pg.Column(db_pg.Integer, default=0)
-    cpu = db_pg.Column(db_pg.Integer, default=0)
-    ram = db_pg.Column(db_pg.Integer, default=0)
-    disk = db_pg.Column(db_pg.Integer, default=0)
+    last_boost = db_sqlite.Column(db_sqlite.DateTime, nullable=True)
+    last_boost_used = db_sqlite.Column(db_sqlite.DateTime, nullable=True)
 
-    coin = db_pg.Column(db_pg.Integer, default=0)
-    special_ram_last_used = db_pg.Column(db_pg.DateTime)
-    trialramused = db_pg.Column(db_pg.Integer, default=0)
+    coin = db_sqlite.Column(db_sqlite.Integer, default=0)
 
-    last_login = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
-    last_boost = db_pg.Column(db_pg.DateTime)
-    last_boost_used = db_pg.Column(db_pg.DateTime)
+    ram_upgrade_start = db_sqlite.Column(db_sqlite.DateTime, nullable=True)
+    ram_upgrade_end = db_sqlite.Column(db_sqlite.DateTime, nullable=True)
 
-    ram_upgrade_start = db_pg.Column(db_pg.DateTime)
-    ram_upgrade_end = db_pg.Column(db_pg.DateTime)
+    harian_coin = db_sqlite.Column(db_sqlite.Integer, default=0)
+    harian_coin_tanggal = db_sqlite.Column(db_sqlite.Date)
 
-    harian_coin = db_pg.Column(db_pg.Integer, default=0)
-    harian_coin_tanggal = db_pg.Column(db_pg.Date)
+    last_login = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
 
-    token = db_pg.Column(db_pg.Text, unique=True)
+    token = db_sqlite.Column(db_sqlite.Text, unique=True, nullable=True)
+    timestamp = db_sqlite.Column(db_sqlite.Integer, nullable=True)
 
-    timestamp = db_pg.Column(db_pg.Integer)
+    boostserver = db_sqlite.Column(db_sqlite.Integer, default=0)
 
-    iklan = db_pg.Column(db_pg.Integer, default=0)
-    iklan_expiry = db_pg.Column(db_pg.DateTime)
+    referral_code = db_sqlite.Column(db_sqlite.String(20), unique=True)
+    referred_by = db_sqlite.Column(db_sqlite.String(20), nullable=True)
 
-    boostserver = db_pg.Column(db_pg.Integer, default=0)
+    milestone_3 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_5 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_10 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_15 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_20 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_25 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    milestone_30 = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
-    referral_code = db_pg.Column(db_pg.String(20), unique=True)
-    referred_by = db_pg.Column(db_pg.String(20))
+    device_id = db_sqlite.Column(db_sqlite.String(255), nullable=True)
+    ip_address = db_sqlite.Column(db_sqlite.String(45), nullable=True)
+    user_agent = db_sqlite.Column(db_sqlite.Text)
 
-    milestone_3 = db_pg.Column(db_pg.Boolean, default=False)
-    milestone_5 = db_pg.Column(db_pg.Boolean, default=False)
-    milestone_10 = db_pg.Column(db_pg.Boolean, default=False)
-    milestone_15 = db_pg.Column(db_pg.Boolean, default=False)
-    milestone_20 = db_pg.Column(db_pg.Boolean, default=False)
-    milestone_25 = db_pg.Column(db_pg.Boolean, default=False)
-    milestone_30 = db_pg.Column(db_pg.Boolean, default=False)
+    daily_claim_day = db_sqlite.Column(db_sqlite.Integer, default=0)
+    daily_claim_last = db_sqlite.Column(db_sqlite.Date, nullable=True)
 
-    device_id = db_pg.Column(db_pg.String(255))
-    ip_address = db_pg.Column(db_pg.String(45))
-    user_agent = db_pg.Column(db_pg.Text)
+    afk_total_coin_bulanan = db_sqlite.Column(db_sqlite.Integer, default=0)
+    afk_bonus_bulan = db_sqlite.Column(db_sqlite.String(7), nullable=True)
+    afk_bonus_50 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    afk_bonus_100 = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    afk_bonus_200 = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
-    daily_claim_day = db_pg.Column(db_pg.Integer, default=0)
-    daily_claim_last = db_pg.Column(db_pg.Date)
+    created_server_before = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    create_mission_rewarded = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
-    afk_total_coin_bulanan = db_pg.Column(db_pg.Integer, default=0)
-    afk_bonus_bulan = db_pg.Column(db_pg.String(7))
-    afk_bonus_50 = db_pg.Column(db_pg.Boolean, default=False)
-    afk_bonus_100 = db_pg.Column(db_pg.Boolean, default=False)
-    afk_bonus_200 = db_pg.Column(db_pg.Boolean, default=False)
+    is_moderator = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    is_banned = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
-    created_server_before = db_pg.Column(db_pg.Boolean, default=False)
-    create_mission_rewarded = db_pg.Column(db_pg.Boolean, default=False)
+    is_backup_mega = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    auto_backup_enabled = db_sqlite.Column(db_sqlite.Boolean, default=False)
 
-    is_moderator = db_pg.Column(db_pg.Boolean, default=False)
-    is_banned = db_pg.Column(db_pg.Boolean, default=False)
+    last_backup = db_sqlite.Column(db_sqlite.DateTime)
+    next_backup = db_sqlite.Column(db_sqlite.DateTime)
+    last_filename = db_sqlite.Column(db_sqlite.String(255))
 
-    is_backup_mega = db_pg.Column(db_pg.Boolean, default=False)
-    auto_backup_enabled = db_pg.Column(db_pg.Boolean, default=False)
+    serverid = db_sqlite.Column(db_sqlite.String(50))
+    mega_link = db_sqlite.Column(db_sqlite.Text)
 
-    last_backup = db_pg.Column(db_pg.DateTime)
-    next_backup = db_pg.Column(db_pg.DateTime)
-    last_filename = db_pg.Column(db_pg.String(255))
-
-    serverid = db_pg.Column(db_pg.String(50))
-    mega_link = db_pg.Column(db_pg.Text)
+    trialramused = db_sqlite.Column(db_sqlite.Integer, default=0)
     
-class ServerSpec(db_pg.Model):
-    __tablename__ = "server_spec"
-
-    id = db_pg.Column(db_pg.String, primary_key=True)
-    ram = db_pg.Column(db_pg.Integer, default=1024)
-    cpu = db_pg.Column(db_pg.Integer, default=120)
-    disk = db_pg.Column(db_pg.Integer, default=5024)
-
-
-class Node(db_pg.Model):
-    __tablename__ = "node"
-
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    name = db_pg.Column(db_pg.String(50))
-    limit_server = db_pg.Column(db_pg.Integer, default=35)
-
-
-class Server(db_pg.Model):
-    __tablename__ = "server"
-
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    serverid = db_pg.Column(db_pg.String(50))
-    name = db_pg.Column(db_pg.String(100), nullable=False)
-    uuid = db_pg.Column(db_pg.String(36), unique=True, nullable=False)
-
-    user_id = db_pg.Column(db_pg.Integer, nullable=False)
-
-    server = db_pg.Column(db_pg.Integer, default=0)
-    cpu = db_pg.Column(db_pg.Integer, default=0)
-    ram = db_pg.Column(db_pg.Integer, default=0)
-    disk = db_pg.Column(db_pg.Integer, default=0)
-
-    allocation_id = db_pg.Column(db_pg.Integer)
-    created_at = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
+class ServerSpec(db_sqlite.Model):
+    __bind_key__ = 'data_global_server'
     
-class Ticket(db_pg.Model):
-    __tablename__ = "ticket"
+    id = db_sqlite.Column(db_sqlite.String, primary_key=True)
+    ram = db_sqlite.Column(db_sqlite.Integer, default=1024)
+    cpu = db_sqlite.Column(db_sqlite.Integer, default=100)
+    disk = db_sqlite.Column(db_sqlite.Integer, default=3024)
 
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    user_email = db_pg.Column(db_pg.String(120), nullable=False)
-    subject = db_pg.Column(db_pg.String(255), nullable=False)
-    category = db_pg.Column(db_pg.String(100), nullable=False)
-    status = db_pg.Column(db_pg.String(50), default="open")
-    created_at = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
+class Node(db_sqlite.Model):
+    __bind_key__ = 'data_global_limit_node'
+    
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    name = db_sqlite.Column(db_sqlite.String(50))
+    limit_server = db_sqlite.Column(db_sqlite.Integer, default=35)
 
-    is_notified_admin = db_pg.Column(db_pg.Boolean, default=False)
+class Server(db_sqlite.Model):
+    __bind_key__ = 'data_panel'
 
-    replies = db_pg.relationship(
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    serverid = db_sqlite.Column(db_sqlite.String(50))
+    name = db_sqlite.Column(db_sqlite.String(100), nullable=False)
+    uuid = db_sqlite.Column(db_sqlite.String(36), unique=True, nullable=False)
+    user_id = db_sqlite.Column(db_sqlite.Integer, nullable=False)
+    server = db_sqlite.Column(db_sqlite.Integer, default=0)
+    cpu = db_sqlite.Column(db_sqlite.Integer, default=0)
+    ram = db_sqlite.Column(db_sqlite.Integer, default=0)
+    disk = db_sqlite.Column(db_sqlite.Integer, default=0)
+    created_at = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
+    allocation_id = db_sqlite.Column(db_sqlite.Integer, nullable=True)
+    
+class Ticket(db_sqlite.Model):
+    __bind_key__ = 'data_ticket'
+    __tablename__ = 'ticket'
+
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    user_email = db_sqlite.Column(db_sqlite.String(120), nullable=False)
+    subject = db_sqlite.Column(db_sqlite.String(255), nullable=False)
+    category = db_sqlite.Column(db_sqlite.String(100), nullable=False)
+    status = db_sqlite.Column(db_sqlite.String(50), default="open")
+    created_at = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
+
+    is_notified_admin = db_sqlite.Column(db_sqlite.Boolean, default=False)
+
+    replies = db_sqlite.relationship(
         "Reply",
         backref="ticket",
         cascade="all, delete-orphan",
         passive_deletes=True
     )
-
-
-class Reply(db_pg.Model):
-    __tablename__ = "reply"
-
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    ticket_id = db_pg.Column(db_pg.Integer, db_pg.ForeignKey("ticket.id", ondelete="CASCADE"))
-    sender = db_pg.Column(db_pg.String(50))
-    message = db_pg.Column(db_pg.Text, nullable=False)
-    created_at = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
-
-    is_notified_user = db_pg.Column(db_pg.Boolean, default=False)
-    is_notified_admin = db_pg.Column(db_pg.Boolean, default=False)
-
-    images = db_pg.relationship(
-        "ReplyImage",
-        backref="reply",
-        cascade="all, delete-orphan"
-    )
-
-
-class ReplyImage(db_pg.Model):
-    __tablename__ = "reply_image"
-
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    reply_id = db_pg.Column(db_pg.Integer, db_pg.ForeignKey("reply.id"), nullable=False)
-    image_url = db_pg.Column(db_pg.String(255), nullable=False)
     
-class ReferralActivity(db_pg.Model):
-    __tablename__ = "referral_activity"
+class ReplyImage(db_sqlite.Model):
+    __bind_key__ = 'data_ticket'
+    __tablename__ = 'reply_image'
 
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    inviter_id = db_pg.Column(db_pg.Integer)
-    invited_id = db_pg.Column(db_pg.Integer)
-    action = db_pg.Column(db_pg.String(50))
-    reward = db_pg.Column(db_pg.Integer, default=0)
-    timestamp = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    reply_id = db_sqlite.Column(db_sqlite.Integer, db_sqlite.ForeignKey("reply.id"), nullable=False)
+    image_url = db_sqlite.Column(db_sqlite.String(255), nullable=False)
 
-class MonetagSession(db_pg.Model):
+class Reply(db_sqlite.Model):
+    __bind_key__ = 'data_ticket'
+    __tablename__ = 'reply'
+
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    ticket_id = db_sqlite.Column(db_sqlite.Integer, db_sqlite.ForeignKey("ticket.id", ondelete="CASCADE"), nullable=False)
+    sender = db_sqlite.Column(db_sqlite.String(50))  # 'user' atau 'admin'
+    message = db_sqlite.Column(db_sqlite.Text, nullable=False)
+    created_at = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
+
+    is_notified_user = db_sqlite.Column(db_sqlite.Boolean, default=False)
+    is_notified_admin = db_sqlite.Column(db_sqlite.Boolean, default=False)
+
+    images = db_sqlite.relationship("ReplyImage", backref="reply", cascade="all, delete-orphan")
+    
+class ReferralActivity(db_sqlite.Model):
+    __bind_key__ = 'data_refferal_user'
+
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    inviter_id = db_sqlite.Column(db_sqlite.Integer)
+    invited_id = db_sqlite.Column(db_sqlite.Integer)
+    action = db_sqlite.Column(db_sqlite.String(50))
+    reward = db_sqlite.Column(db_sqlite.Integer, default=0)
+    timestamp = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
+    
+class MonetagSession(db_sqlite.Model):
     __tablename__ = "monetag_sessions"
 
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    ymid = db_pg.Column(db_pg.String(64), unique=True, nullable=False, index=True)
-    email = db_pg.Column(db_pg.String(120), nullable=False)
-    status = db_pg.Column(db_pg.String(20), default="pending")
-    created_at = db_pg.Column(db_pg.DateTime, default=datetime.utcnow)
-    expires_at = db_pg.Column(db_pg.DateTime, nullable=False)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    ymid = db_sqlite.Column(db_sqlite.String(64), unique=True, nullable=False, index=True)
+    email = db_sqlite.Column(db_sqlite.String(120), nullable=False)
+    status = db_sqlite.Column(db_sqlite.String(20), default="pending")
+    created_at = db_sqlite.Column(db_sqlite.DateTime, default=datetime.utcnow)
+    expires_at = db_sqlite.Column(db_sqlite.DateTime, nullable=False)
 
     def is_expired(self) -> bool:
         return datetime.utcnow() >= self.expires_at
+    
+class SiteSetting(db_sqlite.Model):
+    __bind_key__ = 'data_dashboard'
 
-class SiteSetting(db_pg.Model):
-    __tablename__ = "site_setting"
-
-    id = db_pg.Column(db_pg.Integer, primary_key=True)
-    key = db_pg.Column(db_pg.String(100), unique=True, nullable=False)
-    value = db_pg.Column(db_pg.String(255), nullable=False)
+    id = db_sqlite.Column(db_sqlite.Integer, primary_key=True)
+    key = db_sqlite.Column(db_sqlite.String(100), unique=True, nullable=False)
+    value = db_sqlite.Column(db_sqlite.String(255), nullable=False)
 
     @staticmethod
     def get(key, default=None):
@@ -317,8 +300,9 @@ class SiteSetting(db_pg.Model):
         if s:
             s.value = str(value)
         else:
-            db_pg.session.add(SiteSetting(key=key, value=str(value)))
-        db_pg.session.commit()
+            s = SiteSetting(key=key, value=str(value))
+            db_sqlite.session.add(s)
+        db_sqlite.session.commit()
     
 update_queue = []
 update_logs = []
@@ -338,8 +322,8 @@ def init_nodes():
     if Node.query.count() == 0:
         for n in DEFAULT_NODES:
             node = Node(id=n["id"], name=n["name"], limit_server=n["limit_server"])
-            db_pg.session.add(node)
-        db_pg.session.commit()
+            db_sqlite.session.add(node)
+        db_sqlite.session.commit()
         print("Node default berhasil ditambahkan!")
         
 def init_server_spec():
@@ -352,15 +336,15 @@ def init_server_spec():
                 cpu=120,
                 disk=5024
             )
-            db_pg.session.add(default_server)
+            db_sqlite.session.add(default_server)
             print(f"[INIT] ServerSpec untuk {panel_id} berhasil ditambahkan")
         else:
             print(f"[INIT] ServerSpec untuk {panel_id} sudah ada, dilewati")
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
         
 with app.app_context():
-    db_pg.create_all()
+    db_sqlite.create_all()
     init_nodes()
     init_server_spec()
 
@@ -712,14 +696,14 @@ def delete_pterodactyl_server(user):
         # ==============================
         # 4️⃣ BERSIHKAN DATABASE LOKAL
         # ==============================
-        db_pg.session.delete(server)
+        db_sqlite.session.delete(server)
 
         user.server = 0
         user.cpu = 0
         user.ram = 0
         user.disk = 0
 
-        db_pg.session.commit()
+        db_sqlite.session.commit()
 
         return True, "Server & User Pterodactyl berhasil dihapus."
 
@@ -772,14 +756,14 @@ def enqueue_spec_update(panel_id: str, ram: int, disk: int, cpu: int):
             allocation = attrs["allocation"]
 
             # Gunakan UUID, bukan numeric id
-            server_db_pg = Server.query.filter_by(uuid=server_uuid).first()
-            if not server_db_pg:
-                add_log(f"⚠️ Server {server_uuid} tidak ditemukan di db_pg")
+            server_db_sqlite = Server.query.filter_by(uuid=server_uuid).first()
+            if not server_db_sqlite:
+                add_log(f"⚠️ Server {server_uuid} tidak ditemukan di db_sqlite")
                 continue
 
-            user = User.query.filter_by(id=server_db_pg.user_id).first()
+            user = User.query.filter_by(id=server_db_sqlite.user_id).first()
             if not user:
-                add_log(f"⚠️ User {server_db_pg.user_id} tidak ditemukan")
+                add_log(f"⚠️ User {server_db_sqlite.user_id} tidak ditemukan")
                 continue
 
             if user.ram_upgrade_start is not None or user.last_boost is not None:
@@ -796,11 +780,11 @@ def enqueue_spec_update(panel_id: str, ram: int, disk: int, cpu: int):
                 "cpu": cpu
             })
 
-            # Update spec di db_pg
+            # Update spec di db_sqlite
             user.cpu = cpu
             user.ram = ram
             user.disk = disk
-            db_pg.session.commit()
+            db_sqlite.session.commit()
 
         if data["meta"]["pagination"]["current_page"] >= data["meta"]["pagination"]["total_pages"]:
             break
@@ -1069,7 +1053,7 @@ def hapus_server_tidak_valid(panel_id, simulasi=True):
                     user.ram_upgrade_start = None
                     user.ram_upgrade_end = None
 
-                db_pg.session.delete(srv)
+                db_sqlite.session.delete(srv)
                 total_dihapus += 1
                 output.append("Server berhasil dihapus dan state user di-reset.")
 
@@ -1077,7 +1061,7 @@ def hapus_server_tidak_valid(panel_id, simulasi=True):
             total_dilewatkan += 1
 
     if not simulasi:
-        db_pg.session.commit()
+        db_sqlite.session.commit()
 
     output.append("")
     output.append("Ringkasan:")
@@ -1098,7 +1082,7 @@ def mark_trial(user):
     user.cpu = 120
     user.trialramused = 1
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
     
 def mark_trial_two(user):
     now = datetime.utcnow()
@@ -1134,7 +1118,7 @@ def mark_trial_two(user):
         print(f"⚠️ Revert gagal {user.email}:", e)
         return False
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
     
 def ensure_trial_on_dashboard(user):
 
@@ -1245,9 +1229,9 @@ def check_invite_milestone(user, inviter):
                 action=attr,
                 reward=reward
             )
-            db_pg.session.add(inviter)
-            db_pg.session.add(activity)
-            db_pg.session.commit()
+            db_sqlite.session.add(inviter)
+            db_sqlite.session.add(activity)
+            db_sqlite.session.commit()
     
 def log_referral_activity(user, action):
     if not user.referred_by:
@@ -1274,7 +1258,7 @@ def log_referral_activity(user, action):
         reward = 100
 
     inviter.coin += reward
-    db_pg.session.add(inviter)
+    db_sqlite.session.add(inviter)
 
     activity = ReferralActivity(
         inviter_id=inviter.id,
@@ -1282,8 +1266,8 @@ def log_referral_activity(user, action):
         action=action,
         reward=reward
     )
-    db_pg.session.add(activity)
-    db_pg.session.commit()
+    db_sqlite.session.add(activity)
+    db_sqlite.session.commit()
 
     check_invite_milestone(user, inviter)    
     
@@ -1630,7 +1614,7 @@ def reset_user_server_data(user):
     user.ram_upgrade_start = None
     user.ram_upgrade_end = None
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
 def sync_user_multi_panel(user):
     email = user.email
@@ -1696,7 +1680,7 @@ def sync_user_multi_panel(user):
             disk=server_disk,
             allocation_id=allocation_id
         )
-        db_pg.session.merge(server_entry)
+        db_sqlite.session.merge(server_entry)
 
         # COIN DEFAULT
         from web3.scheduler_tasks import sync_coin_to_github
@@ -1724,7 +1708,7 @@ def sync_user_multi_panel(user):
         except Exception as e:
             print(f"[WARN] Gagal cek/revert RAM: {e}")
 
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         return True  # ⬅️ STOP, SERVER SUDAH DITEMUKAN
 
     # =========================
@@ -1821,7 +1805,7 @@ def backup_and_upload(user):
     user.is_backup_mega = True
     user.last_filename = backup_name
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
     return True
     
 #------ ERROR PAGE ------#
@@ -1844,19 +1828,19 @@ def update_last_login():
     user = User.query.filter_by(email=user_email).first()
     if user:
         user.last_login = datetime.utcnow()
-        db_pg.session.commit()
+        db_sqlite.session.commit()
 #------ IKLAN ------#
 def aktifkan_iklan(user):
     user.iklan = 1
     user.iklan_expiry = datetime.utcnow() + timedelta(hours=1)
-    db_pg.session.commit()
+    db_sqlite.session.commit()
     
 def cek_iklan_kedaluwarsa(user):
     if user.iklan == 1 and user.iklan_expiry:
         if datetime.utcnow() > user.iklan_expiry:
             user.iklan = 0
             user.iklan_expiry = None
-            db_pg.session.commit()
+            db_sqlite.session.commit()
             
 @app.route("/iklan-selesai")
 def iklan_selesai():
@@ -1933,7 +1917,7 @@ def dashboard():
         return resp
         
     if not user:
-        logging.warning(f"[DASHBOARD] User ID {session.get('user_id')} tidak ditemukan di db_pg. Session direset.")
+        logging.warning(f"[DASHBOARD] User ID {session.get('user_id')} tidak ditemukan di db_sqlite. Session direset.")
         session.clear()
         return redirect('/')
 
@@ -1965,7 +1949,7 @@ def dashboard():
         blokir_create = False
         ip_users = []  # list email akun lain
         user.ip_address = ip_addr
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         
         if ip_addr:
            ip_users = User.query.filter(
@@ -1987,7 +1971,7 @@ def dashboard():
 
            if coin_sync > user.coin:
                user.coin = coin_sync
-               db_pg.session.commit()
+               db_sqlite.session.commit()
                session["coin_synced"] = True
         else:
             print("[SYNC] Dilewati (sudah pernah sync di session ini)")
@@ -2061,8 +2045,8 @@ def hapus_akun_ip():
         print("[SKIP DELETE SERVER] User tidak punya server (>0). Tidak menghapus server Pterodactyl.")
 
     try:
-        db_pg.session.delete(user)
-        db_pg.session.commit()
+        db_sqlite.session.delete(user)
+        db_sqlite.session.commit()
         print("[DELETE USER] User berhasil dihapus.")
     except Exception as e:
         print("[DELETE USER ERROR]", str(e))
@@ -2090,8 +2074,8 @@ def hapus_akun():
         print("[SKIP DELETE SERVER] User tidak punya server (>0). Tidak menghapus server Pterodactyl.")
 
     try:
-        db_pg.session.delete(user)
-        db_pg.session.commit()
+        db_sqlite.session.delete(user)
+        db_sqlite.session.commit()
         print("[DELETE USER] User berhasil dihapus.")
     except Exception as e:
         print("[DELETE USER ERROR]", str(e))
@@ -2265,7 +2249,7 @@ def edit_profil():
                 file.save(file_path)
                 user.photo_url = f'uploads_kocheng/{filename}'
 
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         return redirect('/profile?change=success')
 
     return render_template(
@@ -2306,7 +2290,7 @@ def verifikasi_edit_email():
             if 'photo_url' in pending:
                 user.photo_url = pending['photo_url']
 
-            db_pg.session.commit()
+            db_sqlite.session.commit()
             session.pop('pending_update', None)
             return redirect('/profile?changemail=success')
         else:
@@ -2466,8 +2450,8 @@ def verifikasi():
                     ip_address=ip_address,
                     coin=20 if referred_by else 0
                 )
-                db_pg.session.add(new_user)
-                db_pg.session.commit()
+                db_sqlite.session.add(new_user)
+                db_sqlite.session.commit()
 
                 # ✅ set session lengkap biar konsisten dengan login google
                 session['user_id'] = new_user.id
@@ -2550,12 +2534,12 @@ def authorize_google():
     photo_google = user_info["picture"]
     referral_code = uuid.uuid4().hex[:8].upper()
 
-    existing_user = db_pg.session.query(User).filter_by(email=email).first()
+    existing_user = db_sqlite.session.query(User).filter_by(email=email).first()
 
     if not existing_user:
         new_user = User(email=email, nama=nama, photo_google=photo_google, login_google=True, referral_code=referral_code)
-        db_pg.session.add(new_user)
-        db_pg.session.commit()
+        db_sqlite.session.add(new_user)
+        db_sqlite.session.commit()
         user = new_user
     else:
         user = existing_user
@@ -2591,8 +2575,8 @@ def support_page():
                 status="Open",
                 is_notified_admin=False
             )
-            db_pg.session.add(new_ticket)
-            db_pg.session.commit()
+            db_sqlite.session.add(new_ticket)
+            db_sqlite.session.commit()
 
             # 2. Tambahkan reply pertama
             first_reply = Reply(
@@ -2601,8 +2585,8 @@ def support_page():
                 message=message,
                 is_notified_admin=False
             )
-            db_pg.session.add(first_reply)
-            db_pg.session.commit()
+            db_sqlite.session.add(first_reply)
+            db_sqlite.session.commit()
 
             return redirect('/tickets?newticket=success')
 
@@ -2643,7 +2627,7 @@ def tickets_page():
         if hasattr(Ticket, "is_notified_admin"):
             Ticket.query.filter_by(is_notified_admin=False).update({"is_notified_admin": True})
 
-        db_pg.session.commit()
+        db_sqlite.session.commit()
 
         tickets = Ticket.query.order_by(Ticket.created_at.desc()).all()
 
@@ -2680,8 +2664,8 @@ def ticket_detail(ticket_id):
             else:
                 reply.is_notified_admin = False  # Admin perlu dapat notif
 
-            db_pg.session.add(reply)
-            db_pg.session.commit()
+            db_sqlite.session.add(reply)
+            db_sqlite.session.commit()
 
             # Simpan gambar jika ada
             image_urls = []
@@ -2694,9 +2678,9 @@ def ticket_detail(ticket_id):
                     image_urls.append(image_url)
 
                     reply_image = ReplyImage(reply_id=reply.id, image_url=image_url)
-                    db_pg.session.add(reply_image)
+                    db_sqlite.session.add(reply_image)
 
-            db_pg.session.commit()
+            db_sqlite.session.commit()
 
             return jsonify({
                 "sender": sender,
@@ -2731,7 +2715,7 @@ def ticket_detail(ticket_id):
             Reply.is_notified_user == False
         ).update({"is_notified_user": True})
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     return render_template(
         "Ticket-Page/ticket_detail.html",
@@ -2745,14 +2729,14 @@ def ticket_detail(ticket_id):
 def update_status(ticket_id, new_status):
     ticket = Ticket.query.get_or_404(ticket_id)
     ticket.status = new_status
-    db_pg.session.commit()
+    db_sqlite.session.commit()
     return redirect('/tickets?changestatus=success')
 
 @app.route("/ticket/<int:ticket_id>/delete")
 def delete_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
-    db_pg.session.delete(ticket)
-    db_pg.session.commit()
+    db_sqlite.session.delete(ticket)
+    db_sqlite.session.commit()
     return redirect('/tickets?delete=success')
     
 @app.route("/check_notifications")
@@ -2880,7 +2864,7 @@ def afk_earn():
         user.afk_bonus_50 = True
         bonus_text = "+20 bonus (AFK 50)"
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({
         "success": True,
@@ -2957,8 +2941,8 @@ def referral():
         user.device_id = device_id
         user.coin += 20
 
-        db_pg.session.add(user)
-        db_pg.session.commit()
+        db_sqlite.session.add(user)
+        db_sqlite.session.commit()
 
         # ✅ Catat aktivitas
         log_referral_activity(user, "input_code")
@@ -2977,7 +2961,7 @@ def referral():
         action="input_code"
     ).count()
 
-    total_coin = db_pg.session.query(func.sum(ReferralActivity.reward)).filter(
+    total_coin = db_sqlite.session.query(func.sum(ReferralActivity.reward)).filter(
         ReferralActivity.inviter_id == user.id
     ).scalar() or 0
 
@@ -3107,7 +3091,7 @@ def klaim_harian():
     user.daily_claim_day = hari_ke
     user.daily_claim_last = today
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({
         "success": True,
@@ -3130,8 +3114,8 @@ def misi():
 @moderator_required
 def delete_user(user_id):
     user = User.query.get_or_404(user_id)
-    db_pg.session.delete(user)
-    db_pg.session.commit()
+    db_sqlite.session.delete(user)
+    db_sqlite.session.commit()
     flash("User Successfully Deleted.", "success")
     return redirect('/admin/list/user?delete=success')
 
@@ -3205,15 +3189,15 @@ def delete_server_web(server_id):
     user = User.query.get(server.user_id)
 
     try:
-        db_pg.session.delete(server)
+        db_sqlite.session.delete(server)
         user.server = 0
         user.cpu = 0
         user.ram = 0
         user.disk = 0
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         flash('Server Successfully Deleted.', 'success')
     except SQLAlchemyError:
-        db_pg.session.rollback()
+        db_sqlite.session.rollback()
         flash('Gagal menghapus server.', 'error')
 
     return redirect('/admin/list/server?delete=success')
@@ -3312,7 +3296,7 @@ def kelola_koin():
                 flash("Invalid action.", "error")
                 return redirect(url_for('kelola_koin'))
 
-            db_pg.session.commit()
+            db_sqlite.session.commit()
             flash(f"Coins successfully in{'plus' if aksi == 'tambah' else 'reduce'} for {email}.", "success")
 
     # Query user dengan filter pencarian dan min coin
@@ -3359,13 +3343,13 @@ def admin_panel():
             user = User.query.get(user_id)
             if user:
                 user.is_moderator = not user.is_moderator
-                db_pg.session.commit()
+                db_sqlite.session.commit()
 
         elif action == "toggle_banned" and user_id:
             user = User.query.get(user_id)
             if user:
                 user.is_banned = not user.is_banned
-                db_pg.session.commit()
+                db_sqlite.session.commit()
 
         elif action == "update_spec":
             ram = int(request.form.get("ram"))
@@ -3379,7 +3363,7 @@ def admin_panel():
                 server_spec.ram = ram
                 server_spec.cpu = cpu
                 server_spec.disk = disk
-                db_pg.session.commit()
+                db_sqlite.session.commit()
                 enqueue_spec_update(panel_id=panel_id, ram=ram, disk=disk, cpu=cpu)
 
         elif action == "update_node" and node_id:
@@ -3387,7 +3371,7 @@ def admin_panel():
             node = Node.query.get(node_id)
             if node:
                 node.limit_server = limit
-                db_pg.session.commit()
+                db_sqlite.session.commit()
 
         elif action == "toggle_maintenance":
             maintenance_mode = SiteSetting.get("maintenance_mode", "false") == "true"
@@ -3432,8 +3416,8 @@ def admin_panel():
     server_spec = ServerSpec.query.filter_by(id=panel_id).first()
     if not server_spec:
         server_spec = ServerSpec(id=panel_id, ram=1024, cpu=120, disk=5072)
-        db_pg.session.add(server_spec)
-        db_pg.session.commit()
+        db_sqlite.session.add(server_spec)
+        db_sqlite.session.commit()
 
     nodes = Node.query.all()
 
@@ -3490,11 +3474,11 @@ def get_node_server_counts():
     if result is None:
         return jsonify({"error": f"Gagal mengambil data dari panel {panel_id}"}), 500
 
-    # Ambil limit terbaru dari db_pg
+    # Ambil limit terbaru dari db_sqlite
     nodes = Node.query.all()
     node_limits = {str(node.id): node.limit_server for node in nodes}
 
-    # Gabungkan result dengan limit dari db_pg
+    # Gabungkan result dengan limit dari db_sqlite
     for node_id, info in result.items():
         info["limit"] = node_limits.get(str(node_id), 35)  # default 35
 
@@ -3504,7 +3488,7 @@ def get_node_server_counts():
 def get_all_panels_status():
     result = {}
 
-    # Ambil limit terbaru dari db_pg
+    # Ambil limit terbaru dari db_sqlite
     nodes = Node.query.all()
     node_limits = {str(node.id): node.limit_server for node in nodes}
 
@@ -3770,11 +3754,11 @@ def boost_ram():
     except requests.exceptions.RequestException as e:
         return jsonify({"success": False, "message": f"⚠️ RAM boost failed: {e}"})
 
-    # Update waktu boost di db_pg
+    # Update waktu boost di db_sqlite
     user.last_boost = now
     user.last_boost_used = now
     user.boostserver = 1
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({
         "success": True,
@@ -3940,7 +3924,7 @@ def upgrade_ram():
         if ram == 1:
             user.special_ram_last_used = now
 
-        db_pg.session.commit()
+        db_sqlite.session.commit()
 
         return jsonify({
             "success": True,
@@ -3980,7 +3964,7 @@ def panel_set_serverid():
 
         # update serverid user
         user.serverid = panel_id
-        db_pg.session.commit()
+        db_sqlite.session.commit()
 
         app.logger.info(f"✅ User {user.id} set serverid = {panel_id}")
         return {"success": True, "message": f"Serverid set to {panel_id}"}
@@ -4002,8 +3986,8 @@ def create_ptero_user():
         user = User.query.filter_by(email=email).first()
         if not user:
             user = User(email=email)
-            db_pg.session.add(user)
-            db_pg.session.commit()
+            db_sqlite.session.add(user)
+            db_sqlite.session.commit()
             print(f"[DEBUG] Auto-create user {email} dengan id={user.id}")
 
         session["user_id"] = user.id
@@ -4019,7 +4003,7 @@ def create_ptero_user():
     ptero_user = create_user(panel_id, user.email, username)
     if ptero_user and "id" in ptero_user:
         user.ptero_id = ptero_user["id"]
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         return jsonify({"success": True, "id": user.ptero_id})
     else:
         return jsonify({"success": False, "msg": "Failed to create Ptero user"}), 500
@@ -4092,7 +4076,7 @@ def panel_create_get():
         # reset iklan jika kadaluarsa
         user.iklan = 0
         user.iklan_expiry = None
-        db_pg.session.commit()
+        db_sqlite.session.commit()
 
     # ---- Token ----
     email = request.args.get("email")
@@ -4179,7 +4163,7 @@ def panel_create_post():
         flash("Incomplete data", "error")
         return redirect("/panel/create")
 
-    # 2️⃣ Ambil spesifikasi server dari db_pg
+    # 2️⃣ Ambil spesifikasi server dari db_sqlite
     server = ServerSpec.query.filter_by(id=panel_id).first()
     if not server:
         flash("Server spec tidak ditemukan!", "error")
@@ -4223,7 +4207,7 @@ def panel_create_post():
         flash("Server created but not ready yet. Please wait a moment.", "warning")
         return redirect("/dashboard")
 
-    # 4️⃣ Simpan server ke db_pg
+    # 4️⃣ Simpan server ke db_sqlite
     data = server_ready
     server_entry = Server(
         id=data["id"],
@@ -4236,7 +4220,7 @@ def panel_create_post():
         ram=server.ram,
         disk=server.disk
     )
-    db_pg.session.merge(server_entry)
+    db_sqlite.session.merge(server_entry)
 
     # Update data user
     user.server = 1
@@ -4258,7 +4242,7 @@ def panel_create_post():
     if user.referred_by:
         log_referral_activity(user, "create_server")
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     flash("Server Created Successfully!", "server_created")
     return redirect(f"/panel/detail?email={user.email}&username={username}&panel_id={panel_id}")
@@ -4367,7 +4351,7 @@ def api_create_server():
         ram=server_spec.ram,
         disk=server_spec.disk,
     )
-    db_pg.session.merge(server_entry)
+    db_sqlite.session.merge(server_entry)
 
     # Update user
     user.server = 1
@@ -4387,7 +4371,7 @@ def api_create_server():
     if user.referred_by:
         log_referral_activity(user, "create_server")
 
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({
         "status": "success",
@@ -4476,7 +4460,7 @@ def miniapp_main():
 
     user.device_id = device_id
     user.ip_address = ip_addr
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     if check_maintenance():
         return check_maintenance()
@@ -4497,7 +4481,7 @@ def backup_page():
         return resp
 
     panel_id = str(user.serverid) if user.serverid else None
-    db_pg.session.refresh(user)
+    db_sqlite.session.refresh(user)
 
     has_files = False
     no_server = False
@@ -4584,7 +4568,7 @@ def backup():
     # ✅ RESET STATUS
     user.is_backup_mega = False
     user.mega_link = None
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     panel_id = str(user.serverid)
 
@@ -4667,7 +4651,7 @@ def upload_mega_route():
         )
     except Exception as e:
         user.is_backup_mega = False
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         return jsonify({
             "error": "Gagal menghubungi MEGA API",
             "detail": str(e)
@@ -4675,7 +4659,7 @@ def upload_mega_route():
 
     if r.status_code != 200:
         user.is_backup_mega = False
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         return jsonify({
             "error": "Gagal upload ke Railway",
             "detail": r.text
@@ -4686,7 +4670,7 @@ def upload_mega_route():
     # ================================
     user.is_backup_mega = True
     user.last_filename = filename
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     return jsonify({
         "message": "Upload berhasil",
@@ -4711,7 +4695,7 @@ def backup_finished():
     user.is_backup_mega = True
     user.last_filename = filename
     user.mega_link = mega_link
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     print("✅ Backup selesai diterima di Control Server")
     return jsonify({"status": "ok"}), 200
@@ -4776,12 +4760,12 @@ def check_mega():
     if data.get("has_backup"):
         user.is_backup_mega = True
         user.last_filename = filename
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         return jsonify({"has_backup": True, "filename": filename})
 
     # Jika tidak ada
     user.is_backup_mega = False
-    db_pg.session.commit()
+    db_sqlite.session.commit()
     return jsonify({"has_backup": False})
 
 @app.route("/toggle-auto-backup", methods=["POST"])
@@ -4792,7 +4776,7 @@ def toggle_auto_backup():
     user = User.query.get(session["user_id"])
     enabled = request.json.get("enabled", False)
     user.auto_backup_enabled = enabled
-    db_pg.session.commit()
+    db_sqlite.session.commit()
 
     if enabled:
         backup_and_upload(user)
@@ -4885,8 +4869,8 @@ def create_session():
         expires_at=datetime.utcnow() + timedelta(minutes=30)
     )
 
-    db_pg.session.add(session)
-    db_pg.session.commit()
+    db_sqlite.session.add(session)
+    db_sqlite.session.commit()
 
     return jsonify({"ymid": ymid})
     
@@ -4907,12 +4891,12 @@ def monetag_postback():
 
     if session.is_expired():
         session.status = "expired"
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         return "Session expired", 200
 
     if reward and reward != "no":
         session.status = "approved"
-        db_pg.session.commit()
+        db_sqlite.session.commit()
         return "OK", 200
 
     return "No reward", 200
@@ -4926,7 +4910,7 @@ def check_status(ymid):
 
     if session.is_expired() and session.status == "pending":
         session.status = "expired"
-        db_pg.session.commit()
+        db_sqlite.session.commit()
 
     return jsonify({
         "status": session.status,
