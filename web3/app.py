@@ -120,7 +120,7 @@ class User(db_sqlite.Model):
 
     photo_url = db_sqlite.Column(db_sqlite.String(255))
     iklan = db_sqlite.Column(db_sqlite.Integer, default=0)
-    iklan_expiry = db_pg.Column(db_pg.DateTime)
+    iklan_expiry = db_sqlite.Column(db_sqlite.DateTime)
     photo_google = db_sqlite.Column(db_sqlite.String(255), nullable=True)
 
     server = db_sqlite.Column(db_sqlite.Integer, default=0)
