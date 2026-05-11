@@ -9,7 +9,7 @@ import json
 # ✅ SAFE IMPORT DARI FLASK APP
 # =========================
 try:
-    from web1.app import (
+    from web3.app import (
     app,
     db_pg,
     User,
@@ -27,9 +27,9 @@ try:
     backup_and_upload,
     add_log
 )
-    print("✅ Import web1.app berhasil")
+    print("✅ Import web3.app berhasil")
 except Exception as e:
-    print("❌ Gagal import web1.app:", e)
+    print("❌ Gagal import web3.app:", e)
     app = db_pg = User = Server = ServerSpec = PANELS = None
     broadcast_lock_notification = None
     update_server_build = None
