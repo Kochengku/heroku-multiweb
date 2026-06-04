@@ -14,8 +14,8 @@ from config_web1 import admin_mail, moderator_mail
 PANELS = {
 "server1": {
         "url": "https://console.kocheng.biz.id",
-        "api_key": "ptla_wELKQwIlVDc0DN7fSiB2AtAEVtpkBuAXcVd0AHE10Oo,",
-        "client_api_key": "ptlc_p2Q0uyL4FzHs2mx6O1kBwJvHXnFYBu2kjcZn4MkEsxw"
+        "api_key": "ptla_x8EiVvWg0w8UnfNc6qCmvL5tuPP3KaH6fmHFVvDB7to,",
+        "client_api_key": "ptlc_BtXLfSc4kQlUYSRXOY942JOB53VtZc4D4xegIq5lnRh"
     }
     # Bisa ditambah server3, dst...
 }
