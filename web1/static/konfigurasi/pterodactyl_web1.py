@@ -14,8 +14,8 @@ from config_web1 import admin_mail, moderator_mail
 PANELS = {
 "server1": {
         "url": "https://console.kocheng.biz.id",
-        "api_key": "ptla_C2icPtoXNJwMXAZNE7UiuZqfv6CyaytAIz2CamFuNYg,",
-        "client_api_key": "ptlc_NtYiixUNdm2IjVIrT3I5eqvHEsSJPs3SONUXgLZrnAN"
+        "api_key": "ptla_zddsTFBRDWz2dmbxG0AAjRHhpNmciibbbJAzfGuEvTv,",
+        "client_api_key": "ptlc_wDgWh3fStXfwUj34oB4nMHeI8ANYClmUfQmPbNGzFvH"
     }
     # Bisa ditambah server3, dst...
 }
@@ -122,7 +122,7 @@ def create_server(panel_id, user_id, name, egg_id, node_id, cpu, ram, disk):
 
         # Konfigurasi Egg
         egg_configs = {
-            16: {  # Python Generic
+            17: {  # Python Generic
                 "docker_image": "ghcr.io/kochengku/python_3.12_kocheng:latest",
                 "startup": "pip install -r requirements.txt && /usr/local/bin/python /home/container/$STARTUP_FILE ${EXTRA_ARGS:-}",
                 "environment": {
