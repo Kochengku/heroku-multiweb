@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic SEO -->
+  <meta charset="UTF-8">
+  <title>About Us | Kocheng Hosting</title>
+  <meta name="description" content="Learn more about Kocheng Hosting, our mission, and our free hosting services for Discord and WhatsApp bots.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://kocheng.biz.id/about">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp">
+  <link rel="manifest" href="/static/site.webmanifest">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="About Us | Kocheng Hosting">
+  <meta property="og:description" content="Discover Kocheng Hosting and our mission to make bot hosting more accessible.">
+  <meta property="og:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://kocheng.biz.id/about">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Us | Kocheng Hosting">
+  <meta name="twitter:description" content="Learn about Kocheng Hosting and our free bot hosting services.">
+  <meta name="twitter:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Kocheng Hosting",
+    "url": "https://kocheng.biz.id",
+    "logo": "https://kocheng.biz.id/static/logo-512x512.webp",
+    "email": "supporthosting@kocheng.tech"
+  }
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/getstarted" class="transition-transform duration-200 hover:scale-105">
+        <img src="/static/logo2.webp" alt="Kocheng Hosting Logo" class="h-10 max-w-[200px]">
+      </a>
+
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-grow px-6 py-12 max-w-4xl mx-auto w-full fade-in">
+
+    <!-- INTRODUCTION -->
+    <section class="text-center mb-12">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-100 text-blue-700 mb-5">
+        <i class="fa-solid fa-server text-3xl"></i>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+        About Kocheng Hosting
+      </h1>
+
+      <p class="text-gray-600 leading-relaxed max-w-2xl mx-auto">
+        Making bot hosting accessible to everyone.
+        Our platform enables users to deploy and manage
+        Discord and WhatsApp bots without maintaining
+        their own hosting infrastructure.
+      </p>
+    </section>
+
+    <!-- WHO WE ARE -->
+    <section class="bg-white rounded-2xl shadow-sm p-6 md:p-8 mb-8">
+      <h2 class="text-2xl font-bold text-blue-900 mb-4">
+        Who We Are
+      </h2>
+
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Kocheng Hosting is a hosting platform dedicated to offering accessible solutions for bot developers and users. It provides a simple hosting environment that enables people to deploy and manage their Discord and WhatsApp bots.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed">
+        Our goal is to simplify bot hosting for individuals and communities that want to explore automation, develop projects, or keep their bots online without having to manage a server.
+      </p>
+    </section>
+
+    <!-- OUR MISSION -->
+    <section class="bg-white rounded-2xl shadow-sm p-6 md:p-8 mb-8">
+      <h2 class="text-2xl font-bold text-blue-900 mb-4">
+        Our Mission
+      </h2>
+
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Our goal is to make bot hosting more accessible through an easy-to-use platform designed for users with varying levels of technical experience.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed">
+        We believe technology experimentation and the development of useful bot projects should be accessible to everyone. That’s why we work to make hosting resources easier to access and manage.
+      </p>
+    </section>
+
+    <!-- WHAT WE OFFER -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold text-blue-900 mb-6 text-center">
+        What We Offer
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- Discord Hosting -->
+        <div class="feature-card bg-white rounded-2xl shadow-sm p-6">
+          <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4">
+            <i class="fa-brands fa-discord text-2xl"></i>
+          </div>
+
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            Discord Bot Hosting
+          </h3>
+
+          <p class="text-gray-600 leading-relaxed">
+            Hosting solutions for users who want to deploy and manage Discord bots across their servers and communities.
+          </p>
+        </div>
+
+        <!-- WhatsApp Hosting -->
+        <div class="feature-card bg-white rounded-2xl shadow-sm p-6">
+          <div class="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center mb-4">
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+          </div>
+
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            WhatsApp Bot Hosting
+          </h3>
+
+          <p class="text-gray-600 leading-relaxed">
+            Hosting solutions for WhatsApp automation projects and bot applications that require a runtime environment.
+          </p>
+        </div>
+
+        <!-- Server Management -->
+        <div class="feature-card bg-white rounded-2xl shadow-sm p-6">
+          <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
+            <i class="fa-solid fa-sliders text-2xl"></i>
+          </div>
+
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            Server Management
+          </h3>
+
+          <p class="text-gray-600 leading-relaxed">
+            Our platform includes a server management panel that enables users to administer their hosting environments and track available resources.
+          </p>
+        </div>
+
+        <!-- Accessible Hosting -->
+        <div class="feature-card bg-white rounded-2xl shadow-sm p-6">
+          <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-4">
+            <i class="fa-solid fa-users text-2xl"></i>
+          </div>
+
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">
+            Accessible Hosting
+          </h3>
+
+          <p class="text-gray-600 leading-relaxed">
+            Our goal is to make hosting more accessible for users interested in exploring bot development and automation projects.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- OUR APPROACH -->
+    <section class="bg-white rounded-2xl shadow-sm p-6 md:p-8 mb-8">
+      <h2 class="text-2xl font-bold text-blue-900 mb-4">
+        Our Approach
+      </h2>
+
+      <p class="text-gray-700 leading-relaxed mb-4">
+        We aim to deliver a practical hosting environment while continuously enhancing the platform and its features. We recognize that hosting services require technical resources, regular maintenance, and ongoing operational expenses.
+      </p>
+
+      <p class="text-gray-700 leading-relaxed">
+        We believe that providing clear information is essential. Our policies describe how our services operate, how we manage user information, and what users can expect when they use Kocheng Hosting.
+      </p>
+    </section>
+
+    <!-- GETTING STARTED -->
+    <section class="bg-blue-900 rounded-2xl shadow-sm p-7 md:p-9 mb-8 text-center text-white">
+      <h2 class="text-2xl font-bold mb-3">
+        Ready to Get Started?
+      </h2>
+
+      <p class="text-blue-100 leading-relaxed mb-6 max-w-xl mx-auto">
+        Explore Kocheng Hosting to learn more about the hosting services offered through our platform.
+      </p>
+
+      <a href="/getstarted"
+         class="inline-flex items-center gap-2 bg-white text-blue-900 font-semibold px-6 py-3 rounded-xl hover:bg-blue-50 transition">
+        Get Started
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-blue-900 mb-4">
+        Contact Us
+      </h2>
+
+      <p class="text-gray-700 leading-relaxed mb-5">
+        Have questions about our platform or need help? Contact our support team using the email address below.
+      </p>
+
+      <div class="flex items-center gap-3 text-blue-700">
+        <i class="fa-solid fa-envelope text-xl"></i>
+
+        <a href="mailto:supporthosting@kocheng.tech"
+           class="hover:underline break-all">
+          supporthosting@kocheng.tech
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+
+      <p class="font-semibold text-gray-700">
+        Kocheng's |> Sahabat Ai Nusantara
+      </p>
+
+      <p>
+        <a href="/about" class="text-blue-600 hover:underline">About Us</a> |
+        <a href="/contact" class="text-blue-600 hover:underline">Contact Us</a> |
+        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+
+      <p>
+        JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).
+      </p>
+
+      <p>
+        <i class="fa-solid fa-envelope"></i>
+        supporthosting@kocheng.tech
+      </p>
+
+    </div>
+  </footer>
+
+  <!-- ANIMATION -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("main").classList.add("visible");
+    });
+  </script>
+
+</body>
+</html>

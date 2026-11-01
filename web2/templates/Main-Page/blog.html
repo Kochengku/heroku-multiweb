@@ -9,53 +9,33 @@
 <link rel="manifest" href="/static/site.webmanifest" />
 
   <!-- Open Graph (untuk share di media sosial) -->
-  <meta property="og:title" content="Kocheng's">
-  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
-  <meta property="og:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
-  <meta property="og:url" content="https://control.kocheng.biz.id">
+  <meta property="og:title" content="Kocheng Hosting Blog">
+<meta property="og:description" content="Explore tutorials, tips, and useful guides about Discord bots, WhatsApp bots, and bot hosting.">
+  <meta property="og:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://kocheng.biz.id/blog">
   <meta property="og:type" content="website">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Kocheng's">
-  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
-  <meta name="twitter:image" content="https://control.kocheng.biz.id/static/logo-512x512.webp">
+  <meta name="twitter:title" content="Kocheng Hosting Blog">
+<meta name="twitter:description" content="Explore tutorials, tips, and useful guides about Discord bots, WhatsApp bots, and bot hosting.">
+  <meta name="twitter:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
 
-  <!-- Structured Data (Organization Logo Schema) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "url": "https://control.kocheng.biz.id",
-    "logo": "https://control.kocheng.biz.id/static/logo-512x512.webp",
-    "name": "Kocheng's"
-  }
-  </script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [{
-    "@type": "Question",
-    "name": "What is Kocheng Hosting?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
-    }
-  },{
-    "@type": "Question",
-    "name": "Is it free forever??",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
-    }
-  }]
+  "@type": "Organization",
+  "name": "Kocheng Hosting",
+  "url": "https://kocheng.biz.id",
+  "logo": "https://kocheng.biz.id/static/logo-512x512.webp",
+  "email": "supporthosting@kocheng.tech"
 }
 </script>
   <meta charset="UTF-8">
   <title>Blog | Kocheng Hosting</title>
   <meta name="description" content="Read guides, tips, and tutorials about Discord bot hosting, WhatsApp bots, and Pterodactyl panel.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://kocheng.biz.id/blog">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -77,26 +57,39 @@
 
   <!-- MAIN CONTENT -->
   <main class="flex-grow px-6 py-12 max-w-5xl mx-auto fade-in">
-    <h1 class="text-3xl font-bold text-blue-900 mb-8">Our Blog</h1>
+    <h1 class="text-3xl font-bold text-blue-900 mb-3">Our Blog</h1>
+
+<p class="text-gray-600 mb-8 leading-relaxed">
+  Explore practical guides, tutorials, and the latest information on Discord bots, WhatsApp bots, hosting, and server management.
+</p>
 
     <!-- Filter buttons -->
     <div class="flex flex-wrap gap-3 mb-10">
-      <button class="filter-btn bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-blue-200" data-category="all">All</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="bots">Bots</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="hosting">Hosting</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="ads">Ads</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="general">General</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="business">Business</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="ai">AI</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="inspiration">Inspiration</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="information">Information</button>
-      <button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="education">Education</button>
+      <button class="filter-btn bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-blue-200" data-category="all" aria-pressed="true">All</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="bots" aria-pressed="false">Bots</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="hosting" aria-pressed="false">Hosting</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="ads" aria-pressed="false">Ads</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="general" aria-pressed="false">General</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="business" aria-pressed="false">Business</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="ai" aria-pressed="false">AI</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="inspiration" aria-pressed="false">Inspiration</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="information" aria-pressed="false">Information</button>
+
+<button class="filter-btn bg-gray-100 text-gray-700 px-4 py-1 rounded-full text-sm font-medium hover:bg-gray-200" data-category="education" aria-pressed="false">Education</button>
     </div>
 
     <!-- Articles Loop -->
-    <div class="space-y-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {% for slug, article in articles.items() %}
-        <article class="border-b pb-4 blog-article" data-category="{{ article.categories }}">
+        <article class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 blog-article hover:shadow-md transition-shadow duration-200" data-category="{{ article.categories }}">
           <h2 class="text-xl font-semibold text-blue-700">
             <a href="{{ url_for('blog_article', slug=slug) }}" class="hover:underline">
               {{ article.title }}
@@ -122,46 +115,79 @@
   <!-- FOOTER -->
   <footer class="bg-white border-t border-gray-200 py-4 text-xs">
     <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
-      <p class="font-semibold text-gray-700">Kocheng's |> Sahabat Ai Nusantara</p>
+
+      <p class="font-semibold text-gray-700">
+        Kocheng's |> Sahabat Ai Nusantara
+      </p>
+
       <p>
-        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> | 
-        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> | 
-        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> | 
+        <a href="/about" class="text-blue-600 hover:underline">About Us</a> |
+        <a href="/contact" class="text-blue-600 hover:underline">Contact Us</a> |
+        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
         <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
       </p>
-      <p>JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).</p>
-      <p><i class="fa-solid fa-envelope"></i> supporthosting@kocheng.tech</p>
+
+      <p>
+        JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).
+      </p>
+
+      <p>
+        <i class="fa-solid fa-envelope"></i>
+        supporthosting@kocheng.tech
+      </p>
+
     </div>
   </footer>
 
   <!-- SCRIPT -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelector("main").classList.add("visible");
+document.addEventListener("DOMContentLoaded", () => {
+  const main = document.querySelector("main");
+  const buttons = document.querySelectorAll(".filter-btn");
+  const articles = document.querySelectorAll(".blog-article");
 
-      const buttons = document.querySelectorAll(".filter-btn");
-      const articles = document.querySelectorAll(".blog-article");
+  // Show main content
+  if (main) {
+    main.classList.add("visible");
+  }
 
-      buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const category = btn.getAttribute("data-category");
+  // Category filter
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const category = btn.getAttribute("data-category");
 
-          buttons.forEach(b => b.classList.remove("bg-blue-100", "text-blue-700"));
-          buttons.forEach(b => b.classList.add("bg-gray-100", "text-gray-700"));
+      // Update active button and accessibility status
+      buttons.forEach(b => {
+        const isActive = b === btn;
 
-          btn.classList.remove("bg-gray-100", "text-gray-700");
-          btn.classList.add("bg-blue-100", "text-blue-700");
+        b.classList.toggle("bg-blue-100", isActive);
+        b.classList.toggle("text-blue-700", isActive);
+        b.classList.toggle("bg-gray-100", !isActive);
+        b.classList.toggle("text-gray-700", !isActive);
 
-          articles.forEach(article => {
-            if (category === "all" || article.getAttribute("data-category").includes(category)) {
-              article.style.display = "block";
-            } else {
-              article.style.display = "none";
-            }
-          });
-        });
+        b.setAttribute("aria-pressed", String(isActive));
+      });
+
+      // Filter articles
+      articles.forEach(article => {
+        const rawCategories = article.getAttribute("data-category") || "";
+
+        const articleCategories = rawCategories
+          .toLowerCase()
+          .replace(/[\[\]']/g, "")
+          .split(/[,\s]+/)
+          .filter(Boolean);
+
+        const isVisible =
+          category === "all" || articleCategories.includes(category);
+
+        article.style.display = isVisible ? "" : "none";
       });
     });
-  </script>
+  });
+});
+</script>
 </body>
 </html>
