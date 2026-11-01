@@ -83,53 +83,50 @@
     <h1 class="text-3xl font-bold text-blue-900 mb-6">How to Create a Panel and Run a WhatsApp Bot</h1>
     <p class="text-gray-500 mb-6">Published on September 14, 2025 · 7 min read</p>
 
-    <p class="mb-4">In this guide, we will walk you through the process of creating a new panel on Kocheng Hosting and deploying a WhatsApp bot using the Pterodactyl panel. The steps below cover the <strong>website method</strong>. If you want to set up your server via Telegram, click here.</p>
+    <p class="mb-4">In this post, we will lead you through the process of building a new panel on Kocheng Hosting and deploying a WhatsApp bot using the Pterodactyl panel.</p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 1: Register an Account</h2>
-    <p class="mb-4">Go to the Kocheng Hosting homepage and register for a free account. You can sign up using Google or an email address.</p>
+    <p class="mb-4">Go to the Kocheng Hosting homepage and register for a free account.</p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 2: Navigate to the Bot Server Menu</h2>
     <p class="mb-4">
-      Once inside the dashboard, click the menu icon (three lines at the top-left). Then select 
-      <strong>Bot Server</strong>. You will see two options: <em>Create via Website</em> or <em>Create via Telegram</em>. 
-      For this article, we will continue with the website method. 
-      If you want to set up your server via Telegram, 
+      Click the menu icon (three lines at the top-left) once you're inside the dashboard. Next, choose Bot Server. Two choices will appear to you: Create through Telegram or a website. We'll stick with the website approach for this article. If you wish to use Telegram to set up your server,
       <a href="{{ url_for('blog_article', slug='article-telegram') }}" class="text-blue-600 hover:underline">click here</a>.
     </p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 3: Follow the Ad-Supported Setup</h2>
     <p class="mb-4">
-      You will be redirected to an ad page. Simply follow the instructions provided 
+      You'll be taken to an advertisement page. Just adhere to the given instructions.
       <a href="{{ url_for('blog_article', slug='article-ads-setup') }}" class="text-blue-600 hover:underline">click here</a>.  
     </p>
     <ul class="list-disc ml-6 mb-4">
-      <li>Fill in the required server details such as <strong>name</strong>.</li>
-      <li>Select the available <strong>Node</strong> for your server.</li>
-      <li>Choose the appropriate <strong>egg</strong> depending on your needs (e.g., WhatsApp bot environment).</li>
-      <li>Complete the CAPTCHA verification.</li>
-      <li>Click the yellow <strong>Watch Ad</strong> button. Wait around 5 seconds, then press the back button on your device.</li>
+      <li>Enter the necessary server information, including name.</li>
+      <li>Choose the node that is available for your server.</li>
+      <li>Depending on your needs (such as a WhatsApp bot environment), select the right egg.</li>
+      <li>Finish the CAPTCHA verification process.</li>
+      <li>Click the Watch Ad button in yellow. After about five seconds, hit your device's back button.</li>
     </ul>
-    <p class="mb-4">After this, the button will change to <strong>Create Server Now</strong>. Click it to proceed.</p>
+    <p class="mb-4">The button will then change to "Create Server Now." To continue, click it.</p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 4: Get Your Server Credentials</h2>
-    <p class="mb-4">Your server will be created automatically. You will then see the server details including <strong>email, password, and panel URL</strong> for the Pterodactyl dashboard.</p>
+    <p class="mb-4">Your server will be set up automatically. The server information, including the email address, password, and panel URL for the Pterodactyl dashboard, will then be displayed.</p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 5: Log in to the Pterodactyl Panel</h2>
-    <p class="mb-4">Go to the provided panel URL and log in using the credentials displayed in your account details.</p>
+    <p class="mb-4">Use the login credentials shown in your account details to access the panel URL that has been provided.</p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 6: Upload Your Bot Script</h2>
-    <p class="mb-4">Once inside the panel, select your server. Then go to the <strong>Files</strong> section and upload your bot script (e.g., a ZIP archive).</p>
+    <p class="mb-4">Choose your server once you're inside the panel. Next, upload your bot script (such as a ZIP file) to the Files section.</p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 7: Extract Your Script Files</h2>
-    <p class="mb-4">After uploading, click the menu icon (three dots) next to your uploaded ZIP file and select <strong>Unarchive</strong>. The ZIP file will be extracted into a folder.</p>
+    <p class="mb-4">Once the upload is complete, click the three-dot menu beside the ZIP file and choose Unarchive. The contents will be extracted into a folder.</p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 8: Move Script Files</h2>
-    <p class="mb-4">Open the extracted script folder, select all files using the checkbox in the top-left, then click <strong>Move</strong>. Enter <code>../</code> as the destination so that all files are placed in the main directory.</p>
+    <p class="mb-4">Open the folder containing the extracted script, use the checkbox in the upper-left corner to select every file, and click Move. Set the destination to ../ to place all the files in the main directory.</p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 9: Start the Bot</h2>
-    <p class="mb-4">Go to the <strong>Console</strong> tab and press <strong>Start</strong>. The system will begin installing dependencies and launch your WhatsApp bot.</p>
+    <p class="mb-4">Open the Console tab and click Start. The system will install the required dependencies and launch your WhatsApp bot.</p>
 
-    <p class="mt-8 font-semibold">Congratulations! You have successfully created a panel and deployed your WhatsApp bot on Kocheng Hosting.</p>
+    <p class="mt-8 font-semibold">Congratulations! Your panel has been created successfully, and your WhatsApp bot is now deployed on Kocheng Hosting.</p>
   </main>
 
   <!-- FOOTER -->

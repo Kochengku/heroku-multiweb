@@ -65,12 +65,12 @@
   </p>
 
   <div class="note mb-6">
-    <strong>Important:</strong> Ensure that you have a clean Linux server and backups of any important data before starting the installation process.
+    <strong>Important:</strong>Before beginning the installation, verify that you have a clean Linux server and backups of all important data.
   </div>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 1 — Prepare Your Server</h2>
   <p class="mb-4">
-    Choose a supported operating system such as Ubuntu 22.04 LTS or Debian 12. Update all system packages and ensure you have a non-root user with sudo privileges for installation.
+    Select a supported operating system, such as Ubuntu 22.04 LTS or Debian 12, update all system packages, and make sure a non-root user is available.
   </p>
   <ul class="list-disc ml-6 mb-4 text-gray-700">
     <li>Run <code>sudo apt update && sudo apt upgrade -y</code></li>
@@ -80,7 +80,7 @@
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 2 — Install Dependencies</h2>
   <p class="mb-4">
-    Pterodactyl requires PHP, a web server, a database, and additional software:
+    Pterodactyl depends on PHP, a web server, a database, and other required software.
   </p>
   <ul class="list-disc ml-6 mb-4 text-gray-700">
     <li>PHP 8.1 with extensions: BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML</li>
@@ -92,7 +92,7 @@
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 3 — Configure Database</h2>
   <p class="mb-4">
-    Create a dedicated database and user for Pterodactyl:
+    Set up a separate database and user account for Pterodactyl.
   </p>
   <pre class="bg-gray-100 p-4 rounded mb-4">mysql -u root -p
 CREATE DATABASE pterodactyl;
@@ -104,7 +104,7 @@ EXIT;</pre>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 4 — Download and Install Panel</h2>
   <p class="mb-4">
-    Switch to your new user and download the latest Pterodactyl Panel:
+    Log in as the new user and download the latest version of the Pterodactyl Panel.
   </p>
   <pre class="bg-gray-100 p-4 rounded mb-4">cd /var/www/
 git clone https://github.com/pterodactyl/panel.git pterodactyl
@@ -116,7 +116,7 @@ chmod -R 755 /var/www/pterodactyl</pre>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 5 — Configure Environment</h2>
   <p class="mb-4">
-    Copy the example environment file and edit it according to your database and domain:
+    Copy the example environment file, then update it to match your database and domain settings.
   </p>
   <pre class="bg-gray-100 p-4 rounded mb-4">cp .env.example .env
 nano .env</pre>
@@ -124,14 +124,14 @@ nano .env</pre>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 6 — Run Migrations and Seeds</h2>
   <p class="mb-4">
-    Apply database migrations and seed default data:
+    Run the database migrations and populate the default data.
   </p>
   <pre class="bg-gray-100 p-4 rounded mb-4">php artisan key:generate --force
 php artisan migrate --seed --force</pre>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 7 — Set Up Web Server</h2>
   <p class="mb-4">
-    Configure Nginx to serve the panel and enable SSL using Let's Encrypt:
+    Set up Nginx to host the panel and activate SSL with Let's Encrypt.
   </p>
   <ul class="list-disc ml-6 mb-4 text-gray-700">
     <li>Create a server block pointing to <code>/var/www/pterodactyl/public</code></li>
@@ -141,7 +141,7 @@ php artisan migrate --seed --force</pre>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 8 — Install Wings Daemon</h2>
   <p class="mb-4">
-    Wings manages the game servers themselves. Install Docker and configure Wings:
+    Wings directly manages the game servers. Install Docker, then configure Wings:
   </p>
   <ul class="list-disc ml-6 mb-4 text-gray-700">
     <li>Install Docker and Docker Compose</li>
@@ -151,7 +151,7 @@ php artisan migrate --seed --force</pre>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 9 — Finalize and Test</h2>
   <p class="mb-4">
-    Access your panel through the browser, create an admin account, and verify that the Wings daemon communicates correctly. Deploy a test server to ensure the complete setup works.
+    Open the panel in a browser, set up an administrator account, and confirm that the Wings daemon is communicating properly. Then deploy a test server to verify that the entire configuration functions as expected.
   </p>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Step 10 — Security and Maintenance</h2>
@@ -164,7 +164,7 @@ php artisan migrate --seed --force</pre>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Conclusion</h2>
   <p class="mb-4">
-    By carefully following these steps, you can successfully install Pterodactyl Panel and Wings daemon, creating a stable and secure environment to manage multiple game servers efficiently. Proper preparation, attention to detail, and adherence to best practices ensure long-term reliability and performance.
+    Following these steps carefully allows you to install the Pterodactyl Panel and Wings daemon successfully, establishing a stable and secure environment for efficiently managing multiple game servers. Thorough preparation, careful attention to detail, and compliance with best practices help ensure reliable, high-performance operation over the long term.
   </p>
 </main>
 

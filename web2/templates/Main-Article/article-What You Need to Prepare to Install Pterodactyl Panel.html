@@ -61,83 +61,83 @@
   <p class="text-gray-500 mb-6">Published on September 21, 2025 · 9 min read</p>
 
   <p class="lead mb-4">
-    Pterodactyl Panel is a powerful web-based game server management platform that allows administrators to deploy and control multiple game servers efficiently. Proper preparation is crucial to ensure a smooth installation and configuration process.
+    Pterodactyl Panel is a robust, web-based platform for managing game servers, enabling administrators to deploy and oversee multiple servers efficiently. Thorough preparation is essential for a smooth installation and configuration process.
   </p>
 
   <div class="note mb-6">
-    <strong>Key Insight:</strong> Preparing your environment with the right hardware, software, and security considerations will save time and reduce installation errors.
+    <strong>Key Insight:</strong> Setting up the appropriate hardware, software, and security measures in advance can save time and minimize installation errors.
   </div>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">1. Hardware Requirements</h2>
   <p class="mb-4">
-    Before installing Pterodactyl, ensure your server meets the minimum hardware requirements. Recommended specifications include:
+    Before installing Pterodactyl, verify that your server satisfies the minimum hardware requirements. The recommended specifications are as follows:
   </p>
   <ul class="list-disc ml-6 mb-4 text-gray-700">
-    <li><strong>CPU:</strong> Minimum 2 cores, preferably 4 cores for multiple servers.</li>
-    <li><strong>RAM:</strong> At least 2GB for the panel itself; additional RAM is needed for game servers.</li>
-    <li><strong>Storage:</strong> SSD storage recommended for faster performance, minimum 20GB free space.</li>
-    <li><strong>Network:</strong> Reliable high-speed internet connection to handle server traffic.</li>
+    <li><strong>CPU:</strong> Use at least 2 cores; 4 cores are recommended when running multiple servers.</li>
+    <li><strong>RAM:</strong> Allocate a minimum of 2GB for the panel, with additional memory required for game servers.</li>
+    <li><strong>Storage:</strong> An SSD is recommended for improved performance, with at least 20GB of available space.</li>
+    <li><strong>Network:</strong> A reliable, high-speed internet connection is necessary to manage server traffic.</li>
   </ul>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">2. Supported Operating Systems</h2>
   <p class="mb-4">
-    Pterodactyl Panel is compatible with most Linux distributions. Popular choices include:
+    Pterodactyl Panel works with most Linux distributions, including these popular options:
   </p>
   <ul class="list-disc ml-6 mb-4 text-gray-700">
     <li>Ubuntu 22.04 LTS or 20.04 LTS</li>
     <li>Debian 11 or 12</li>
-    <li>CentOS 7/8 (though Ubuntu/Debian is preferred)</li>
+    <li>CentOS 7 or 8 (Ubuntu or Debian is recommended)</li>
   </ul>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">3. Software Dependencies</h2>
   <p class="mb-4">
-    The panel and daemon require several software packages:
+    The panel and daemon depend on several software packages:
   </p>
   <ul class="list-disc ml-6 mb-4 text-gray-700">
-    <li>PHP (version 8.1 or higher) with necessary extensions (BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML)</li>
-    <li>MySQL or MariaDB database</li>
-    <li>Nginx or Apache web server</li>
-    <li>Node.js and Composer for panel dependencies</li>
-    <li>Docker for the Wings daemon</li>
+    <li>PHP 8.1 or later, including the required extensions: BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, and XML</li>
+    <li>A MySQL or MariaDB database</li>
+    <li>An Nginx or Apache web server</li>
+    <li>Node.js and Composer to manage panel dependencies</li>
+    <li>Docker to run the Wings daemon</li>
   </ul>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">4. Domain and SSL</h2>
   <p class="mb-4">
-    A fully qualified domain name (FQDN) is required for accessing the panel securely. You should also prepare an SSL certificate using Let's Encrypt or another provider to ensure encrypted communication between users and the panel.
+    To access the panel securely, you need a fully qualified domain name (FQDN). You should also obtain an SSL certificate from Let's Encrypt or another provider to encrypt communication between users and the panel.
   </p>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">5. Security Preparations</h2>
   <p class="mb-4">
-    Prioritize security by:
+    Make security a priority by:
   </p>
   <ul class="list-disc ml-6 mb-4 text-gray-700">
-    <li>Creating a dedicated server user with sudo privileges for panel installation.</li>
-    <li>Disabling root login over SSH and using key-based authentication.</li>
-    <li>Configuring a firewall (UFW or iptables) to restrict unnecessary ports.</li>
+    <li>Set up a dedicated user with sudo access to install the panel.</li>
+    <li>Disable SSH access for root and authenticate with keys instead.</li>
+    <li>Configure UFW or iptables to block unnecessary ports.</li>
   </ul>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">6. Backups and Snapshots</h2>
   <p class="mb-4">
-    Always prepare a backup or snapshot of your server before starting the installation. This allows you to revert to a safe state if any issues occur during setup.
+    Before beginning the installation, always create a backup or snapshot of your server. This enables you to restore it to a safe state if problems arise during setup.
   </p>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">7. Preparing the Database</h2>
   <p class="mb-4">
-    Create a dedicated database and user for Pterodactyl with proper permissions. This separation enhances security and ensures that the panel has exclusive access to its data.
+    Set up a separate database and user for Pterodactyl, granting only the necessary permissions. This isolation improves security and ensures that the panel has exclusive access to its data.
   </p>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">8. Understanding the Installation Process</h2>
   <p class="mb-4">
-    Familiarize yourself with the official Pterodactyl installation documentation. Reviewing each step ahead of time—panel setup, Wings daemon configuration, queue workers, and cron jobs—reduces errors during deployment.
+    Review the official Pterodactyl installation documentation before you begin. Going through the panel setup, Wings daemon configuration, queue workers, and cron jobs in advance can help prevent deployment errors.
   </p>
 
   <h2 class="text-xl font-semibold mt-6 mb-2">Conclusion</h2>
   <p class="mb-4">
-    Proper preparation is the key to a successful Pterodactyl Panel installation. By ensuring your hardware, software, security, and backup systems are ready, you can deploy and manage game servers efficiently and safely.
+    Thorough preparation is essential for a successful Pterodactyl Panel installation. Confirming that your hardware, software, security measures, and backup systems are properly configured enables you to deploy and manage game servers securely and efficiently.
   </p>
 
   <p class="mt-6">
-    With careful planning, even beginners can follow the installation steps confidently, paving the way for a stable and fully functional game server management environment.
+    With proper preparation, even first-time users can confidently complete the installation process, establishing a stable and fully operational environment for managing the game server.
   </p>
 </main>
 
