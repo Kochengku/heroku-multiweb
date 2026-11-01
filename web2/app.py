@@ -4,6 +4,8 @@ from datetime import datetime, timedelta, timezone
 from flask import Flask, Response, url_for
 import sys
 import os
+import re
+import unicodedata
 sys.path.append(os.path.join(os.path.dirname(__file__), 'static/konfigurasi'))
 
 from config_web2 import web_control, status_page, whatsapp_channel, whattsapp_admin, url_order
@@ -18,6 +20,13 @@ app = Flask(__name__, template_folder=TEMPLATE_DIR)
 
 ARTICLE_DIR = os.path.join(TEMPLATE_DIR, "Main-Article")
 
+def slugify(text):
+    text = unicodedata.normalize("NFKD", text)
+    text = text.encode("ascii", "ignore").decode("ascii")
+    text = text.lower()
+    text = re.sub(r"[^a-z0-9]+", "-", text)
+    return text.strip("-")
+
 def get_articles():
     articles = {}
 
@@ -26,43 +35,87 @@ def get_articles():
         return articles
 
     for file in os.listdir(ARTICLE_DIR):
-        if file.endswith(".html"):
-            slug = file.replace(".html", "")
-            file_path = os.path.join(ARTICLE_DIR, file)
+        if not file.endswith(".html"):
+            continue
 
+        old_slug = file[:-5]
+        file_path = os.path.join(ARTICLE_DIR, file)
+
+        try:
+            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                soup = BeautifulSoup(f, "html.parser")
+        except Exception as e:
+            print("[ERROR] Gagal baca:", file_path, e)
+            continue
+
+        title = (
+            soup.title.get_text(strip=True)
+            if soup.title else old_slug.replace("-", " ").title()
+        )
+
+        description_tag = soup.find(
+            "meta", attrs={"name": "description"}
+        )
+        description = (
+            description_tag.get("content", "")
+            if description_tag else "No description available."
+        )
+
+        category_tag = soup.find(
+            "meta", attrs={"name": "category"}
+        )
+        categories = (
+            category_tag.get("content", "").lower()
+            if category_tag else "general"
+        )
+
+        date_tag = soup.find("meta", attrs={"name": "date"})
+        if date_tag:
             try:
-                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                    soup = BeautifulSoup(f, "html.parser")
-            except Exception as e:
-                print("[ERROR] Gagal baca:", file_path, e)
-                continue
-
-            title = soup.title.string if soup.title else slug.replace("-", " ").title()
-
-            description_tag = soup.find("meta", attrs={"name": "description"})
-            description = description_tag["content"] if description_tag else "No description available."
-
-            category_tag = soup.find("meta", attrs={"name": "category"})
-            categories = category_tag["content"].lower() if category_tag else "general"
-
-            date_tag = soup.find("meta", attrs={"name": "date"})
-            if date_tag:
-                try:
-                    date = datetime.strptime(date_tag["content"], "%Y-%m-%d")
-                except ValueError:
-                    date = datetime.min
-            else:
+                date = datetime.strptime(
+                    date_tag["content"], "%Y-%m-%d"
+                )
+            except (ValueError, KeyError):
                 date = datetime.min
+        else:
+            date = datetime.min
 
-            articles[slug] = {
-                "file": file,
-                "title": title.strip(),
-                "description": description.strip(),
-                "categories": categories.strip(),
-                "date": date
-            }
+        # Gunakan slug khusus jika tersedia
+        slug_tag = soup.find("meta", attrs={"name": "slug"})
 
-    return dict(sorted(articles.items(), key=lambda x: x[1]["date"], reverse=True))
+        if slug_tag and slug_tag.get("content"):
+            new_slug = slugify(slug_tag["content"])
+        else:
+            new_slug = slugify(title)
+
+        if not new_slug:
+            new_slug = slugify(old_slug)
+
+        if not new_slug:
+            print("[ERROR] Slug kosong:", file)
+            continue
+
+        if new_slug in articles:
+            print("[ERROR] Slug duplikat:", new_slug)
+            continue
+
+        articles[new_slug] = {
+            "file": file,
+            "old_slug": old_slug,
+            "slug": new_slug,
+            "title": title.strip(),
+            "description": description.strip(),
+            "categories": categories.strip(),
+            "date": date
+        }
+
+    return dict(
+        sorted(
+            articles.items(),
+            key=lambda x: x[1]["date"],
+            reverse=True
+        )
+    )
 
 # Route untuk landing page (index)
 @app.route('/robots.txt')
@@ -123,23 +176,44 @@ def tos():
 def advertisingagreement():
 	
     return render_template("Main-Page/ads.html")
+    
+@app.route("/about")
+def aboutus():
+	
+    return render_template("Main-Page/aboutus.html")
+    
+@app.route("/contact")
+def contact():
+	
+    return render_template("Main-Page/contact.html")
 
 @app.route("/blog/<slug>")
 def blog_article(slug):
-	
+
     articles = get_articles()
+
+    # Cari berdasarkan slug baru
     article = articles.get(slug)
+
     if not article:
+        # Cari URL lama berdasarkan nama file
+        for new_slug, item in articles.items():
+            if item["old_slug"] == slug:
+                return redirect(
+                    url_for("blog_article", slug=new_slug),
+                    code=301
+                )
+
         abort(404)
 
-    file_path = os.path.join(ARTICLE_DIR, article["file"])
+    # Jika memakai URL lama, arahkan ke URL baru
+    if slug != article["slug"]:
+        return redirect(
+            url_for("blog_article", slug=article["slug"]),
+            code=301
+        )
 
-    # Cek isi file biar tidak error decode
-    try:
-        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-            f.read()
-    except Exception:
-        return "File artikel rusak atau tidak bisa dibaca", 500
-
-    # Render aman
-    return render_template(f"Main-Article/{article['file']}", article=article)
+    return render_template(
+        f"Main-Article/{article['file']}",
+        article=article
+    )
