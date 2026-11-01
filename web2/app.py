@@ -1,4 +1,5 @@
 from flask import Flask, render_template, send_from_directory
+import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta, timezone
 from flask import Flask, Response, url_for
@@ -122,30 +123,74 @@ def get_articles():
 def robots_txt():
     return send_from_directory('.', 'robots.txt')
     
-@app.route('/sitemap.xml', methods=['GET'])
+@app.route("/sitemap.xml")
 def sitemap():
-    pages = [
-        {'loc': 'https://kocheng.biz.id/', 'priority': '1.0'},
-        {'loc': 'https://kocheng.biz.id/privacypolicy', 'priority': '0.8'},
-        {'loc': 'https://kocheng.biz.id/tos', 'priority': '0.8'},
-        {'loc': 'https://kocheng.biz.id/advertisingagreement', 'priority': '0.7'},
-        {'loc': 'https://kocheng.biz.id/blog', 'priority': '0.6'},
+
+    domain = "https://kocheng.biz.id"
+
+    namespace = "http://www.sitemaps.org/schemas/sitemap/0.9"
+    ET.register_namespace("", namespace)
+
+    root = ET.Element(f"{{{namespace}}}urlset")
+
+    def add_url(loc, lastmod=None):
+        url = ET.SubElement(root, f"{{{namespace}}}url")
+
+        ET.SubElement(
+            url, f"{{{namespace}}}loc"
+        ).text = loc
+
+        if lastmod:
+            ET.SubElement(
+                url, f"{{{namespace}}}lastmod"
+            ).text = lastmod
+
+    # Halaman utama dan halaman penting
+    static_pages = [
+        "/",
+        "/getstarted",
+        "/privacypolicy",
+        "/tos",
+        "/advertisingagreement",
+        "/blog",
+        "/contact",
+        "/about"
     ]
 
-    xml = ['<?xml version="1.0" encoding="UTF-8"?>']
-    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+    for page in static_pages:
+        add_url(domain + page)
 
-    for page in pages:
-        xml.append('  <url>')
-        xml.append(f'    <loc>{page["loc"]}</loc>')
-        xml.append(f'    <lastmod>{datetime.utcnow().date()}</lastmod>')
-        xml.append(f'    <changefreq>weekly</changefreq>')
-        xml.append(f'    <priority>{page["priority"]}</priority>')
-        xml.append('  </url>')
+    # Semua artikel secara otomatis
+    articles = get_articles()
 
-    xml.append('</urlset>')
-    sitemap_xml = '\n'.join(xml)
-    return Response(sitemap_xml, mimetype='application/xml')
+    for slug, article in articles.items():
+
+        article_url = url_for(
+            "blog_article",
+            slug=slug,
+            _external=True
+        )
+
+        date = article.get("date")
+
+        lastmod = (
+            date.strftime("%Y-%m-%d")
+            if date and date != datetime.min
+            else None
+        )
+
+        add_url(article_url, lastmod)
+
+    xml_data = ET.tostring(
+        root,
+        encoding="utf-8",
+        xml_declaration=True
+    )
+
+    return Response(
+        xml_data,
+        mimetype="application/xml"
+    )
     
 @app.route("/")
 def home():
