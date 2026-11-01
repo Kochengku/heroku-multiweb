@@ -27,18 +27,89 @@
 <meta name="category" content="hosting,information">
 <meta name="date" content="2025-09-21">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="slug" content="install-pterodactyl-panel-vps">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <style>
-.fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
-.lead { color: #475569; }
-.note { background: rgba(59,130,246,.06); border-left: 4px solid rgba(59,130,246,.3); padding:.75rem 1rem; border-radius:.375rem; }
-</style>
-<style>
-/* Article Illustration */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+main {
+    width: 100%;
+    max-width: 896px;
+    min-width: 0;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-wrap: anywhere;
+}
+
+p, li, h1, h2, h3 {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+pre {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+code {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.lead {
+    color: #475569;
+    line-height: 1.8;
+}
+
+.note {
+    background: rgba(59,130,246,.06);
+    border-left: 4px solid rgba(59,130,246,.3);
+    padding: .75rem 1rem;
+    border-radius: .375rem;
+    overflow-wrap: anywhere;
+}
+
 .article-image {
     width: 100%;
     max-width: 760px;
@@ -56,27 +127,6 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.3s ease;
-}
-
-.article-image:hover img {
-    transform: scale(1.02);
-}
-
-.article-image figcaption {
-    font-size: 12px;
-    color: #64748b;
-    text-align: center;
-    padding: 8px 12px;
-}
-
-/* Mobile */
-@media (max-width: 640px) {
-    .article-image {
-        max-width: 100%;
-        border-radius: 10px;
-        margin: 20px auto;
-    }
 }
 
 .article-author {
@@ -89,6 +139,7 @@
 .author-avatar {
     width: 42px;
     height: 42px;
+    flex-shrink: 0;
     border-radius: 50%;
     object-fit: cover;
     background: #dbeafe;
@@ -110,6 +161,36 @@
     font-size: 14px;
     font-weight: 600;
     color: #1e40af;
+}
+
+@media (max-width: 640px) {
+    main {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-top: 28px !important;
+        padding-bottom: 28px !important;
+    }
+
+    main h1 {
+        font-size: 25px;
+        line-height: 1.35;
+    }
+
+    main h2 {
+        font-size: 19px;
+        line-height: 1.5;
+    }
+
+    pre {
+        font-size: 12px;
+        padding: 12px;
+    }
+
+    .article-image {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 20px auto;
+    }
 }
 </style>
 <script type="application/ld+json">
@@ -147,7 +228,7 @@
 </header>
 
 <!-- MAIN -->
-<main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+<main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in w-full min-w-0">
   <h1 class="text-3xl font-bold text-blue-900 mb-4">
     Complete Guide to Installing Pterodactyl Panel
   </h1>
