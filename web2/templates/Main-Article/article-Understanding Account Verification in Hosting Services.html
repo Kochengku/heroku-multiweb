@@ -67,7 +67,90 @@
     .note { background: rgba(59, 130, 246, 0.06); border-left: 4px solid rgba(59,130,246,0.2); padding: .75rem 1rem; border-radius: .375rem; }
     .warning { background: rgba(251, 113, 133, 0.06); border-left: 4px solid rgba(239, 68, 68, 0.18); padding: .75rem 1rem; border-radius: .375rem; }
     code { background:#f8fafc; padding: .15rem .3rem; border-radius: .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace; }
+    
+    .article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}.article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Create a Panel and Run a WhatsApp Bot",
+  "author": {
+    "@type": "Organization",
+    "name": "Kocheng Team",
+    "url": "https://kocheng.biz.id/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kocheng",
+    "url": "https://kocheng.biz.id"
+  },
+  "datePublished": "2025-10-14",
+  "dateModified": "2025-10-14"
+}
+</script>
 </head>
 <body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
 
@@ -85,6 +168,22 @@
   <!-- MAIN -->
   <main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
     <h1 class="text-3xl font-bold text-blue-900 mb-4">How to Complete the Ad Verification to Create a Free Server</h1>
+    
+    <div class="article-author">
+    <img
+        src="{{ url_for('static', filename='favicon-96x96.webp') }}"
+        alt="Kocheng"
+        class="author-avatar"
+        width="42"
+        height="42"
+    >
+
+    <div class="author-info">
+        <span class="author-label">Written by</span>
+        <span class="author-name">Kocheng Team</span>
+    </div>
+</div>
+
     <p class="text-gray-500 mb-6">Published on September 14, 2025 · 3 min read</p>
 
     <p class="lead mb-4">Kocheng Hosting uses a brief ad-verification process to help sustain its free server tier. This article provides step-by-step instructions for safely completing website-based ad verification so your server can be provisioned correctly.</p>

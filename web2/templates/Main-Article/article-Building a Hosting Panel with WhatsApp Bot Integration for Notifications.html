@@ -52,6 +52,100 @@
   }]
 }
 </script>
+<style>
+/* Article Illustration */
+.article-image {
+    width: 100%;
+    max-width: 760px;
+    aspect-ratio: 16 / 9;
+    margin: 24px auto;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #eaf2ff;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.08);
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.article-image:hover img {
+    transform: scale(1.02);
+}
+
+.article-image figcaption {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    padding: 8px 12px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .article-image {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 20px auto;
+    }
+}
+
+.article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Create a Panel and Run a WhatsApp Bot",
+  "author": {
+    "@type": "Organization",
+    "name": "Kocheng Team",
+    "url": "https://kocheng.biz.id/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kocheng",
+    "url": "https://kocheng.biz.id"
+  },
+  "datePublished": "2025-09-14",
+  "dateModified": "2025-09-14"
+}
+</script>
   <meta charset="UTF-8">
   <title>Building a Hosting Panel with WhatsApp Bot Integration for Notifications</title>
   <meta name="description" content="A step-by-step tutorial on integrating WhatsApp bots with hosting panels to automate alerts, monitoring updates, and system notifications.">
@@ -82,6 +176,29 @@
   <main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
     <h1 class="text-3xl font-bold text-blue-900 mb-6">How to Create a Panel and Run a WhatsApp Bot</h1>
     <p class="text-gray-500 mb-6">Published on September 14, 2025 · 7 min read</p>
+    <div class="article-author">
+    <img
+        src="{{ url_for('static', filename='favicon-96x96.webp') }}"
+        alt="Kocheng"
+        class="author-avatar"
+        width="42"
+        height="42"
+    >
+
+    <div class="author-info">
+        <span class="author-label">Written by</span>
+        <span class="author-name">Kocheng Team</span>
+    </div>
+</div>
+    
+    <figure class="article-image">
+    <img
+        src="{{ url_for('static', filename='images/server.webp') }}"
+        alt="image"
+        loading="lazy"
+        decoding="async"
+    >
+</figure>
 
     <p class="mb-4">In this post, we will lead you through the process of building a new panel on Kocheng Hosting and deploying a WhatsApp bot using the Pterodactyl panel.</p>
 
@@ -90,14 +207,12 @@
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 2: Navigate to the Bot Server Menu</h2>
     <p class="mb-4">
-      Click the menu icon (three lines at the top-left) once you're inside the dashboard. Next, choose Bot Server. Two choices will appear to you: Create through Telegram or a website. We'll stick with the website approach for this article. If you wish to use Telegram to set up your server,
-      <a href="{{ url_for('blog_article', slug='article-telegram') }}" class="text-blue-600 hover:underline">click here</a>.
+      Click the menu icon (three lines at the top-left) once you're inside the dashboard. Next, choose Bot Server. Two choices will appear to you: Create through Telegram or a website. We'll stick with the website approach for this article. If you wish to use Telegram to set up your server.
     </p>
 
     <h2 class="text-xl font-semibold mt-6 mb-2">Step 3: Follow the Ad-Supported Setup</h2>
     <p class="mb-4">
       You'll be taken to an advertisement page. Just adhere to the given instructions.
-      <a href="{{ url_for('blog_article', slug='article-ads-setup') }}" class="text-blue-600 hover:underline">click here</a>.  
     </p>
     <ul class="list-disc ml-6 mb-4">
       <li>Enter the necessary server information, including name.</li>

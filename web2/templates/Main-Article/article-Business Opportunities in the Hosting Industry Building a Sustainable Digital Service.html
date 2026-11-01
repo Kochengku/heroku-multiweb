@@ -36,6 +36,100 @@
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 .lead { color: #475569; }
 </style>
+<style>
+/* Article Illustration */
+.article-image {
+    width: 100%;
+    max-width: 760px;
+    aspect-ratio: 16 / 9;
+    margin: 24px auto;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #eaf2ff;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.08);
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.article-image:hover img {
+    transform: scale(1.02);
+}
+
+.article-image figcaption {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    padding: 8px 12px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .article-image {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 20px auto;
+    }
+}
+
+.article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Create a Panel and Run a WhatsApp Bot",
+  "author": {
+    "@type": "Organization",
+    "name": "Kocheng Team",
+    "url": "https://kocheng.biz.id/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kocheng",
+    "url": "https://kocheng.biz.id"
+  },
+  "datePublished": "2026-01-10",
+  "dateModified": "2026-01-10"
+}
+</script>
 </head>
 
 <body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
@@ -56,7 +150,31 @@
 Business Opportunities in the Hosting Industry: Building a Sustainable Digital Service
 </h1>
 
+<div class="article-author">
+    <img
+        src="{{ url_for('static', filename='favicon-96x96.webp') }}"
+        alt="Kocheng"
+        class="author-avatar"
+        width="42"
+        height="42"
+    >
+
+    <div class="author-info">
+        <span class="author-label">Written by</span>
+        <span class="author-name">Kocheng Team</span>
+    </div>
+</div>
+
 <p class="text-gray-500 mb-6">Published on January 10, 2026 · 11 min read</p>
+
+<figure class="article-image">
+    <img
+        src="{{ url_for('static', filename='images/tech.webp') }}"
+        alt="image"
+        loading="lazy"
+        decoding="async"
+    >
+</figure>
 
 <p class="lead mb-6">
 The hosting industry continues to expand as digital transformation reshapes the way organizations and individuals operate. Businesses, content creators, and software developers are increasingly moving websites, applications, data, and other operations online, creating a steady need for dependable hosting services. Customers often look for solutions that provide strong performance, reliable uptime, security, scalability, and responsive technical support. This ongoing demand presents substantial business opportunities for entrepreneurs who understand the hosting market, identify underserved customer needs, and develop services that address practical challenges for their target audiences.
