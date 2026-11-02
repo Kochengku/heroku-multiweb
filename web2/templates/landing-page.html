@@ -35,6 +35,25 @@
 <meta name="twitter:description" content="Bot hosting solutions for Discord and WhatsApp projects.">
 <meta name="twitter:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
 
+<!-- Google Consent Mode v2 - Default Denied -->
+<script>
+window.dataLayer = window.dataLayer || [];
+
+function gtag() {
+  dataLayer.push(arguments);
+}
+
+gtag('consent', 'default', {
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'analytics_storage': 'denied',
+  'functionality_storage': 'granted',
+  'security_storage': 'granted',
+  'wait_for_update': 500
+});
+</script>
+
 <!-- Structured Data -->
 <script type="application/ld+json">
 {
@@ -145,6 +164,120 @@
 </style>
 </head>
 
+<!-- COOKIE CONSENT -->
+<div id="cookie-consent" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+
+  <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative">
+
+    <div class="flex items-center gap-3 mb-4">
+      <div class="bg-blue-100 text-blue-600 w-12 h-12 rounded-xl flex items-center justify-center">
+        <i class="fa-solid fa-cookie-bite text-2xl"></i>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-gray-800">
+          Your Privacy Matters
+        </h2>
+        <p class="text-xs text-gray-500">
+          Kocheng Hosting Cookie Preferences
+        </p>
+      </div>
+    </div>
+
+    <p class="text-sm text-gray-600 leading-relaxed mb-5">
+      We use cookies and similar technologies to improve your browsing
+      experience, analyze website traffic, and display relevant advertisements
+      through Google AdSense. You can accept all cookies, reject
+      non-essential cookies, or customize your preferences.
+    </p>
+
+    <div class="bg-gray-50 border rounded-xl p-4 space-y-3 mb-5">
+
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="font-semibold text-sm text-gray-800">
+            Essential Cookies
+          </p>
+          <p class="text-xs text-gray-500">
+            Required for basic website functionality.
+          </p>
+        </div>
+
+        <span class="text-xs font-semibold text-green-600">
+          Always Active
+        </span>
+      </div>
+
+      <hr>
+
+      <label class="flex justify-between items-center cursor-pointer">
+        <div>
+          <p class="font-semibold text-sm text-gray-800">
+            Analytics Cookies
+          </p>
+          <p class="text-xs text-gray-500">
+            Help us understand website usage.
+          </p>
+        </div>
+
+        <input type="checkbox" id="cookie-analytics"
+          class="w-5 h-5 accent-blue-600">
+      </label>
+
+      <hr>
+
+      <label class="flex justify-between items-center cursor-pointer">
+        <div>
+          <p class="font-semibold text-sm text-gray-800">
+            Advertising Cookies
+          </p>
+          <p class="text-xs text-gray-500">
+            Used for advertising and personalization.
+          </p>
+        </div>
+
+        <input type="checkbox" id="cookie-ads"
+          class="w-5 h-5 accent-blue-600">
+      </label>
+
+    </div>
+
+    <div class="flex flex-col gap-2">
+
+      <button id="cookie-accept"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition">
+        Accept All
+      </button>
+
+      <button id="cookie-reject"
+        class="w-full border border-gray-300 hover:bg-gray-50 text-gray-700 font-semibold py-3 rounded-xl transition">
+        Reject Non-Essential
+      </button>
+
+      <button id="cookie-save"
+        class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition">
+        Save My Preferences
+      </button>
+
+    </div>
+
+    <p class="text-xs text-center text-gray-400 mt-4">
+      Read our
+      <a href="/privacypolicy" class="text-blue-600 hover:underline">
+        Privacy Policy
+      </a>
+      for more information.
+    </p>
+
+  </div>
+</div>
+
+<!-- COOKIE SETTINGS BUTTON -->
+<button id="cookie-settings"
+  class="fixed bottom-4 left-4 z-[9998] bg-white border border-gray-200 shadow-lg rounded-full px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+  <i class="fa-solid fa-cookie-bite text-blue-600 mr-2"></i>
+  Cookie Settings
+</button>
 <body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
 
 <!-- HEADER -->
@@ -662,6 +795,157 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && !sidebar.classList.contains('hidden')) {
     closeSidebar();
   }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const popup = document.getElementById('cookie-consent');
+
+  const acceptBtn = document.getElementById('cookie-accept');
+  const rejectBtn = document.getElementById('cookie-reject');
+  const saveBtn = document.getElementById('cookie-save');
+  const settingsBtn = document.getElementById('cookie-settings');
+
+  const analyticsInput = document.getElementById('cookie-analytics');
+  const adsInput = document.getElementById('cookie-ads');
+
+  const STORAGE_KEY = 'kocheng_cookie_consent_v1';
+
+  function updateGoogleConsent(preferences) {
+
+    gtag('consent', 'update', {
+
+      'ad_storage': preferences.ads ? 'granted' : 'denied',
+
+      'ad_user_data': preferences.ads ? 'granted' : 'denied',
+
+      'ad_personalization': preferences.ads ? 'granted' : 'denied',
+
+      'analytics_storage': preferences.analytics ? 'granted' : 'denied'
+
+    });
+
+  }
+
+  function openPopup() {
+
+    const current = getConsent();
+
+    analyticsInput.checked = current
+      ? current.analytics
+      : false;
+
+    adsInput.checked = current
+      ? current.ads
+      : false;
+
+    popup.classList.remove('hidden');
+    popup.classList.add('flex');
+
+  }
+
+  function closePopup() {
+
+    popup.classList.add('hidden');
+    popup.classList.remove('flex');
+
+  }
+
+  function getConsent() {
+
+    try {
+
+      const data = localStorage.getItem(STORAGE_KEY);
+
+      return data ? JSON.parse(data) : null;
+
+    } catch (error) {
+
+      return null;
+
+    }
+
+  }
+
+  function saveConsent(preferences) {
+
+    const consent = {
+
+      essential: true,
+
+      analytics: Boolean(preferences.analytics),
+
+      ads: Boolean(preferences.ads),
+
+      updatedAt: new Date().toISOString(),
+
+      version: 1
+
+    };
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(consent)
+    );
+
+    updateGoogleConsent(consent);
+
+    closePopup();
+
+  }
+
+  // Accept All
+  acceptBtn.addEventListener('click', function () {
+
+    saveConsent({
+      analytics: true,
+      ads: true
+    });
+
+  });
+
+  // Reject Non-Essential
+  rejectBtn.addEventListener('click', function () {
+
+    saveConsent({
+      analytics: false,
+      ads: false
+    });
+
+  });
+
+  // Save Custom Preferences
+  saveBtn.addEventListener('click', function () {
+
+    saveConsent({
+
+      analytics: analyticsInput.checked,
+
+      ads: adsInput.checked
+
+    });
+
+  });
+
+  // Open Cookie Settings
+  settingsBtn.addEventListener('click', openPopup);
+
+  // Restore previous consent
+  const savedConsent = getConsent();
+
+  if (savedConsent && savedConsent.version === 1) {
+
+    updateGoogleConsent(savedConsent);
+
+    closePopup();
+
+  } else {
+
+    openPopup();
+
+  }
+
 });
 </script>
 </body>
