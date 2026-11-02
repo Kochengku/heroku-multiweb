@@ -110,7 +110,7 @@
   <h1 class="text-3xl font-bold text-blue-900 mb-4">
     What You Need to Prepare to Install Pterodactyl Panel
   </h1>
-  
+
   <div class="article-author">
     <img
         src="{{ url_for('static', filename='favicon-96x96.webp') }}"
@@ -207,6 +207,342 @@
   <p class="mt-6">
     With proper preparation, even first-time users can confidently complete the installation process, establishing a stable and fully operational environment for managing the game server.
   </p>
+
+  <hr class="my-10">
+
+  <h2 class="text-2xl font-bold text-blue-900 mb-4">Preparing a VPS for Pterodactyl Panel: Hardware, Software, Networking, and Security Requirements</h2>
+
+  <p class="lead mb-4">
+    Preparing a VPS for Pterodactyl Panel involves more than choosing a server plan and running an installation command. Administrators need to verify the operating system, allocate sufficient resources, configure networking, secure remote access, and prepare the database before deploying the panel and Wings daemon.
+  </p>
+
+  <p class="mb-4">
+    Pterodactyl is an open-source game server management platform. Its architecture separates the web-based Panel, which handles administration, from Wings, the service responsible for managing game server instances through Docker. Understanding this separation helps administrators prepare each component correctly and avoid configuration problems during deployment.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Why VPS Preparation Matters Before Installing Pterodactyl</h2>
+
+  <p class="mb-4">
+    A VPS that appears suitable on paper may still encounter problems if its resources are shared poorly, its operating system is unsupported, or essential network ports are blocked. These issues can affect installation, server deployment, file transfers, and communication between the Panel and Wings.
+  </p>
+
+  <p class="mb-4">
+    Preparation also reduces the risk of exposing administrative services to the public internet. A properly configured environment gives administrators a clearer starting point for troubleshooting and makes future maintenance easier.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Choosing the Right VPS Specifications</h2>
+
+  <p class="mb-4">
+    Hardware requirements depend on how the VPS will be used. A machine hosting only the web panel has a different workload from a node running several Minecraft, Discord bot, or other containerized services.
+  </p>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">CPU, RAM, and Storage</h3>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><strong>CPU:</strong> At least two CPU cores provide a practical starting point for a small environment. More cores are useful when multiple game servers or resource-intensive applications run simultaneously.</li>
+    <li><strong>RAM:</strong> Memory must cover the operating system, Panel services, database, Wings, and every hosted server. A VPS with 2 GB of RAM may be suitable for a small panel-only setup, but it is not a universal requirement or guarantee for running game servers.</li>
+    <li><strong>Storage:</strong> SSD or NVMe storage is preferable for faster file operations. Capacity should account for the operating system, Docker images, server files, databases, logs, backups, and future growth.</li>
+    <li><strong>Network:</strong> Choose a provider with reliable connectivity and sufficient bandwidth for the expected number of users and hosted services.</li>
+  </ul>
+
+  <p class="mb-4">
+    Administrators should distinguish between the resources reserved for the Panel and those consumed by game servers. Assigning nearly all available memory to hosted instances can leave the operating system and supporting services without enough room to operate reliably.
+  </p>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">Estimate Capacity Before Buying</h3>
+
+  <p class="mb-4">
+    Calculate expected resource consumption rather than relying only on the advertised VPS specifications. For example, a node hosting several game servers needs enough memory for their combined workloads, while disk usage can increase as users install additional files and generate backups.
+  </p>
+
+  <p class="mb-4">
+    Leave operating-system and service overhead available. Resource allocation should also account for temporary spikes, such as server startup, world generation, updates, and backup operations.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Selecting a Supported Linux Operating System</h2>
+
+  <p class="mb-4">
+    Pterodactyl installations are commonly deployed on Linux servers. Ubuntu and Debian are widely used choices because they provide established package management systems and extensive documentation.
+  </p>
+
+  <p class="mb-4">
+    Check the current Pterodactyl installation documentation before selecting an operating system. Version compatibility changes over time, so an older distribution should not be selected merely because it appears in an outdated tutorial.
+  </p>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><strong>Ubuntu LTS:</strong> A practical choice for administrators who prefer long-term support releases and widely available server guides.</li>
+    <li><strong>Debian:</strong> Another established Linux option, commonly used for servers that prioritize a stable package environment.</li>
+  </ul>
+
+  <p class="mb-4">
+    CentOS 7 and CentOS 8, which are sometimes mentioned in older installation guides, should not be treated as current default recommendations. Their original release lifecycles have ended. Choose a maintained distribution that is compatible with the Pterodactyl version being installed.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Installing the Required Software Dependencies</h2>
+
+  <p class="mb-4">
+    The Panel and Wings have different responsibilities and therefore require different software components. The Panel runs as a web application, while Wings manages server instances and communicates with Docker.
+  </p>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">Panel Dependencies</h3>
+
+  <p class="mb-4">
+    The Panel uses PHP and a database to process administrative requests and store information. Its deployment also requires a web server and supporting tools for application dependencies and frontend assets.
+  </p>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><strong>PHP:</strong> Install a PHP version supported by the specific Pterodactyl release, together with all extensions listed in its official documentation.</li>
+    <li><strong>Database:</strong> Use a supported MySQL or MariaDB version to store panel data.</li>
+    <li><strong>Web server:</strong> Nginx or Apache can serve the Panel application when configured correctly.</li>
+    <li><strong>Composer:</strong> The PHP dependency manager used to install the application's required packages.</li>
+    <li><strong>Node.js:</strong> Used for frontend-related build tasks when required by the installation procedure.</li>
+  </ul>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">Wings and Docker</h3>
+
+  <p class="mb-4">
+    Wings is the node service that communicates with the Panel and manages game server containers. Docker provides the container runtime used to isolate and run those server environments.
+  </p>
+
+  <p class="mb-4">
+    Docker must be installed and configured according to the supported procedure. Administrators should verify that the Docker service starts correctly after installation and that Wings has permission to communicate with it.
+  </p>
+
+  <p class="mb-4">
+    Installing the Panel does not automatically mean that a node is ready to host game servers. Wings must also be configured, connected to the Panel, and assigned the appropriate node settings.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Configuring the Domain Name and SSL Certificate</h2>
+
+  <p class="mb-4">
+    A fully qualified domain name (FQDN) gives users a consistent address for accessing the Panel. For example, an administrator might use <strong>panel.example.com</strong> for the web interface and a separate hostname for a Wings node.
+  </p>
+
+  <p class="mb-4">
+    Create the required DNS records at the domain provider and point them to the correct public IP address. If the server uses a reverse proxy, load balancer, or private network, make sure the DNS and routing design matches that architecture.
+  </p>
+
+  <p class="mb-4">
+    HTTPS protects communication between browsers and the Panel. A certificate from Let's Encrypt or another trusted certificate authority can provide encrypted connections, provided that domain validation and web server configuration are completed successfully.
+  </p>
+
+  <p class="mb-4">
+    Certificate configuration should cover the hostname actually used by the service. Administrators should also plan certificate renewal so that an expired certificate does not interrupt secure access.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Preparing Firewall Rules and Network Ports</h2>
+
+  <p class="mb-4">
+    Network configuration is one of the most important parts of a Pterodactyl deployment. A firewall that blocks required traffic can prevent users from opening the Panel, Wings from communicating with the Panel, or players from connecting to game servers.
+  </p>
+
+  <p class="mb-4">
+    Common ports include the following, although the exact configuration depends on the deployment and services being hosted:
+  </p>
+
+  <div class="overflow-x-auto mb-4">
+    <table class="w-full border-collapse border border-gray-300 text-sm">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 p-2 text-left">Port</th>
+          <th class="border border-gray-300 p-2 text-left">Protocol</th>
+          <th class="border border-gray-300 p-2 text-left">Typical purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="border border-gray-300 p-2">22</td>
+          <td class="border border-gray-300 p-2">TCP</td>
+          <td class="border border-gray-300 p-2">SSH administration, if configured on the default port</td>
+        </tr>
+        <tr>
+          <td class="border border-gray-300 p-2">80</td>
+          <td class="border border-gray-300 p-2">TCP</td>
+          <td class="border border-gray-300 p-2">HTTP access and common certificate validation</td>
+        </tr>
+        <tr>
+          <td class="border border-gray-300 p-2">443</td>
+          <td class="border border-gray-300 p-2">TCP</td>
+          <td class="border border-gray-300 p-2">HTTPS access to the Panel</td>
+        </tr>
+        <tr>
+          <td class="border border-gray-300 p-2">8080</td>
+          <td class="border border-gray-300 p-2">TCP</td>
+          <td class="border border-gray-300 p-2">Common Wings API port when configured to use it</td>
+        </tr>
+        <tr>
+          <td class="border border-gray-300 p-2">2022</td>
+          <td class="border border-gray-300 p-2">TCP</td>
+          <td class="border border-gray-300 p-2">Common Wings SFTP port when configured to use it</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="mb-4">
+    Game server ports must also be allocated according to the applications being hosted. Minecraft, for example, commonly uses a different port configuration from other game server software.
+  </p>
+
+  <p class="mb-4">
+    Do not open every port without a clear reason. Restrict SSH access to trusted addresses where practical, and expose only the services that users or other components genuinely need to reach.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Securing SSH and Administrative Access</h2>
+
+  <p class="mb-4">
+    SSH provides remote access to the VPS, so weak authentication can put the entire hosting environment at risk. Use strong credentials and consider SSH key authentication instead of relying solely on passwords.
+  </p>
+
+  <p class="mb-4">
+    Administrators should avoid using the root account for routine work. A separate administrative account with carefully controlled sudo privileges makes it easier to manage access and reduces the consequences of mistakes.
+  </p>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Use SSH keys and protect private keys with an appropriate passphrase.</li>
+    <li>Disable direct root login when the alternative administrative account has been tested successfully.</li>
+    <li>Keep the operating system and installed packages updated.</li>
+    <li>Apply firewall rules before exposing services publicly.</li>
+    <li>Protect Panel administrator accounts with strong, unique passwords and multi-factor authentication when available.</li>
+  </ul>
+
+  <p class="mb-4">
+    Before changing SSH settings, confirm that the new account can log in and execute administrative commands. Otherwise, an incorrect configuration may lock the administrator out of the VPS.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Creating a Separate Database and User</h2>
+
+  <p class="mb-4">
+    The Panel needs a database to store information such as users, server configurations, and administrative settings. Create a dedicated database and database account for the application rather than using a general-purpose account with unrestricted privileges.
+  </p>
+
+  <p class="mb-4">
+    Grant only the permissions required by the installation instructions. Store database credentials securely and avoid placing passwords in publicly accessible files or repositories.
+  </p>
+
+  <p class="mb-4">
+    Database access should normally be restricted to the services and hosts that need it. If the database is located on a separate machine, configure the network and authentication rules deliberately rather than exposing its port to the entire internet.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Planning Backups and Recovery</h2>
+
+  <p class="mb-4">
+    A VPS snapshot provides a convenient recovery point before major system changes, but it should not be the only backup method. Snapshots may be stored on the same provider infrastructure and may not protect against every account, storage, or provider-level failure.
+  </p>
+
+  <p class="mb-4">
+    Plan backups for the Panel database, application configuration, server data, and any files that would be difficult to recreate. The exact backup scope depends on whether the VPS runs only the Panel or also hosts Wings and game server instances.
+  </p>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Store important backups separately from the VPS being protected.</li>
+    <li>Schedule backups according to how frequently the data changes.</li>
+    <li>Protect backup files because they may contain credentials or user data.</li>
+    <li>Test restoration procedures instead of assuming that every backup is usable.</li>
+  </ul>
+
+  <p class="mb-4">
+    A backup is valuable only if it can be restored. Periodically test recovery on a separate environment or through a controlled restoration procedure.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Checking the VPS Before Installation</h2>
+
+  <p class="mb-4">
+    Run basic checks before starting the installation. Confirm that the server has internet access, the expected hostname, sufficient free disk space, and a functioning package manager.
+  </p>
+
+  <p class="mb-4">
+    Administrators can use standard Linux commands to inspect the system:
+  </p>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><strong>Operating system:</strong> <em>cat /etc/os-release</em></li>
+    <li><strong>CPU information:</strong> <em>lscpu</em></li>
+    <li><strong>Memory usage:</strong> <em>free -h</em></li>
+    <li><strong>Disk capacity:</strong> <em>df -h</em></li>
+    <li><strong>Network addresses:</strong> <em>ip address</em></li>
+    <li><strong>Listening services:</strong> <em>ss -tulpn</em></li>
+  </ul>
+
+  <p class="mb-4">
+    These commands provide a basic overview of the VPS. They do not replace the official compatibility checks, but they can reveal resource shortages, unexpected services, or network configuration issues before installation begins.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Understanding the Panel and Wings Installation Sequence</h2>
+
+  <p class="mb-4">
+    Read the official Pterodactyl documentation before executing installation commands. The Panel and Wings are separate components, and each has its own configuration steps.
+  </p>
+
+  <p class="mb-4">
+    A typical deployment involves preparing the operating system, installing the Panel dependencies, configuring the database and web server, setting up the Panel, and then preparing Wings on the intended node. The administrator must also configure node allocations, service ports, and the connection between Wings and the Panel.
+  </p>
+
+  <p class="mb-4">
+    Queue workers and scheduled tasks are also part of a functioning Panel deployment. Follow the instructions for the exact release being installed, because service names, dependencies, and supported versions can change.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Common Preparation Mistakes to Avoid</h2>
+
+  <p class="mb-4">
+    Many installation problems originate from overlooked details rather than complicated software defects. Checking the environment in advance can prevent several recurring mistakes.
+  </p>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><strong>Using an outdated operating system:</strong> An unsupported distribution may no longer receive security updates or compatible packages.</li>
+    <li><strong>Installing incompatible dependencies:</strong> PHP, database, and other software versions must match the selected Pterodactyl release.</li>
+    <li><strong>Ignoring firewall configuration:</strong> Required services may become unreachable even when the installation itself succeeds.</li>
+    <li><strong>Underestimating storage:</strong> Docker images, server files, logs, and backups can consume more disk space than expected.</li>
+    <li><strong>Skipping recovery planning:</strong> A failed configuration change can become much harder to recover from without a usable backup.</li>
+    <li><strong>Exposing unnecessary services:</strong> Publicly accessible administrative and database ports increase the attack surface.</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Conclusion</h2>
+
+  <p class="mb-4">
+    Preparing a VPS for Pterodactyl Panel requires a coordinated plan for hardware, Linux compatibility, software dependencies, networking, security, and backups. Each part contributes to the stability of the hosting environment, from the web-based control panel to the Wings service that manages game server containers.
+  </p>
+
+  <p class="mb-4">
+    Administrators who verify these requirements before installation are better positioned to avoid preventable errors and maintain their infrastructure. The most reliable approach is to follow the official documentation for the selected Pterodactyl release, use supported software versions, and test the environment before deploying production servers.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Frequently Asked Questions</h2>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">Can Pterodactyl run on a VPS with 2 GB of RAM?</h3>
+  <p class="mb-4">
+    A small Panel-only deployment may run with 2 GB of RAM, depending on its workload and supporting services. Hosting game servers requires additional memory, so the total capacity must be calculated separately.
+  </p>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">Is Ubuntu required to install Pterodactyl?</h3>
+  <p class="mb-4">
+    No. Ubuntu is a common option, but supported Linux distributions depend on the Pterodactyl release and its installation documentation. Check compatibility before choosing an operating system.
+  </p>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">Does Pterodactyl require Docker?</h3>
+  <p class="mb-4">
+    Wings uses Docker to run game server instances in containers. Docker is therefore an essential part of the standard Wings-based deployment.
+  </p>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">Which ports should be opened for Pterodactyl?</h3>
+  <p class="mb-4">
+    Common configurations use ports 80 and 443 for web access, 8080 for Wings API traffic, and 2022 for SFTP. SSH and game server ports may also be needed. Actual ports depend on the configuration, so firewall rules should match the services in use.
+  </p>
+
+  <h3 class="text-lg font-semibold mt-5 mb-2">Is a VPS snapshot enough to protect a Pterodactyl installation?</h3>
+  <p class="mb-4">
+    A snapshot is useful before major changes, but it should be complemented by separate backups of the database, configuration, and important server data. Restoration should be tested regularly.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Official Documentation and Technical References</h2>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><a href="https://pterodactyl.io/">Pterodactyl Documentation</a> — official project documentation and installation guidance.</li>
+    <li><a href="https://pterodactyl.io/panel/1.0/getting_started.html">Pterodactyl Panel Documentation</a> — panel setup and configuration information.</li>
+    <li><a href="https://pterodactyl.io/wings/1.0/installing.html">Pterodactyl Wings Documentation</a> — Wings installation guidance.</li>
+    <li><a href="https://docs.docker.com/engine/install/">Docker Engine Installation Guide</a> — official Docker installation instructions.</li>
+    <li><a href="https://ubuntu.com/server/docs">Ubuntu Server Documentation</a> — official Ubuntu server administration reference.</li>
+    <li><a href="https://www.debian.org/doc/">Debian Documentation</a> — official Debian system documentation.</li>
+  </ul>
 </main>
 
 <!-- FOOTER -->

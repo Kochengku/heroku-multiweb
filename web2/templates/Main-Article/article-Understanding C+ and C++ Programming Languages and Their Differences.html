@@ -183,7 +183,7 @@
   <h1 class="text-3xl font-bold text-blue-900 mb-4">
     Understanding C+ and C++ Programming Languages and Their Differences
   </h1>
-  
+
   <div class="article-author">
     <img
         src="{{ url_for('static', filename='favicon-96x96.webp') }}"
@@ -270,6 +270,336 @@
   <p class="mt-6">
     Through learning C++ concepts, completing coding exercises, and developing projects, learners can build a strong foundation in programming and prepare to study advanced software development topics.
   </p>
+
+  <!-- ADDITIONAL ARTICLE CONTENT -->
+
+  <hr class="my-10">
+
+  <h2 class="text-2xl font-bold text-blue-900 mb-4">
+    C vs C++: Understanding the Real Differences Between the Two Languages
+  </h2>
+
+  <p class="mb-4">
+    The discussion about C+ and C++ often leads to a more useful comparison: the differences between C and C++. Unlike the informal term C+, both C and C++ have internationally recognized standards, established compiler support, and long histories in software engineering. They share several design principles, but their programming models and available language features are not identical.
+  </p>
+
+  <p class="mb-4">
+    C is commonly used for software that requires close interaction with hardware and operating system interfaces. C++ retains many of those capabilities while providing additional tools for organizing larger programs, including classes, templates, exceptions, and a broader standard library. Choosing between them requires understanding the project's constraints rather than assuming that one language is always faster or better.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">The History of C and the Development of C++</h2>
+
+  <p class="mb-4">
+    C was developed by Dennis Ritchie at Bell Laboratories during the early 1970s. It became closely associated with the development of the Unix operating system and influenced generations of programming languages. Its design emphasizes portability, efficiency, and the ability to work with computer resources at a relatively low level.
+  </p>
+
+  <p class="mb-4">
+    C++ followed a different development path. According to its creator, Bjarne Stroustrup, work on the language began in 1979 under the name "C with Classes." An early version was used internally at AT&T in 1983, when the name C++ also emerged. The first commercial implementation appeared in October 1985.
+  </p>
+
+  <p class="mb-4">
+    The language was designed to combine C's efficiency and flexibility with stronger facilities for organizing software. Over time, C++ developed into a separate language with its own standardization process, features, and library ecosystem. Its relationship with C remains important, but the two languages should not be treated as interchangeable.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">C and C++ Programming: Main Technical Differences</h2>
+
+  <p class="mb-4">
+    The most visible distinction is the programming model. C primarily uses procedural programming, where a program is organized around functions and data structures. C++ supports procedural programming as well, but it also offers object-oriented and generic programming techniques that allow developers to structure software in different ways.
+  </p>
+
+  <table class="w-full border-collapse my-6 text-sm">
+    <thead>
+      <tr>
+        <th class="border border-gray-300 p-3 text-left">Area</th>
+        <th class="border border-gray-300 p-3 text-left">C</th>
+        <th class="border border-gray-300 p-3 text-left">C++</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border border-gray-300 p-3">Programming model</td>
+        <td class="border border-gray-300 p-3">Primarily procedural</td>
+        <td class="border border-gray-300 p-3">Procedural, object-oriented, and generic</td>
+      </tr>
+      <tr>
+        <td class="border border-gray-300 p-3">Classes and objects</td>
+        <td class="border border-gray-300 p-3">Not provided as native language features</td>
+        <td class="border border-gray-300 p-3">Supported through classes and objects</td>
+      </tr>
+      <tr>
+        <td class="border border-gray-300 p-3">Function overloading</td>
+        <td class="border border-gray-300 p-3">Not supported as a standard language feature</td>
+        <td class="border border-gray-300 p-3">Supported</td>
+      </tr>
+      <tr>
+        <td class="border border-gray-300 p-3">Templates</td>
+        <td class="border border-gray-300 p-3">Not available</td>
+        <td class="border border-gray-300 p-3">Supported for generic programming</td>
+      </tr>
+      <tr>
+        <td class="border border-gray-300 p-3">Exception handling</td>
+        <td class="border border-gray-300 p-3">No native C++-style exception mechanism</td>
+        <td class="border border-gray-300 p-3">Provides try, catch, and throw</td>
+      </tr>
+      <tr>
+        <td class="border border-gray-300 p-3">Standard library</td>
+        <td class="border border-gray-300 p-3">Provides standard headers and library functions</td>
+        <td class="border border-gray-300 p-3">Includes containers, algorithms, strings, streams, and other facilities</td>
+      </tr>
+      <tr>
+        <td class="border border-gray-300 p-3">Memory management</td>
+        <td class="border border-gray-300 p-3">Commonly uses functions such as malloc and free</td>
+        <td class="border border-gray-300 p-3">Offers new and delete, standard containers, smart pointers, and RAII techniques</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="mb-4">
+    These differences affect how developers design and maintain applications. C encourages explicit management of data and functions, while C++ offers abstractions that can group related data and behavior into reusable components. Neither approach removes the need to understand memory, performance, and program structure.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Procedural Programming and Object-Oriented Programming</h2>
+
+  <p class="mb-4">
+    In C, developers commonly organize a program into functions that operate on structures and other data types. This approach can be effective for embedded software, operating system components, libraries, and applications where a relatively direct control flow is desirable.
+  </p>
+
+  <p class="mb-4">
+    C++ adds classes, which can combine data members with functions that operate on that data. Access control allows developers to define which parts of a class are publicly available and which implementation details should remain private. This can make complex software easier to divide into independent components.
+  </p>
+
+  <p class="mb-4">
+    Object-oriented programming is not mandatory in C++. Developers can write procedural C++ code when it is appropriate for the task. The language's flexibility means that a project can use several programming styles, provided the design remains consistent and understandable.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Memory Management and Resource Safety</h2>
+
+  <p class="mb-4">
+    Both C and C++ allow developers to work with memory directly, which is one reason they are used in performance-sensitive software. In C, dynamic memory is commonly requested through malloc or calloc and released with free. The programmer must ensure that allocated memory is used correctly and released when it is no longer needed.
+  </p>
+
+  <p class="mb-4">
+    C++ supports manual allocation through new and release through delete, but modern C++ development generally encourages safer resource-management techniques. Standard containers such as vector and string can manage their own storage, while smart pointers help express ownership of dynamically allocated objects.
+  </p>
+
+  <p class="mb-4">
+    A central C++ technique is Resource Acquisition Is Initialization, commonly known as RAII. The approach connects the lifetime of a resource to the lifetime of an object, allowing resources such as memory, file handles, and locks to be released automatically when the responsible object leaves its scope.
+  </p>
+
+  <p class="mb-4">
+    The C++ Core Guidelines, a community-maintained set of recommendations associated with experts including Bjarne Stroustrup and Herb Sutter, emphasize clear ownership and resource management. These guidelines encourage developers to avoid unnecessary manual handling when standard language facilities can provide safer behavior.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Understanding the C and C++ Standardization Process</h2>
+
+  <p class="mb-4">
+    Programming language standards define how conforming programs should behave and provide a common technical reference for compiler developers. Standardization helps improve portability, but it does not mean that every compiler supports every feature immediately after a standard is published.
+  </p>
+
+  <p class="mb-4">
+    The C language is maintained through the ISO/IEC standardization process. Its C23 revision was published as ISO/IEC 9899:2024 in October 2024. The document specifies the syntax, constraints, and semantic rules used to interpret C programs, helping developers and compiler implementers work from a common definition.
+  </p>
+
+  <p class="mb-4">
+    C++ has its own standard, ISO/IEC 14882. The current published edition is commonly called C++23, with the formal publication designation ISO/IEC 14882:2024. The name C++23 refers to the year in which the technical work was completed, while 2024 appears in the formal ISO publication reference.
+  </p>
+
+  <table class="w-full border-collapse my-6 text-sm">
+    <thead>
+      <tr>
+        <th class="border border-gray-300 p-3 text-left">Language</th>
+        <th class="border border-gray-300 p-3 text-left">Standard</th>
+        <th class="border border-gray-300 p-3 text-left">Formal ISO reference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border border-gray-300 p-3">C</td>
+        <td class="border border-gray-300 p-3">C23</td>
+        <td class="border border-gray-300 p-3">ISO/IEC 9899:2024</td>
+      </tr>
+      <tr>
+        <td class="border border-gray-300 p-3">C++</td>
+        <td class="border border-gray-300 p-3">C++23</td>
+        <td class="border border-gray-300 p-3">ISO/IEC 14882:2024</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="mb-4">
+    The existence of a published standard does not guarantee that every compiler implements all of its features. Developers should check the documentation for their compiler and select an appropriate language mode when building a project. This is especially important when software must compile across several operating systems or development environments.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Are C and C++ Code Compatible?</h2>
+
+  <p class="mb-4">
+    C and C++ share many basic concepts, including variables, loops, conditional statements, pointers, and structures. Some C source files can be adapted for use in C++ with only limited changes, but compatibility is not complete. A program that is valid C is not necessarily valid C++.
+  </p>
+
+  <p class="mb-4">
+    The languages differ in areas such as type conversions, reserved keywords, declarations, library behavior, and language rules. C++ also introduces features that do not exist in C, so code written specifically for C++ cannot generally be compiled as ordinary C source without modification.
+  </p>
+
+  <p class="mb-4">
+    Projects that need to combine C and C++ often use a defined interface between the two languages. C++ provides mechanisms such as C language linkage to make selected functions usable from C-compatible interfaces. Developers still need to pay attention to data types, calling conventions, symbol names, and compiler-specific requirements.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Where C Is Commonly Used</h2>
+
+  <p class="mb-4">
+    C remains important in areas where developers need predictable control over memory layout, hardware interaction, and execution behavior. Its relatively small language core and established ecosystem make it suitable for software that operates close to the operating system or processor.
+  </p>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><strong>Operating system components:</strong> C is used in kernels, drivers, and low-level system utilities.</li>
+    <li><strong>Embedded systems:</strong> Microcontrollers and resource-constrained devices often use C for firmware.</li>
+    <li><strong>Compiler development:</strong> C is used to implement compilers, interpreters, and development tools.</li>
+    <li><strong>Networking software:</strong> Libraries and system utilities may use C for direct control over data and operating system interfaces.</li>
+    <li><strong>Hardware-related software:</strong> C is useful when applications need to interact with registers, memory-mapped devices, or platform-specific interfaces.</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Where C++ Is Commonly Used</h2>
+
+  <p class="mb-4">
+    C++ is used in projects that need both high performance and flexible software architecture. Its language features and standard library support applications ranging from compact embedded programs to large software systems with complex internal components.
+  </p>
+
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li><strong>Game development:</strong> Game engines use C++ for performance-sensitive systems, simulation, and gameplay infrastructure.</li>
+    <li><strong>Desktop applications:</strong> C++ is used in software that requires native performance and extensive graphical interfaces.</li>
+    <li><strong>Financial technology:</strong> Some trading and analysis systems use C++ where execution speed and predictable resource use are important.</li>
+    <li><strong>Scientific computing:</strong> Numerical simulations and engineering applications can use C++ for intensive calculations.</li>
+    <li><strong>Robotics:</strong> C++ supports software that coordinates sensors, control systems, and other components.</li>
+    <li><strong>Embedded development:</strong> C++ can be used for firmware and devices that benefit from its abstraction and resource-management features.</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Which Language Should Beginners Learn First?</h2>
+
+  <p class="mb-4">
+    The best starting point depends on what a learner wants to build. C can introduce fundamental concepts such as data types, functions, pointers, memory allocation, and the relationship between software and hardware. These topics are useful for understanding how programs interact with computer resources.
+  </p>
+
+  <p class="mb-4">
+    C++ may be a suitable starting point for learners interested in game development, object-oriented programming, application development, or modern software engineering. Beginners can learn basic programming concepts first and gradually introduce classes, containers, algorithms, and other features as their projects become more complex.
+  </p>
+
+  <p class="mb-4">
+    Neither language should be selected only because it is described as faster or more powerful. Good software depends on the developer's understanding of algorithms, data structures, memory use, testing, and the requirements of the target platform.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Practical Steps for Learning C and C++</h2>
+
+  <p class="mb-4">
+    Learning a programming language requires regular practice with small programs before moving toward larger projects. A structured approach helps beginners understand individual concepts and recognize how those concepts work together in real applications.
+  </p>
+
+  <ol class="list-decimal ml-6 mb-4 text-gray-700">
+    <li>Learn variables, data types, operators, and basic input and output.</li>
+    <li>Practice conditional statements, loops, and functions.</li>
+    <li>Study arrays, strings, pointers, and structures.</li>
+    <li>Understand memory allocation and the lifetime of program data.</li>
+    <li>For C++, continue with classes, objects, inheritance, and polymorphism.</li>
+    <li>Explore standard library facilities such as containers and algorithms.</li>
+    <li>Build small projects, test different inputs, and investigate compiler warnings.</li>
+    <li>Read official documentation and established programming guidelines as knowledge improves.</li>
+  </ol>
+
+  <p class="mb-4">
+    Beginners should also become familiar with compiler messages and debugging tools. Understanding why a program fails to compile or produces an unexpected result is an important part of programming practice, not merely an obstacle to completing an exercise.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Common Mistakes When Choosing Between C and C++</h2>
+
+  <p class="mb-4">
+    One common mistake is assuming that C++ is simply C with a few additional features. Although the languages share a history and many concepts, their standards have evolved separately. Writing reliable software requires understanding the rules of the language actually being used.
+  </p>
+
+  <p class="mb-4">
+    Another mistake is choosing a language based only on performance claims. Real application speed depends on algorithms, compiler optimization, memory access patterns, hardware, and implementation quality. A well-designed program in either language can perform better than a poorly designed alternative.
+  </p>
+
+  <p class="mb-4">
+    Beginners may also try to use advanced features before understanding the fundamentals. Learning pointers, data structures, functions, and program flow provides a stronger foundation than memorizing complex syntax without knowing how the underlying program works.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Frequently Asked Questions About C, C+, and C++</h2>
+
+  <h3 class="font-semibold mt-4 mb-2">1. Is C+ an official programming language?</h3>
+  <p class="mb-4">
+    C+ is not the name of a widely recognized ISO-standardized programming language. In most programming discussions, it is a mistaken reference to C or C++. Learners should confirm which language a tutorial or source actually intends to explain.
+  </p>
+
+  <h3 class="font-semibold mt-4 mb-2">2. Is C++ based on the C programming language?</h3>
+  <p class="mb-4">
+    C++ developed from an earlier project called C with Classes and retained many ideas and syntax conventions from C. It has since evolved into a separately standardized language with additional programming models and features.
+  </p>
+
+  <h3 class="font-semibold mt-4 mb-2">3. Is C faster than C++?</h3>
+  <p class="mb-4">
+    Neither language is automatically faster in every situation. Both can produce highly efficient native code, and actual performance depends on the algorithms, compiler, optimization settings, hardware, and implementation.
+  </p>
+
+  <h3 class="font-semibold mt-4 mb-2">4. Can C code run directly in a C++ compiler?</h3>
+  <p class="mb-4">
+    Some C programs can be compiled as C++ with little or no modification, but the languages are not fully compatible. Differences in type rules, keywords, declarations, and other features can require changes to the source code.
+  </p>
+
+  <h3 class="font-semibold mt-4 mb-2">5. Should beginners learn C or C++ first?</h3>
+  <p class="mb-4">
+    C is useful for learning procedural programming and low-level concepts, while C++ provides a wider range of tools for object-oriented and generic programming. The better choice depends on the learner's goals and the type of software they want to develop.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">References and Further Reading</h2>
+
+  <p class="mb-3">
+    The following technical and institutional resources provide further information about the history, standards, and recommended practices of C and C++ development.
+  </p>
+
+  <ul class="list-disc ml-6 mb-6 text-gray-700">
+    <li>
+      <strong>Bjarne Stroustrup — Frequently Asked Questions:</strong>
+      Historical information about the development of C++, including its early name, initial use, and first commercial release.
+      <br>
+      https://stroustrup.com/bs_faq.html
+    </li>
+    <li>
+      <strong>Bjarne Stroustrup — A History of C++: 1979–1991:</strong>
+      A historical account by the language's creator describing its original design goals and early development.
+      <br>
+      https://stroustrup.com/hopl2.pdf
+    </li>
+    <li>
+      <strong>ISO C++ — The Standard:</strong>
+      Information about the published C++ standard and the C++23 edition.
+      <br>
+      https://isocpp.org/std/the-standard
+    </li>
+    <li>
+      <strong>ISO — ISO/IEC 9899:2024:</strong>
+      The international standard specifying the C programming language.
+      <br>
+      https://www.iso.org/standard/82075.html
+    </li>
+    <li>
+      <strong>ISO/IEC JTC1/SC22/WG14 — C Language Committee:</strong>
+      Official information about the C standardization working group and the C23 revision.
+      <br>
+      https://www.open-std.org/JTC1/SC22/WG14/
+    </li>
+    <li>
+      <strong>C++ Core Guidelines:</strong>
+      Recommendations for writing safer, more maintainable, and more effective C++ programs, including resource-management practices.
+      <br>
+      https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
+    </li>
+    <li>
+      <strong>cppreference — C++ Language Reference:</strong>
+      Technical documentation covering C++ language features and standard library facilities.
+      <br>
+      https://en.cppreference.com/w/
+    </li>
+  </ul>
+
 </main>
 
 <!-- FOOTER -->
