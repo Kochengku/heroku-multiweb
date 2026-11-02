@@ -111,6 +111,62 @@
     font-weight: 600;
     color: #1e40af;
 }
+
+/* Mencegah halaman melebar ke samping */
+html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+/* Memastikan semua elemen mengikuti lebar layar */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Membatasi konten utama */
+main {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+/* Mencegah gambar keluar dari layar */
+img {
+    max-width: 100%;
+}
+
+/* Mencegah tabel melebar */
+table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+}
+
+th, td {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* Mencegah URL panjang memperlebar halaman */
+a, p, li {
+    overflow-wrap: anywhere;
+}
+
+/* Memastikan header dan footer tidak melebar */
+header, footer {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
 </style>
 <script type="application/ld+json">
 {
