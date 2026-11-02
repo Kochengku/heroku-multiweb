@@ -1,23 +1,39 @@
-from flask import Flask, render_template, send_from_directory
+from flask import (
+    Flask, render_template, send_from_directory,
+    Response, url_for, redirect, abort
+)
+from flask_compress import Compress
+
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta, timezone
-from flask import Flask, Response, url_for
 import sys
 import os
 import re
 import unicodedata
-sys.path.append(os.path.join(os.path.dirname(__file__), 'static/konfigurasi'))
 
-from config_web2 import web_control, status_page, whatsapp_channel, whattsapp_admin, url_order
-app = Flask(__name__)
+sys.path.append(
+    os.path.join(os.path.dirname(__file__), 'static/konfigurasi')
+)
 
-#------ SISITEM ARTICLE ------#
-# Path to article templates
+from config_web2 import (
+    web_control, status_page, whatsapp_channel,
+    whattsapp_admin, url_order
+)
+
+#------ SISTEM ARTICLE ------#
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 
 app = Flask(__name__, template_folder=TEMPLATE_DIR)
+
+#------ COMPRESSION ------#
+app.config["COMPRESS_ALGORITHM"] = ["br", "gzip"]
+app.config["COMPRESS_LEVEL"] = 6
+app.config["COMPRESS_BR_LEVEL"] = 4
+app.config["COMPRESS_MIN_SIZE"] = 500
+
+compress = Compress(app)
 
 ARTICLE_DIR = os.path.join(TEMPLATE_DIR, "Main-Article")
 
