@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Skyforgia">
+<meta property="og:description" content="Free bot discord & whatsapp hosting.">
+<meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://control.skyforgia.biz.id">
+<meta property="og:type" content="website">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skyforgia">
+<meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+<meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "url": "https://control.skyforgia.biz.id",
+  "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+  "name": "Skyforgia"
+}
+</script>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Skyforgia |> Dashboard Lock</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    background-color: #f8f9fb;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Card Animation */
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-fade-in-scale {
+    animation: fadeInScale 0.6s ease-out forwards;
+  }
+
+  /* Countdown digit */
+  .digit {
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .digit.change {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+  <!-- MAIN CONTENT -->
+<main class="flex-grow flex items-center justify-center px-4 py-10 animate-fade-in-scale">
+
+  <div class="w-full max-w-4xl grid md:grid-cols-2 rounded-2xl overflow-hidden shadow-xl border bg-white">
+
+    <!-- LEFT — HERO LOCK SCREEN -->
+    <div class="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-10 flex flex-col items-center justify-center space-y-4">
+
+      <i class="fa-solid fa-lock text-7xl drop-shadow-lg text-red-400"></i>
+
+      <h1 class="text-xl font-bold text-white text-center">
+        Website Locked
+      </h1>
+
+      <p class="text-blue-100 text-sm text-center leading-relaxed">
+        Routine monthly maintenance is in progress.<br>
+        Estimated downtime: <strong>up to 7 days</strong>.
+      </p>
+
+    </div>
+
+    <!-- RIGHT — COUNTDOWN CARD -->
+    <div class="p-8 flex flex-col justify-center">
+
+      <!-- Countdown -->
+      <div class="bg-gray-50 border rounded-xl p-6 shadow-sm mb-6">
+        <h2 class="text-base font-semibold flex items-center justify-center gap-2 text-gray-800 mb-3">
+          <i class="fa-solid fa-hourglass-half text-blue-600"></i>
+          Countdown
+        </h2>
+
+        <p id="countdown" class="text-2xl font-extrabold tracking-wide text-blue-700 text-center">
+          <span class="digit" id="days">0</span>d&nbsp;
+          <span class="digit" id="hours">00</span>:
+          <span class="digit" id="minutes">00</span>:
+          <span class="digit" id="seconds">00</span>
+        </p>
+      </div>
+
+      <p class="text-gray-500 text-xs text-center">
+        Thank you for your patience and understanding.
+      </p>
+
+    </div>
+  </div>
+
+</main>
+
+  <!-- SCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let remainingSeconds = parseInt("{{ countdown_seconds|default(604800) }}"); // default 7 days
+      const daysEl = document.getElementById("days");
+      const hoursEl = document.getElementById("hours");
+      const minutesEl = document.getElementById("minutes");
+      const secondsEl = document.getElementById("seconds");
+
+      function padZero(num) {
+        return num.toString().padStart(2, "0");
+      }
+
+      function animateChange(el, value) {
+        if (el.textContent !== value) {
+          el.classList.add("change");
+          setTimeout(() => {
+            el.textContent = value;
+            el.classList.remove("change");
+          }, 150);
+        }
+      }
+
+      function updateCountdown() {
+        if (remainingSeconds <= 0) {
+          daysEl.textContent = 0;
+          animateChange(hoursEl, "00");
+          animateChange(minutesEl, "00");
+          animateChange(secondsEl, "00");
+          clearInterval(interval);
+          return;
+        }
+
+        const days = Math.floor(remainingSeconds / (24 * 3600));
+        const hours = Math.floor((remainingSeconds % (24 * 3600)) / 3600);
+        const minutes = Math.floor((remainingSeconds % 3600) / 60);
+        const seconds = remainingSeconds % 60;
+
+        daysEl.textContent = days;
+        animateChange(hoursEl, padZero(hours));
+        animateChange(minutesEl, padZero(minutes));
+        animateChange(secondsEl, padZero(seconds));
+
+        remainingSeconds--;
+      }
+
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 1000);
+    });
+  </script>
+</body>
+</html>

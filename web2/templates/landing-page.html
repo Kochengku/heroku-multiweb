@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96">
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="shortcut icon" href="/static/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp">
+<link rel="manifest" href="/static/site.webmanifest">
+
+<!-- Primary SEO -->
+<title>Bot Hosting for Discord & WhatsApp | Kocheng Hosting</title>
+
+<meta name="description" content="Kocheng Hosting provides bot hosting for Discord and WhatsApp projects with Pterodactyl panel access, flexible plans, and server management tools.">
+
+<meta name="robots" content="index, follow">
+<meta name="google-adsense-account" content="ca-pub-8032590857505235">
+
+<link rel="canonical" href="https://kocheng.biz.id/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Kocheng Hosting - Discord & WhatsApp Bot Hosting">
+<meta property="og:description" content="Explore bot hosting solutions for Discord and WhatsApp projects with flexible resources and Pterodactyl panel access.">
+<meta property="og:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://kocheng.biz.id/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kocheng Hosting">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kocheng Hosting">
+<meta name="twitter:description" content="Bot hosting solutions for Discord and WhatsApp projects.">
+<meta name="twitter:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+
+<!-- Google Consent Mode v2 - Default Denied -->
+<script>
+window.dataLayer = window.dataLayer || [];
+
+function gtag() {
+  dataLayer.push(arguments);
+}
+
+gtag('consent', 'default', {
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'analytics_storage': 'denied',
+  'functionality_storage': 'granted',
+  'security_storage': 'granted',
+  'wait_for_update': 500
+});
+</script>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Kocheng Hosting",
+  "url": "https://kocheng.biz.id/",
+  "logo": "https://kocheng.biz.id/static/logo-512x512.webp",
+  "email": "supporthosting@kocheng.tech"
+}
+</script>
+
+<!-- FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Kocheng Hosting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kocheng Hosting offers hosting resources for Discord bots, WhatsApp bots, and other supported applications."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Kocheng Hosting free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We offer a free starter plan for users who want to test our hosting services. Paid plans are also available for those who need additional resources."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I manage my hosting server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Manage your hosting resources using the Pterodactyl control panel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I contact support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you need assistance, email our support team at supporthosting@kocheng.tech."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- Tailwind & Font Awesome -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Animations -->
+<style>
+.fade-up {
+  opacity: 1;
+  transform: none;
+}
+
+.js-enabled .fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.js-enabled .fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-enabled .fade-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-show {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1.02);
+}
+
+.scale-tap {
+  transform: scale(0.97);
+  transition: transform 0.15s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .animate-show,
+  .scale-tap {
+    transition: none;
+    transform: none;
+  }
+}
+</style>
+</head>
+
+<!-- COOKIE CONSENT -->
+<div id="cookie-consent"
+  class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/60 backdrop-blur-sm px-3 py-3">
+
+  <div class="bg-white w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-2xl shadow-2xl p-4 sm:p-6 relative">
+
+    <!-- Header -->
+    <div class="flex items-center gap-3 mb-3 sm:mb-4">
+      <div class="bg-blue-100 text-blue-600 w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex-shrink-0 flex items-center justify-center">
+        <i class="fa-solid fa-cookie-bite text-xl sm:text-2xl"></i>
+      </div>
+
+      <div class="min-w-0">
+        <h2 class="text-lg sm:text-xl font-bold text-gray-800">
+          Your Privacy Matters
+        </h2>
+        <p class="text-xs text-gray-500">
+          Kocheng Hosting Cookie Preferences
+        </p>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-3 sm:mb-5">
+      We use cookies and similar technologies to improve your browsing
+      experience, analyze website traffic, and display relevant advertisements
+      through Google AdSense. You can accept all cookies, reject
+      non-essential cookies, or customize your preferences.
+    </p>
+
+    <!-- Cookie Options -->
+    <div class="bg-gray-50 border rounded-xl p-3 sm:p-4 space-y-3 mb-4 sm:mb-5">
+
+      <div class="flex justify-between items-center gap-2">
+        <div class="min-w-0">
+          <p class="font-semibold text-xs sm:text-sm text-gray-800">
+            Essential Cookies
+          </p>
+          <p class="text-xs text-gray-500">
+            Required for basic website functionality.
+          </p>
+        </div>
+
+        <span class="text-xs font-semibold text-green-600 whitespace-nowrap">
+          Always Active
+        </span>
+      </div>
+
+      <hr>
+
+      <label class="flex justify-between items-center gap-3 cursor-pointer">
+        <div class="min-w-0">
+          <p class="font-semibold text-xs sm:text-sm text-gray-800">
+            Analytics Cookies
+          </p>
+          <p class="text-xs text-gray-500">
+            Help us understand website usage.
+          </p>
+        </div>
+
+        <input type="checkbox" id="cookie-analytics"
+          class="w-5 h-5 flex-shrink-0 accent-blue-600">
+      </label>
+
+      <hr>
+
+      <label class="flex justify-between items-center gap-3 cursor-pointer">
+        <div class="min-w-0">
+          <p class="font-semibold text-xs sm:text-sm text-gray-800">
+            Advertising Cookies
+          </p>
+          <p class="text-xs text-gray-500">
+            Used for advertising and personalization.
+          </p>
+        </div>
+
+        <input type="checkbox" id="cookie-ads"
+          class="w-5 h-5 flex-shrink-0 accent-blue-600">
+      </label>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex flex-col gap-2">
+
+      <button id="cookie-accept"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2.5 sm:py-3 rounded-xl transition">
+        Accept All
+      </button>
+
+      <button id="cookie-reject"
+        class="w-full border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-semibold py-2.5 sm:py-3 rounded-xl transition">
+        Reject Non-Essential
+      </button>
+
+      <button id="cookie-save"
+        class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold py-2.5 sm:py-3 rounded-xl transition">
+        Save My Preferences
+      </button>
+
+    </div>
+
+    <!-- Privacy Policy -->
+    <p class="text-xs text-center text-gray-400 mt-3 sm:mt-4">
+      Read our
+      <a href="/privacypolicy" class="text-blue-600 hover:underline">
+        Privacy Policy
+      </a>
+      for more information.
+    </p>
+
+  </div>
+</div>
+
+<!-- COOKIE SETTINGS BUTTON -->
+<button id="cookie-settings"
+  class="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-[9998] bg-white border border-gray-200 shadow-lg rounded-full px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-gray-700 hover:bg-gray-50">
+  <i class="fa-solid fa-cookie-bite text-blue-600 mr-1 sm:mr-2"></i>
+  Cookie Settings
+</button>
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3 shadow-sm relative">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <!-- Logo -->
+    <a href="/" class="transition-transform duration-200 hover:scale-105">
+      <img src="/static/logo2.webp" alt="Kocheng Hosting" class="h-10 max-w-[200px]" />
+    </a>
+
+    <!-- Hamburger Button -->
+<button
+  id="menu-btn"
+  aria-label="Open navigation menu"
+  aria-controls="sidebar"
+  aria-expanded="false"
+  class="text-gray-700 text-2xl focus:outline-none">
+  <i class="fa-solid fa-bars"></i>
+</button>
+  </div>
+
+  <!-- Sidebar (ubah jadi modal tengah) -->
+<div id="sidebar" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+  <!-- Background blur -->
+  <div id="sidebar-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+  
+  <!-- Panel tengah -->
+  <div class="relative bg-white rounded-2xl shadow-xl w-80 max-w-sm p-6 z-10 transform scale-90 opacity-0 transition-all duration-300" id="sidebar-panel">
+    <div class="flex justify-between items-center border-b pb-3 mb-4">
+      <h2 class="text-lg font-bold text-blue-800">Menu</h2>
+      <button
+  id="close-btn"
+  aria-label="Close navigation menu"
+  class="text-2xl text-gray-600 hover:text-gray-800">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <nav class="flex flex-col space-y-4 text-gray-700 font-medium">
+
+  <a href="{{ whatsapp_channel }}" class="hover:text-blue-600">
+    WhatsApp Community
+  </a>
+
+  <hr>
+  
+  <a href="/about" class="hover:text-blue-600">
+  About Us
+</a>
+  
+  <a href="/blog" class="hover:text-blue-600">
+    Blog
+  </a>
+
+  <a href="/contact" class="hover:text-blue-600">
+    Contact Us
+  </a>
+
+  <hr>
+
+  <a href="/tos" class="hover:text-blue-600">
+    Terms of Service
+  </a>
+
+  <a href="/privacypolicy" class="hover:text-blue-600">
+    Privacy Policy
+  </a>
+
+  <a href="/advertisingagreement" class="hover:text-blue-600">
+    Advertising Disclosure
+  </a>
+
+  <hr>
+
+  <a href="https://{{ web_control }}/signup"
+     class="bg-blue-600 text-white px-4 py-2 rounded-md text-center hover:bg-blue-700">
+    Sign Up
+  </a>
+
+</nav>
+  </div>
+</div>
+</header>
+
+<main class="flex-grow">
+
+<!-- HERO -->
+<section class="text-center px-6 py-16 fade-up">
+  <h1 class="text-3xl sm:text-4xl font-bold mb-4 text-blue-900">Reliable Bot Hosting Made Simple</h1>
+  <p class="text-gray-700 text-lg mb-6">
+    Build and deploy Discord or WhatsApp bots easily. Start with our free starter tier and scale seamlessly.
+  </p>
+  <div class="flex gap-4 flex-wrap justify-center">
+    <a href="https://{{ web_control }}/signup" class="bg-blue-600 text-white px-5 py-2 rounded-full font-medium hover:bg-blue-700">Get Started</a>
+    <a href="/blog" class="bg-white border border-blue-600 text-blue-600 px-5 py-2 rounded-full font-medium hover:bg-blue-50">Learn More</a>
+  </div>
+</section>
+
+<!-- ABOUT KOCHENG HOSTING -->
+<section class="bg-white py-16 px-6 fade-up">
+  <div class="max-w-4xl mx-auto">
+
+    <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-blue-800 text-center">
+      About Kocheng Hosting
+    </h2>
+
+    <div class="text-gray-700 leading-relaxed space-y-4 text-justify">
+
+      <p>
+        Kocheng Hosting is a hosting platform that enables developers to deploy and manage their applications using an easy-to-access web-based control panel.
+      </p>
+
+      <p>
+        Our services accommodate projects including Discord bots, WhatsApp bots, and other applications that run in our hosting environment.
+      </p>
+
+      <p>
+        The Pterodactyl control panel provides a centralized interface for managing servers, tracking resource usage, and controlling applications.
+      </p>
+
+      <p>
+        We strive to offer accessible hosting solutions for developers, beginners, and anyone interested in exploring application hosting.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- SPECIFICATIONS -->
+<section class="bg-white py-12 px-6 fade-up">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-2xl font-bold mb-6 text-blue-800">Starter Plan Specifications</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm text-gray-700">
+      <div class="bg-blue-50 rounded-lg p-4 shadow fade-up">
+        <i class="fa-solid fa-hdd text-blue-600 text-xl mb-2"></i>
+        <p class="font-semibold">Up to 10GB RAM</p>
+      </div>
+      <div class="bg-blue-50 rounded-lg p-4 shadow fade-up">
+        <i class="fa-solid fa-database text-blue-600 text-xl mb-2"></i>
+        <p class="font-semibold">5GB SSD Storage</p>
+      </div>
+      <div class="bg-blue-50 rounded-lg p-4 shadow fade-up">
+        <i class="fa-solid fa-microchip text-blue-600 text-xl mb-2"></i>
+        <p class="font-semibold">Full CPU Access</p>
+      </div>
+    </div>
+    <p class="text-gray-500 text-xs mt-4">*Included in the free starter plan. Upgrades available anytime.*</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="bg-gradient-to-r from-blue-50 to-white py-16 px-6 fade-up">
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="text-2xl sm:text-3xl font-bold mb-10 text-blue-800">
+      <i class="fa-solid fa-tags text-blue-600 mr-2"></i>Simple Pricing
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Free Starter -->
+      <div class="plan-card bg-white rounded-2xl shadow-md p-6 border border-blue-100 hover:shadow-lg transition-all fade-up cursor-pointer">
+        <h3 class="font-bold text-lg mb-2 text-blue-700">
+          <i class="fa-solid fa-rocket mr-2 text-blue-500"></i>Free Starter
+        </h3>
+        <p class="text-gray-600 mb-4 text-sm">
+  A free hosting option for beginners looking to deploy and test small bot projects.
+</p>
+        <p class="text-3xl font-bold mb-4">$0 USD<span class="text-sm text-gray-500">/mo</span></p>
+        <ul class="text-gray-600 text-sm space-y-1 mb-6 text-left">
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Up To 10GB RAM, 5GB Disk</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Full Panel Access</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Daily Backups</li>
+        </ul>
+        <a href="https://{{ web_control }}/signup"
+           class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-medium transition">
+           <i class="fa-solid fa-play mr-2"></i>Get Started
+        </a>
+      </div>
+
+      <!-- Basic -->
+      <div class="plan-card bg-white rounded-2xl shadow-md p-6 border border-blue-300 hover:shadow-lg transition-all fade-up cursor-pointer">
+        <h3 class="font-bold text-lg mb-2 text-blue-700">
+          <i class="fa-solid fa-leaf mr-2 text-indigo-500"></i>Basic
+        </h3>
+        <p class="text-gray-600 mb-4 text-sm">An affordable option for users who need additional hosting resources.</p>
+        <p class="text-3xl font-bold mb-4">$0.30 USD<span class="text-sm text-gray-500">/mo</span></p>
+        <ul class="text-gray-600 text-sm space-y-1 mb-6 text-left">
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>2GB RAM, 2GB Disk</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Full Panel Access</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Admin Support</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>No Ads</li>
+        </ul>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="{{ whattsapp_admin }}"
+             class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-medium transition">
+             <i class="fa-solid fa-cart-shopping mr-2"></i>Order
+          </a>
+          <a href="{{ url_order }}"
+             class="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-5 py-2 rounded-full font-medium transition">
+             <i class="fa-solid fa-globe mr-2"></i>Via Website
+          </a>
+        </div>
+      </div>
+
+      <!-- Premium -->
+      <div class="plan-card bg-white rounded-2xl shadow-md p-6 border border-blue-100 hover:shadow-lg transition-all fade-up cursor-pointer">
+        <h3 class="font-bold text-lg mb-2 text-blue-700">
+          <i class="fa-regular fa-gem mr-2 text-blue-600"></i>Premium
+        </h3>
+        <p class="text-gray-600 mb-4 text-sm">
+  Designed for developers seeking additional resources to scale applications and bot projects.
+</p>
+        <p class="text-3xl font-bold mb-4">$0.60 USD<span class="text-sm text-gray-500">/mo</span></p>
+        <ul class="text-gray-600 text-sm space-y-1 mb-6 text-left">
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>4GB RAM, 4GB Disk</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Full Panel Access</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Admin Support</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>No Ads</li>
+        </ul>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="{{ whattsapp_admin }}"
+             class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-medium transition">
+             <i class="fa-solid fa-cart-shopping mr-2"></i>Order
+          </a>
+          <a href="{{ url_order }}"
+             class="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-5 py-2 rounded-full font-medium transition">
+             <i class="fa-solid fa-globe mr-2"></i>Via Website
+          </a>
+        </div>
+      </div>
+      
+      <!-- Pro -->
+      <div class="plan-card bg-white rounded-2xl shadow-md p-6 border border-blue-300 hover:shadow-lg transition-all fade-up cursor-pointer">
+        <h3 class="font-bold text-lg mb-2 text-blue-700">
+          <i class="fa-solid fa-crown mr-2 text-indigo-500"></i>Pro
+        </h3>
+        <p class="text-gray-600 mb-4 text-sm">
+  Built for larger projects that need additional memory and storage capacity.
+</p>
+        <p class="text-3xl font-bold mb-4">$1 USD<span class="text-sm text-gray-500">/mo</span></p>
+        <ul class="text-gray-600 text-sm space-y-1 mb-6 text-left">
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>7GB RAM, 7GB Disk</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Full Panel Access</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>Admin Support</li>
+          <li><i class="fa-solid fa-check text-green-500 mr-1"></i>No Ads</li>
+        </ul>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="{{ whattsapp_admin }}"
+             class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-medium transition">
+             <i class="fa-solid fa-cart-shopping mr-2"></i>Order
+          </a>
+          <a href="{{ url_order }}"
+             class="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-5 py-2 rounded-full font-medium transition">
+             <i class="fa-solid fa-globe mr-2"></i>Via Website
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="bg-white py-16 px-6 fade-up">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-2xl sm:text-3xl font-bold mb-10 text-blue-800">Why Choose Kocheng Hosting?</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div class="flex flex-col items-center space-y-4 fade-up">
+        <i class="fa-solid fa-gift text-green-500 text-5xl"></i>
+        <h3 class="text-lg font-semibold">Flexible Free Plan</h3>
+        <p class="text-gray-600 text-sm">Start small and scale anytime — transparent and developer-friendly.</p>
+      </div>
+      <div class="flex flex-col items-center space-y-4 fade-up">
+        <i class="fa-solid fa-microchip text-purple-600 text-5xl"></i>
+        <h3 class="text-lg font-semibold">Optimized Performance</h3>
+        <p class="text-gray-600 text-sm">
+  Manage your applications and monitor allocated server resources through an easy-to-use control panel.
+</p>
+      </div>
+      <div class="flex flex-col items-center space-y-4 fade-up">
+        <i class="fa-solid fa-users text-teal-500 text-5xl"></i>
+        <h3 class="text-lg font-semibold">Community Support</h3>
+        <p class="text-gray-600 text-sm">Get help and share ideas with active developers worldwide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOSTING FEATURES -->
+<section class="bg-gradient-to-r from-blue-50 to-white py-16 px-6">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="text-center mb-10">
+      <h2 class="text-2xl sm:text-3xl font-bold text-blue-800 mb-3">
+        What You Can Do with Kocheng Hosting
+      </h2>
+
+      <p class="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
+        Discover the tools and features designed to help you deploy, manage, and maintain your hosting projects.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Feature 1 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
+        <i class="fa-solid fa-server text-3xl text-blue-600 mb-4"></i>
+
+        <h3 class="font-bold text-lg text-gray-800 mb-2">
+          Server Management
+        </h3>
+
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Manage all your hosting resources from a centralized Pterodactyl control panel.
+        </p>
+      </div>
+      
+      <!-- Feature 2 -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
+  <i class="fa-brands fa-discord text-3xl text-indigo-600 mb-4"></i>
+
+  <h3 class="font-bold text-lg text-gray-800 mb-2">
+    Discord Bot Hosting
+  </h3>
+
+  <p class="text-gray-600 text-sm leading-relaxed">
+    Host and manage supported Discord bot applications with our hosting resources.
+  </p>
+</div>
+
+      <!-- Feature 3 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
+        <i class="fa-brands fa-whatsapp text-3xl text-green-600 mb-4"></i>
+
+        <h3 class="font-bold text-lg text-gray-800 mb-2">
+          WhatsApp Bot Hosting
+        </h3>
+
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Deploy supported WhatsApp bot projects with the available hosting resources.
+        </p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
+        <i class="fa-solid fa-sliders text-3xl text-purple-600 mb-4"></i>
+
+        <h3 class="font-bold text-lg text-gray-800 mb-2">
+          Resource Management
+        </h3>
+
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Monitor and manage your allocated RAM, storage, and other server resources through the control panel.
+        </p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
+        <i class="fa-solid fa-tags text-3xl text-orange-500 mb-4"></i>
+
+        <h3 class="font-bold text-lg text-gray-800 mb-2">
+          Flexible Hosting Plans
+        </h3>
+
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Select a free or paid hosting plan based on your project's resource needs.
+        </p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100">
+        <i class="fa-solid fa-book-open text-3xl text-teal-600 mb-4"></i>
+
+        <h3 class="font-bold text-lg text-gray-800 mb-2">
+          Guides and Support
+        </h3>
+
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Visit our blog and support resources to learn more about hosting and server management.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="bg-blue-50 py-16 px-6">
+  <div class="max-w-4xl mx-auto">
+
+    <h2 class="text-2xl sm:text-3xl font-bold text-blue-800 text-center mb-10">
+      Frequently Asked Questions
+    </h2>
+
+    <div class="space-y-4">
+
+      <div class="bg-white p-5 rounded-xl shadow-sm">
+        <h3 class="font-semibold text-gray-800 mb-2">
+          What is Kocheng Hosting?
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Kocheng Hosting offers hosting resources for Discord bots, WhatsApp bots, and other supported applications.
+        </p>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl shadow-sm">
+        <h3 class="font-semibold text-gray-800 mb-2">
+          Is Kocheng Hosting free?
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Yes. We offer a free starter plan for users who want to test our hosting services. Paid plans are also available for those who need additional resources.
+        </p>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl shadow-sm">
+        <h3 class="font-semibold text-gray-800 mb-2">
+          How do I manage my hosting server?
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Manage your hosting resources using the Pterodactyl control panel.
+        </p>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl shadow-sm">
+        <h3 class="font-semibold text-gray-800 mb-2">
+          How can I contact support?
+        </h3>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          If you need assistance, email our support team at
+          supporthosting@kocheng.tech.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+
+      <p class="font-semibold text-gray-700">
+        Kocheng's |> Sahabat Ai Nusantara
+      </p>
+
+      <p>
+        <a href="/about" class="text-blue-600 hover:underline">About Us</a> |
+        <a href="/contact" class="text-blue-600 hover:underline">Contact Us</a> |
+        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+
+      <p>
+        JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).
+      </p>
+
+      <p>
+        <i class="fa-solid fa-envelope"></i>
+        supporthosting@kocheng.tech
+      </p>
+
+    </div>
+  </footer>
+
+<!-- JS Animation -->
+<script>
+document.documentElement.classList.add("js-enabled");
+
+document.addEventListener("DOMContentLoaded", () => {
+  const els = document.querySelectorAll(".fade-up");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add("visible");
+    });
+  }, { threshold: 0.2 });
+  els.forEach(el => observer.observe(el));
+});
+</script>
+<script>
+const menuBtn = document.getElementById('menu-btn');
+const closeBtn = document.getElementById('close-btn');
+const sidebar = document.getElementById('sidebar');
+const sidebarPanel = document.getElementById('sidebar-panel');
+const overlay = document.getElementById('sidebar-overlay');
+
+function openSidebar() {
+  sidebar.classList.remove('hidden');
+  menuBtn.setAttribute('aria-expanded', 'true');
+
+  setTimeout(() => {
+    sidebarPanel.classList.remove('scale-90', 'opacity-0');
+    sidebarPanel.classList.add('scale-100', 'opacity-100');
+  }, 10);
+}
+
+function closeSidebar() {
+  sidebarPanel.classList.remove('scale-100', 'opacity-100');
+  sidebarPanel.classList.add('scale-90', 'opacity-0');
+
+  menuBtn.setAttribute('aria-expanded', 'false');
+
+  setTimeout(() => {
+    sidebar.classList.add('hidden');
+  }, 300);
+}
+
+menuBtn.addEventListener('click', openSidebar);
+closeBtn.addEventListener('click', closeSidebar);
+overlay.addEventListener('click', closeSidebar);
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !sidebar.classList.contains('hidden')) {
+    closeSidebar();
+  }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const popup = document.getElementById('cookie-consent');
+
+  const acceptBtn = document.getElementById('cookie-accept');
+  const rejectBtn = document.getElementById('cookie-reject');
+  const saveBtn = document.getElementById('cookie-save');
+  const settingsBtn = document.getElementById('cookie-settings');
+
+  const analyticsInput = document.getElementById('cookie-analytics');
+  const adsInput = document.getElementById('cookie-ads');
+
+  const STORAGE_KEY = 'kocheng_cookie_consent_v1';
+
+  function updateGoogleConsent(preferences) {
+
+    gtag('consent', 'update', {
+
+      'ad_storage': preferences.ads ? 'granted' : 'denied',
+
+      'ad_user_data': preferences.ads ? 'granted' : 'denied',
+
+      'ad_personalization': preferences.ads ? 'granted' : 'denied',
+
+      'analytics_storage': preferences.analytics ? 'granted' : 'denied'
+
+    });
+
+  }
+
+  function openPopup() {
+
+    const current = getConsent();
+
+    analyticsInput.checked = current
+      ? current.analytics
+      : false;
+
+    adsInput.checked = current
+      ? current.ads
+      : false;
+
+    popup.classList.remove('hidden');
+    popup.classList.add('flex');
+
+  }
+
+  function closePopup() {
+
+    popup.classList.add('hidden');
+    popup.classList.remove('flex');
+
+  }
+
+  function getConsent() {
+
+    try {
+
+      const data = localStorage.getItem(STORAGE_KEY);
+
+      return data ? JSON.parse(data) : null;
+
+    } catch (error) {
+
+      return null;
+
+    }
+
+  }
+
+  function saveConsent(preferences) {
+
+    const consent = {
+
+      essential: true,
+
+      analytics: Boolean(preferences.analytics),
+
+      ads: Boolean(preferences.ads),
+
+      updatedAt: new Date().toISOString(),
+
+      version: 1
+
+    };
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(consent)
+    );
+
+    updateGoogleConsent(consent);
+
+    closePopup();
+
+  }
+
+  // Accept All
+  acceptBtn.addEventListener('click', function () {
+
+    saveConsent({
+      analytics: true,
+      ads: true
+    });
+
+  });
+
+  // Reject Non-Essential
+  rejectBtn.addEventListener('click', function () {
+
+    saveConsent({
+      analytics: false,
+      ads: false
+    });
+
+  });
+
+  // Save Custom Preferences
+  saveBtn.addEventListener('click', function () {
+
+    saveConsent({
+
+      analytics: analyticsInput.checked,
+
+      ads: adsInput.checked
+
+    });
+
+  });
+
+  // Open Cookie Settings
+  settingsBtn.addEventListener('click', openPopup);
+
+  // Restore previous consent
+  const savedConsent = getConsent();
+
+  if (savedConsent && savedConsent.version === 1) {
+
+    updateGoogleConsent(savedConsent);
+
+    closePopup();
+
+  } else {
+
+    openPopup();
+
+  }
+
+});
+</script>
+</body>
+</html>

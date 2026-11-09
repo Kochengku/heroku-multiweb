@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://kocheng.biz.id",
+    "logo": "https://kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="UTF-8" />
+  <title>How to Backup and Restore Hosting Panel Files Safely</title>
+  <meta name="description" content="A complete step-by-step guide on backing up panel files, restoring data, and storing backups securely using local storage or cloud services.">
+  <meta name="category" content="backup,hosting">
+  <meta name="date" content="2025-09-20">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="slug" content="backup-restore-pterodactyl-panel-files">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .lead { color: #475569; }
+    .note { background: rgba(59, 130, 246, 0.06); border-left: 4px solid rgba(59,130,246,0.2); padding: .75rem 1rem; border-radius: .375rem; }
+  </style>
+  <style>
+/* Article Illustration */
+.article-image {
+    width: 100%;
+    max-width: 760px;
+    aspect-ratio: 16 / 9;
+    margin: 24px auto;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #eaf2ff;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.08);
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.article-image:hover img {
+    transform: scale(1.02);
+}
+
+.article-image figcaption {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    padding: 8px 12px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .article-image {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 20px auto;
+    }
+}
+
+.article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Create a Panel and Run a WhatsApp Bot",
+  "author": {
+    "@type": "Organization",
+    "name": "Kocheng Team",
+    "url": "https://kocheng.biz.id/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kocheng",
+    "url": "https://kocheng.biz.id"
+  },
+  "datePublished": "2025-10-25",
+  "dateModified": "2025-10-25"
+}
+</script>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/blog" class="transition-transform duration-200 hover:scale-105 flex items-center space-x-2">
+        <i class="fa-solid fa-arrow-left text-blue-600"></i>
+        <span class="text-sm text-gray-700">Back to Blog</span>
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+    <h1 class="text-3xl font-bold text-blue-900 mb-4">How to Backup Panel Files</h1>
+    
+    <div class="article-author">
+    <img
+        src="{{ url_for('static', filename='favicon-96x96.webp') }}"
+        alt="Kocheng"
+        class="author-avatar"
+        width="42"
+        height="42"
+    >
+
+    <div class="author-info">
+        <span class="author-label">Written by</span>
+        <span class="author-name">Kocheng Team</span>
+    </div>
+</div>
+
+    <p class="text-gray-500 mb-6">Published on September 20, 2025 · 6 min read</p>
+
+<figure class="article-image">
+    <img
+        src="{{ url_for('static', filename='images/cloud.webp') }}"
+        alt="image"
+        loading="lazy"
+        decoding="async"
+    >
+</figure>
+
+    <p class="lead mb-4">
+      This guide describes how to back up your server files through the Kocheng Hosting panel. Backups help protect your data if the panel restarts or your server experiences unexpected problems.
+    </p>
+
+    <div class="note mb-6">
+      <strong>Note:</strong> Before starting a backup, confirm that an active server containing files is available. The backup process cannot start without server files.
+    </div>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 1 — Open the Backup Page</h2>
+    <p class="mb-4">Go to control.kocheng.biz.id/panel/backup, where you will find a table of your backups and a <strong>Start Backup</strong> button.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 2 — Start a Backup</h2>
+    <p class="mb-4">Click <strong>Start Backup</strong>, then wait for the process to finish. The time required may vary based on the size of your server files.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 3 — Download or Upload to Cloud</h2>
+    <p class="mb-4">Once the backup is complete, two options will appear:</p>
+    <ul class="list-disc ml-6 mb-4 text-gray-700">
+      <li><strong>Download:</strong> Save the backup file directly on your device.</li>
+      <li><strong>Upload to Cloud:</strong> Transfer the backup file to Kocheng Hosting’s cloud storage. This keeps your data protected if the panel restarts, provided you sign in with the same account.</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 4 — Restore from Cloud</h2>
+    <p class="mb-4">If you select <strong>Upload to Cloud</strong>, an additional <strong>Restore</strong> option becomes available. Use it to download the backup file from cloud storage and restore it to your server whenever necessary.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step 5 — Enable Auto Backup</h2>
+    <p class="mb-4">You can also turn on the <strong>Auto Backup</strong> feature. After it is enabled, your server files will be backed up automatically once a week, so you won’t need to perform backups manually.</p>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Troubleshooting & Tips</h2>
+    <ul class="list-disc ml-6 mb-4 text-gray-700">
+      <li><strong>Backup failure:</strong> Check that your server has sufficient disk space, then try again.</li>
+      <li><strong>Download issue:</strong> Change your network connection (Wi-Fi ↔ mobile data) and retry.</li>
+      <li><strong>Cloud upload failure:</strong> Make sure you are signed in to the correct account and have not exceeded your cloud storage quota.</li>
+      <li><strong>Restore error:</strong> Verify that the backup is available in your cloud storage. If the problem continues, contact support.</li>
+      <li><strong>Automatic backup not running:</strong> Confirm that automatic backup is enabled, then wait for the scheduled weekly backup day.</li>
+    </ul>
+
+    <p class="mt-6">With manual and automatic backups, cloud uploads, and restore capabilities, your server files are always protected and can be recovered whenever needed.</p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+
+      <p class="font-semibold text-gray-700">
+        Kocheng's |> Sahabat Ai Nusantara
+      </p>
+
+      <p>
+        <a href="/about" class="text-blue-600 hover:underline">About Us</a> |
+        <a href="/contact" class="text-blue-600 hover:underline">Contact Us</a> |
+        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+
+      <p>
+        JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).
+      </p>
+
+      <p>
+        <i class="fa-solid fa-envelope"></i>
+        supporthosting@kocheng.tech
+      </p>
+
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("main").classList.add("visible");
+    });
+  </script>
+</body>
+</html>

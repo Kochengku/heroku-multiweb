@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- Open Graph (untuk share di media sosial) -->
+  <meta property="og:title" content="Kocheng's">
+  <meta property="og:description" content="Free bot discord & whatsapp hosting.">
+  <meta property="og:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+  <meta property="og:url" content="https://kocheng.biz.id">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kocheng's">
+  <meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+  <meta name="twitter:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+
+  <!-- Structured Data (Organization Logo Schema) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "url": "https://kocheng.biz.id",
+    "logo": "https://kocheng.biz.id/static/logo-512x512.webp",
+    "name": "Kocheng's"
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Kocheng Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Kocheng Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever??",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+  <meta charset="utf-8" />
+  <title>Understanding Account Verification in Hosting Services</title>
+  <meta name="description" content="An overview of how account verification works in hosting platforms, why it is required, and common issues users may encounter during the activation process.An overview of how account verification works in hosting platforms, why it is required, and common issues users may encounter during the activation process." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="slug" content="account-verification-hosting-services">
+  <meta name="category" content="ads">
+  <meta name="date" content="2025-09-14">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .lead { color: #475569; }
+    .note { background: rgba(59, 130, 246, 0.06); border-left: 4px solid rgba(59,130,246,0.2); padding: .75rem 1rem; border-radius: .375rem; }
+    .warning { background: rgba(251, 113, 133, 0.06); border-left: 4px solid rgba(239, 68, 68, 0.18); padding: .75rem 1rem; border-radius: .375rem; }
+    code { background:#f8fafc; padding: .15rem .3rem; border-radius: .25rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace; }
+    
+    .article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}.article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Create a Panel and Run a WhatsApp Bot",
+  "author": {
+    "@type": "Organization",
+    "name": "Kocheng Team",
+    "url": "https://kocheng.biz.id/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kocheng",
+    "url": "https://kocheng.biz.id"
+  },
+  "datePublished": "2025-10-14",
+  "dateModified": "2025-10-14"
+}
+</script>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+    <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+      <a href="/blog" class="transition-transform duration-200 hover:scale-105 flex items-center space-x-2">
+        <i class="fa-solid fa-arrow-left text-blue-600"></i>
+        <span class="text-sm text-gray-700">Back to Blog</span>
+      </a>
+      <span class="text-sm text-gray-500">EN</span>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+    <h1 class="text-3xl font-bold text-blue-900 mb-4">How to Complete the Ad Verification to Create a Free Server</h1>
+    
+    <div class="article-author">
+    <img
+        src="{{ url_for('static', filename='favicon-96x96.webp') }}"
+        alt="Kocheng"
+        class="author-avatar"
+        width="42"
+        height="42"
+    >
+
+    <div class="author-info">
+        <span class="author-label">Written by</span>
+        <span class="author-name">Kocheng Team</span>
+    </div>
+</div>
+
+    <p class="text-gray-500 mb-6">Published on September 14, 2025 · 3 min read</p>
+
+    <p class="lead mb-4">Kocheng Hosting uses a brief ad-verification process to help sustain its free server tier. This article provides step-by-step instructions for safely completing website-based ad verification so your server can be provisioned correctly.</p>
+
+    <div class="note mb-6">
+      <strong>Quick summary:</strong> Log in → open the Dashboard → select Server → choose Create Server → complete the ad flow → return to the server creation page → enter the required information → create the server.
+    </div>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Prerequisites</h2>
+    <ul class="list-disc ml-6 mb-4 text-gray-700">
+      <li>Sign in to your Kocheng Hosting account and open the dashboard.</li>
+      <li>For optimal compatibility, use a current mobile browser or an up-to-date Android/iOS device.</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Step-by-step Instructions</h2>
+
+    <ol class="list-decimal ml-6 mb-6 space-y-3 text-gray-700">
+      <li>
+        <strong>Start the server creation process.</strong>
+        <p class="mt-1">On your dashboard, tap the three-line menu icon in the top-left corner, choose <em>Server</em>, and then tap <em>Create Server</em> using the website method.</p>
+      </li>
+
+      <li>
+        <strong>Review the ad page.</strong>
+        <p class="mt-1">You will be redirected to an advertisement and verification page. This page is part of the ad-supported process. Follow the steps below to confirm that you viewed the ad.</p>
+      </li>
+
+      <li>
+        <strong>Select the “I’m human” button.</strong>
+        <p class="mt-1">On the ad page, find and select the <strong>“I’m human”</strong> button or another verification button with similar wording. A brief countdown, typically about 3 seconds, will then appear.</p>
+      </li>
+
+      <li>
+        <strong>Wait for the countdown to end, then follow the on-screen instruction.</strong>
+        <p class="mt-1">Once the countdown is complete, select the <strong>Get Link</strong> or <strong>Get URL</strong> button that appears to proceed.</p>
+      </li>
+
+      <li>
+        <strong>Go back to the server creation page.</strong>
+        <p class="mt-1">Once you tap <em>Get Link</em>, you will be taken to the free server creation form. If the ad opens in a new tab or full-screen mode, use your browser's back button to return to the original form.</p>
+      </li>
+
+      <li>
+        <strong>Complete the server setup form.</strong>
+        <p class="mt-1">Enter the required information, including the <em>Server Name</em>, select the <em>Node</em>, and choose the appropriate <em>Egg</em> based on your bot or server type.</p>
+      </li>
+
+      <li>
+        <strong>Submit the flow to complete it.</strong>
+        <p class="mt-1">Select the action button, such as <em>Watch Ad &amp; Create Server</em>. If ad verification redirects you again, follow the instructions to repeat the back-button step. This confirms the view and enables the creation process to continue.</p>
+      </li>
+
+      <li>
+        <strong>Confirm provisioning.</strong>
+        <p class="mt-1">After verification succeeds, the site will activate the creation option and provision your server. Once provisioning is complete, you will see the server information and panel credentials.</p>
+      </li>
+    </ol>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Important Cautions</h2>
+    <div class="warning mb-4">
+      <strong>Warning:</strong> Advertisement pages may include various external advertisements and promotional materials. Do not provide personal information on third-party websites, and do not download files from unknown sources. If an advertisement requests unnecessary permissions or tries to install software, close the page immediately and return to the creation form.
+    </div>
+
+    <h2 class="text-xl font-semibold mt-6 mb-2">Troubleshooting Tips</h2>
+    <ul class="list-disc ml-6 mb-6 text-gray-700">
+      <li><strong>Ad button missing:</strong> Wait several seconds, then refresh the ad page. If the issue continues, switch networks (mobile data ↔ Wi-Fi).</li>
+      <li><strong>Redirect loop:</strong> Close any extra tabs, and press the browser back button once the ad timer finishes.</li>
+      <li><strong>Verification cannot be completed:</strong> Try a different device, or contact support and include a screenshot along with the exact step where the process failed.</li>
+      <li><strong>Privacy concern:</strong> Third parties provide the ads, so do not enter sensitive personal information on ad pages. See our <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> for more information.</li>
+    </ul>
+
+    <p class="mt-8 font-semibold">For assistance, contact support through the dashboard or email <a href="mailto:supporthosting@kocheng.tech" class="text-blue-600 hover:underline">supporthosting@kocheng.tech</a>.</p>
+  </main>
+
+<!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+
+      <p class="font-semibold text-gray-700">
+        Kocheng's |> Sahabat Ai Nusantara
+      </p>
+
+      <p>
+        <a href="/about" class="text-blue-600 hover:underline">About Us</a> |
+        <a href="/contact" class="text-blue-600 hover:underline">Contact Us</a> |
+        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+
+      <p>
+        JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).
+      </p>
+
+      <p>
+        <i class="fa-solid fa-envelope"></i>
+        supporthosting@kocheng.tech
+      </p>
+
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelector("main").classList.add("visible");
+    });
+  </script>
+</body>
+</html>

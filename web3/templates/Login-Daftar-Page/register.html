@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+  <link rel="manifest" href="/static/site.webmanifest" />
+
+  <!-- SEO & Metadata -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Skyforgia |> Sign up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      background-color: #f8f9fb;
+      font-family: 'Inter', sans-serif;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+  <!-- MAIN -->
+ <main class="flex-grow flex items-center justify-center px-4 py-10 fade-in">
+  <div class="bg-white rounded-2xl shadow-xl border w-full max-w-4xl grid md:grid-cols-2 overflow-hidden">
+
+    <!-- LEFT: Branding -->
+    <div class="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-8 flex flex-col justify-center space-y-4">
+      <div class="text-center space-y-2">
+        <h2 class="text-3xl font-bold">Join Skyforgia</h2>
+        <p class="text-blue-100 text-sm leading-relaxed">
+          Create your account and start hosting Discord & WhatsApp bots for free!
+        </p>
+      </div>
+
+      <div class="flex justify-center">
+        <i class="fa-solid fa-user-plus text-7xl opacity-90 drop-shadow-md"></i>
+      </div>
+
+      <p class="text-xs text-blue-100 text-center">No credit card required</p>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="p-8 space-y-4">
+
+      <h3 class="text-xl font-bold text-center text-gray-800">Sign Up</h3>
+
+      {% if message %}
+      <div class="p-3 bg-red-100 text-red-700 rounded text-center text-sm">{{ message }}</div>
+      {% endif %}
+
+      <form action="/signup/email" method="POST" class="space-y-5" id="form-daftar">
+
+        <!-- Username -->
+        <div>
+          <label for="nama" class="text-sm font-semibold text-gray-700">Username</label>
+          <input type="text" id="nama" name="nama" required placeholder="Enter your username"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="text-sm font-semibold text-gray-700">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="text-sm font-semibold text-gray-700">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+        </div>
+
+        <!-- Referral Code -->
+        <div>
+          <label class="text-sm font-semibold text-gray-700">Referral Code (optional)</label>
+          <input type="text" id="referral_code" name="referral_code" value="{{ referral_code or '' }}"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+          <p id="referral_error" class="text-sm text-red-500 mt-1"></p>
+          <input type="hidden" name="device_id" id="device_id" />
+        </div>
+
+        <!-- Terms -->
+        <div class="flex items-center space-x-2 text-sm text-gray-600">
+          <input type="checkbox" class="h-4 w-4 rounded border-gray-300" required>
+          <label>By registering you accept 
+            <a href="#" class="text-blue-600 font-medium hover:underline">Terms of Service</a>
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button id="submit-btn" type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm shadow transition">
+          Create Account
+        </button>
+
+      </form>
+
+      <p class="text-center text-sm text-gray-700">
+        Already have an account?
+        <a href="/signin/email" class="text-blue-600 font-semibold hover:underline">Sign In</a>
+      </p>
+    </div>
+
+  </div>
+</main>
+
+  <!-- REFERRAL SCRIPT -->
+  <script>
+    const referralInput = document.getElementById("referral_code");
+    const errorDiv = document.getElementById("referral_error");
+    const submitBtn = document.getElementById("submit-btn");
+    const deviceInput = document.getElementById("device_id");
+    const form = document.getElementById("form-daftar");
+    let referralValid = true;
+
+    function getDeviceId() {
+      let id = localStorage.getItem("device_id");
+      if (!id) {
+        id = crypto.randomUUID();
+        localStorage.setItem("device_id", id);
+      }
+      return id;
+    }
+
+    deviceInput.value = getDeviceId();
+
+    async function validateReferral() {
+      const code = referralInput.value.trim();
+      const device_id = deviceInput.value;
+      if (code === "") {
+        errorDiv.textContent = "";
+        referralInput.classList.remove("border-red-500");
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        referralValid = true;
+        return;
+      }
+
+      try {
+        const res = await fetch(`/validate/referral?code=${encodeURIComponent(code)}&device_id=${device_id}`);
+        const data = await res.json();
+
+        if (!data.valid) {
+          errorDiv.textContent = data.message;
+          referralInput.classList.add("border-red-500");
+          submitBtn.disabled = true;
+          submitBtn.classList.add("opacity-50", "cursor-not-allowed");
+          referralValid = false;
+        } else {
+          errorDiv.textContent = "";
+          referralInput.classList.remove("border-red-500");
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("opacity-50", "cursor-not-allowed");
+          referralValid = true;
+        }
+      } catch (err) {
+        console.error("Referral validation failed:", err);
+        referralValid = false;
+      }
+    }
+
+    referralInput.addEventListener("input", validateReferral);
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const referralFromUrl = urlParams.get("referral");
+      if (referralFromUrl && referralInput && !referralInput.value) {
+        referralInput.value = referralFromUrl.toUpperCase();
+        setTimeout(() => validateReferral(), 200);
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      await validateReferral();
+      if (!referralValid) e.preventDefault();
+    });
+  </script>
+</body>
+</html>

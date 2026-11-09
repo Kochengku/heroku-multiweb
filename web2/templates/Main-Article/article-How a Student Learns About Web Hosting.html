@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="How a Student Learns About Web Hosting">
+<meta property="og:description" content="An insightful guide on how students explore and understand web hosting, including practical steps, tools, and resources to gain hands-on experience.">
+<meta property="og:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://kocheng.biz.id">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How a Student Learns About Web Hosting">
+<meta name="twitter:description" content="Discover how students can effectively learn about web hosting, gain practical experience, and explore the fundamentals of server management.">
+<meta name="twitter:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+
+<meta charset="UTF-8" />
+<title>How a Student Learns About Web Hosting</title>
+<meta name="description" content="A complete guide on how students can learn web hosting, understand servers, practice with real projects, and develop skills for online applications.">
+<meta name="category" content="hosting,education,information">
+<meta name="date" content="2025-09-21">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="slug" content="learning-web-hosting-beginners-guide">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+.fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.lead { color: #475569; }
+.note { background: rgba(59,130,246,.06); border-left: 4px solid rgba(59,130,246,.3); padding:.75rem 1rem; border-radius:.375rem; }
+</style>
+<style>
+/* Article Illustration */
+.article-image {
+    width: 100%;
+    max-width: 760px;
+    aspect-ratio: 16 / 9;
+    margin: 24px auto;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #eaf2ff;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.08);
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.article-image:hover img {
+    transform: scale(1.02);
+}
+
+.article-image figcaption {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    padding: 8px 12px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .article-image {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 20px auto;
+    }
+}
+
+.article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Create a Panel and Run a WhatsApp Bot",
+  "author": {
+    "@type": "Organization",
+    "name": "Kocheng Team",
+    "url": "https://kocheng.biz.id/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kocheng",
+    "url": "https://kocheng.biz.id"
+  },
+  "datePublished": "2025-10-21",
+  "dateModified": "2025-10-21"
+}
+</script>
+</head>
+
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/blog" class="flex items-center space-x-2 hover:scale-105 transition">
+      <i class="fa-solid fa-arrow-left text-blue-600"></i>
+      <span class="text-sm text-gray-700">Back to Blog</span>
+    </a>
+    <span class="text-sm text-gray-500">EN</span>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+  <h1 class="text-3xl font-bold text-blue-900 mb-4">
+    How a Student Learns About Web Hosting
+  </h1>
+
+  <div class="article-author">
+    <img
+        src="{{ url_for('static', filename='favicon-96x96.webp') }}"
+        alt="Kocheng"
+        class="author-avatar"
+        width="42"
+        height="42"
+    >
+
+    <div class="author-info">
+        <span class="author-label">Written by</span>
+        <span class="author-name">Kocheng Team</span>
+    </div>
+</div>
+
+  <p class="text-gray-500 mb-6">Published on September 21, 2025 · 8 min read</p>
+
+<figure class="article-image">
+    <img
+        src="{{ url_for('static', filename='images/coding.webp') }}"
+        alt="image"
+        loading="lazy"
+        decoding="async"
+    >
+</figure>
+
+  <p class="lead mb-4">
+    For students pursuing technology, website development, or digital entrepreneurship, understanding web hosting is an important foundational skill. Studying hosting concepts early provides hands-on insight into servers, domains, and web-based applications.
+  </p>
+
+  <div class="note mb-6">
+    <strong>Key Insight:</strong> Understanding web hosting involves both theoretical knowledge and practical experience, enabling students to develop a solid foundation for future projects.
+  </div>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 1 — Understanding the Basics</h2>
+  <p class="mb-4">
+    The student first develops an understanding of fundamental web hosting concepts, such as servers, domain names, DNS, bandwidth, storage, and hosting options, including shared, VPS, cloud, and dedicated servers. This foundation enables them to see how websites are stored and delivered to users.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 2 — Exploring Free Hosting Platforms</h2>
+  <p class="mb-4">
+    Many students use free hosting services as a practical way to build hands-on experience. Platforms such as InfinityFree, 000WebHost, and Kocheng Hosting enable them to publish small websites, experiment with server settings, and develop fundamental file management skills.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 3 — Learning File and Database Management</h2>
+  <p class="mb-4">
+    An essential aspect of learning web hosting involves understanding file organization and database administration. Students learn to upload HTML, CSS, and JavaScript files through FTP clients while managing MySQL or SQLite databases for storing website content.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 4 — Understanding Security and Backups</h2>
+  <p class="mb-4">
+    Hosting education also covers essential security practices, including using SSL certificates, configuring firewalls, and creating strong passwords. Students learn to perform regular backups to reduce the risk of data loss and become familiar with disaster recovery procedures.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 5 — Developing a Real Project</h2>
+  <p class="mb-4">
+    After learning the fundamentals of hosting, students can build and launch a small website project, such as a personal portfolio, school club page, or basic blog. Deploying a working project reinforces their understanding and showcases their practical abilities.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Step 6 — Exploring Advanced Hosting Concepts</h2>
+  <p class="mb-4">
+    Advanced learners may study cloud hosting, server optimization, load balancing, and domain administration. They can also work with control panels such as cPanel and Pterodactyl or manage Linux servers directly to further develop their expertise.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Benefits for Students</h2>
+  <ul class="list-disc ml-6 mb-4 text-gray-700">
+    <li>Practical experience using web technologies.</li>
+    <li>Understanding how websites interact with servers.</li>
+    <li>Ability to deploy personal or school projects online.</li>
+    <li>Preparation for careers in web development, IT support, and cloud computing.</li>
+    <li>Greater confidence in diagnosing hosting and deployment problems.</li>
+  </ul>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Conclusion</h2>
+  <p class="mb-4">
+    Studying web hosting gives students useful technical abilities and hands-on experience. By learning hosting fundamentals, using free platforms for practice, and developing real-world projects, students position themselves for future careers in technology and digital entrepreneurship.
+  </p>
+
+  <p class="mt-6">
+    Through dedicated study and curiosity, students can develop a solid understanding of web hosting that advances their academic and professional development.
+  </p>
+
+  <hr class="my-10">
+
+  <!-- SECOND ARTICLE -->
+  <article>
+
+    <h2 class="text-2xl font-bold text-blue-900 mb-4">
+      Understanding Web Hosting Infrastructure: Servers, DNS, Security, and Performance
+    </h2>
+
+    <figure class="article-image">
+      <img
+          src="{{ url_for('static', filename='images/dnsweb.webp') }}"
+          alt="Web hosting infrastructure and server administration"
+          loading="lazy"
+          decoding="async"
+      >
+      <figcaption>
+        Learning server infrastructure helps students understand how websites operate and remain accessible online.
+      </figcaption>
+    </figure>
+
+    <p class="lead mb-4">
+      Learning web hosting involves more than uploading website files to an online server. Students who want to understand hosting infrastructure need to explore how servers process requests, how domain names locate services, how databases store information, and how security controls protect applications.
+    </p>
+
+    <p class="mb-4">
+      These concepts form the foundation of modern website deployment. They are relevant to students studying information technology, aspiring web developers, system administrators, and anyone interested in managing online services.
+    </p>
+
+    <p class="mb-4">
+      A practical understanding of web hosting infrastructure also makes it easier to diagnose problems. When a website becomes inaccessible, loads slowly, or displays an error, knowing how its individual components work can help narrow down the cause instead of relying on guesswork.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      How Web Hosting Infrastructure Works
+    </h3>
+
+    <p class="mb-4">
+      Web hosting is a service that provides the computing resources needed to make a website available through the internet. These resources generally include processing capacity, memory, storage, network connectivity, and software required to serve website content.
+    </p>
+
+    <p class="mb-4">
+      When someone enters a website address into a browser, several processes take place. The browser needs to locate the appropriate server, establish a connection, send a request, and receive a response containing the requested website resources.
+    </p>
+
+    <p class="mb-4">
+      The server may return static files such as HTML, CSS, images, and JavaScript. For dynamic websites, the application can also execute server-side code and retrieve information from a database before generating the response.
+    </p>
+
+    <p class="mb-4">
+      Understanding this sequence helps beginners distinguish between website development and website hosting. Development focuses on creating the application, while hosting provides the environment in which that application operates.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Understanding Servers and Their Resources
+    </h3>
+
+    <p class="mb-4">
+      A server is a computer system that provides services or resources to other devices through a network. In web hosting, a server receives requests from browsers and delivers the appropriate website content.
+    </p>
+
+    <p class="mb-4">
+      Four important resources determine how much work a hosting environment can handle: CPU, RAM, storage, and network capacity. Each resource serves a different purpose, and limitations in any of them can affect website performance.
+    </p>
+
+    <ul class="list-disc ml-6 mb-4 text-gray-700">
+      <li><strong>CPU:</strong> Processes application instructions and server operations.</li>
+      <li><strong>RAM:</strong> Holds data and processes that need temporary memory while applications run.</li>
+      <li><strong>Storage:</strong> Stores website files, databases, logs, and backups.</li>
+      <li><strong>Network capacity:</strong> Determines how data moves between the server and connected users.</li>
+    </ul>
+
+    <p class="mb-4">
+      For example, a small static website may require relatively few computing resources. A dynamic application that processes many database queries or handles simultaneous users may need more CPU capacity and memory.
+    </p>
+
+    <p class="mb-4">
+      Students should learn to monitor resource usage rather than selecting a server based only on advertised specifications. A hosting package with substantial storage does not necessarily provide enough processing power for a demanding application.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Shared Hosting, VPS, Cloud, and Dedicated Servers
+    </h3>
+
+    <p class="mb-4">
+      Hosting services are available in several configurations. The main differences involve how computing resources are allocated, how much control customers receive, and who is responsible for maintaining the underlying infrastructure.
+    </p>
+
+    <p class="mb-4">
+      Shared hosting places multiple websites on a common hosting environment. It is generally suitable for beginners who need to publish a simple website without managing an entire server.
+    </p>
+
+    <p class="mb-4">
+      A Virtual Private Server (VPS) uses virtualization to create separate virtual server environments on a physical machine. Users typically receive more administrative control and can install software or configure services according to their requirements.
+    </p>
+
+    <p class="mb-4">
+      Cloud hosting uses computing resources delivered through cloud infrastructure. Depending on the provider and architecture, resources can be distributed across multiple systems, helping applications adapt to changing workloads.
+    </p>
+
+    <p class="mb-4">
+      Dedicated hosting provides a physical server for a single customer. This arrangement offers greater control over the hardware environment but generally requires more technical administration and a larger budget.
+    </p>
+
+    <p class="mb-4">
+      No hosting category is automatically the best choice for every project. Students should compare actual resource limits, support arrangements, security responsibilities, scalability, and total costs before selecting a service.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      DNS: Connecting Domain Names to Servers
+    </h3>
+
+    <p class="mb-4">
+      The Domain Name System, commonly called DNS, helps translate domain names into information that computers can use to locate internet services. It allows visitors to access websites through recognizable names instead of having to remember numerical IP addresses.
+    </p>
+
+    <p class="mb-4">
+      When a user requests a domain, DNS resolution helps the browser discover the relevant destination. Depending on the configuration, different DNS records provide different types of information.
+    </p>
+
+    <ul class="list-disc ml-6 mb-4 text-gray-700">
+      <li><strong>A record:</strong> Maps a domain name to an IPv4 address.</li>
+      <li><strong>AAAA record:</strong> Maps a domain name to an IPv6 address.</li>
+      <li><strong>CNAME record:</strong> Identifies another domain name as the canonical target.</li>
+      <li><strong>MX record:</strong> Specifies mail servers responsible for receiving email for a domain.</li>
+      <li><strong>TXT record:</strong> Stores text information used for verification and other domain configurations.</li>
+      <li><strong>NS record:</strong> Identifies the authoritative name servers for a DNS zone.</li>
+    </ul>
+
+    <p class="mb-4">
+      Incorrect DNS settings can make a website inaccessible even when the hosting server itself is operating normally. For this reason, understanding DNS is an important skill for anyone learning domain and server administration.
+    </p>
+
+    <p class="mb-4">
+      Cloudflare's DNS documentation provides technical explanations of common record types and how DNS configurations work. It is a useful reference for students practicing domain management.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Understanding HTTP, HTTPS, and SSL/TLS
+    </h3>
+
+    <p class="mb-4">
+      HTTP is the application protocol used for communication between web browsers and servers. It defines how requests and responses are structured when applications exchange website information.
+    </p>
+
+    <p class="mb-4">
+      HTTPS adds a layer of protection by using TLS to secure the communication channel. This helps protect information from being read or modified by unauthorized parties while it travels between the browser and server.
+    </p>
+
+    <p class="mb-4">
+      Website operators commonly configure HTTPS using a digital certificate issued by a trusted certificate authority. Modern hosting environments often provide certificate installation or automated certificate management.
+    </p>
+
+    <p class="mb-4">
+      Students should understand that HTTPS does not guarantee that a website is completely secure. It protects the connection, but vulnerabilities in application code, weak passwords, exposed databases, and compromised server accounts can still create security risks.
+    </p>
+
+    <p class="mb-4">
+      Learning how certificates are issued, renewed, and validated provides useful practical experience for managing production websites.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Linux Server Administration for Beginners
+    </h3>
+
+    <p class="mb-4">
+      Linux is widely used in server environments, making basic Linux administration valuable for students interested in web hosting. Learning how to navigate directories, manage files, inspect processes, and configure services provides a foundation for more advanced server operations.
+    </p>
+
+    <p class="mb-4">
+      Beginners can start with basic command-line operations and gradually explore user permissions, package management, networking tools, and service administration.
+    </p>
+
+    <p class="mb-4">
+      Common tasks include checking available disk space, reviewing system logs, restarting a web service, and identifying processes that consume excessive memory or CPU resources.
+    </p>
+
+    <p class="mb-4">
+      Administrative access should be handled carefully. Commands executed with elevated privileges can change system configurations or remove important files, so students should practice in a test environment before managing a live server.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Databases and Server-Side Applications
+    </h3>
+
+    <p class="mb-4">
+      Many websites need databases to store information that changes over time. Examples include user accounts, product catalogs, articles, transaction records, and application settings.
+    </p>
+
+    <p class="mb-4">
+      Relational database systems such as MySQL and PostgreSQL organize information into tables and use SQL to retrieve or modify records. SQLite offers a different approach by storing database information in a file, making it useful for smaller applications and local development.
+    </p>
+
+    <p class="mb-4">
+      A beginner learning hosting should understand how an application connects to a database, how database credentials are configured, and why database permissions matter.
+    </p>
+
+    <p class="mb-4">
+      Credentials should not be exposed in public source repositories or displayed directly to website visitors. Applications should use appropriate access controls and secure configuration practices to protect sensitive information.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Website Security and Backup Management
+    </h3>
+
+    <p class="mb-4">
+      Server security is an essential part of hosting administration. A website may be exposed to risks involving unauthorized access, outdated software, vulnerable plugins, weak authentication, or incorrectly configured services.
+    </p>
+
+    <p class="mb-4">
+      Students should begin with basic protective measures, including strong unique passwords, software updates, limited administrative access, and secure communication through HTTPS.
+    </p>
+
+    <p class="mb-4">
+      Backups are equally important because technical failures, accidental deletion, compromised accounts, and application errors can cause data loss. A backup strategy should consider website files, databases, configuration files, and the information required to restore the service.
+    </p>
+
+    <p class="mb-4">
+      Storing every backup on the same server is not sufficient protection against every type of incident. Separate backup storage and periodic restoration tests can help determine whether recovery procedures actually work.
+    </p>
+
+    <p class="mb-4">
+      The US Cybersecurity and Infrastructure Security Agency (CISA) recommends maintaining backups and protecting them from unauthorized access. Its cybersecurity guidance provides practical recommendations that students and administrators can use when developing basic security procedures.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Monitoring Website Performance and Troubleshooting
+    </h3>
+
+    <p class="mb-4">
+      A website that works correctly during development may encounter different conditions after being published. Real users can access the application from different devices, networks, and locations, while server workloads can change throughout the day.
+    </p>
+
+    <p class="mb-4">
+      Monitoring helps administrators identify performance problems before they become major disruptions. Useful indicators include CPU usage, memory consumption, disk space, response time, network activity, and application error logs.
+    </p>
+
+    <p class="mb-4">
+      Students can learn troubleshooting by investigating common HTTP status codes. A 404 response generally indicates that a requested resource cannot be found, while a 500 response indicates an internal server error.
+    </p>
+
+    <p class="mb-4">
+      A 502 Bad Gateway response can occur when a gateway or proxy receives an invalid response from an upstream server. A 503 Service Unavailable response indicates that the server is currently unable to handle the request.
+    </p>
+
+    <p class="mb-4">
+      These codes do not always identify the exact underlying cause. Administrators should examine application logs, web server logs, service status, and network configuration before applying changes.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      A Practical Learning Project for Students
+    </h3>
+
+    <p class="mb-4">
+      One effective way to understand hosting infrastructure is to deploy a small project from beginning to end. A personal portfolio, school information page, or simple blog can provide enough complexity to practice several important concepts.
+    </p>
+
+    <p class="mb-4">
+      Students can begin by creating a website locally, organizing its files, and testing its functionality. The next stage involves selecting an appropriate hosting environment, uploading the application, and configuring the domain.
+    </p>
+
+    <p class="mb-4">
+      Once the website is accessible, students can configure HTTPS, test database connections if required, and monitor how the server responds to requests.
+    </p>
+
+    <p class="mb-4">
+      Keeping a record of each configuration change and troubleshooting step is also useful. Documentation makes it easier to understand what caused a problem and provides evidence of practical learning progress.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Essential Skills for Future Hosting Administrators
+    </h3>
+
+    <p class="mb-4">
+      Learning web hosting can introduce students to several technical fields. These include web development, Linux administration, networking, cybersecurity, database management, and cloud infrastructure.
+    </p>
+
+    <p class="mb-4">
+      The ability to combine these skills is particularly valuable when managing applications that depend on multiple services. For example, a website may require a domain, DNS configuration, a web server, an application runtime, and a database to operate correctly.
+    </p>
+
+    <p class="mb-4">
+      Technical knowledge should also be supported by problem-solving and documentation skills. Administrators need to explain configuration decisions, identify risks, and communicate technical issues clearly to other people.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Frequently Asked Questions
+    </h3>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      What should beginners learn first in web hosting?
+    </h3>
+
+    <p class="mb-4">
+      Beginners should start with domain names, DNS, IP addresses, servers, storage, and basic website deployment. Understanding these concepts makes advanced topics easier to follow.
+    </p>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      Is Linux necessary for learning web hosting?
+    </h3>
+
+    <p class="mb-4">
+      Linux is not mandatory for every hosting environment, but learning its command-line tools and administration practices is highly useful for students interested in VPS management and server administration.
+    </p>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      What is the difference between shared hosting and VPS?
+    </h3>
+
+    <p class="mb-4">
+      Shared hosting places multiple websites within a common hosting environment, while a VPS provides an isolated virtual server with greater configuration control and allocated resources.
+    </p>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      Why is DNS important for a website?
+    </h3>
+
+    <p class="mb-4">
+      DNS helps browsers locate internet services using domain names. Incorrect DNS records can prevent visitors from reaching the intended website even when the server is operating.
+    </p>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      Can students learn server administration without an expensive computer?
+    </h3>
+
+    <p class="mb-4">
+      Students can begin with documentation, local development tools, browser-based learning resources, and suitable remote hosting environments. The resources required depend on the project and the tools being used.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Conclusion
+    </h3>
+
+    <p class="mb-4">
+      Understanding web hosting infrastructure requires knowledge of several connected technologies, including servers, DNS, HTTP, databases, Linux administration, and cybersecurity. Each component contributes to the way websites operate and remain accessible through the internet.
+    </p>
+
+    <p class="mb-4">
+      For students, practical projects provide an effective way to connect theoretical concepts with real technical tasks. Learning how to deploy applications, inspect server resources, configure domains, and troubleshoot errors can build a strong foundation for future work in information technology.
+    </p>
+
+    <p class="mb-4">
+      Web hosting is not simply about purchasing server space or uploading files. It involves understanding the infrastructure behind online services and learning how to maintain that infrastructure reliably. Developing these skills step by step can prepare students for opportunities in web development, system administration, and cloud computing.
+    </p>
+
+    <hr class="my-8 border-gray-300">
+
+    <h3 class="text-lg font-semibold mt-6 mb-3">
+      Research and Technical References
+    </h3>
+
+    <p class="mb-3 text-sm text-gray-600">
+      Cloudflare Learning Center and Developer Documentation — DNS concepts, DNS records, and internet infrastructure.
+    </p>
+
+    <p class="mb-3 text-sm text-gray-600">
+      MDN Web Docs — HTTP overview, HTTP request methods, response status codes, and web communication fundamentals.
+    </p>
+
+    <p class="mb-3 text-sm text-gray-600">
+      CISA — Cybersecurity best practices and guidance for protecting systems and maintaining backups.
+    </p>
+
+    <p class="mb-3 text-sm text-gray-600">
+      Linux Documentation Project — Linux administration and command-line learning resources.
+    </p>
+
+    <p class="mb-3 text-sm text-gray-600">
+      Let's Encrypt Documentation — HTTPS certificates and automated certificate management.
+    </p>
+
+  </article>
+
+</main>
+
+<!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+
+      <p class="font-semibold text-gray-700">
+        Kocheng's |> Sahabat Ai Nusantara
+      </p>
+
+      <p>
+        <a href="/about" class="text-blue-600 hover:underline">About Us</a> |
+        <a href="/contact" class="text-blue-600 hover:underline">Contact Us</a> |
+        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+
+      <p>
+        JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).
+      </p>
+
+      <p>
+        <i class="fa-solid fa-envelope"></i>
+        supporthosting@kocheng.tech
+      </p>
+
+    </div>
+  </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector("main").classList.add("visible");
+});
+</script>
+
+</body>
+</html>

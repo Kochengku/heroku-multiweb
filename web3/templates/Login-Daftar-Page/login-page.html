@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Skyforgia">
+<meta property="og:description" content="Free bot discord & whatsapp hosting.">
+<meta property="og:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://control.skyforgia.biz.id">
+<meta property="og:type" content="website">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skyforgia">
+<meta name="twitter:description" content="Free bot discord & whatsapp hosting.">
+<meta name="twitter:image" content="https://control.skyforgia.biz.id/static/logo-512x512.webp">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "url": "https://control.skyforgia.biz.id",
+  "logo": "https://control.skyforgia.biz.id/static/logo-512x512.webp",
+  "name": "Skyforgia"
+}
+</script>
+
+<!-- FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What is Skyforgia Hosting?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Skyforgia Hosting provides free hosting for Discord & WhatsApp bots using Pterodactyl Panel."
+    }
+  },{
+    "@type": "Question",
+    "name": "Is it free forever?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, there is a free package available with specifications of 1000MB RAM, 3GB disk, and 100 CPU%."
+    }
+  }]
+}
+</script>
+
+<meta charset="UTF-8" />
+<meta name="monetag" content="42477f930d0656fe74b86906814dda7a">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Skyforgia |> Sign up</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  body {
+    background-color: #f8f9fb;
+    font-family: 'Inter', sans-serif;
+  }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/getstarted" class="flex items-center space-x-2">
+      <img src="/static/logo2.webp" alt="Logo" class="h-10" />
+      <span class="text-2xl font-bold text-gray-800">Skyforgia</span>
+    </a>
+    <div class="flex items-center space-x-3">
+      <i class="fa-solid fa-shield-halved text-gray-600 text-lg"></i>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow flex items-center justify-center px-4 py-10 fade-in">
+  <div class="bg-white rounded-2xl shadow-xl border w-full max-w-4xl grid md:grid-cols-2 overflow-hidden">
+
+    <!-- LEFT: Branding / Welcome Message -->
+    <div class="bg-gradient-to-br from-blue-600 to-blue-800 text-white p-8 flex flex-col justify-center space-y-4">
+      <div class="text-center space-y-2">
+        <h2 class="text-3xl font-bold">Create Account</h2>
+        <p class="text-blue-100 text-sm leading-relaxed">Join Skyforgia and start your hosting experience today!</p>
+      </div>
+      <div class="flex justify-center">
+        <i class="fa-solid fa-user-plus text-7xl opacity-90 drop-shadow-md"></i>
+      </div>
+      <p class="text-xs text-blue-100 text-center">Fast signup & secure access</p>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="p-8 space-y-4">
+      <h3 class="text-xl font-bold text-center text-gray-800">Sign up</h3>
+
+      <!-- Google Sign Up -->
+      <a href="/login/google"
+        class="flex items-center justify-center border border-gray-300 rounded-lg py-3 hover:shadow bg-white w-full text-sm font-medium transition">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5 mr-2">
+        Continue with Google
+      </a>
+
+      <!-- Separator -->
+      <div class="flex items-center">
+        <hr class="flex-grow border-t border-gray-300" />
+        <span class="mx-3 text-gray-500 text-xs uppercase">or sign in with email</span>
+        <hr class="flex-grow border-t border-gray-300" />
+      </div>
+
+      <!-- Form -->
+      <form action="/signin/email" method="POST" class="space-y-5">
+        <div>
+          <label class="text-sm font-semibold text-gray-700">Email</label>
+          <input type="email" name="email" required placeholder="Enter your email"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+        </div>
+
+        <div>
+          <label class="text-sm font-semibold text-gray-700">Password</label>
+          <input type="password" name="password" required placeholder="Enter your password"
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm">
+        </div>
+
+        <button type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-sm shadow transition">
+          SIGN IN
+        </button>
+      </form>
+
+      <p class="text-center text-sm text-gray-700">
+        Don't have an account yet?
+        <a href="/signup/email" class="text-blue-600 font-semibold hover:underline">Sign in</a>
+      </p>
+    </div>
+
+  </div>
+</main>
+
+</body>
+</html>

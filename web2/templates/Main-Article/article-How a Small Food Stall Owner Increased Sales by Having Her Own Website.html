@@ -1,0 +1,591 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/static/favicon-96x96.webp" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+<link rel="shortcut icon" href="/static/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.webp" />
+<link rel="manifest" href="/static/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="How a Small Food Stall Owner Increased Sales by Having Her Own Website">
+<meta property="og:description" content="An inspiring story of a small food stall owner who successfully increased daily sales and customer reach after creating a simple business website.">
+<meta property="og:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+<meta property="og:url" content="https://kocheng.biz.id">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How a Small Food Stall Owner Increased Sales by Having Her Own Website">
+<meta name="twitter:description" content="A real-life example of how digital presence helps micro businesses grow sustainably.">
+<meta name="twitter:image" content="https://kocheng.biz.id/static/logo-512x512.webp">
+
+<meta charset="UTF-8" />
+<title>How a Small Food Stall Owner Increased Sales by Having Her Own Website</title>
+<meta name="description" content="A detailed and inspiring story about a small food stall owner who improved her business performance and customer trust by building her own website.">
+<meta name="category" content="business,inspiration">
+<meta name="date" content="2025-09-21">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="slug" content="small-food-business-increased-sales-website">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+.fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.lead { color: #475569; }
+.note { background: rgba(34,197,94,.08); border-left: 4px solid rgba(34,197,94,.4); padding:.75rem 1rem; border-radius:.375rem; }
+</style>
+<style>
+/* Article Illustration */
+.article-image {
+    width: 100%;
+    max-width: 760px;
+    aspect-ratio: 16 / 9;
+    margin: 24px auto;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #eaf2ff;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.08);
+}
+
+.article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.article-image:hover img {
+    transform: scale(1.02);
+}
+
+.article-image figcaption {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    padding: 8px 12px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .article-image {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 20px auto;
+    }
+}
+
+.article-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #dbeafe;
+    border: 2px solid #bfdbfe;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Create a Panel and Run a WhatsApp Bot",
+  "author": {
+    "@type": "Organization",
+    "name": "Kocheng Team",
+    "url": "https://kocheng.biz.id/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kocheng",
+    "url": "https://kocheng.biz.id"
+  },
+  "datePublished": "2025-10-21",
+  "dateModified": "2025-10-21"
+}
+</script>
+</head>
+
+<body class="bg-gradient-to-br from-white to-blue-100 text-gray-800 min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-200 py-3 shadow-sm">
+  <div class="max-w-screen-lg mx-auto flex justify-between items-center px-4">
+    <a href="/blog" class="flex items-center space-x-2 hover:scale-105 transition">
+      <i class="fa-solid fa-arrow-left text-blue-600"></i>
+      <span class="text-sm text-gray-700">Back to Blog</span>
+    </a>
+    <span class="text-sm text-gray-500">EN</span>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow px-6 py-12 max-w-4xl mx-auto fade-in">
+  <h1 class="text-3xl font-bold text-blue-900 mb-4">
+    How a Small Food Stall Owner Increased Sales by Having Her Own Website
+  </h1>
+  
+  <div class="article-author">
+    <img
+        src="{{ url_for('static', filename='favicon-96x96.webp') }}"
+        alt="Kocheng"
+        class="author-avatar"
+        width="42"
+        height="42"
+    >
+
+    <div class="author-info">
+        <span class="author-label">Written by</span>
+        <span class="author-name">Kocheng Team</span>
+    </div>
+</div>
+
+  <p class="text-gray-500 mb-6">Published on September 21, 2025 · 8 min read</p>
+
+<figure class="article-image">
+    <img
+        src="{{ url_for('static', filename='images/website.webp') }}"
+        alt="image"
+        loading="lazy"
+        decoding="async"
+    >
+</figure>
+
+  <p class="lead mb-4">
+    For many small business owners, adopting digital tools can appear unnecessary or overly complicated. However, this compelling example demonstrates that even a basic website can substantially improve daily sales and strengthen customer trust.
+  </p>
+
+  <div class="note mb-6">
+    <strong>Real Story:</strong> This article describes the common experiences of microbusiness owners as they transition to digital platforms.
+  </div>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Starting from a Traditional Food Stall</h2>
+  <p class="mb-4">
+    Mrs. Sari has operated a small food stall for over ten years. Her customer base consisted primarily of local residents who purchased food directly from the stall. Although sales remained steady, they were limited, resulting in slow business growth.
+  </p>
+
+  <p class="mb-4">
+    As with many small business owners, she depended on referrals and did not view an online presence as essential.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">The Decision to Build a Website</h2>
+  <p class="mb-4">
+    The key change occurred when her son proposed building a basic website featuring the menu, prices, location, and contact details. Rather than competing with large restaurants, the site was intended to help customers locate the stall more easily.
+  </p>
+
+  <p class="mb-4">
+    The website was built for simplicity, mobile compatibility, and straightforward maintenance.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Building Customer Trust</h2>
+  <p class="mb-4">
+    Maintaining a website strengthened the business’s credibility by giving customers access to accurate information, food photos, and operating hours. This level of transparency fostered greater trust, particularly among first-time customers.
+  </p>
+
+  <p class="mb-4">
+    Many customers reported locating the stall through an online search before their visit.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Sales Growth and Wider Reach</h2>
+  <p class="mb-4">
+    Over the next several months, the number of daily orders grew. Online inquiries became routine, while event-related bulk orders began to emerge. The website extended the business's reach beyond the surrounding neighborhood.
+  </p>
+
+  <p class="mb-4">
+    Accurate location information also enabled delivery drivers to locate the stall more easily.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Lessons for Small Business Owners</h2>
+  <p class="mb-4">
+    This example demonstrates that digital tools are accessible to businesses of any size. Even a basic website can serve as an online storefront that remains available 24 hours a day, shares essential information, and helps attract new customers.
+  </p>
+
+  <p class="mb-4">
+    For micro and small businesses, maintaining an online presence has shifted from being optional to being increasingly necessary.
+  </p>
+
+  <h2 class="text-xl font-semibold mt-6 mb-2">Conclusion</h2>
+  <p class="mb-4">
+    Mrs. Sari’s experience demonstrates that adopting digital solutions does not have to involve complicated technology or substantial costs. A basic website can help small business owners increase visibility, build trust, and improve sales performance.
+  </p>
+
+  <p class="mt-6">
+    For local businesses, a basic website can provide a foundation for long-term growth.
+  </p>
+
+<hr class="my-10">
+
+  <!-- SECOND ARTICLE -->
+
+  <article>
+
+    <h2 class="text-2xl font-bold text-blue-900 mb-4">
+      How Small Food Businesses Can Turn Website Visitors into Loyal Customers
+    </h2>
+
+    <figure class="article-image">
+      <img
+          src="{{ url_for('static', filename='images/usaha.webp') }}"
+          alt="Small food business using a website to reach customers and receive online orders"
+          loading="lazy"
+          decoding="async"
+      >
+      <figcaption>
+        A well-maintained business website can help food entrepreneurs connect with customers beyond their immediate neighborhood.
+      </figcaption>
+    </figure>
+
+    <p class="lead mb-4">
+      Having a website is an important first step for a small food business, but attracting visitors alone does not guarantee higher revenue. Business owners also need to provide useful information, create a convenient ordering experience, and establish relationships that encourage customers to return.
+    </p>
+
+    <p class="mb-4">
+      For independent food stalls, home-based catering services, and neighborhood restaurants, a website can become more than an online business card. When managed properly, it can support marketing activities, answer common customer questions, and help turn online interest into actual purchases.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Why an Online Presence Matters for Small Food Businesses
+    </h3>
+
+    <p class="mb-4">
+      Customers increasingly use digital channels to discover products and compare businesses before making purchasing decisions. Someone looking for affordable lunch, homemade snacks, or catering services may search online rather than immediately visiting a nearby establishment.
+    </p>
+
+    <p class="mb-4">
+      Without accurate business information online, a small food seller may miss opportunities to reach these potential customers. A website provides a central location where visitors can find the menu, prices, operating hours, photographs, ordering instructions, and business contact information.
+    </p>
+
+    <p class="mb-4">
+      The Organisation for Economic Co-operation and Development (OECD) identifies digitalisation as an important opportunity for small and medium-sized enterprises to improve productivity, strengthen competitiveness, and access new markets.
+    </p>
+
+    <p class="mb-4">
+      Its 2025 SME Digitalisation for Competitiveness survey examined businesses across ten OECD countries. Among the reported benefits of digital adoption, 39% of surveyed businesses identified expanding their customer base as an advantage, while 35% identified increasing domestic sales. Automating business processes was identified by 53% of respondents.
+    </p>
+
+    <p class="mb-4">
+      These findings illustrate why digital tools deserve attention from smaller enterprises. However, the survey represents participating businesses in the countries studied, not every small business worldwide. Individual results will depend on the industry, market, and way digital tools are implemented.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Creating a Website That Answers Customer Questions
+    </h3>
+
+    <p class="mb-4">
+      A useful food business website should make essential information easy to find. Visitors should not have to navigate several pages just to discover what a business sells or how to place an order.
+    </p>
+
+    <p class="mb-4">
+      The homepage can introduce the business and display its most popular products. A separate menu section can provide food descriptions, available portions, and current prices, while a contact section can explain how customers can make inquiries or request delivery.
+    </p>
+
+    <p class="mb-4">
+      Food photography also plays an important role in presenting products. Clear photographs help customers understand portion sizes, presentation, and the types of meals being offered. Business owners should use genuine images of their products rather than misleading photographs that do not represent the actual items.
+    </p>
+
+    <p class="mb-4">
+      Information must also remain accurate. If prices change, certain menu items become unavailable, or operating hours are adjusted, the website should be updated accordingly. Outdated information can create confusion and damage customer confidence.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Mobile-Friendly Design Is Essential
+    </h3>
+
+    <p class="mb-4">
+      Many customers search for nearby food businesses using smartphones. A website that works properly on desktop computers but displays poorly on mobile devices can create unnecessary obstacles for potential buyers.
+    </p>
+
+    <p class="mb-4">
+      Mobile-friendly design involves more than reducing the size of a desktop layout. Text should remain readable, navigation should be straightforward, photographs should load efficiently, and important contact information should be accessible without excessive scrolling.
+    </p>
+
+    <p class="mb-4">
+      Google's search documentation also emphasizes mobile-first indexing. This means Google primarily uses the mobile version of a website's content for indexing and ranking. Maintaining equivalent, accessible content across mobile and desktop versions is therefore important for businesses seeking visibility in search results.
+    </p>
+
+    <p class="mb-4">
+      Website performance matters as well. Large photographs, unnecessary scripts, and poorly optimized resources can increase loading times, particularly for visitors using slower mobile connections. Compressing images and keeping the website structure simple can help improve the experience.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Using Local SEO to Reach Nearby Customers
+    </h3>
+
+    <p class="mb-4">
+      Search engine optimization, commonly known as SEO, helps businesses make their websites easier to discover through search engines. For a small food stall, local SEO is particularly relevant because many potential customers are searching for products or services within a specific area.
+    </p>
+
+    <p class="mb-4">
+      A food business should naturally include relevant information such as its food category, neighborhood, city, and services. For example, a business selling traditional snacks in Madiun can provide clear descriptions that identify its products and service location.
+    </p>
+
+    <p class="mb-4">
+      Business owners can also maintain a Google Business Profile to provide information such as their address, opening hours, contact details, and customer reviews. This helps customers discover the business through Google Search and Google Maps.
+    </p>
+
+    <p class="mb-4">
+      Local SEO should focus on accuracy rather than repeating keywords excessively. Search engines aim to provide relevant results, so useful descriptions and consistent business information are more valuable than unnatural keyword repetition.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Making Online Ordering Easier
+    </h3>
+
+    <p class="mb-4">
+      Once visitors understand what a business offers, the next step is making it easy for them to purchase. A complicated ordering process can discourage potential customers, even when the products and prices are attractive.
+    </p>
+
+    <p class="mb-4">
+      Small businesses do not necessarily need an expensive e-commerce system to start accepting online orders. A simple WhatsApp contact button, an order form, or a clearly displayed telephone number can provide a practical starting point.
+    </p>
+
+    <p class="mb-4">
+      Ordering instructions should explain the information customers need to provide, including product selection, quantity, delivery address, and preferred payment method. Businesses should also communicate estimated preparation times and delivery arrangements where applicable.
+    </p>
+
+    <p class="mb-4">
+      For sellers receiving many orders, a more organized system can help record transactions and reduce mistakes. Maintaining an order log makes it easier to monitor incoming requests, completed purchases, and outstanding payments.
+    </p>
+
+    <p class="mb-4">
+      Business owners should avoid displaying payment instructions that are unclear or unverified. Transparent transaction procedures help customers understand what happens after they submit an order.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Building Customer Loyalty Through Consistent Service
+    </h3>
+
+    <p class="mb-4">
+      Getting a first purchase is only one part of running a sustainable food business. Repeat customers can provide a more stable source of demand, particularly for businesses selling everyday products such as breakfast meals, snacks, and lunch packages.
+    </p>
+
+    <p class="mb-4">
+      A website can support customer relationships by displaying updated menus, introducing seasonal products, and providing information about special offers. Business owners can also use their website to communicate changes in operating hours and availability.
+    </p>
+
+    <p class="mb-4">
+      Customer feedback is another useful source of information. Reviews and direct suggestions can help identify problems with product quality, packaging, delivery, or service. Responding professionally demonstrates that the business takes customer experiences seriously.
+    </p>
+
+    <p class="mb-4">
+      Promotions should be planned carefully. Discounts that reduce profit margins too heavily can create additional sales without improving the financial position of the business. Owners should calculate ingredient costs, packaging, labor, delivery expenses, and other operating costs before determining promotional prices.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Understanding the Financial Impact of Digital Marketing
+    </h3>
+
+    <p class="mb-4">
+      Digital marketing does not automatically produce higher profits. A business may receive more website visits or online inquiries without generating enough completed orders to cover its additional expenses.
+    </p>
+
+    <p class="mb-4">
+      Owners should therefore monitor several basic performance indicators. These include website visits, customer inquiries, completed orders, average transaction value, and the cost of acquiring new customers.
+    </p>
+
+    <p class="mb-4">
+      Consider a hypothetical food stall receiving 100 website visits in one week. If ten visitors place orders, the business has a 10% visitor-to-order conversion rate. This figure can help the owner evaluate whether the website is attracting relevant visitors and whether the ordering process is effective.
+    </p>
+
+    <p class="mb-4">
+      Revenue and profit should also be evaluated separately. Higher sales do not necessarily mean higher profits if ingredient prices, packaging expenses, and promotional costs increase at the same time.
+    </p>
+
+    <p class="mb-4">
+      The OECD's research on SME digital transformation highlights the relationship between digital platforms, business productivity, and access to wider customer networks. Its findings support the value of digital adoption while also recognizing that businesses need appropriate skills and operational practices to benefit from these tools.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Managing Digital Security and Customer Information
+    </h3>
+
+    <p class="mb-4">
+      As food businesses begin collecting online inquiries and customer details, protecting information becomes an important responsibility. Even a relatively simple website may handle names, telephone numbers, delivery addresses, and transaction-related information.
+    </p>
+
+    <p class="mb-4">
+      Business owners should collect only the information necessary to process orders. Customer details should not be publicly displayed or shared with unrelated parties without an appropriate legal basis.
+    </p>
+
+    <p class="mb-4">
+      Strong passwords, updated website software, secure hosting configurations, and regular backups can reduce common security risks. Website administrators should also restrict access to trusted individuals who actually need permission to manage business information.
+    </p>
+
+    <p class="mb-4">
+      The OECD's 2025 research identifies digital security as an important part of SME resilience. Digital growth should therefore be accompanied by reasonable security practices rather than focusing exclusively on marketing and sales.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      A Practical Digital Strategy for Small Food Entrepreneurs
+    </h3>
+
+    <p class="mb-4">
+      Small food businesses do not need to adopt every available digital technology at once. Starting with a manageable website and gradually improving its functions can be a more realistic approach for entrepreneurs operating with limited budgets.
+    </p>
+
+    <p class="mb-4">
+      An effective starting strategy can include several basic activities:
+    </p>
+
+    <ul class="list-disc pl-6 mb-4 space-y-2">
+      <li>Create a simple website containing the business profile, menu, prices, and contact information.</li>
+      <li>Make sure the website works properly on smartphones and loads efficiently.</li>
+      <li>Register and maintain accurate information on relevant local business directories.</li>
+      <li>Provide a straightforward ordering channel, such as WhatsApp.</li>
+      <li>Publish genuine product photographs and update unavailable items.</li>
+      <li>Monitor inquiries, completed orders, revenue, and operating costs.</li>
+      <li>Protect customer information and maintain regular website backups.</li>
+    </ul>
+
+    <p class="mb-4">
+      These activities provide a foundation that can be expanded when the business has sufficient resources. For example, a food stall with growing demand may eventually consider online payment integration, automated order notifications, or a dedicated customer management system.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Frequently Asked Questions
+    </h3>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      Does a small food business really need a website?
+    </h3>
+
+    <p class="mb-4">
+      A website is not mandatory for every food business, but it can provide a useful online location for menus, prices, business details, and ordering information. Its value depends on customer demand and how effectively it is maintained.
+    </p>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      How much does it cost to create a food business website?
+    </h3>
+
+    <p class="mb-4">
+      Costs vary depending on the domain, hosting, design, and required features. A basic website can be relatively affordable, particularly when business owners use simple website tools and manage updates themselves.
+    </p>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      Can a website increase food business sales?
+    </h3>
+
+    <p class="mb-4">
+      A website can improve business visibility and provide additional opportunities to receive customer inquiries and orders. However, actual sales growth also depends on product quality, pricing, customer service, competition, and marketing effectiveness.
+    </p>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      Is SEO important for a local food stall?
+    </h3>
+
+    <p class="mb-4">
+      Yes. Local SEO can help potential customers discover a food business when searching for relevant products or services in a particular area. Accurate business information and useful website content are important starting points.
+    </p>
+
+    <h3 class="text-lg font-semibold mt-4 mb-2">
+      Can WhatsApp be used together with a business website?
+    </h3>
+
+    <p class="mb-4">
+      Yes. A website can display product information while WhatsApp provides a direct communication channel for inquiries and orders. This combination can be practical for small businesses that do not yet need a complex ordering platform.
+    </p>
+
+    <h3 class="text-xl font-semibold mt-6 mb-2">
+      Conclusion
+    </h3>
+
+    <p class="mb-4">
+      Turning website visitors into loyal customers requires more than simply publishing a business website. Small food entrepreneurs need accurate information, mobile-friendly design, accessible ordering channels, consistent customer service, and a clear understanding of their business performance.
+    </p>
+
+    <p class="mb-4">
+      Research published by the OECD demonstrates that digital adoption can help small businesses expand their customer base, improve operational efficiency, and strengthen competitiveness. Nevertheless, technology delivers meaningful results when it supports a well-managed business rather than replacing the fundamentals of good products and reliable service.
+    </p>
+
+    <p class="mb-4">
+      For independent food stalls and home-based food businesses, a simple website can become a practical foundation for reaching new customers and maintaining long-term relationships. Sustainable growth begins with understanding customer needs and using digital tools to serve them more effectively.
+    </p>
+
+    <hr class="my-8 border-gray-300">
+
+    <h3 class="text-lg font-semibold mt-6 mb-3">
+      Research References
+    </h3>
+
+    <p class="mb-3 text-sm text-gray-600">
+      OECD (2025). SME Digitalisation for Competitiveness: The 2025 OECD D4SME Survey. OECD SME and Entrepreneurship Papers, No. 68.
+    </p>
+
+    <p class="mb-3 text-sm text-gray-600">
+      OECD (2021). The Digital Transformation of SMEs. OECD Studies on SMEs and Entrepreneurship.
+    </p>
+
+    <p class="mb-3 text-sm text-gray-600">
+      Google Search Central. Mobile-first indexing best practices and documentation.
+    </p>
+
+  </article>
+
+</main>
+
+<!-- FOOTER -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-xs">
+    <div class="max-w-screen-md mx-auto text-center text-gray-500 space-y-1 leading-tight px-4">
+
+      <p class="font-semibold text-gray-700">
+        Kocheng's |> Sahabat Ai Nusantara
+      </p>
+
+      <p>
+        <a href="/about" class="text-blue-600 hover:underline">About Us</a> |
+        <a href="/contact" class="text-blue-600 hover:underline">Contact Us</a> |
+        <a href="/privacypolicy" class="text-blue-600 hover:underline">Privacy Policy</a> |
+        <a href="/tos" class="text-blue-600 hover:underline">Terms of Service</a> |
+        <a href="/advertisingagreement" class="text-blue-600 hover:underline">Ads Disclosure</a> |
+        <a href="/blog" class="text-blue-600 hover:underline">Blog</a>
+      </p>
+
+      <p>
+        JL. Anggrek Klagenserut, Jiwan Kabupaten Madiun (6311).
+      </p>
+
+      <p>
+        <i class="fa-solid fa-envelope"></i>
+        supporthosting@kocheng.tech
+      </p>
+
+    </div>
+  </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector("main").classList.add("visible");
+});
+</script>
+
+</body>
+</html>
